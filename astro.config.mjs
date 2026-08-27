@@ -34,7 +34,9 @@ export default defineConfig({
   site: env.PUBLIC_SITE_URL || 'https://www.sanapatel.com.au',
   adapter: cloudflare({
     prerenderEnvironment: 'workerd',
+    imageService: 'compile',
   }),
+  session: false,
   integrations,
   trailingSlash: 'always',
   compressHTML: true,
