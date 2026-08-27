@@ -23,17 +23,17 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.3",
-    "@astrojs/react": "^4.4.0",
-    "@sanity/astro": "^4.0.0",
-    "@sanity/image-url": "^1.2.0",
-    "@sanity/presentation": "^1.0.0",
-    "@sanity/visual-editing": "^5.7.3",
-    "astro": "^7.1.0",
+    "@astrojs/react": "^6.0.4",
+    "@sanity/astro": "^3.2.6",
+    "@sanity/client": "^8.0.0",
+    "@sanity/image-url": "^1.1.0",
+    "astro": "^7.2.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "sanity": "^4.0.0"
+    "sanity": "^6.11.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.4",
     "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.0.0",
