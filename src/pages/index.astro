@@ -6,7 +6,7 @@ import CredentialStrip from '@/components/CredentialStrip.astro';
 import { SITE } from '@/config/site';
 
 const title = 'Property Management Melbourne | Sana Patel Real Estate';
-const description = 'Personal, proactive Melbourne property management with direct accountability, clear communication and a strategy built around your investment.';
+const description = 'Founder-led Melbourne property management with 24×7 direct access to Sana Patel, proactive oversight, clear communication and evidence-led rental decisions.';
 
 const schema = [
   {
@@ -33,7 +33,7 @@ const schema = [
 
 const credentials = [
   { label: 'Founder-led', value: 'Sana Patel' },
-  { label: 'Role', value: 'Managing Director / OIEC' },
+  { label: 'Direct access', value: '24×7 to Sana Patel' },
   { label: 'Professional standing', value: 'Licensed Estate Agent' },
   { label: 'Service area', value: 'Melbourne · Victoria' },
 ];
@@ -69,8 +69,8 @@ const credentials = [
     </video>
     <div class="hero__content">
       <p class="eyebrow">Property Management · Melbourne</p>
-      <h1 id="hero-title" class="hero__title">Your investment deserves direct accountability.</h1>
-      <p class="hero__lead">Personal property management, proactive oversight and clear communication from someone who stays close to the decisions that shape your investment.</p>
+      <h1 id="hero-title" class="hero__title">Your property should never be a mystery.</h1>
+      <p class="hero__lead">24×7 direct access to Sana Patel, proactive oversight and clear communication around the decisions that shape your investment.</p>
       <div class="hero__actions">
         <a class="button button--solid" href="/rental-appraisal/">Request a rental appraisal</a>
         <a class="button button--light" href="/switch-property-managers/">Thinking of switching?</a>
@@ -88,49 +88,50 @@ const credentials = [
       </div>
       <div class="statement__body">
         <p>Good property management is the ongoing care of rental performance, property condition, tenancy quality and owner confidence.</p>
-        <p>Sana Patel Real Estate is built around one simple idea: rental providers should know who is responsible for their property, understand what is happening, and have a clear next step when something needs attention.</p>
+        <p>Sana Patel Real Estate is built around a simple owner experience: know who is responsible, know what changed, understand why it matters and know what happens next.</p>
       </div>
     </div>
   </section>
 
-  <section class="section section--tight" aria-labelledby="journeys-title">
+  <section class="section section--tight journey-section" aria-labelledby="journeys-title">
     <div class="container-wide">
       <p class="eyebrow">Start where you are</p>
-      <h2 id="journeys-title" style="font-size:var(--h2);max-width:14ch;margin-top:var(--space-2);">Three useful ways to start.</h2>
-      <div class="grid journeys" style="margin-top:var(--space-4);">
+      <h2 id="journeys-title" class="journey-title">You do not have to be ready to switch before getting something useful.</h2>
+      <div class="grid journeys">
+        <article class="journey-card journey-card--featured">
+          <span class="journey-card__number">01 · Just checking</span>
+          <h3>How visible is the management of your investment?</h3>
+          <p>Take the free 90-second Property Management Visibility Check. See your result immediately—no name, email, phone or property address required first.</p>
+          <a href="/property-management-visibility-check/">Take the 90-second check →</a>
+        </article>
         <article class="journey-card">
-          <span class="journey-card__number">01</span>
-          <h3>Know what your property could rent for.</h3>
-          <p>Start with a practical rental appraisal and a clearer view of current rental positioning.</p>
+          <span class="journey-card__number">02 · Reviewing rent</span>
+          <h3>Want a clearer view of your property's rental position?</h3>
+          <p>Start with a practical appraisal based on the property, current competition, presentation, renter demand and timing.</p>
           <a href="/rental-appraisal/">Request an appraisal →</a>
         </article>
         <article class="journey-card">
-          <span class="journey-card__number">02</span>
+          <span class="journey-card__number">03 · Ready for change</span>
           <h3>Not getting enough from your current manager?</h3>
           <p>Understand the switching process, what changes and what Sana needs to make the transition orderly.</p>
           <a href="/switch-property-managers/">Explore switching →</a>
         </article>
-        <article class="journey-card">
-          <span class="journey-card__number">03</span>
-          <h3>Want a better property-management relationship?</h3>
-          <p>See how leasing, inspections, maintenance, arrears, renewals and communication fit into one accountable service.</p>
-          <a href="/rental-providers/">For rental providers →</a>
-        </article>
       </div>
+      <p class="journey-more"><a href="/rental-providers/">See Sana's complete property-management approach →</a></p>
     </div>
   </section>
 
   <section class="section proof-band">
     <div class="container proof-grid">
       <div>
-        <p class="eyebrow">Service is the differentiator</p>
-        <h2>Built from a career spent looking after people.</h2>
-        <p style="margin-top:var(--space-3);max-width:38rem;color:rgba(255,255,255,.76);">Sana's background spans customer service, hospitality, aviation and residential property management. That service discipline shapes a simple standard: communicate clearly, follow through, and stay personally accountable for what happens next.</p>
+        <p class="eyebrow">24×7 direct access</p>
+        <h2>Founder-led should mean reachable.</h2>
+        <p class="proof-copy">Sana's service model includes 24×7 direct access when something needs attention. The promise is a direct line of accountability and a responsive next step—not the fiction that every trade, repair or tenancy process can be completed instantly at any hour.</p>
       </div>
       <div class="quote">
         <p class="eyebrow">What direct accountability means</p>
         <blockquote>Know who is managing your property. Know what is happening. Know what comes next.</blockquote>
-        <footer>Clear communication · proactive follow-through · personal accountability</footer>
+        <footer>24×7 direct access · clear context · proactive follow-through</footer>
       </div>
     </div>
   </section>
@@ -153,6 +154,16 @@ const credentials = [
 </BaseLayout>
 
 <style>
+  .journey-section { background:var(--white); }
+  .journey-title { font-size:var(--h2); max-width:18ch; margin-top:var(--space-2); }
+  .journeys { margin-top:var(--space-4); }
+  .journey-card--featured { background:var(--paper-deep); border-color:var(--accent); box-shadow:0 1.1rem 3rem rgba(34,31,27,.08); }
+  .journey-card--featured .journey-card__number { color:var(--accent-deep); }
+  .journey-more { margin-top:var(--space-3); text-align:right; }
+  .journey-more a { font-size:.76rem; font-weight:750; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; }
+  .journey-more a:hover { color:var(--accent-deep); }
+  .proof-copy { margin-top:var(--space-3); max-width:39rem; color:rgba(255,255,255,.76); }
+  @media(max-width:700px){ .journey-more{text-align:left;} }
   @media (prefers-reduced-motion: reduce) {
     .hero__video { display: none; }
   }
