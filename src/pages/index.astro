@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
+import CredentialStrip from '@/components/CredentialStrip.astro';
 import { SITE } from '@/config/site';
 
 const title = 'Property Management Melbourne | Sana Patel Real Estate';
@@ -22,7 +23,19 @@ const schema = [
     telephone: SITE.phone.schema,
     email: SITE.email,
     areaServed: SITE.areaServed,
+    founder: {
+      '@type': 'Person',
+      name: 'Sana Patel',
+      jobTitle: 'Managing Director / Licensed Estate Agent',
+    },
   },
+];
+
+const credentials = [
+  { label: 'Founder-led', value: 'Sana Patel' },
+  { label: 'Role', value: 'Managing Director / OIEC' },
+  { label: 'Professional standing', value: 'Licensed Estate Agent' },
+  { label: 'Service area', value: 'Melbourne · Victoria' },
 ];
 ---
 <BaseLayout {title} {description} canonicalPath="/" {schema}>
@@ -64,6 +77,8 @@ const schema = [
       </div>
     </div>
   </section>
+
+  <CredentialStrip items={credentials} />
 
   <section class="section">
     <div class="container statement">
@@ -110,7 +125,7 @@ const schema = [
       <div>
         <p class="eyebrow">Service is the differentiator</p>
         <h2>Built from a career spent looking after people.</h2>
-        <p style="margin-top:var(--space-3);max-width:38rem;color:rgba(255,255,255,.72);">Sana's background spans customer service, hospitality, aviation and residential property management. That service discipline shapes a simple standard: communicate clearly, follow through, and stay personally accountable for what happens next.</p>
+        <p style="margin-top:var(--space-3);max-width:38rem;color:rgba(255,255,255,.76);">Sana's background spans customer service, hospitality, aviation and residential property management. That service discipline shapes a simple standard: communicate clearly, follow through, and stay personally accountable for what happens next.</p>
       </div>
       <div class="quote">
         <p class="eyebrow">What direct accountability means</p>
