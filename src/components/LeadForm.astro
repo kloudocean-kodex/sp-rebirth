@@ -132,6 +132,8 @@ const privacyNoticeVersion = '2026-08-27';
 {turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 
 <script>
+  import { emitGrowthEvent, type LeadJourney } from '@/lib/growth-events';
+
   type TurnstileApi = { reset: (widget?: HTMLElement | string) => void };
   const forms = document.querySelectorAll('[data-lead-form]');
 
@@ -139,6 +141,12 @@ const privacyNoticeVersion = '2026-08-27';
     if (!(form instanceof HTMLFormElement)) continue;
 
     const params = new URLSearchParams(window.location.search);
+    const rawFormType = form.dataset.formType;
+    const formType: LeadJourney =
+      rawFormType === 'rental_appraisal' || rawFormType === 'switch_manager' || rawFormType === 'general'
+        ? rawFormType
+        : 'general';
+
     const set = (name: string, value: string | null) => {
       const field = form.elements.namedItem(name);
       if (field instanceof HTMLInputElement) field.value = value || '';
@@ -150,6 +158,8 @@ const privacyNoticeVersion = '2026-08-27';
       set(key, params.get(key));
     }
 
+    form.addEventListener('input', () => emitGrowthEvent({ name: 'lead_started', formType }), { once: true });
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const status = form.querySelector('[data-form-status]');
@@ -159,6 +169,7 @@ const privacyNoticeVersion = '2026-08-27';
       button.disabled = true;
       button.setAttribute('aria-busy', 'true');
       if (status) status.textContent = 'Sending securely…';
+      emitGrowthEvent({ name: 'lead_submit_attempted', formType });
 
       try {
         const response = await fetch(form.action, {
@@ -172,8 +183,10 @@ const privacyNoticeVersion = '2026-08-27';
           throw new Error(result?.error || 'submission_failed');
         }
 
-        window.location.assign(`/thank-you/?type=${encodeURIComponent(form.dataset.formType || 'general')}`);
+        emitGrowthEvent({ name: 'lead_accepted', formType });
+        window.location.assign(`/thank-you/?type=${encodeURIComponent(formType)}`);
       } catch {
+        emitGrowthEvent({ name: 'lead_failed', formType });
         if (status) status.textContent = 'We could not safely deliver your enquiry. Please call Sana on 0416 977 990 or try again.';
 
         const widget = form.querySelector('.cf-turnstile');
