@@ -8,6 +8,8 @@ import {
   declaredBodyTooLarge,
   normalizeFormType,
   readFormDataWithinLimit,
+  requestOriginAllowed,
+  supportedLeadContentType,
   validateLead,
   type LeadFormType,
 } from '@/lib/leads';
@@ -96,22 +98,16 @@ async function verifyTurnstile(
 
 export const POST: APIRoute = async ({ request }) => {
   const requestUrl = new URL(request.url);
-  const origin = request.headers.get('origin');
 
-  if (origin) {
-    try {
-      if (new URL(origin).host !== requestUrl.host) return json({ ok: false, error: 'origin_rejected' }, 403);
-    } catch {
-      return json({ ok: false, error: 'origin_rejected' }, 403);
-    }
+  if (!requestOriginAllowed(request.headers.get('origin'), requestUrl)) {
+    return json({ ok: false, error: 'origin_rejected' }, 403);
   }
 
   if (declaredBodyTooLarge(request.headers.get('content-length'))) {
     return json({ ok: false, error: 'request_too_large' }, 413);
   }
 
-  const contentType = request.headers.get('content-type') || '';
-  if (!contentType.includes('application/x-www-form-urlencoded') && !contentType.includes('multipart/form-data')) {
+  if (!supportedLeadContentType(request.headers.get('content-type'))) {
     return json({ ok: false, error: 'unsupported_content_type' }, 415);
   }
 

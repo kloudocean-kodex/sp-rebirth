@@ -6,6 +6,8 @@ import {
   declaredBodyTooLarge,
   normalizeFormType,
   readFormDataWithinLimit,
+  requestOriginAllowed,
+  supportedLeadContentType,
   validateLead,
 } from '../src/lib/leads';
 
@@ -83,6 +85,29 @@ describe('lead validation', () => {
     expect(errors).toEqual(
       expect.arrayContaining(['full_name', 'email', 'phone', 'privacy_notice_version']),
     );
+  });
+});
+
+describe('request boundary', () => {
+  it('requires an exact same origin when the Origin header is present', () => {
+    const requestUrl = new URL('https://staging.example.test/api/leads');
+
+    expect(requestOriginAllowed('https://staging.example.test', requestUrl)).toBe(true);
+    expect(requestOriginAllowed(null, requestUrl)).toBe(true);
+    expect(requestOriginAllowed('http://staging.example.test', requestUrl)).toBe(false);
+    expect(requestOriginAllowed('https://staging.example.test:8443', requestUrl)).toBe(false);
+    expect(requestOriginAllowed('https://other.example.test', requestUrl)).toBe(false);
+    expect(requestOriginAllowed('not a url', requestUrl)).toBe(false);
+  });
+
+  it('accepts only the supported form media types, including normal parameters', () => {
+    expect(supportedLeadContentType('application/x-www-form-urlencoded')).toBe(true);
+    expect(supportedLeadContentType('application/x-www-form-urlencoded; charset=UTF-8')).toBe(true);
+    expect(supportedLeadContentType('multipart/form-data; boundary=synthetic')).toBe(true);
+    expect(supportedLeadContentType('text/application/x-www-form-urlencoded')).toBe(false);
+    expect(supportedLeadContentType('application/x-www-form-urlencoded.evil')).toBe(false);
+    expect(supportedLeadContentType('application/json')).toBe(false);
+    expect(supportedLeadContentType(null)).toBe(false);
   });
 });
 

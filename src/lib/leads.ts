@@ -107,6 +107,21 @@ export function validateLead(lead: LeadPayload): string[] {
   return errors;
 }
 
+export function requestOriginAllowed(originHeader: string | null, requestUrl: URL): boolean {
+  if (!originHeader) return true;
+  try {
+    return new URL(originHeader).origin === requestUrl.origin;
+  } catch {
+    return false;
+  }
+}
+
+export function supportedLeadContentType(contentType: string | null): boolean {
+  if (!contentType) return false;
+  const mediaType = contentType.split(';', 1)[0]?.trim().toLowerCase();
+  return mediaType === 'application/x-www-form-urlencoded' || mediaType === 'multipart/form-data';
+}
+
 export function declaredBodyTooLarge(contentLength: string | null): boolean {
   if (!contentLength) return false;
   const bytes = Number.parseInt(contentLength, 10);
