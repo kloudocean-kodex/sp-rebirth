@@ -42,6 +42,9 @@ jobs:
       - name: Production build
         run: npm run build
 
+      - name: Wrangler deployment bundle dry-run
+        run: npx wrangler deploy --dry-run --outdir .wrangler-dry-run --experimental-provision=false --experimental-auto-create=false
+
       - name: Install Chromium for browser QA
         run: npx playwright install --with-deps chromium
 
