@@ -1,6 +1,6 @@
 import { handle } from '@astrojs/cloudflare/handler';
-import { consumeLeadQueueMessage, type QueueMessageLike } from '@/lib/lead-queue-consumer';
-import type { LeadDeliveryBindings } from '@/lib/lead-delivery';
+import { consumeLeadQueueMessage, type QueueMessageLike } from './lib/lead-queue-consumer';
+import type { LeadDeliveryBindings } from './lib/lead-delivery';
 
 type AstroWorkerEnv = Parameters<typeof handle>[1];
 type AstroExecutionContext = Parameters<typeof handle>[2];
