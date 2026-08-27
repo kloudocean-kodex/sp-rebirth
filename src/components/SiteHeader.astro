@@ -1,11 +1,18 @@
 ---
 const ctaHref = '/rental-appraisal/';
+const logoSrc = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Patel-Logo.webp';
 ---
 <header class="site-header">
   <div class="site-header__inner">
     <a class="brand" href="/" aria-label="Sana Patel Real Estate home">
-      <strong>Sana Patel</strong>
-      <span>Real Estate · Melbourne</span>
+      <img
+        class="brand__logo"
+        src={logoSrc}
+        alt="Sana Patel Real Estate"
+        width="190"
+        height="55"
+        decoding="async"
+      />
     </a>
     <nav class="site-nav" aria-label="Primary navigation">
       <a href="/rental-providers/">Rental Providers</a>
