@@ -33,6 +33,22 @@ function json(body: unknown, status = 200) {
   });
 }
 
+function delivered(request: Request, formType: string, leadId?: string) {
+  if (request.headers.get('x-sp-rebirth-fetch') === '1') {
+    return json({ ok: true, leadId }, leadId ? 201 : 202);
+  }
+
+  const destination = new URL('/thank-you/', request.url);
+  destination.searchParams.set('type', formType || 'general');
+  return new Response(null, {
+    status: 303,
+    headers: {
+      location: destination.toString(),
+      'cache-control': 'no-store',
+    },
+  });
+}
+
 async function verifyTurnstile(token: string, ip: string | null) {
   const secret = env.TURNSTILE_SECRET_KEY;
   if (!secret) return { success: false, reason: 'turnstile_not_configured' };
@@ -73,14 +89,15 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const form = await request.formData();
+  const formType = clean(form.get('form_type'), 80) || 'general';
 
-  // Honeypot: genuine visitors never fill this field.
-  if (clean(form.get('company_website'), 200)) return json({ ok: true }, 202);
+  // Honeypot: genuine visitors never fill this field. Return a success-like response without forwarding data.
+  if (clean(form.get('company_website'), 200)) return delivered(request, formType);
 
   const lead = {
     id: crypto.randomUUID(),
     submittedAt: new Date().toISOString(),
-    formType: clean(form.get('form_type'), 80) || 'general',
+    formType,
     fullName: clean(form.get('full_name'), MAX.name),
     email: clean(form.get('email'), MAX.email).toLowerCase(),
     phone: clean(form.get('phone'), MAX.phone),
@@ -147,7 +164,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (!delivery.ok) return json({ ok: false, error: 'lead_delivery_failed' }, 502);
 
-  return json({ ok: true, leadId: lead.id }, 201);
+  return delivered(request, lead.formType, lead.id);
 };
 
 export const ALL: APIRoute = async () => json({ ok: false, error: 'method_not_allowed' }, 405);
