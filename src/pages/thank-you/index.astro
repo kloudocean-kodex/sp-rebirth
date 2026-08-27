@@ -1,0 +1,57 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+
+const type = Astro.url.searchParams.get('type');
+const labels: Record<string, { title: string; body: string }> = {
+  rental_appraisal: {
+    title: 'Your rental appraisal request is with Sana.',
+    body: 'Sana has the details you submitted and can review the property context before responding.',
+  },
+  switch_manager: {
+    title: 'Your switching enquiry is with Sana.',
+    body: 'Sana can review what you would like to improve and discuss the practical next step before any change is made.',
+  },
+  general: {
+    title: 'Thanks — your enquiry is with Sana.',
+    body: 'Your details were delivered successfully. Sana can now respond to the context you provided.',
+  },
+};
+const content = labels[type || ''] ?? labels.general;
+---
+<BaseLayout
+  title="Thank You | Sana Patel Real Estate"
+  description="Your enquiry has been delivered to Sana Patel Real Estate."
+  canonicalPath="/thank-you/"
+  noindex={true}
+>
+  <SiteHeader slot="header" />
+  <section class="thanks">
+    <div class="container thanks__content">
+      <p class="eyebrow">Enquiry received</p>
+      <h1>{content.title}</h1>
+      <p>{content.body}</p>
+      <div class="thanks__actions">
+        <a class="button button--solid" href="/">Return home</a>
+        <a class="button" href="tel:+61416977990">Call 0416 977 990</a>
+      </div>
+    </div>
+  </section>
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script define:vars={{ type: type || 'general' }}>
+  window.dispatchEvent(new CustomEvent('sp:lead-delivered', { detail: { type } }));
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'generate_lead', { lead_type: type });
+  }
+</script>
+
+<style>
+  .thanks { min-height:72svh; display:grid; align-items:center; padding-top:7rem; background:var(--paper); }
+  .thanks__content { max-width:60rem; padding-block:var(--space-6); }
+  h1 { margin-top:var(--space-2); max-width:12ch; font-size:var(--h1); }
+  .thanks__content > p:last-of-type { margin-top:var(--space-3); max-width:40rem; color:var(--ink-soft); font-size:var(--body-lg); }
+  .thanks__actions { margin-top:var(--space-4); display:flex; flex-wrap:wrap; gap:.8rem; }
+</style>
