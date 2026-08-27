@@ -9,7 +9,8 @@ export type GrowthEvent =
   | { name: 'lead_started'; formType: LeadJourney }
   | { name: 'lead_submit_attempted'; formType: LeadJourney }
   | { name: 'lead_accepted'; formType: LeadJourney }
-  | { name: 'lead_failed'; formType: LeadJourney };
+  | { name: 'lead_failed'; formType: LeadJourney }
+  | { name: 'lead_delivered'; formType: LeadJourney };
 
 /**
  * First-party measurement contract for SP_REBIRTH.
