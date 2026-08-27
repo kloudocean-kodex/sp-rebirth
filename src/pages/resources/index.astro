@@ -1,0 +1,49 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+
+const title = 'Property Management Resources Melbourne | Sana Patel Real Estate';
+const description = 'Reviewed property-management resources for Melbourne rental providers and renters. Practical guidance with authoritative source links where rules or compliance are discussed.';
+---
+<BaseLayout {title} {description} canonicalPath="/resources/" noindex={true}>
+  <SiteHeader slot="header" />
+  <InnerHero
+    eyebrow="Resources"
+    title="Useful information should be current, sourced and worth reading."
+    lead="SP_REBIRTH will use this area for genuinely helpful rental-provider and renter resources—not thin SEO pages written merely to target keywords."
+  />
+
+  <section class="section">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">Editorial standard</p>
+        <h2>Publish less. Maintain it better.</h2>
+      </div>
+      <div class="statement__body">
+        <p>Compliance and tenancy information changes. Resource articles that discuss Victorian requirements will carry a review date and link to authoritative sources such as Consumer Affairs Victoria where appropriate.</p>
+        <p>This hub remains excluded from search until the first substantive resources are reviewed and published through Sanity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight resource-placeholder">
+    <div class="container-wide resource-grid">
+      <article><p class="eyebrow">Rental providers</p><h2>Understanding rental minimum standards</h2><p>Planned: a sourced overview that helps owners understand the categories and where to verify the latest Victorian requirements.</p></article>
+      <article><p class="eyebrow">Rental providers</p><h2>What a routine inspection should tell you</h2><p>Planned: how useful inspection reporting differs from a simple checklist, without pretending an inspection is a building report.</p></article>
+      <article><p class="eyebrow">Switching managers</p><h2>Questions to ask before changing property managers</h2><p>Planned: practical due-diligence questions around service, communication, current agreements and handover.</p></article>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .resource-placeholder { background:var(--white); }
+  .resource-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-3); }
+  article { min-height:22rem; padding:var(--space-3); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--paper); }
+  article h2 { margin-top:var(--space-2); font-size:clamp(1.8rem,2.8vw,2.8rem); }
+  article > p:last-child { margin-top:var(--space-2); color:var(--ink-soft); }
+  @media(max-width:800px){ .resource-grid{grid-template-columns:1fr;} }
+</style>
