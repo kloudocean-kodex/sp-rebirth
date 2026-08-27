@@ -14,7 +14,7 @@ function validForm(type = 'general') {
   form.set('full_name', '  Sana   Example  ');
   form.set('email', 'SANA@example.com');
   form.set('phone', '0416 977 990');
-  form.set('consent', 'yes');
+  form.set('privacy_notice_version', '2026-08-27');
   return form;
 }
 
@@ -37,6 +37,7 @@ describe('lead normalization', () => {
     });
     expect(lead.fullName).toBe('Sana Example');
     expect(lead.email).toBe('sana@example.com');
+    expect(lead.privacyNoticeVersion).toBe('2026-08-27');
   });
 });
 
@@ -69,16 +70,18 @@ describe('lead validation', () => {
     expect(validateLead(lead)).not.toContain('property_location');
   });
 
-  it('rejects malformed contact data and missing consent', () => {
+  it('rejects malformed contact data and a missing collection-notice version', () => {
     const form = validForm();
     form.set('full_name', 'A');
     form.set('email', 'not-an-email');
     form.set('phone', '12');
-    form.delete('consent');
+    form.delete('privacy_notice_version');
     const errors = validateLead(
       createLeadPayload(form, { id: 'lead-1', submittedAt: '2026-08-27T00:00:00.000Z' }),
     );
-    expect(errors).toEqual(expect.arrayContaining(['full_name', 'email', 'phone', 'consent']));
+    expect(errors).toEqual(
+      expect.arrayContaining(['full_name', 'email', 'phone', 'privacy_notice_version']),
+    );
   });
 });
 
