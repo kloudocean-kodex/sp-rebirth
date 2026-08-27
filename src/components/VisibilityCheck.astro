@@ -164,8 +164,8 @@ const questions = [
         <p>If you want a second opinion, Sana can look at the property itself, the rental position and the management context before suggesting a next step.</p>
       </div>
       <div class="check-result__buttons">
-        <a class="button button--solid" href="/rental-appraisal/">Request a rental appraisal</a>
-        <a class="button" href="/switch-property-managers/">Talk about switching</a>
+        <a class="button button--solid" href="/rental-appraisal/" data-check-cta="rental_appraisal">Request a rental appraisal</a>
+        <a class="button" href="/switch-property-managers/" data-check-cta="switch_manager">Talk about switching</a>
         <button class="button" type="button" data-print-result>Print / save result</button>
       </div>
     </div>
@@ -177,6 +177,8 @@ const questions = [
 </div>
 
 <script>
+  import { emitGrowthEvent } from '@/lib/growth-events';
+
   const check = document.querySelector('[data-visibility-check]');
 
   if (check instanceof HTMLFormElement) {
@@ -204,6 +206,8 @@ const questions = [
         progress.textContent = `${score}%`;
       }
     };
+
+    check.addEventListener('change', () => emitGrowthEvent({ name: 'visibility_check_started' }), { once: true });
 
     check.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -269,6 +273,8 @@ const questions = [
         }
       }
 
+      emitGrowthEvent({ name: 'visibility_check_completed' });
+
       if (result instanceof HTMLElement) {
         result.hidden = false;
         result.focus({ preventScroll: true });
@@ -277,9 +283,21 @@ const questions = [
     });
   }
 
+  for (const link of document.querySelectorAll<HTMLElement>('[data-check-cta]')) {
+    link.addEventListener('click', () => {
+      const cta = link.dataset.checkCta;
+      if (cta === 'rental_appraisal' || cta === 'switch_manager') {
+        emitGrowthEvent({ name: 'visibility_check_cta_selected', cta });
+      }
+    });
+  }
+
   const printButton = document.querySelector('[data-print-result]');
   if (printButton instanceof HTMLButtonElement) {
-    printButton.addEventListener('click', () => window.print());
+    printButton.addEventListener('click', () => {
+      emitGrowthEvent({ name: 'visibility_check_printed' });
+      window.print();
+    });
   }
 </script>
 
