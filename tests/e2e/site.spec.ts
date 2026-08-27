@@ -5,6 +5,7 @@ const publicRoutes = [
   '/rental-providers/',
   '/rental-appraisal/',
   '/switch-property-managers/',
+  '/property-management-visibility-check/',
   '/about/',
   '/lease/',
   '/for-renters/',
@@ -28,6 +29,22 @@ for (const path of publicRoutes) {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
   });
 }
+
+test('homepage exposes the value-first diagnostic before requiring a sales conversation', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const visibilityCheck = page.getByRole('link', { name: /take the 90-second check/i });
+  await expect(visibilityCheck).toBeVisible();
+  await expect(visibilityCheck).toHaveAttribute('href', '/property-management-visibility-check/');
+});
+
+test('confirmed 24x7 direct-access service promise remains visible', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('24×7 to Sana Patel', { exact: true })).toBeVisible();
+
+  await page.goto('/rental-providers/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
+});
 
 test('staging robots policy blocks crawling', async ({ request }) => {
   const response = await request.get('/robots.txt');
