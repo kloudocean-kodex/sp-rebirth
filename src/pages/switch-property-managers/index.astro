@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+import LeadForm from '@/components/LeadForm.astro';
+
+const title = 'Switch Property Managers Melbourne | Sana Patel Real Estate';
+const description = 'Considering changing property managers in Melbourne? Understand the transition, what Sana needs from you and how a managed handover can begin.';
+---
+<BaseLayout {title} {description} canonicalPath="/switch-property-managers/">
+  <SiteHeader slot="header" />
+  <InnerHero
+    eyebrow="Switch Property Managers · Melbourne"
+    title="If the relationship is not working, understand your options."
+    lead="Poor communication, unclear accountability or a sense that you are constantly chasing updates are valid reasons to review how your investment is being managed."
+    primaryLabel="Talk about switching"
+    primaryHref="#switch-form"
+    secondaryLabel="Explore Sana's approach"
+    secondaryHref="/rental-providers/"
+    image="https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pate_371781052.webp"
+  />
+
+  <section class="section">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">You do not need to stay stuck</p>
+        <h2>Start by understanding the handover.</h2>
+      </div>
+      <div class="statement__body">
+        <p>Changing property managers should be handled carefully, with the current management agreement and relevant notice requirements reviewed before any transition is initiated.</p>
+        <p>Sana can first understand your situation, identify what information is required and explain the practical next steps. No cancellation or transfer should happen blindly.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight process-band">
+    <div class="container-wide process-grid">
+      <article><span>01</span><h2>Tell Sana what is not working</h2><p>Communication, leasing, maintenance, reporting, arrears, responsiveness or simply a mismatch in service expectations.</p></article>
+      <article><span>02</span><h2>Review the current arrangement</h2><p>Understand the management agreement, property status and what is required for an orderly transition.</p></article>
+      <article><span>03</span><h2>Plan the handover</h2><p>If both sides agree to proceed, establish the transfer steps, information requirements and communication plan.</p></article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container switch-reasons">
+      <div>
+        <p class="eyebrow">Common signals</p>
+        <h2>When owners start reconsidering their manager.</h2>
+      </div>
+      <ul>
+        <li>You regularly have to chase updates.</li>
+        <li>You are unsure who is actually accountable for the property.</li>
+        <li>Maintenance feels reactive or poorly communicated.</li>
+        <li>Inspection reporting does not give you useful confidence.</li>
+        <li>Important tenancy or lease decisions feel last-minute.</li>
+        <li>You want a more direct working relationship.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="switch-form" style="background:var(--paper-deep);">
+    <div class="container">
+      <LeadForm type="switch_manager" heading="Tell Sana what you would like to improve" submitLabel="Discuss switching" showCurrentManager={true} />
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .process-band { background:var(--ink); color:var(--white); }
+  .process-grid { display:grid; grid-template-columns:repeat(3,1fr); }
+  .process-grid article { padding:var(--space-4); border:1px solid var(--line-light); }
+  .process-grid span { font-size:.72rem; color:var(--accent-pale); letter-spacing:.12em; }
+  .process-grid h2 { margin-top:var(--space-3); font-size:clamp(1.8rem,3vw,3rem); }
+  .process-grid p { margin-top:var(--space-2); color:rgba(255,255,255,.68); }
+  .switch-reasons { display:grid; grid-template-columns:.8fr 1.2fr; gap:var(--space-5); }
+  .switch-reasons h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:12ch; }
+  .switch-reasons ul { margin:0; padding:0; list-style:none; border-top:1px solid var(--line); }
+  .switch-reasons li { padding:1.2rem 0; border-bottom:1px solid var(--line); color:var(--ink-soft); }
+  @media(max-width:800px){ .process-grid,.switch-reasons{grid-template-columns:1fr;} }
+</style>
