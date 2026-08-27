@@ -1,0 +1,109 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+
+interface SourceLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  eyebrow: string;
+  heading: string;
+  lead: string;
+  reviewedOn: string;
+  sources: SourceLink[];
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  eyebrow,
+  heading,
+  lead,
+  reviewedOn,
+  sources,
+  image,
+  noindex = true,
+} = Astro.props;
+---
+<BaseLayout {title} {description} {canonicalPath} {noindex}>
+  <SiteHeader slot="header" />
+  <InnerHero {eyebrow} title={heading} {lead} {image} />
+
+  <section class="resource-meta">
+    <div class="container resource-meta__inner">
+      <div>
+        <span>Last reviewed</span>
+        <strong>{reviewedOn}</strong>
+      </div>
+      <p>General information only. Victorian rental rules can change; use the linked government sources to check the requirements that apply to your property and circumstances.</p>
+    </div>
+  </section>
+
+  <article class="resource-article container">
+    <slot />
+  </article>
+
+  <section class="source-panel">
+    <div class="container source-panel__inner">
+      <div>
+        <p class="eyebrow">Authoritative sources</p>
+        <h2>Check the current rule at the source.</h2>
+      </div>
+      <ul>
+        {sources.map((source) => (
+          <li><a href={source.href} target="_blank" rel="noopener noreferrer">{source.label} ↗</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">Your property · your context</p>
+        <h2>Need to talk through the practical next step?</h2>
+        <p>General information is useful, but the right management decision depends on the property, tenancy and current circumstances.</p>
+      </div>
+      <div class="cta-panel__actions">
+        <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
+        <a class="button" href="/contact/">Talk to Sana</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .resource-meta { background:var(--paper-deep); border-bottom:1px solid var(--line); }
+  .resource-meta__inner { padding-block:1.25rem; display:grid; grid-template-columns:auto minmax(0,1fr); gap:var(--space-4); align-items:center; }
+  .resource-meta__inner > div { display:grid; gap:.15rem; }
+  .resource-meta span { font-size:.68rem; font-weight:750; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); }
+  .resource-meta strong { font-size:.95rem; }
+  .resource-meta p { max-width:52rem; color:var(--ink-soft); font-size:.88rem; }
+  .resource-article { padding-block:var(--space-6); max-width:min(100% - 2rem, 52rem); }
+  .resource-article :global(h2) { margin-top:var(--space-5); font-size:clamp(2rem,4vw,3.5rem); }
+  .resource-article :global(h3) { margin-top:var(--space-4); font-size:clamp(1.45rem,2.4vw,2rem); }
+  .resource-article :global(p), .resource-article :global(ul), .resource-article :global(ol) { margin-top:1.15rem; color:var(--ink-soft); }
+  .resource-article :global(ul), .resource-article :global(ol) { padding-left:1.25rem; }
+  .resource-article :global(li + li) { margin-top:.65rem; }
+  .resource-article :global(.note) { margin-top:var(--space-3); padding:1.2rem 1.35rem; border-left:3px solid var(--accent); background:var(--paper-deep); color:var(--ink-soft); }
+  .source-panel { padding-block:var(--space-5); background:var(--ink); color:var(--white); }
+  .source-panel__inner { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-5); }
+  .source-panel h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:12ch; }
+  .source-panel ul { margin:0; padding:0; list-style:none; border-top:1px solid var(--line-light); }
+  .source-panel li { border-bottom:1px solid var(--line-light); }
+  .source-panel a { display:block; padding:1rem 0; color:rgba(255,255,255,.82); text-decoration:none; }
+  .source-panel a:hover { color:var(--champagne); }
+  @media(max-width:760px){ .resource-meta__inner,.source-panel__inner{grid-template-columns:1fr;} }
+</style>
