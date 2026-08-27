@@ -5,6 +5,7 @@ const reviewRoutes = [
   ['rental-providers', '/rental-providers/'],
   ['rental-appraisal', '/rental-appraisal/'],
   ['switch-property-managers', '/switch-property-managers/'],
+  ['visibility-check', '/property-management-visibility-check/'],
   ['about', '/about/'],
 ] as const;
 
