@@ -7,7 +7,7 @@ import {
   resolveLeadDeliveryMode,
   type LeadQueueBinding,
 } from '../src/lib/lead-delivery';
-import type { LeadPayload } from '../src/lib/leads';
+import { LEAD_LIMITS, type LeadPayload } from '../src/lib/leads';
 
 function lead(): LeadPayload {
   return {
@@ -164,5 +164,21 @@ describe('Queue safety helpers', () => {
     expect(isLeadPayload(lead())).toBe(true);
     expect(isLeadPayload({ id: 'lead-123' })).toBe(false);
     expect(isLeadPayload(null)).toBe(false);
+  });
+
+  it('rejects structurally complete Queue payloads that exceed canonical field limits', () => {
+    expect(isLeadPayload({ ...lead(), message: 'x'.repeat(LEAD_LIMITS.message + 1) })).toBe(false);
+    expect(
+      isLeadPayload({
+        ...lead(),
+        attribution: { ...lead().attribution, landingPage: 'x'.repeat(LEAD_LIMITS.url + 1) },
+      }),
+    ).toBe(false);
+  });
+
+  it('rejects structurally complete Queue payloads that fail canonical contact or property validation', () => {
+    expect(isLeadPayload({ ...lead(), email: 'not-an-email' })).toBe(false);
+    expect(isLeadPayload({ ...lead(), propertyAddress: '', suburb: '' })).toBe(false);
+    expect(isLeadPayload({ ...lead(), submittedAt: 'not-a-date' })).toBe(false);
   });
 });

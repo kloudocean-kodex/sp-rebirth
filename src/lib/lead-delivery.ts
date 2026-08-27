@@ -1,4 +1,4 @@
-import type { LeadPayload } from './leads';
+import { LEAD_LIMITS, emailLooksValid, type LeadPayload } from './leads';
 
 export type LeadDeliveryMode = 'queue' | 'webhook';
 
@@ -112,34 +112,48 @@ export function queueRetryDelaySeconds(attempts: number): number {
   return Math.min(15 * 2 ** (safeAttempts - 1), 15 * 60);
 }
 
-export function isLeadPayload(value: unknown): value is LeadPayload {
-  if (!value || typeof value !== 'object') return false;
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
 
-  const lead = value as Partial<LeadPayload>;
-  return (
-    typeof lead.id === 'string' &&
-    lead.id.length > 0 &&
-    typeof lead.submittedAt === 'string' &&
-    lead.submittedAt.length > 0 &&
-    (lead.formType === 'rental_appraisal' || lead.formType === 'switch_manager' || lead.formType === 'general') &&
-    typeof lead.fullName === 'string' &&
-    typeof lead.email === 'string' &&
-    typeof lead.phone === 'string' &&
-    typeof lead.propertyAddress === 'string' &&
-    typeof lead.suburb === 'string' &&
-    typeof lead.currentManager === 'string' &&
-    typeof lead.situation === 'string' &&
-    typeof lead.timeframe === 'string' &&
-    typeof lead.message === 'string' &&
-    typeof lead.privacyNoticeVersion === 'string' &&
-    !!lead.attribution &&
-    typeof lead.attribution === 'object' &&
-    typeof lead.attribution.landingPage === 'string' &&
-    typeof lead.attribution.referrer === 'string' &&
-    typeof lead.attribution.utmSource === 'string' &&
-    typeof lead.attribution.utmMedium === 'string' &&
-    typeof lead.attribution.utmCampaign === 'string' &&
-    typeof lead.attribution.utmContent === 'string' &&
-    typeof lead.attribution.utmTerm === 'string'
-  );
+function stringWithin(value: unknown, minLength: number, maxLength: number): value is string {
+  return typeof value === 'string' && value.length >= minLength && value.length <= maxLength;
+}
+
+export function isLeadPayload(value: unknown): value is LeadPayload {
+  if (!isRecord(value)) return false;
+
+  const formType = value.formType;
+  if (formType !== 'rental_appraisal' && formType !== 'switch_manager' && formType !== 'general') {
+    return false;
+  }
+
+  if (!stringWithin(value.id, 1, 128)) return false;
+  if (!stringWithin(value.submittedAt, 1, 64) || Number.isNaN(Date.parse(value.submittedAt))) return false;
+  if (!stringWithin(value.fullName, 2, LEAD_LIMITS.name)) return false;
+  if (!stringWithin(value.email, 1, LEAD_LIMITS.email) || !emailLooksValid(value.email)) return false;
+  if (!stringWithin(value.phone, 6, LEAD_LIMITS.phone)) return false;
+  if (!stringWithin(value.propertyAddress, 0, LEAD_LIMITS.address)) return false;
+  if (!stringWithin(value.suburb, 0, LEAD_LIMITS.suburb)) return false;
+  if (!stringWithin(value.currentManager, 0, LEAD_LIMITS.short)) return false;
+  if (!stringWithin(value.situation, 0, LEAD_LIMITS.short)) return false;
+  if (!stringWithin(value.timeframe, 0, LEAD_LIMITS.short)) return false;
+  if (!stringWithin(value.message, 0, LEAD_LIMITS.message)) return false;
+  if (!stringWithin(value.privacyNoticeVersion, 1, LEAD_LIMITS.noticeVersion)) return false;
+
+  if ((formType === 'rental_appraisal' || formType === 'switch_manager') && !value.propertyAddress && !value.suburb) {
+    return false;
+  }
+
+  const attribution = value.attribution;
+  if (!isRecord(attribution)) return false;
+  if (!stringWithin(attribution.landingPage, 0, LEAD_LIMITS.url)) return false;
+  if (!stringWithin(attribution.referrer, 0, LEAD_LIMITS.url)) return false;
+  if (!stringWithin(attribution.utmSource, 0, LEAD_LIMITS.short)) return false;
+  if (!stringWithin(attribution.utmMedium, 0, LEAD_LIMITS.short)) return false;
+  if (!stringWithin(attribution.utmCampaign, 0, LEAD_LIMITS.short)) return false;
+  if (!stringWithin(attribution.utmContent, 0, LEAD_LIMITS.short)) return false;
+  if (!stringWithin(attribution.utmTerm, 0, LEAD_LIMITS.short)) return false;
+
+  return true;
 }
