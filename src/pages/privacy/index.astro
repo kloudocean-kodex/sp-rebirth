@@ -3,45 +3,62 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import InnerHero from '@/components/InnerHero.astro';
+import { SITE } from '@/config/site';
 
 const title = 'Privacy Notice | Sana Patel Real Estate';
-const description = 'How Sana Patel Real Estate proposes to collect, use and protect information submitted through the SP_REBIRTH website.';
+const description = 'How Sana Patel Real Estate proposes to collect, use, disclose and protect information submitted through the SP_REBIRTH website.';
 ---
 <BaseLayout {title} {description} canonicalPath="/privacy/" noindex={true}>
   <SiteHeader slot="header" />
   <InnerHero
     eyebrow="Privacy"
     title="Clear about the information we ask for."
-    lead="This draft notice describes the SP_REBIRTH website data flows. It remains a launch gate and must be reviewed against the final CRM, analytics, email and legal configuration before production."
+    lead="This pre-launch notice describes the SP_REBIRTH website data flows. It remains a release gate and must be checked against the final CRM, analytics, email, review and legal configuration before production."
   />
 
   <section class="section">
     <article class="container legal-copy">
-      <p class="status-note"><strong>Pre-launch draft:</strong> do not remove the noindex directive until the final data destinations, retention rules, cookie/analytics approach and legal review are complete.</p>
+      <p class="status-note"><strong>Pre-launch draft:</strong> do not remove the noindex directive until the final data destinations, retention rules, cookie/analytics approach, overseas-processing position and legal review are complete.</p>
+
+      <h2>Who is collecting the information</h2>
+      <p>This website is operated for {SITE.name}. Questions about information submitted through the website can be directed to <a href={`mailto:${SITE.email}`}>{SITE.email}</a> or <a href={`tel:${SITE.phone.e164}`}>{SITE.phone.display}</a>.</p>
 
       <h2>Information collected</h2>
-      <p>When you submit an enquiry, the website may collect your name, email address, phone number, property address or suburb, information about your current property-management situation, your message and your preferred timing. The website may also capture attribution information such as the page you arrived on, referral source and campaign parameters.</p>
+      <p>When you submit an enquiry, the website may collect your name, email address, phone number, property address or suburb, information about your current property-management situation, current property manager if you choose to provide it, preferred timing and your message.</p>
+      <p>The website may also capture limited technical and attribution information associated with the enquiry, such as the page you arrived on, referral source and campaign parameters. The production system should collect only information reasonably necessary for the enquiry, website security and agreed measurement purposes.</p>
 
-      <h2>Why this information is used</h2>
-      <p>Enquiry information is intended to be used to respond to your request, understand the property or service you are asking about, arrange appropriate follow-up and measure which marketing activity is generating genuine enquiries.</p>
+      <h2>Why this information is collected</h2>
+      <p>Enquiry information is intended to be used to respond to your request, understand the property or service you are asking about, arrange appropriate follow-up and understand which website or marketing activity generated genuine enquiries. Submitting an enquiry does not by itself subscribe you to unrelated marketing.</p>
+
+      <h2>If you do not provide the information</h2>
+      <p>You can browse the public website without submitting a lead form. If you choose not to provide the contact details or minimum property context required by a particular enquiry form, Sana Patel Real Estate may not be able to respond meaningfully to that request. You can instead contact Sana directly by phone or email.</p>
 
       <h2>Spam and security checks</h2>
-      <p>Forms use Cloudflare Turnstile or an equivalent abuse-prevention control. Technical request information may be processed as part of this verification and for website security.</p>
+      <p>Forms use Cloudflare Turnstile or an equivalent abuse-prevention control. Technical request information may be processed as part of this verification and for website security. The production configuration will document the security provider and relevant data-handling terms.</p>
 
-      <h2>Service providers</h2>
-      <p>The production website may use infrastructure, content-management, lead-delivery, email, analytics and review-display providers. The final list and relevant cross-border processing considerations will be documented before launch.</p>
+      <h2>Service providers and disclosures</h2>
+      <p>The production website may use infrastructure, content-management, lead-delivery, email, analytics and review-display providers to operate the website and respond to enquiries. Personal information should only be disclosed to providers where reasonably necessary for those functions, or where otherwise authorised or required.</p>
 
-      <h2>Analytics and cookies</h2>
-      <p>Analytics will not be enabled merely because a tracking ID exists. The production implementation will document what is measured, whether consent is required and how visitors can exercise any available choices.</p>
+      <h2>Overseas processing</h2>
+      <p>Some cloud, content, email, analytics or security providers may process information outside Australia. The final production notice must identify whether overseas disclosure or processing is likely and, where practicable and legally required, the relevant countries or regions after the final vendor configuration is known.</p>
 
-      <h2>Retention and access</h2>
-      <p>The final lead system must define an appropriate retention period and process for access, correction or deletion requests where applicable. SP_REBIRTH will not intentionally keep website enquiry data indefinitely without a business or legal reason.</p>
+      <h2>Analytics, cookies and campaign measurement</h2>
+      <p>Analytics will not be enabled merely because a tracking ID exists. The production implementation will document what is measured, which cookies or similar technologies are used, whether consent or another choice mechanism is appropriate, and how visitors can exercise any available choices.</p>
 
-      <h2>Contact</h2>
-      <p>Questions about information submitted through this website can be directed to <a href="mailto:sana@sanapatel.com.au">sana@sanapatel.com.au</a> or <a href="tel:+61416977990">0416 977 990</a>.</p>
+      <h2>Retention and security</h2>
+      <p>The final lead system must define an appropriate retention period and security controls for enquiry data. SP_REBIRTH will not intentionally keep website enquiry data indefinitely without a business or legal reason. Access should be limited to people and service providers who genuinely need it.</p>
+
+      <h2>Access and correction</h2>
+      <p>The final operating procedure will describe how an individual can ask what personal information is held about them and request correction where appropriate. Requests can begin through the contact details above.</p>
+
+      <h2>Privacy concerns or complaints</h2>
+      <p>The final production policy will document how privacy concerns are received, investigated and responded to, including any external escalation information that applies to Sana Patel Real Estate.</p>
+
+      <h2>Australian privacy requirements</h2>
+      <p>Australian privacy obligations depend on the organisation and the circumstances. This website has been engineered with the Australian Privacy Principles and current OAIC collection-notice guidance in mind, but this draft does not state that every APP obligation applies to Sana Patel Real Estate. Applicability and final wording require legal/business review against the actual operating model.</p>
 
       <h2>Final review required</h2>
-      <p>This page is an engineering draft, not legal advice. It must be reviewed and approved against the final operating model before the production launch.</p>
+      <p>This page is an engineering draft, not legal advice. It must be reviewed and approved against the final CRM, email, analytics, Cloudflare, Sanity, Trustindex/review and data-retention configuration before production launch.</p>
     </article>
   </section>
 
@@ -49,8 +66,9 @@ const description = 'How Sana Patel Real Estate proposes to collect, use and pro
 </BaseLayout>
 
 <style>
-  .legal-copy { max-width:54rem; }
+  .legal-copy { max-width:56rem; }
   .legal-copy h2 { margin-top:var(--space-4); font-size:clamp(1.7rem,2.8vw,2.6rem); }
   .legal-copy p { margin-top:var(--space-2); color:var(--ink-soft); }
+  .legal-copy a { color:var(--accent-deep); font-weight:650; }
   .status-note { padding:1.2rem 1.4rem; border-left:4px solid var(--accent); background:var(--white); color:var(--ink) !important; }
 </style>
