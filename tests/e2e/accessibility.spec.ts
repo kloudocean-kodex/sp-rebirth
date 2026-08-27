@@ -6,6 +6,7 @@ const criticalRoutes = [
   '/rental-providers/',
   '/rental-appraisal/',
   '/switch-property-managers/',
+  '/property-management-visibility-check/',
   '/about/',
   '/contact/',
 ] as const;
