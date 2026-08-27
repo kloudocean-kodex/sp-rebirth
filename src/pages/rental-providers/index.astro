@@ -1,0 +1,94 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+
+const title = 'Property Management for Rental Providers Melbourne | Sana Patel Real Estate';
+const description = 'Personalised Melbourne property management for rental providers: rental appraisals, leasing, inspections, maintenance, arrears, renewals and direct communication.';
+---
+<BaseLayout {title} {description} canonicalPath="/rental-providers/">
+  <SiteHeader slot="header" />
+  <InnerHero
+    eyebrow="Rental Providers · Melbourne"
+    title="Your investment deserves more than rent collection."
+    lead="Proactive management of rental performance, property condition, tenancy, maintenance and the decisions that protect the long-term value of your investment."
+    primaryLabel="Request a rental appraisal"
+    primaryHref="/rental-appraisal/"
+    secondaryLabel="Thinking of changing managers?"
+    secondaryHref="/switch-property-managers/"
+    image="https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-owners_2624278291.webp"
+  />
+
+  <section class="section">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">Is your property really being managed?</p>
+        <h2>Management should be visible.</h2>
+      </div>
+      <div class="statement__body">
+        <p>A monthly rent payment is only one small part of property management. The real work is in the decisions between payments: rental positioning, renter selection, inspections, maintenance, arrears, renewals and communication.</p>
+        <p>Sana's approach is designed around direct accountability. You know who is managing your property and what the next step is when something needs attention.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight service-section">
+    <div class="container-wide">
+      <p class="eyebrow">Complete property management</p>
+      <h2 class="section-title">One accountable service across the tenancy lifecycle.</h2>
+      <div class="service-grid">
+        <article><span>01</span><h3>Rental appraisal & rent reviews</h3><p>Evidence-led rental positioning and periodic review of how the property sits in the current market.</p></article>
+        <article><span>02</span><h3>Leasing & renter selection</h3><p>Marketing, enquiry management, applications, screening and a deliberate selection process.</p></article>
+        <article><span>03</span><h3>Routine inspections</h3><p>Structured inspections with useful reporting so property condition is not reduced to a checkbox.</p></article>
+        <article><span>04</span><h3>Maintenance coordination</h3><p>Clear issue triage, owner communication and coordination with appropriate trades and providers.</p></article>
+        <article><span>05</span><h3>Rent collection & arrears</h3><p>Consistent monitoring, timely communication and escalation within the applicable Victorian tenancy framework.</p></article>
+        <article><span>06</span><h3>Lease renewals</h3><p>Forward planning around expiry, rental position, tenancy history and the owner's objectives.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section proof-band">
+    <div class="container proof-grid">
+      <div>
+        <p class="eyebrow">Direct communication</p>
+        <h2>Your property should not disappear into a workflow.</h2>
+        <p class="soft-copy">The promise is not that problems never happen. It is that when they do, you have a clear point of accountability, useful communication and a property manager who understands the context.</p>
+      </div>
+      <div class="quote">
+        <p class="eyebrow">Owner proof</p>
+        <blockquote>Real customer language will be pulled from authenticated Google/Trustindex reviews.</blockquote>
+        <footer>Review count, names and wording remain data-driven rather than hard-coded.</footer>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">Getting started</p>
+        <h2>Let's talk about your investment.</h2>
+        <p>Tell Sana about the property, its current situation and what you would like to improve. The first step should help both sides understand whether the fit is right.</p>
+      </div>
+      <div class="cta-panel__actions">
+        <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
+        <a class="button" href="tel:+61416977990">Call Sana</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .section-title { font-size:var(--h2); max-width:14ch; margin-top:var(--space-2); }
+  .service-section { background:var(--white); }
+  .service-grid { margin-top:var(--space-4); display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  .service-grid article { min-height:18rem; padding:var(--space-3); border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .service-grid span { font-size:.72rem; letter-spacing:.12em; opacity:.48; }
+  .service-grid h3 { margin-top:var(--space-3); font-size:var(--h3); max-width:11ch; }
+  .service-grid p { margin-top:var(--space-2); color:var(--ink-soft); max-width:31ch; }
+  .soft-copy { margin-top:var(--space-3); max-width:38rem; color:rgba(255,255,255,.72); }
+  @media(max-width:900px){ .service-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:620px){ .service-grid{grid-template-columns:1fr;} }
+</style>
