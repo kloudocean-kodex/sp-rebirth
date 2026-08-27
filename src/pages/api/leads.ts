@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
+import { acceptLeadForDelivery, type LeadDeliveryBindings } from '@/lib/lead-delivery';
 import {
   LEAD_LIMITS,
   cleanText,
@@ -148,39 +149,23 @@ export const POST: APIRoute = async ({ request }) => {
   );
   if (!turnstile.success) return json({ ok: false, error: 'verification_failed' }, 403);
 
-  const webhookUrl = env.LEAD_DELIVERY_WEBHOOK_URL;
-  const webhookToken = env.LEAD_DELIVERY_TOKEN;
-  if (!webhookUrl || !webhookToken) {
-    // Fail closed: never show a success UX unless a durable downstream system accepted the lead.
-    return json({ ok: false, error: 'lead_delivery_not_configured' }, 503);
-  }
+  const delivery = await acceptLeadForDelivery(lead, env as LeadDeliveryBindings, {
+    deployEnv: import.meta.env.PUBLIC_DEPLOY_ENV,
+  });
 
-  let destination: URL;
-  try {
-    destination = new URL(webhookUrl);
-    if (destination.protocol !== 'https:') throw new Error('HTTPS required');
-  } catch {
-    return json({ ok: false, error: 'lead_delivery_invalid' }, 503);
-  }
+  if (!delivery.ok) {
+    const configurationFailure =
+      delivery.error === 'lead_queue_not_configured' ||
+      delivery.error === 'lead_delivery_not_configured' ||
+      delivery.error === 'lead_delivery_invalid';
 
-  let delivery: Response;
-  try {
-    delivery = await fetch(destination, {
-      method: 'POST',
-      headers: {
-        authorization: `Bearer ${webhookToken}`,
-        'content-type': 'application/json',
-        'user-agent': 'SP_REBIRTH/1.0',
-        'idempotency-key': lead.id,
-      },
-      body: JSON.stringify(lead),
-      signal: AbortSignal.timeout(10_000),
-    });
-  } catch {
-    return json({ ok: false, error: 'lead_delivery_failed' }, 502);
+    // Keep transport details server-side. The public contract is simply that the
+    // website will not claim success unless a configured durable destination accepted the lead.
+    return json(
+      { ok: false, error: configurationFailure ? 'lead_delivery_not_configured' : 'lead_delivery_failed' },
+      configurationFailure ? 503 : 502,
+    );
   }
-
-  if (!delivery.ok) return json({ ok: false, error: 'lead_delivery_failed' }, 502);
 
   return delivered(request, lead.formType, lead.id);
 };
