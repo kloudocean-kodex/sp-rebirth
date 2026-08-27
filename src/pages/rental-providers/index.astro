@@ -3,9 +3,34 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import InnerHero from '@/components/InnerHero.astro';
+import FAQList from '@/components/FAQList.astro';
+import { SITE } from '@/config/site';
 
 const title = 'Rental Provider Property Management Melbourne | Sana Patel';
-const description = 'Personalised Melbourne property management for rental providers: rental appraisals, leasing, inspections, maintenance, arrears, renewals and direct communication.';
+const description = 'Personalised Melbourne property management for rental providers: rental appraisals, leasing, inspections, maintenance, arrears, renewals and direct accountability.';
+
+const faqs = [
+  {
+    question: 'What does direct accountability mean in practice?',
+    answer: 'It means having a clear point of responsibility for the property and useful communication when something changes. The goal is not more messages. It is knowing what happened, why it matters, what is recommended and what happens next.',
+  },
+  {
+    question: 'Can Sana take over management if the property is already tenanted?',
+    answer: 'A management transfer can be considered while a property is tenanted, but the current management authority, notice requirements, tenancy documents and handover process should be reviewed before any action is taken. Sana can start by understanding the existing arrangement.',
+  },
+  {
+    question: 'How is a rental appraisal approached?',
+    answer: 'A useful appraisal considers the property, current competing rentals, presentation, likely renter demand and timing. It should help establish a defensible rental position rather than simply produce the highest possible headline figure.',
+  },
+  {
+    question: 'How are maintenance issues handled?',
+    answer: 'The aim is clear triage, owner communication and coordination with appropriate trades or service providers. The right response depends on the issue, urgency, tenancy context and any applicable Victorian requirements.',
+  },
+  {
+    question: 'Does property management remove every compliance risk?',
+    answer: 'No property manager can responsibly promise that. Requirements change and some matters require qualified trades or specialist advice. A stronger standard is a documented, proactive process for identifying issues, coordinating appropriate action and keeping the owner informed.',
+  },
+];
 ---
 <BaseLayout {title} {description} canonicalPath="/rental-providers/">
   <SiteHeader slot="header" />
@@ -63,6 +88,12 @@ const description = 'Personalised Melbourne property management for rental provi
     </div>
   </section>
 
+  <FAQList
+    heading="Clarity before you hand over the keys."
+    intro="The best time to understand how the relationship works is before something urgent happens. These are the questions owners most often need answered early."
+    items={faqs}
+  />
+
   <section class="section">
     <div class="container cta-panel">
       <div>
@@ -72,7 +103,7 @@ const description = 'Personalised Melbourne property management for rental provi
       </div>
       <div class="cta-panel__actions">
         <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
-        <a class="button" href="tel:+61416977990">Call Sana</a>
+        <a class="button" href={`tel:${SITE.phone.e164}`}>Call Sana</a>
       </div>
     </div>
   </section>
@@ -84,11 +115,11 @@ const description = 'Personalised Melbourne property management for rental provi
   .section-title { font-size:var(--h2); max-width:14ch; margin-top:var(--space-2); }
   .service-section { background:var(--white); }
   .service-grid { margin-top:var(--space-4); display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--line); border-left:1px solid var(--line); }
-  .service-grid article { min-height:18rem; padding:var(--space-3); border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
-  .service-grid span { font-size:.72rem; letter-spacing:.12em; opacity:.48; }
-  .service-grid h3 { margin-top:var(--space-3); font-size:var(--h3); max-width:11ch; }
+  .service-grid article { min-height:17rem; padding:var(--space-3); border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .service-grid span { color:var(--accent); font-size:.7rem; font-weight:700; letter-spacing:.06em; }
+  .service-grid h3 { margin-top:var(--space-3); font-size:var(--h3); max-width:12ch; }
   .service-grid p { margin-top:var(--space-2); color:var(--ink-soft); max-width:31ch; }
-  .soft-copy { margin-top:var(--space-3); max-width:38rem; color:rgba(255,255,255,.72); }
+  .soft-copy { margin-top:var(--space-3); max-width:38rem; color:rgba(255,255,255,.76); }
   @media(max-width:900px){ .service-grid{grid-template-columns:1fr 1fr;} }
   @media(max-width:620px){ .service-grid{grid-template-columns:1fr;} }
 </style>
