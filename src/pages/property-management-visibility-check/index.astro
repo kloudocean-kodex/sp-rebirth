@@ -1,0 +1,62 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+import VisibilityCheck from '@/components/VisibilityCheck.astro';
+
+const title = 'Property Management Visibility Check Melbourne | Sana Patel';
+const description = 'A free 90-second self-check for Melbourne rental providers. See how visible your rent strategy, inspections, maintenance, safety records and management communication really are.';
+---
+<BaseLayout {title} {description} canonicalPath="/property-management-visibility-check/">
+  <SiteHeader slot="header" />
+
+  <InnerHero
+    eyebrow="For Rental Providers · Free 90-Second Check"
+    title="Is your property really being managed — or are you simply receiving rent?"
+    lead="Seven practical questions. An immediate result. No contact details required. Use it to see where your current management is clear — and where you may want better visibility."
+    primaryLabel="Start the free check"
+    primaryHref="#visibility-check"
+    secondaryLabel="See Sana's approach"
+    secondaryHref="/rental-providers/"
+  />
+
+  <section class="section">
+    <div class="container">
+      <VisibilityCheck />
+    </div>
+  </section>
+
+  <section class="section section--tight why-check">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">Why this exists</p>
+        <h2>Clarity before a sales conversation.</h2>
+      </div>
+      <div class="statement__body">
+        <p>Many rental providers cannot immediately tell whether rent strategy, inspection follow-up, maintenance, safety records and tenancy planning are actively being managed — or simply dealt with when something happens.</p>
+        <p>This check is intentionally ungated. You should be able to get a useful perspective before deciding whether you want to speak with Sana.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">Need property-specific evidence?</p>
+        <h2>A self-check can reveal questions. An appraisal looks at the property.</h2>
+        <p>If rental positioning is one of the areas you want to understand better, Sana can assess the property, current market competition and leasing context rather than relying on an automated estimate.</p>
+      </div>
+      <div class="cta-panel__actions">
+        <a class="button button--solid" href="/rental-appraisal/">Request an appraisal</a>
+        <a class="button" href="/switch-property-managers/">Discuss switching</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .why-check { background:var(--white); }
+</style>
