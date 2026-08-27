@@ -22,7 +22,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     <p>Enough information to make the first conversation useful—without turning the form into an application process.</p>
   </div>
 
-  <form class="lead-form" method="post" action="/api/leads" data-lead-form>
+  <form class="lead-form" method="post" action="/api/leads" data-lead-form data-form-type={type}>
     <input type="hidden" name="form_type" value={type} />
     <input type="hidden" name="landing_page" value="" />
     <input type="hidden" name="referrer" value="" />
@@ -128,7 +128,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     if (!(form instanceof HTMLFormElement)) continue;
 
     const params = new URLSearchParams(window.location.search);
-    const set = (name, value) => {
+    const set = (name: string, value: string | null) => {
       const field = form.elements.namedItem(name);
       if (field instanceof HTMLInputElement) field.value = value || '';
     };
@@ -161,7 +161,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           throw new Error(result?.error || 'submission_failed');
         }
 
-        window.location.assign(`/thank-you/?type=${encodeURIComponent(form.dataset.formType || '')}`);
+        window.location.assign(`/thank-you/?type=${encodeURIComponent(form.dataset.formType || 'general')}`);
       } catch {
         if (status) status.textContent = 'We could not safely deliver your enquiry. Please call Sana on 0416 977 990 or try again.';
         button.disabled = false;
