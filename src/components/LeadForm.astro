@@ -14,6 +14,7 @@ const {
 } = Astro.props;
 
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const privacyNoticeVersion = '2026-08-27';
 ---
 <div class="lead-form-shell">
   <div class="lead-form-intro">
@@ -24,6 +25,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
   <form class="lead-form" method="post" action="/api/leads" data-lead-form data-form-type={type}>
     <input type="hidden" name="form_type" value={type} />
+    <input type="hidden" name="privacy_notice_version" value={privacyNoticeVersion} />
     <input type="hidden" name="landing_page" value="" />
     <input type="hidden" name="referrer" value="" />
     <input type="hidden" name="utm_source" value="" />
@@ -55,12 +57,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     {type !== 'general' && (
       <div class="field-grid field-grid--two">
         <label>
-          <span>Property address</span>
+          <span>Property address <small>(optional at this stage)</small></span>
           <input name="property_address" type="text" autocomplete="street-address" maxlength="240" />
         </label>
         <label>
           <span>Suburb</span>
-          <input name="suburb" type="text" autocomplete="address-level2" maxlength="120" />
+          <input name="suburb" type="text" autocomplete="address-level2" maxlength="120" required />
         </label>
       </div>
     )}
@@ -103,10 +105,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       <textarea name="message" rows="5" maxlength="3000"></textarea>
     </label>
 
-    <label class="consent">
-      <input name="consent" type="checkbox" value="yes" required />
-      <span>I agree that Sana Patel Real Estate may use these details to respond to my enquiry. See the <a href="/privacy/">privacy notice</a>.</span>
-    </label>
+    <div class="collection-notice" role="note">
+      <strong>About your information</strong>
+      <p>Submitting this form asks Sana Patel Real Estate to contact you about this enquiry. We collect the details above plus limited page, referral and campaign information so Sana can respond and understand how genuine enquiries reach the website. This form does not subscribe you to marketing. Website security, hosting and the final lead/email providers may process the information as described in the <a href="/privacy/">privacy notice</a>.</p>
+    </div>
 
     {turnstileSiteKey ? (
       <div
@@ -192,15 +194,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   .lead-form { display:grid; gap:1.15rem; padding:clamp(1.4rem,3vw,2.5rem); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--white); box-shadow:var(--shadow-soft); }
   .field-grid { display:grid; gap:1rem; }
   .field-grid--two { grid-template-columns:1fr 1fr; }
-  label:not(.consent) { display:grid; gap:.48rem; }
-  label > span { font-size:.76rem; font-weight:720; letter-spacing:.055em; text-transform:uppercase; }
-  label small { font-weight:500; opacity:.6; text-transform:none; letter-spacing:0; }
-  input, select, textarea { width:100%; border:1px solid rgba(21,22,18,.25); border-radius:.45rem; background:#fff; color:var(--ink); padding:.85rem .95rem; box-shadow:none; }
+  label { display:grid; gap:.48rem; }
+  label > span { font-size:.74rem; font-weight:700; letter-spacing:.045em; text-transform:uppercase; }
+  label small { font-weight:500; opacity:.66; text-transform:none; letter-spacing:0; }
+  input, select, textarea { width:100%; border:1px solid rgba(23,23,19,.25); border-radius:var(--radius-sm); background:#fff; color:var(--ink); padding:.85rem .95rem; box-shadow:none; }
   input, select { min-height:3.25rem; }
   textarea { resize:vertical; min-height:9rem; }
-  input:focus, select:focus, textarea:focus { border-color:var(--accent-deep); outline:3px solid rgba(164,138,82,.2); outline-offset:1px; }
-  .consent { display:grid; grid-template-columns:auto 1fr; gap:.8rem; align-items:start; color:var(--ink-soft); font-size:.88rem; }
-  .consent input { width:1.15rem; min-height:auto; height:1.15rem; margin-top:.18rem; }
+  input:focus, select:focus, textarea:focus { border-color:var(--accent-deep); outline:3px solid rgba(109,83,44,.16); outline-offset:1px; }
+  .collection-notice { padding:1rem 1.05rem; border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:.82rem; }
+  .collection-notice strong { color:var(--ink); font-size:.76rem; letter-spacing:.04em; text-transform:uppercase; }
+  .collection-notice p { margin-top:.35rem; }
+  .collection-notice a { color:var(--accent-deep); font-weight:650; }
   .configuration-note { padding:.8rem 1rem; border-left:3px solid var(--accent); background:var(--paper); font-size:.82rem; color:var(--ink-soft); }
   .form-status { min-height:1.5rem; color:var(--danger); font-size:.86rem; }
   .hp { position:absolute !important; left:-10000px !important; width:1px !important; height:1px !important; overflow:hidden !important; }
