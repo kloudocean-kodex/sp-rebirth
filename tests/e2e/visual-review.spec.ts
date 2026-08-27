@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const reviewRoutes = [
   ['home', '/'],
@@ -11,7 +11,13 @@ const reviewRoutes = [
 
 for (const [name, path] of reviewRoutes) {
   test(`${name} visual review capture`, async ({ page }, testInfo) => {
-    await page.goto(path, { waitUntil: 'networkidle' });
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('h1')).toBeVisible();
+
+    // Give web fonts/layout a short settling window without requiring a permanently
+    // media-active homepage to reach networkidle.
+    await page.waitForTimeout(600);
+
     await page.screenshot({
       path: testInfo.outputPath(`${name}-${testInfo.project.name}.png`),
       fullPage: true,
