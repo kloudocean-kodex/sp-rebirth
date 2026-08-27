@@ -1,0 +1,49 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+
+const title = 'Sell Property Melbourne | Sana Patel Real Estate';
+const description = 'Talk with Sana Patel Real Estate about selling residential property in Melbourne, from preparing the campaign through negotiation and settlement coordination.';
+---
+<BaseLayout {title} {description} canonicalPath="/sale/">
+  <SiteHeader slot="header" />
+  <InnerHero
+    eyebrow="Selling · Melbourne"
+    title="A considered sales campaign, from preparation to settlement."
+    lead="Sana Patel Real Estate's existing service includes residential sales assistance from listing through settlement. SP_REBIRTH keeps that pathway available without allowing it to dilute the site's primary property-management growth focus."
+    primaryLabel="Talk to Sana about selling"
+    primaryHref="/contact/"
+    image="https://www.sanapatel.com.au/wp-content/uploads/2025/08/Sale_552591889.webp"
+  />
+
+  <section class="section">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">Sell with context</p>
+        <h2>One person accountable for the journey.</h2>
+      </div>
+      <div class="statement__body">
+        <p>Selling a home involves presentation, campaign decisions, buyer communication, negotiation and coordination through settlement. The new site will explain Sana's actual sales process once it has been reviewed with her rather than inventing a generic agency formula.</p>
+        <p>If you are considering selling now, contact Sana directly so the conversation can begin with the property and your objectives.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight sales-note">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">Planning a sale?</p>
+        <h2>Start with the property, not a template.</h2>
+        <p>Tell Sana where the property is, your likely timing and what matters most about the move. The detailed campaign recommendation should follow the property—not precede it.</p>
+      </div>
+      <div class="cta-panel__actions">
+        <a class="button button--solid" href="/contact/">Contact Sana</a>
+        <a class="button" href="tel:+61416977990">Call 0416 977 990</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
