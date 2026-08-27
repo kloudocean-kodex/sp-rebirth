@@ -58,7 +58,7 @@ const schemaPayload = schema ?? defaultSchema;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(schemaPayload)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaPayload)} />
   </head>
   <body class={bodyClass}>
     <a class="skip-link" href="#main-content">Skip to main content</a>
