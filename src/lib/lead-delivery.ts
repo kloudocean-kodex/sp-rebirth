@@ -1,4 +1,4 @@
-import type { LeadPayload } from '@/lib/leads';
+import type { LeadPayload } from './leads';
 
 export type LeadDeliveryMode = 'queue' | 'webhook';
 
