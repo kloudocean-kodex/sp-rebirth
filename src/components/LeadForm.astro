@@ -1,0 +1,195 @@
+---
+interface Props {
+  type: 'rental_appraisal' | 'switch_manager' | 'general';
+  heading?: string;
+  submitLabel?: string;
+  showCurrentManager?: boolean;
+}
+
+const {
+  type,
+  heading = 'Tell Sana about your property',
+  submitLabel = 'Send enquiry',
+  showCurrentManager = false,
+} = Astro.props;
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+<div class="lead-form-shell">
+  <div class="lead-form-intro">
+    <p class="eyebrow">Private enquiry</p>
+    <h2>{heading}</h2>
+    <p>Enough information to make the first conversation useful—without turning the form into an application process.</p>
+  </div>
+
+  <form class="lead-form" method="post" action="/api/leads" data-lead-form>
+    <input type="hidden" name="form_type" value={type} />
+    <input type="hidden" name="landing_page" value="" />
+    <input type="hidden" name="referrer" value="" />
+    <input type="hidden" name="utm_source" value="" />
+    <input type="hidden" name="utm_medium" value="" />
+    <input type="hidden" name="utm_campaign" value="" />
+    <input type="hidden" name="utm_content" value="" />
+    <input type="hidden" name="utm_term" value="" />
+
+    <div class="hp" aria-hidden="true">
+      <label>Company website <input type="text" name="company_website" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <div class="field-grid field-grid--two">
+      <label>
+        <span>Full name</span>
+        <input name="full_name" type="text" autocomplete="name" maxlength="120" required />
+      </label>
+      <label>
+        <span>Phone</span>
+        <input name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40" required />
+      </label>
+    </div>
+
+    <label>
+      <span>Email</span>
+      <input name="email" type="email" autocomplete="email" maxlength="180" required />
+    </label>
+
+    {type !== 'general' && (
+      <div class="field-grid field-grid--two">
+        <label>
+          <span>Property address</span>
+          <input name="property_address" type="text" autocomplete="street-address" maxlength="240" />
+        </label>
+        <label>
+          <span>Suburb</span>
+          <input name="suburb" type="text" autocomplete="address-level2" maxlength="120" />
+        </label>
+      </div>
+    )}
+
+    {showCurrentManager && (
+      <label>
+        <span>Current property manager / agency <small>(optional)</small></span>
+        <input name="current_manager" type="text" maxlength="180" />
+      </label>
+    )}
+
+    <div class="field-grid field-grid--two">
+      <label>
+        <span>What best describes your situation?</span>
+        <select name="situation">
+          <option value="">Select one</option>
+          <option>Property currently managed</option>
+          <option>Self-managed property</option>
+          <option>New investment / settlement approaching</option>
+          <option>Currently vacant</option>
+          <option>Tenanted property</option>
+          <option>Just exploring options</option>
+        </select>
+      </label>
+      <label>
+        <span>Timing</span>
+        <select name="timeframe">
+          <option value="">Select one</option>
+          <option>As soon as possible</option>
+          <option>Within 30 days</option>
+          <option>1–3 months</option>
+          <option>3+ months</option>
+          <option>Not sure yet</option>
+        </select>
+      </label>
+    </div>
+
+    <label>
+      <span>Anything Sana should know?</span>
+      <textarea name="message" rows="5" maxlength="3000"></textarea>
+    </label>
+
+    <label class="consent">
+      <input name="consent" type="checkbox" value="yes" required />
+      <span>I agree that Sana Patel Real Estate may use these details to respond to my enquiry. See the <a href="/privacy/">privacy notice</a>.</span>
+    </label>
+
+    {turnstileSiteKey ? (
+      <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
+    ) : (
+      <p class="configuration-note" role="note">Staging configuration pending: Cloudflare Turnstile site key.</p>
+    )}
+
+    <button class="button button--solid" type="submit">{submitLabel}</button>
+    <p class="form-status" aria-live="polite" data-form-status></p>
+  </form>
+</div>
+
+{turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  const forms = document.querySelectorAll('[data-lead-form]');
+
+  for (const form of forms) {
+    if (!(form instanceof HTMLFormElement)) continue;
+
+    const params = new URLSearchParams(window.location.search);
+    const set = (name, value) => {
+      const field = form.elements.namedItem(name);
+      if (field instanceof HTMLInputElement) field.value = value || '';
+    };
+
+    set('landing_page', window.location.href.slice(0, 700));
+    set('referrer', document.referrer.slice(0, 700));
+    for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
+      set(key, params.get(key));
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const status = form.querySelector('[data-form-status]');
+      const button = form.querySelector('button[type="submit"]');
+      if (!(button instanceof HTMLButtonElement)) return;
+
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      if (status) status.textContent = 'Sending securely…';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'x-sp-rebirth-fetch': '1' },
+        });
+        const result = await response.json();
+
+        if (!response.ok || !result.ok) {
+          throw new Error(result?.error || 'submission_failed');
+        }
+
+        window.location.assign(`/thank-you/?type=${encodeURIComponent(form.dataset.formType || '')}`);
+      } catch {
+        if (status) status.textContent = 'We could not safely deliver your enquiry. Please call Sana on 0416 977 990 or try again.';
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+      }
+    });
+  }
+</script>
+
+<style>
+  .lead-form-shell { display:grid; grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr); gap:var(--space-5); align-items:start; }
+  .lead-form-intro h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:10ch; }
+  .lead-form-intro > p:last-child { margin-top:var(--space-2); color:var(--ink-soft); max-width:28rem; }
+  .lead-form { display:grid; gap:1.15rem; padding:clamp(1.4rem,3vw,2.5rem); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--white); box-shadow:var(--shadow-soft); }
+  .field-grid { display:grid; gap:1rem; }
+  .field-grid--two { grid-template-columns:1fr 1fr; }
+  label:not(.consent) { display:grid; gap:.48rem; }
+  label > span { font-size:.76rem; font-weight:720; letter-spacing:.055em; text-transform:uppercase; }
+  label small { font-weight:500; opacity:.6; text-transform:none; letter-spacing:0; }
+  input, select, textarea { width:100%; border:1px solid rgba(21,22,18,.25); border-radius:.45rem; background:#fff; color:var(--ink); padding:.85rem .95rem; box-shadow:none; }
+  input, select { min-height:3.25rem; }
+  textarea { resize:vertical; min-height:9rem; }
+  input:focus, select:focus, textarea:focus { border-color:var(--accent-deep); outline:3px solid rgba(139,118,80,.18); outline-offset:1px; }
+  .consent { display:grid; grid-template-columns:auto 1fr; gap:.8rem; align-items:start; color:var(--ink-soft); font-size:.88rem; }
+  .consent input { width:1.15rem; min-height:auto; height:1.15rem; margin-top:.18rem; }
+  .configuration-note { padding:.8rem 1rem; border-left:3px solid var(--accent); background:var(--paper); font-size:.82rem; color:var(--ink-soft); }
+  .form-status { min-height:1.5rem; color:var(--danger); font-size:.86rem; }
+  .hp { position:absolute !important; left:-10000px !important; width:1px !important; height:1px !important; overflow:hidden !important; }
+  button:disabled { opacity:.58; cursor:wait; }
+  @media(max-width:850px){ .lead-form-shell,.field-grid--two{grid-template-columns:1fr;} }
+</style>
