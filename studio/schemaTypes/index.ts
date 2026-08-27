@@ -1,0 +1,34 @@
+import {
+  accessibleImage,
+  ctaLink,
+  ctaSection,
+  faqSection,
+  heroSection,
+  leadFormSection,
+  portableText,
+  proofSection,
+  richTextSection,
+  seo,
+  serviceGridSection,
+} from './objects'
+import {faq, page, resourceArticle, reviewReference, siteSettings, suburbPage} from './documents'
+
+export const schemaTypes = [
+  seo,
+  accessibleImage,
+  portableText,
+  ctaLink,
+  heroSection,
+  richTextSection,
+  serviceGridSection,
+  proofSection,
+  faqSection,
+  ctaSection,
+  leadFormSection,
+  siteSettings,
+  page,
+  faq,
+  reviewReference,
+  resourceArticle,
+  suburbPage,
+]
