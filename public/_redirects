@@ -1,0 +1,3 @@
+# Known WordPress → SP_REBIRTH redirects.
+# Add additional production redirects only after GSC/backlink/analytics inventory confirms them.
+/for-rental-providers/ /rental-providers/ 301
