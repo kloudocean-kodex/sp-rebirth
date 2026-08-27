@@ -56,9 +56,33 @@ A high-intent owner should be able to understand the transition before giving de
 
 CTA should be a confidential conversation, not a scare tactic.
 
+### 4. 24×7 Direct Access Operating Layer
+
+**Service promise confirmed by Sana on 27 August 2026:** rental providers can have 24×7 direct access to Sana Patel.
+
+The website should communicate the promise confidently while distinguishing **access and acknowledgement** from an unrealistic guarantee that every repair, contractor attendance, tenancy process or final resolution happens instantly.
+
+The deeper implementation should be designed as a reusable ProddyG operating layer rather than a generic chatbot. Candidate responsibilities to research and prototype later:
+
+- always-available secure owner contact entry point
+- immediate acknowledgement with clear disclosure when automation is responding
+- property / tenancy / issue context capture
+- urgency classification and routing
+- emergency / urgent-repair safety guardrails that surface official pathways rather than relying on AI
+- Sana escalation for high-risk, sensitive or judgement-heavy matters
+- structured summary so Sana receives the problem, property, people, urgency and prior actions without rereading a long message thread
+- owner-visible acknowledgement / reference number where useful
+- reminders and follow-up if an item remains unresolved
+- CRM / property-management-system logging when integrations are available
+- after-hours analytics: volume, issue type, acknowledgement time, escalation time and resolution handoff
+
+AI may assist triage, summarisation, information retrieval and workflow routing, but it must not impersonate Sana, provide unsupervised legal/compliance determinations or create false certainty. The product test is not 'does it use AI?'; it is **does it make Sana's 24×7 promise measurably more responsive and sustainable?**
+
+Potential ProddyG value: if proven in SP_REBIRTH, the same human-accountability + automation pattern could become a reusable service layer for other founder-led agencies and service businesses.
+
 ## Tier 2 — content + traffic moat
 
-### 4. Rental Provider Hub
+### 5. Rental Provider Hub
 
 Structured evergreen + time-sensitive content:
 
@@ -74,7 +98,7 @@ Structured evergreen + time-sensitive content:
 
 All compliance content must cite authoritative Victorian sources and avoid legal advice.
 
-### 5. Renter Hub
+### 6. Renter Hub
 
 Useful self-service pages can improve renter experience and reduce repetitive administration:
 
@@ -86,13 +110,13 @@ Useful self-service pages can improve renter experience and reduce repetitive ad
 
 No emergency workflow should rely solely on a website form.
 
-### 6. Areas We Serve / local SEO
+### 7. Areas We Serve / local SEO
 
 Create a Melbourne service-area hub first. Add suburb pages only when each page has unique, useful content: actual service relevance, local rental context, property-type patterns, useful owner guidance, real case evidence or community knowledge. No programmatic thin suburb pages.
 
 ## Tier 3 — evidence moat
 
-### 7. Results / Client Stories
+### 8. Results / Client Stories
 
 Only publish when source evidence exists. Preferred structure:
 
@@ -105,7 +129,7 @@ Only publish when source evidence exists. Preferred structure:
 
 Avoid cherry-picked financial claims without enough context.
 
-### 8. Review-language intelligence
+### 9. Review-language intelligence
 
 Use verified Google/Trustindex/portal reviews to identify recurring customer-language themes. Use those themes to inform page hierarchy and copy, but never fabricate or paraphrase a review as if it were a quotation.
 
@@ -140,4 +164,6 @@ Do not ship:
 - dark-pattern gated results
 - 20+ thin suburb pages
 - AI chatbot that cannot answer with verified property/business context
+- AI that presents itself as Sana or hides that the user is interacting with automation
+- an after-hours AI workflow as the sole pathway for emergencies or urgent renter safety matters
 - generic newsletter signup without a defined value proposition
