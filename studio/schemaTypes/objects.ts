@@ -48,8 +48,9 @@ export const accessibleImage = defineType({
   validation: (rule) =>
     rule.custom((value) => {
       if (!value) return true
-      if (value.decorative) return true
-      return value.alt?.trim() ? true : 'Alternative text is required unless the image is explicitly decorative.'
+      if (value.decorative === true) return true
+      const alt = typeof value.alt === 'string' ? value.alt.trim() : ''
+      return alt ? true : 'Alternative text is required unless the image is explicitly decorative.'
     }),
 })
 
