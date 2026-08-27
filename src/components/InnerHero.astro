@@ -8,6 +8,9 @@ interface Props {
   secondaryLabel?: string;
   secondaryHref?: string;
   image?: string;
+  imagePosition?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 }
 
 const {
@@ -19,10 +22,23 @@ const {
   secondaryLabel,
   secondaryHref,
   image,
+  imagePosition,
+  imageWidth = 1600,
+  imageHeight = 1000,
 } = Astro.props;
 ---
 <section class="inner-hero">
-  {image && <img class="inner-hero__image" src={image} alt="" width="1600" height="1000" fetchpriority="high" />}
+  {image && (
+    <img
+      class="inner-hero__image"
+      src={image}
+      alt=""
+      width={imageWidth}
+      height={imageHeight}
+      fetchpriority="high"
+      style={imagePosition ? `object-position:${imagePosition};` : undefined}
+    />
+  )}
   <div class="inner-hero__shade"></div>
   <div class="inner-hero__content container-wide">
     <p class="eyebrow">{eyebrow}</p>
