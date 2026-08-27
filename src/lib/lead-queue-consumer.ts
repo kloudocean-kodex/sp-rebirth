@@ -3,7 +3,7 @@ import {
   isLeadPayload,
   queueRetryDelaySeconds,
   type LeadDeliveryBindings,
-} from '@/lib/lead-delivery';
+} from './lead-delivery';
 
 export interface QueueMessageLike {
   readonly id: string;
