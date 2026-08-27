@@ -5,6 +5,7 @@ import {
   createLeadPayload,
   declaredBodyTooLarge,
   normalizeFormType,
+  readFormDataWithinLimit,
   validateLead,
 } from '../src/lib/leads';
 
@@ -90,5 +91,38 @@ describe('request limits', () => {
     expect(declaredBodyTooLarge(String(LEAD_LIMITS.requestBytes + 1))).toBe(true);
     expect(declaredBodyTooLarge(String(LEAD_LIMITS.requestBytes))).toBe(false);
     expect(declaredBodyTooLarge(null)).toBe(false);
+  });
+
+  it('parses a bounded form body without relying on Content-Length', async () => {
+    const request = new Request('https://staging.example.test/api/leads', {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        full_name: 'Synthetic Test',
+        email: 'synthetic@example.test',
+      }).toString(),
+    });
+
+    expect(request.headers.get('content-length')).toBeNull();
+    const result = await readFormDataWithinLimit(request, 1024);
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) throw new Error('Expected bounded form parsing to succeed');
+    expect(result.form.get('full_name')).toBe('Synthetic Test');
+    expect(result.form.get('email')).toBe('synthetic@example.test');
+  });
+
+  it('rejects the actual streamed body once it exceeds the limit even without Content-Length', async () => {
+    const request = new Request('https://staging.example.test/api/leads', {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ message: 'x'.repeat(256) }).toString(),
+    });
+
+    expect(request.headers.get('content-length')).toBeNull();
+    await expect(readFormDataWithinLimit(request, 64)).resolves.toEqual({
+      ok: false,
+      error: 'request_too_large',
+    });
   });
 });

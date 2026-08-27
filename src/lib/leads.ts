@@ -42,6 +42,10 @@ export interface LeadPayload {
   attribution: LeadAttribution;
 }
 
+export type BoundedFormDataResult =
+  | { ok: true; form: FormData }
+  | { ok: false; error: 'request_too_large' | 'invalid_form_data' };
+
 export function cleanText(value: FormDataEntryValue | null, max: number): string {
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
 }
@@ -107,4 +111,59 @@ export function declaredBodyTooLarge(contentLength: string | null): boolean {
   if (!contentLength) return false;
   const bytes = Number.parseInt(contentLength, 10);
   return Number.isFinite(bytes) && bytes > LEAD_LIMITS.requestBytes;
+}
+
+export async function readFormDataWithinLimit(
+  request: Request,
+  maxBytes = LEAD_LIMITS.requestBytes,
+): Promise<BoundedFormDataResult> {
+  if (!request.body) return { ok: false, error: 'invalid_form_data' };
+
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      totalBytes += value.byteLength;
+      if (totalBytes > maxBytes) {
+        try {
+          await reader.cancel();
+        } catch {
+          // The size decision is already final; cancellation is only best-effort cleanup.
+        }
+        return { ok: false, error: 'request_too_large' };
+      }
+
+      chunks.push(value);
+    }
+  } catch {
+    return { ok: false, error: 'invalid_form_data' };
+  }
+
+  const bodyBuffer = new ArrayBuffer(totalBytes);
+  const bodyBytes = new Uint8Array(bodyBuffer);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bodyBytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+
+  const headers = new Headers();
+  const contentType = request.headers.get('content-type');
+  if (contentType) headers.set('content-type', contentType);
+
+  try {
+    const boundedRequest = new Request(request.url, {
+      method: request.method,
+      headers,
+      body: bodyBuffer,
+    });
+    return { ok: true, form: await boundedRequest.formData() };
+  } catch {
+    return { ok: false, error: 'invalid_form_data' };
+  }
 }

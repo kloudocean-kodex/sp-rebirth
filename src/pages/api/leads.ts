@@ -7,6 +7,7 @@ import {
   createLeadPayload,
   declaredBodyTooLarge,
   normalizeFormType,
+  readFormDataWithinLimit,
   validateLead,
   type LeadFormType,
 } from '@/lib/leads';
@@ -114,12 +115,14 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ ok: false, error: 'unsupported_content_type' }, 415);
   }
 
-  let form: FormData;
-  try {
-    form = await request.formData();
-  } catch {
-    return json({ ok: false, error: 'invalid_form_data' }, 400);
+  const parsedForm = await readFormDataWithinLimit(request);
+  if (!parsedForm.ok) {
+    return json(
+      { ok: false, error: parsedForm.error },
+      parsedForm.error === 'request_too_large' ? 413 : 400,
+    );
   }
+  const form = parsedForm.form;
 
   const formType = normalizeFormType(form.get('form_type'));
 
