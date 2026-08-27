@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build:
-    name: Typecheck and production build
+    name: Tests, typecheck and production build
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -32,6 +32,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+
+      - name: Unit tests
+        run: npm test
 
       - name: Astro typecheck
         run: npm run typecheck
