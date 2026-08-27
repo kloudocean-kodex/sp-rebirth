@@ -1,6 +1,11 @@
 import type { APIRoute } from 'astro';
 import { INDEXED_PATHS, SITE } from '@/config/site';
 
+// Keep the sitemap dynamic so staging can return a real HTTP 404. If this route is
+// prerendered, the static asset server would serve the generated "Not found" file
+// with HTTP 200 and accidentally create a crawlable sitemap URL.
+export const prerender = false;
+
 export const GET: APIRoute = ({ site }) => {
   const isProduction = import.meta.env.PUBLIC_DEPLOY_ENV === 'production';
 
