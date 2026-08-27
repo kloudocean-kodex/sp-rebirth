@@ -10,6 +10,7 @@ export const LEAD_LIMITS = {
   short: 180,
   message: 3000,
   url: 700,
+  noticeVersion: 40,
   turnstileToken: 2048,
   requestBytes: 64 * 1024,
 } as const;
@@ -37,7 +38,7 @@ export interface LeadPayload {
   situation: string;
   timeframe: string;
   message: string;
-  consent: boolean;
+  privacyNoticeVersion: string;
   attribution: LeadAttribution;
 }
 
@@ -71,7 +72,7 @@ export function createLeadPayload(
     situation: cleanText(form.get('situation'), LEAD_LIMITS.short),
     timeframe: cleanText(form.get('timeframe'), LEAD_LIMITS.short),
     message: cleanText(form.get('message'), LEAD_LIMITS.message),
-    consent: form.get('consent') === 'yes',
+    privacyNoticeVersion: cleanText(form.get('privacy_notice_version'), LEAD_LIMITS.noticeVersion),
     attribution: {
       landingPage: cleanText(form.get('landing_page'), LEAD_LIMITS.url),
       referrer: cleanText(form.get('referrer'), LEAD_LIMITS.url),
@@ -89,7 +90,7 @@ export function validateLead(lead: LeadPayload): string[] {
   if (lead.fullName.length < 2) errors.push('full_name');
   if (!emailLooksValid(lead.email)) errors.push('email');
   if (lead.phone.length < 6) errors.push('phone');
-  if (!lead.consent) errors.push('consent');
+  if (!lead.privacyNoticeVersion) errors.push('privacy_notice_version');
 
   if (
     (lead.formType === 'rental_appraisal' || lead.formType === 'switch_manager') &&
