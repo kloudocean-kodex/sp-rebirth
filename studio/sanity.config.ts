@@ -1,9 +1,8 @@
 import {defineConfig} from 'sanity'
 import {presentationTool} from 'sanity/presentation'
 import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
-import {structure} from './structure'
+import {singletonActions, structure} from './structure'
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
@@ -13,12 +12,18 @@ if (!projectId) {
   throw new Error('SANITY_STUDIO_PROJECT_ID is required to run SP_REBIRTH Studio')
 }
 
+let previewOrigin = 'http://localhost:4321'
+try {
+  previewOrigin = new URL(previewUrl).origin
+} catch {
+  throw new Error('SANITY_STUDIO_PREVIEW_URL must be an absolute URL')
+}
+
 export default defineConfig({
   name: 'spRebirth',
   title: 'Sana Patel Real Estate · SP_REBIRTH',
   projectId,
   dataset,
-  basePath: '/',
   plugins: [
     structureTool({structure}),
     presentationTool({
@@ -29,14 +34,13 @@ export default defineConfig({
           disable: '/api/draft-mode/disable',
         },
       },
-      allowOrigins: [
-        'http://localhost:*',
-        previewUrl,
-      ],
+      allowOrigins: ['http://localhost:*', previewOrigin],
     }),
-    visionTool({defaultApiVersion: '2026-08-27'}),
   ],
   schema: {
     types: schemaTypes,
+  },
+  document: {
+    actions: singletonActions,
   },
 })
