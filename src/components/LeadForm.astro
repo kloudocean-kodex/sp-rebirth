@@ -109,7 +109,15 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     </label>
 
     {turnstileSiteKey ? (
-      <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
+      <div
+        class="cf-turnstile"
+        data-sitekey={turnstileSiteKey}
+        data-action={type}
+        data-theme="light"
+        data-size="flexible"
+        data-refresh-expired="auto"
+        data-refresh-timeout="auto"
+      ></div>
     ) : (
       <p class="configuration-note" role="note">Staging configuration pending: Cloudflare Turnstile site key.</p>
     )}
@@ -122,6 +130,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 {turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 
 <script>
+  type TurnstileApi = { reset: (widget?: HTMLElement | string) => void };
   const forms = document.querySelectorAll('[data-lead-form]');
 
   for (const form of forms) {
@@ -164,6 +173,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         window.location.assign(`/thank-you/?type=${encodeURIComponent(form.dataset.formType || 'general')}`);
       } catch {
         if (status) status.textContent = 'We could not safely deliver your enquiry. Please call Sana on 0416 977 990 or try again.';
+
+        const widget = form.querySelector('.cf-turnstile');
+        const turnstile = (window as Window & { turnstile?: TurnstileApi }).turnstile;
+        if (widget instanceof HTMLElement && turnstile) turnstile.reset(widget);
+
         button.disabled = false;
         button.removeAttribute('aria-busy');
       }
@@ -184,7 +198,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   input, select, textarea { width:100%; border:1px solid rgba(21,22,18,.25); border-radius:.45rem; background:#fff; color:var(--ink); padding:.85rem .95rem; box-shadow:none; }
   input, select { min-height:3.25rem; }
   textarea { resize:vertical; min-height:9rem; }
-  input:focus, select:focus, textarea:focus { border-color:var(--accent-deep); outline:3px solid rgba(139,118,80,.18); outline-offset:1px; }
+  input:focus, select:focus, textarea:focus { border-color:var(--accent-deep); outline:3px solid rgba(164,138,82,.2); outline-offset:1px; }
   .consent { display:grid; grid-template-columns:auto 1fr; gap:.8rem; align-items:start; color:var(--ink-soft); font-size:.88rem; }
   .consent input { width:1.15rem; min-height:auto; height:1.15rem; margin-top:.18rem; }
   .configuration-note { padding:.8rem 1rem; border-left:3px solid var(--accent); background:var(--paper); font-size:.82rem; color:var(--ink-soft); }
