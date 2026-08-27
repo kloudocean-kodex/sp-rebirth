@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "npm@10.9.8",
   "workspaces": [
     "studio"
   ],
   "engines": {
-    "node": ">=22.0.0"
+    "node": "22.23.2",
+    "npm": "10.9.8"
   },
   "scripts": {
     "dev": "astro dev",

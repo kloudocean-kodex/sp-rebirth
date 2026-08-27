@@ -1,17 +1,18 @@
 ---
+import { SITE } from '@/config/site';
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
   <div class="container-wide">
     <div class="footer-grid">
       <div>
-        <p class="eyebrow">Sana Patel Real Estate</p>
+        <p class="eyebrow">{SITE.name}</p>
         <h2>Your property deserves clear accountability.</h2>
       </div>
       <div>
         <p><strong>Talk to Sana</strong></p>
-        <p><a href="tel:+61416977990">0416 977 990</a></p>
-        <p><a href="mailto:sana@sanapatel.com.au">sana@sanapatel.com.au</a></p>
+        <p><a href={`tel:${SITE.phone.e164}`}>{SITE.phone.display}</a></p>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
       </div>
       <div>
         <p><strong>Explore</strong></p>
@@ -21,7 +22,7 @@ const year = new Date().getFullYear();
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© {year} Sana Patel Real Estate.</span>
+      <span>© {year} {SITE.name}.</span>
       <span>Melbourne, Victoria · Strategy and digital platform by ProddyG</span>
     </div>
   </div>

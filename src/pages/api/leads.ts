@@ -1,25 +1,23 @@
 import type { APIRoute } from 'astro';
 import { env } from 'cloudflare:workers';
+import {
+  LEAD_LIMITS,
+  cleanText,
+  createLeadPayload,
+  declaredBodyTooLarge,
+  normalizeFormType,
+  validateLead,
+  type LeadFormType,
+} from '@/lib/leads';
 
 export const prerender = false;
 
-const MAX = {
-  name: 120,
-  email: 180,
-  phone: 40,
-  address: 240,
-  suburb: 120,
-  short: 180,
-  message: 3000,
-  url: 700,
-};
-
-function clean(value: FormDataEntryValue | null, max: number) {
-  return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
-}
-
-function emailLooksValid(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= MAX.email;
+interface TurnstileResult {
+  success?: boolean;
+  hostname?: string;
+  action?: string;
+  challenge_ts?: string;
+  ['error-codes']?: string[];
 }
 
 function json(body: unknown, status = 200) {
@@ -33,13 +31,13 @@ function json(body: unknown, status = 200) {
   });
 }
 
-function delivered(request: Request, formType: string, leadId?: string) {
+function delivered(request: Request, formType: LeadFormType, leadId?: string) {
   if (request.headers.get('x-sp-rebirth-fetch') === '1') {
     return json({ ok: true, leadId }, leadId ? 201 : 202);
   }
 
   const destination = new URL('/thank-you/', request.url);
-  destination.searchParams.set('type', formType || 'general');
+  destination.searchParams.set('type', formType);
   return new Response(null, {
     status: 303,
     headers: {
@@ -49,26 +47,49 @@ function delivered(request: Request, formType: string, leadId?: string) {
   });
 }
 
-async function verifyTurnstile(token: string, ip: string | null) {
+async function verifyTurnstile(
+  token: string,
+  ip: string | null,
+  expectedHostname: string,
+  expectedAction: LeadFormType,
+) {
   const secret = env.TURNSTILE_SECRET_KEY;
-  if (!secret) return { success: false, reason: 'turnstile_not_configured' };
+  if (!secret) return { success: false, reason: 'turnstile_not_configured' } as const;
 
   const payload = new FormData();
   payload.set('secret', secret);
   payload.set('response', token);
   if (ip) payload.set('remoteip', ip);
 
-  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    method: 'POST',
-    body: payload,
-  });
+  let response: Response;
+  try {
+    response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body: payload,
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch {
+    return { success: false, reason: 'turnstile_upstream_error' } as const;
+  }
 
-  if (!response.ok) return { success: false, reason: 'turnstile_upstream_error' };
-  const result = (await response.json()) as { success?: boolean; ['error-codes']?: string[] };
-  return {
-    success: result.success === true,
-    reason: result.success === true ? undefined : 'turnstile_rejected',
-  };
+  if (!response.ok) return { success: false, reason: 'turnstile_upstream_error' } as const;
+
+  let result: TurnstileResult;
+  try {
+    result = (await response.json()) as TurnstileResult;
+  } catch {
+    return { success: false, reason: 'turnstile_upstream_error' } as const;
+  }
+
+  if (result.success !== true) return { success: false, reason: 'turnstile_rejected' } as const;
+  if (!result.hostname || result.hostname.toLowerCase() !== expectedHostname.toLowerCase()) {
+    return { success: false, reason: 'turnstile_hostname_mismatch' } as const;
+  }
+  if (result.action !== expectedAction) {
+    return { success: false, reason: 'turnstile_action_mismatch' } as const;
+  }
+
+  return { success: true } as const;
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -83,64 +104,54 @@ export const POST: APIRoute = async ({ request }) => {
     }
   }
 
+  if (declaredBodyTooLarge(request.headers.get('content-length'))) {
+    return json({ ok: false, error: 'request_too_large' }, 413);
+  }
+
   const contentType = request.headers.get('content-type') || '';
   if (!contentType.includes('application/x-www-form-urlencoded') && !contentType.includes('multipart/form-data')) {
     return json({ ok: false, error: 'unsupported_content_type' }, 415);
   }
 
-  const form = await request.formData();
-  const formType = clean(form.get('form_type'), 80) || 'general';
-
-  // Honeypot: genuine visitors never fill this field. Return a success-like response without forwarding data.
-  if (clean(form.get('company_website'), 200)) return delivered(request, formType);
-
-  const lead = {
-    id: crypto.randomUUID(),
-    submittedAt: new Date().toISOString(),
-    formType,
-    fullName: clean(form.get('full_name'), MAX.name),
-    email: clean(form.get('email'), MAX.email).toLowerCase(),
-    phone: clean(form.get('phone'), MAX.phone),
-    propertyAddress: clean(form.get('property_address'), MAX.address),
-    suburb: clean(form.get('suburb'), MAX.suburb),
-    currentManager: clean(form.get('current_manager'), MAX.short),
-    situation: clean(form.get('situation'), MAX.short),
-    timeframe: clean(form.get('timeframe'), MAX.short),
-    message: clean(form.get('message'), MAX.message),
-    consent: form.get('consent') === 'yes',
-    attribution: {
-      landingPage: clean(form.get('landing_page'), MAX.url),
-      referrer: clean(form.get('referrer'), MAX.url),
-      utmSource: clean(form.get('utm_source'), MAX.short),
-      utmMedium: clean(form.get('utm_medium'), MAX.short),
-      utmCampaign: clean(form.get('utm_campaign'), MAX.short),
-      utmContent: clean(form.get('utm_content'), MAX.short),
-      utmTerm: clean(form.get('utm_term'), MAX.short),
-    },
-  };
-
-  const errors: string[] = [];
-  if (lead.fullName.length < 2) errors.push('full_name');
-  if (!emailLooksValid(lead.email)) errors.push('email');
-  if (lead.phone.length < 6) errors.push('phone');
-  if (!lead.consent) errors.push('consent');
-  if (['rental_appraisal', 'switch_manager'].includes(lead.formType) && !lead.propertyAddress && !lead.suburb) {
-    errors.push('property_location');
+  let form: FormData;
+  try {
+    form = await request.formData();
+  } catch {
+    return json({ ok: false, error: 'invalid_form_data' }, 400);
   }
 
+  const formType = normalizeFormType(form.get('form_type'));
+
+  // Honeypot: genuine visitors never fill this field. Return a success-like response without forwarding data.
+  if (cleanText(form.get('company_website'), 200)) return delivered(request, formType);
+
+  const lead = createLeadPayload(form, {
+    id: crypto.randomUUID(),
+    submittedAt: new Date().toISOString(),
+  });
+
+  const errors = validateLead(lead);
   if (errors.length) return json({ ok: false, error: 'validation_failed', fields: errors }, 400);
 
-  const turnstileToken = clean(form.get('cf-turnstile-response'), 4096);
+  const rawTurnstileToken = form.get('cf-turnstile-response');
+  const turnstileToken = typeof rawTurnstileToken === 'string' ? rawTurnstileToken.trim() : '';
   if (!turnstileToken) return json({ ok: false, error: 'verification_required' }, 400);
+  if (turnstileToken.length > LEAD_LIMITS.turnstileToken) {
+    return json({ ok: false, error: 'verification_invalid' }, 400);
+  }
 
-  const cfIp = request.headers.get('cf-connecting-ip');
-  const turnstile = await verifyTurnstile(turnstileToken, cfIp);
-  if (!turnstile.success) return json({ ok: false, error: turnstile.reason }, 403);
+  const turnstile = await verifyTurnstile(
+    turnstileToken,
+    request.headers.get('cf-connecting-ip'),
+    requestUrl.hostname,
+    lead.formType,
+  );
+  if (!turnstile.success) return json({ ok: false, error: 'verification_failed' }, 403);
 
   const webhookUrl = env.LEAD_DELIVERY_WEBHOOK_URL;
   const webhookToken = env.LEAD_DELIVERY_TOKEN;
   if (!webhookUrl || !webhookToken) {
-    // Deliberately fail closed. A successful UX must never be shown when there is no durable lead destination.
+    // Fail closed: never show a success UX unless a durable downstream system accepted the lead.
     return json({ ok: false, error: 'lead_delivery_not_configured' }, 503);
   }
 
@@ -152,15 +163,22 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ ok: false, error: 'lead_delivery_invalid' }, 503);
   }
 
-  const delivery = await fetch(destination, {
-    method: 'POST',
-    headers: {
-      authorization: `Bearer ${webhookToken}`,
-      'content-type': 'application/json',
-      'user-agent': 'SP_REBIRTH/1.0',
-    },
-    body: JSON.stringify(lead),
-  });
+  let delivery: Response;
+  try {
+    delivery = await fetch(destination, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${webhookToken}`,
+        'content-type': 'application/json',
+        'user-agent': 'SP_REBIRTH/1.0',
+        'idempotency-key': lead.id,
+      },
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(10_000),
+    });
+  } catch {
+    return json({ ok: false, error: 'lead_delivery_failed' }, 502);
+  }
 
   if (!delivery.ok) return json({ ok: false, error: 'lead_delivery_failed' }, 502);
 

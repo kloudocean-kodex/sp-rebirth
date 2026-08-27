@@ -14,12 +14,32 @@ const logoSrc = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pa
         decoding="async"
       />
     </a>
-    <nav class="site-nav" aria-label="Primary navigation">
-      <a href="/rental-providers/">Rental Providers</a>
-      <a href="/switch-property-managers/">Switch Managers</a>
-      <a href="/about/">About Sana</a>
-      <a href="/resources/">Resources</a>
-      <a class="button button--light" href={ctaHref}>Rental Appraisal</a>
-    </nav>
+
+    <div class="header-actions">
+      <nav class="site-nav site-nav--desktop" aria-label="Primary navigation">
+        <a href="/rental-providers/">Rental Providers</a>
+        <a href="/switch-property-managers/">Switch Managers</a>
+        <a href="/about/">About Sana</a>
+        <a href="/resources/">Resources</a>
+        <a class="button button--light" href={ctaHref}>Rental Appraisal</a>
+      </nav>
+
+      <details class="mobile-nav">
+        <summary aria-label="Open navigation menu">
+          <span class="mobile-nav__label">Menu</span>
+          <span class="mobile-nav__icon" aria-hidden="true"><i></i><i></i></span>
+        </summary>
+        <nav class="mobile-nav__panel" aria-label="Mobile navigation">
+          <a href="/rental-providers/">Rental Providers</a>
+          <a href="/rental-appraisal/">Rental Appraisal</a>
+          <a href="/switch-property-managers/">Switch Property Managers</a>
+          <a href="/about/">About Sana</a>
+          <a href="/resources/">Resources</a>
+          <a href="/for-renters/">For Renters</a>
+          <a href="/sale/">Selling</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>

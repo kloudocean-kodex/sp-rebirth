@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css';
 import '@/styles/brand.css';
+import { SITE } from '@/config/site';
 
 interface Props {
   title: string;
@@ -16,22 +17,24 @@ const {
   title,
   description,
   canonicalPath = Astro.url.pathname,
-  image = 'https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg',
+  image = SITE.defaultOgImage,
   noindex = false,
   schema,
   bodyClass = '',
 } = Astro.props;
 
-const site = Astro.site ?? new URL('https://www.sanapatel.com.au');
+const site = Astro.site ?? new URL(SITE.url);
 const canonical = new URL(canonicalPath, site);
 const ogImage = new URL(image, site);
+const isProduction = import.meta.env.PUBLIC_DEPLOY_ENV === 'production';
+const effectiveNoindex = noindex || !isProduction;
 const defaultSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Sana Patel Real Estate',
+  name: SITE.name,
   url: site.toString(),
-  telephone: '+61 416 977 990',
-  email: 'sana@sanapatel.com.au',
+  telephone: SITE.phone.schema,
+  email: SITE.email,
 };
 const schemaPayload = schema ?? defaultSchema;
 ---
@@ -45,11 +48,11 @@ const schemaPayload = schema ?? defaultSchema;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    {effectiveNoindex && <meta name="robots" content="noindex,nofollow" />}
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_AU" />
-    <meta property="og:site_name" content="Sana Patel Real Estate" />
+    <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
