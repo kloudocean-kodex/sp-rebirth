@@ -1,0 +1,52 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+import LeadForm from '@/components/LeadForm.astro';
+
+const title = 'Contact Sana Patel Real Estate | Melbourne';
+const description = 'Talk directly with Sana Patel Real Estate about property management, rental appraisal, changing property managers, renting or selling in Melbourne.';
+---
+<BaseLayout {title} {description} canonicalPath="/contact/">
+  <SiteHeader slot="header" />
+  <InnerHero
+    eyebrow="Contact Sana"
+    title="Start with the conversation that fits your situation."
+    lead="Property management, rental appraisal, switching managers, renting or selling—tell Sana what you need and enough context to make the first response useful."
+    primaryLabel="Call 0416 977 990"
+    primaryHref="tel:+61416977990"
+    secondaryLabel="Email Sana"
+    secondaryHref="mailto:sana@sanapatel.com.au"
+    image="https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp"
+  />
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="contact-details">
+        <p class="eyebrow">Direct contact</p>
+        <h2>No switchboard. No mystery inbox.</h2>
+        <dl>
+          <div><dt>Phone</dt><dd><a href="tel:+61416977990">0416 977 990</a></dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:sana@sanapatel.com.au">sana@sanapatel.com.au</a></dd></div>
+          <div><dt>Service area</dt><dd>Melbourne, Victoria</dd></div>
+        </dl>
+      </div>
+      <div>
+        <LeadForm type="general" heading="Send Sana an enquiry" submitLabel="Send enquiry" />
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .contact-grid { display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:var(--space-5); align-items:start; }
+  .contact-details h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:11ch; }
+  dl { margin:var(--space-4) 0 0; border-top:1px solid var(--line); }
+  dl div { padding:1.1rem 0; border-bottom:1px solid var(--line); }
+  dt { font-size:.72rem; font-weight:750; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
+  dd { margin:.3rem 0 0; font-size:1.05rem; }
+  @media(max-width:900px){ .contact-grid{grid-template-columns:1fr;} }
+</style>
