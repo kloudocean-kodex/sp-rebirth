@@ -1,16 +1,5 @@
 import type { APIRoute } from 'astro';
-
-const paths = [
-  '/',
-  '/about/',
-  '/lease/',
-  '/for-renters/',
-  '/sale/',
-  '/contact/',
-  '/rental-providers/',
-  '/rental-appraisal/',
-  '/switch-property-managers/',
-];
+import { INDEXED_PATHS, SITE } from '@/config/site';
 
 export const GET: APIRoute = ({ site }) => {
   const isProduction = import.meta.env.PUBLIC_DEPLOY_ENV === 'production';
@@ -26,10 +15,10 @@ export const GET: APIRoute = ({ site }) => {
     });
   }
 
-  const origin = site ?? new URL('https://www.sanapatel.com.au');
-  const urls = paths
-    .map((path) => `<url><loc>${new URL(path, origin).toString()}</loc></url>`)
-    .join('');
+  const origin = site ?? new URL(SITE.url);
+  const urls = INDEXED_PATHS.map(
+    (path) => `<url><loc>${new URL(path, origin).toString()}</loc></url>`,
+  ).join('');
 
   const body =
     `<?xml version="1.0" encoding="UTF-8"?>` +
