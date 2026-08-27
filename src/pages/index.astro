@@ -43,11 +43,16 @@ const schema = [
       muted
       loop
       playsinline
-      preload="metadata"
+      preload="none"
+      disablepictureinpicture
       poster="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg"
       aria-hidden="true"
     >
-      <source src="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Video-2025-09-30-at-1.22.28-PM-1.mp4" type="video/mp4" />
+      <source
+        src="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Video-2025-09-30-at-1.22.28-PM-1.mp4"
+        type="video/mp4"
+        media="(prefers-reduced-motion: no-preference)"
+      />
     </video>
     <div class="hero__content">
       <p class="eyebrow">Property Management · Melbourne</p>
