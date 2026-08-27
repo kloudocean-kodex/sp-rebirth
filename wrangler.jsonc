@@ -1,11 +1,16 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sp-rebirth",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+  "main": "./src/worker.ts",
   "compatibility_date": "2026-08-27",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
   "observability": {
     "enabled": true
   }
+
+  // Queue producer/consumer bindings are intentionally added only after the
+  // staging Queue and DLQ names are verified in the connected Cloudflare account.
+  // The Worker entrypoint is queue-capable now; production promotion remains
+  // blocked until those bindings and recovery tests are present.
 }
