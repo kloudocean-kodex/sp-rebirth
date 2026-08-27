@@ -6,14 +6,14 @@ import InnerHero from '@/components/InnerHero.astro';
 import LeadForm from '@/components/LeadForm.astro';
 
 const title = 'Contact Sana Patel Real Estate | Melbourne';
-const description = 'Talk directly with Sana Patel Real Estate about property management, rental appraisal, changing property managers, renting or selling in Melbourne.';
+const description = 'Talk directly with Sana Patel Real Estate about property management, rental appraisal, changing property managers, renting or selling in Melbourne. Rental providers have 24×7 direct access to Sana.';
 ---
 <BaseLayout {title} {description} canonicalPath="/contact/">
   <SiteHeader slot="header" />
   <InnerHero
     eyebrow="Contact Sana"
     title="Start with the conversation that fits your situation."
-    lead="Property management, rental appraisal, switching managers, renting or selling—tell Sana what you need and enough context to make the first response useful."
+    lead="Property management, rental appraisal, switching managers, renting or selling—tell Sana what you need and enough context to make the first response useful. Rental providers have 24×7 direct access to Sana."
     primaryLabel="Call 0416 977 990"
     primaryHref="tel:+61416977990"
     secondaryLabel="Email Sana"
@@ -29,8 +29,10 @@ const description = 'Talk directly with Sana Patel Real Estate about property ma
         <dl>
           <div><dt>Phone</dt><dd><a href="tel:+61416977990">0416 977 990</a></dd></div>
           <div><dt>Email</dt><dd><a href="mailto:sana@sanapatel.com.au">sana@sanapatel.com.au</a></dd></div>
+          <div><dt>Rental-provider access</dt><dd>24×7 direct access to Sana</dd></div>
           <div><dt>Service area</dt><dd>Melbourne, Victoria</dd></div>
         </dl>
+        <p class="availability-note">24×7 direct access means you can reach Sana when something needs attention. The timing of a final repair, contractor attendance or tenancy process still depends on the issue and the people or requirements involved.</p>
       </div>
       <div>
         <LeadForm type="general" heading="Send Sana an enquiry" submitLabel="Send enquiry" />
@@ -48,5 +50,6 @@ const description = 'Talk directly with Sana Patel Real Estate about property ma
   dl div { padding:1.1rem 0; border-bottom:1px solid var(--line); }
   dt { font-size:.72rem; font-weight:750; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
   dd { margin:.3rem 0 0; font-size:1.05rem; }
+  .availability-note { margin-top:var(--space-3); max-width:34rem; color:var(--ink-soft); font-size:.9rem; }
   @media(max-width:900px){ .contact-grid{grid-template-columns:1fr;} }
 </style>
