@@ -12,9 +12,17 @@ SP_REBIRTH deploys to **Cloudflare Workers + Static Assets**. Cloudflare Pages i
 - Package manager: npm
 - Dependency graph: committed `package-lock.json`
 - Build: `npm run build`
-- Deploy: `npx wrangler deploy`
+- Deploy: `npm run deploy`
 - Preview deploy for non-production branches: Cloudflare Workers Builds default `npx wrangler versions upload`
 - Worker entrypoint: `src/worker.ts` through `wrangler.jsonc`
+
+The repository deploy script deliberately disables Wrangler automatic resource provisioning and automatic draft-binding creation:
+
+```text
+wrangler deploy --experimental-provision=false --experimental-auto-create=false
+```
+
+This is a release safety boundary. Queue, DLQ and other bound resources must be verified and deliberately provisioned in the intended Cloudflare account before deployment rather than being silently created from a misspelled or guessed configuration.
 
 The custom Worker entrypoint delegates HTTP traffic to Astro's official Cloudflare `handle()` function and also exposes a Queue consumer handler. This follows the current Astro Cloudflare adapter custom-entrypoint API rather than replacing Astro routing with a hand-rolled server.
 
@@ -26,9 +34,9 @@ After `package-lock.json` is committed, configure:
 - **Production branch:** `main`
 - **Build variable:** `SKIP_DEPENDENCY_INSTALL=1`
 - **Build command:** `npm ci --no-audit --no-fund && npm run build`
-- **Deploy command:** `npx wrangler deploy`
+- **Deploy command:** `npx wrangler deploy --experimental-provision=false --experimental-auto-create=false`
 
-This disables Cloudflare's automatic dependency installer so GitHub CI and Cloudflare use the same npm lockfile and install semantics.
+This disables Cloudflare's automatic dependency installer so GitHub CI and Cloudflare use the same npm lockfile and install semantics. The deploy flags independently prevent automatic resource provisioning or draft-binding creation during an intentional deployment.
 
 Do not configure `PUBLIC_DEPLOY_ENV=production` on a preview/staging Worker. Public pages default to `noindex,nofollow`, `robots.txt` blocks crawling, and `sitemap.xml` is unavailable until production is deliberately enabled.
 
@@ -108,7 +116,7 @@ Only at production cutover:
 
 ## Queue provisioning rule
 
-Do **not** invent Queue or DLQ names and do not let automatic resource provisioning silently create production infrastructure in the wrong Cloudflare account. First verify the connected account and existing Worker resources, then deliberately create or bind the staging Queue and DLQ.
+Do **not** invent Queue or DLQ names and do not let automatic resource provisioning silently create production infrastructure in the wrong Cloudflare account. First verify the connected account and existing Worker resources, deliberately create or verify the staging Queue and DLQ, then deploy with automatic provisioning disabled.
 
 Before the Queue binding is committed:
 
@@ -117,10 +125,12 @@ Before the Queue binding is committed:
 3. create a staging Queue and staging DLQ
 4. configure consumer retry/DLQ policy
 5. bind the Queue as `LEAD_QUEUE`
-6. perform synthetic non-customer end-to-end delivery proof
-7. deliberately force downstream failure and prove retry + DLQ behavior
-8. replay/recover the synthetic lead without duplicate downstream contact
-9. only then mirror the proven configuration for production
+6. perform a non-provisioning Wrangler dry-run
+7. deploy with `--experimental-provision=false --experimental-auto-create=false`
+8. perform synthetic non-customer end-to-end delivery proof
+9. deliberately force downstream failure and prove retry + DLQ behavior
+10. replay/recover the synthetic lead without duplicate downstream contact
+11. only then mirror the proven configuration for production
 
 ## Release rule
 

@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 const root = process.cwd();
 const wrangler = readFileSync(join(root, 'wrangler.jsonc'), 'utf8');
+const packageJson = readFileSync(join(root, 'package.json'), 'utf8');
 
 describe('Cloudflare deployment contract', () => {
   it('routes Wrangler through the reviewed custom Worker entrypoint', () => {
@@ -13,6 +14,12 @@ describe('Cloudflare deployment contract', () => {
   it('retains the required Workers compatibility flags', () => {
     expect(wrangler).toContain('nodejs_compat');
     expect(wrangler).toContain('global_fetch_strictly_public');
+  });
+
+  it('disables automatic resource provisioning in the explicit deploy script', () => {
+    expect(packageJson).toMatch(
+      /"deploy"\s*:\s*"[^"]*wrangler deploy[^"]*--experimental-provision=false[^"]*--experimental-auto-create=false[^"]*"/,
+    );
   });
 
   it('does not commit guessed Queue resources before account verification', () => {
