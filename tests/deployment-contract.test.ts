@@ -22,6 +22,12 @@ describe('Cloudflare deployment contract', () => {
     );
   });
 
+  it('disables automatic resource provisioning in the preview upload script', () => {
+    expect(packageJson).toMatch(
+      /"deploy:preview"\s*:\s*"[^"]*wrangler versions upload[^"]*--experimental-provision=false[^"]*--experimental-auto-create=false[^"]*"/,
+    );
+  });
+
   it('does not commit guessed Queue resources before account verification', () => {
     // This assertion is intentionally temporary. When the real staging Queue and
     // DLQ have been verified/provisioned, replace it with assertions for those
