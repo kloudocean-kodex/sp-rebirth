@@ -149,9 +149,12 @@ export const POST: APIRoute = async ({ request }) => {
   );
   if (!turnstile.success) return json({ ok: false, error: 'verification_failed' }, 403);
 
-  const delivery = await acceptLeadForDelivery(lead, env as LeadDeliveryBindings, {
-    deployEnv: import.meta.env.PUBLIC_DEPLOY_ENV,
-  });
+  const deployEnv = import.meta.env.PUBLIC_DEPLOY_ENV;
+  const delivery = await acceptLeadForDelivery(
+    lead,
+    env as LeadDeliveryBindings,
+    deployEnv ? { deployEnv } : {},
+  );
 
   if (!delivery.ok) {
     const configurationFailure =
