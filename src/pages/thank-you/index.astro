@@ -4,7 +4,12 @@ import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 
 const type = Astro.url.searchParams.get('type');
-const labels: Record<string, { title: string; body: string }> = {
+type ThankYouContent = { title: string; body: string };
+const generalContent: ThankYouContent = {
+  title: 'Thanks — your enquiry is with Sana.',
+  body: 'Your details were delivered successfully. Sana can now respond to the context you provided.',
+};
+const labels: Record<string, ThankYouContent> = {
   rental_appraisal: {
     title: 'Your rental appraisal request is with Sana.',
     body: 'Sana has the details you submitted and can review the property context before responding.',
@@ -13,12 +18,9 @@ const labels: Record<string, { title: string; body: string }> = {
     title: 'Your switching enquiry is with Sana.',
     body: 'Sana can review what you would like to improve and discuss the practical next step before any change is made.',
   },
-  general: {
-    title: 'Thanks — your enquiry is with Sana.',
-    body: 'Your details were delivered successfully. Sana can now respond to the context you provided.',
-  },
+  general: generalContent,
 };
-const content = labels[type || ''] ?? labels.general;
+const content: ThankYouContent = labels[type || ''] ?? generalContent;
 ---
 <BaseLayout
   title="Thank You | Sana Patel Real Estate"
@@ -41,7 +43,7 @@ const content = labels[type || ''] ?? labels.general;
   <SiteFooter slot="footer" />
 </BaseLayout>
 
-<script define:vars={{ type: type || 'general' }}>
+<script is:inline define:vars={{ type: type || 'general' }}>
   window.dispatchEvent(new CustomEvent('sp:lead-delivered', { detail: { type } }));
   if (typeof window.gtag === 'function') {
     window.gtag('event', 'generate_lead', { lead_type: type });
