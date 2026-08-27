@@ -1,0 +1,56 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+
+const title = 'Privacy Notice | Sana Patel Real Estate';
+const description = 'How Sana Patel Real Estate proposes to collect, use and protect information submitted through the SP_REBIRTH website.';
+---
+<BaseLayout {title} {description} canonicalPath="/privacy/" noindex={true}>
+  <SiteHeader slot="header" />
+  <InnerHero
+    eyebrow="Privacy"
+    title="Clear about the information we ask for."
+    lead="This draft notice describes the SP_REBIRTH website data flows. It remains a launch gate and must be reviewed against the final CRM, analytics, email and legal configuration before production."
+  />
+
+  <section class="section">
+    <article class="container legal-copy">
+      <p class="status-note"><strong>Pre-launch draft:</strong> do not remove the noindex directive until the final data destinations, retention rules, cookie/analytics approach and legal review are complete.</p>
+
+      <h2>Information collected</h2>
+      <p>When you submit an enquiry, the website may collect your name, email address, phone number, property address or suburb, information about your current property-management situation, your message and your preferred timing. The website may also capture attribution information such as the page you arrived on, referral source and campaign parameters.</p>
+
+      <h2>Why this information is used</h2>
+      <p>Enquiry information is intended to be used to respond to your request, understand the property or service you are asking about, arrange appropriate follow-up and measure which marketing activity is generating genuine enquiries.</p>
+
+      <h2>Spam and security checks</h2>
+      <p>Forms use Cloudflare Turnstile or an equivalent abuse-prevention control. Technical request information may be processed as part of this verification and for website security.</p>
+
+      <h2>Service providers</h2>
+      <p>The production website may use infrastructure, content-management, lead-delivery, email, analytics and review-display providers. The final list and relevant cross-border processing considerations will be documented before launch.</p>
+
+      <h2>Analytics and cookies</h2>
+      <p>Analytics will not be enabled merely because a tracking ID exists. The production implementation will document what is measured, whether consent is required and how visitors can exercise any available choices.</p>
+
+      <h2>Retention and access</h2>
+      <p>The final lead system must define an appropriate retention period and process for access, correction or deletion requests where applicable. SP_REBIRTH will not intentionally keep website enquiry data indefinitely without a business or legal reason.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about information submitted through this website can be directed to <a href="mailto:sana@sanapatel.com.au">sana@sanapatel.com.au</a> or <a href="tel:+61416977990">0416 977 990</a>.</p>
+
+      <h2>Final review required</h2>
+      <p>This page is an engineering draft, not legal advice. It must be reviewed and approved against the final operating model before the production launch.</p>
+    </article>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .legal-copy { max-width:54rem; }
+  .legal-copy h2 { margin-top:var(--space-4); font-size:clamp(1.7rem,2.8vw,2.6rem); }
+  .legal-copy p { margin-top:var(--space-2); color:var(--ink-soft); }
+  .status-note { padding:1.2rem 1.4rem; border-left:4px solid var(--accent); background:var(--white); color:var(--ink) !important; }
+</style>
