@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
+import { SITE } from '@/config/site';
 
 const title = 'Property Management Melbourne | Sana Patel Real Estate';
 const description = 'Personal, proactive Melbourne property management with direct accountability, clear communication and a strategy built around your investment.';
@@ -10,17 +11,17 @@ const schema = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Sana Patel Real Estate',
-    url: 'https://www.sanapatel.com.au/',
+    name: SITE.name,
+    url: SITE.url,
   },
   {
     '@context': 'https://schema.org',
     '@type': 'RealEstateAgent',
-    name: 'Sana Patel Real Estate',
-    url: 'https://www.sanapatel.com.au/',
-    telephone: '+61 416 977 990',
-    email: 'sana@sanapatel.com.au',
-    areaServed: 'Melbourne, Victoria, Australia',
+    name: SITE.name,
+    url: SITE.url,
+    telephone: SITE.phone.schema,
+    email: SITE.email,
+    areaServed: SITE.areaServed,
   },
 ];
 ---
@@ -123,7 +124,7 @@ const schema = [
       </div>
       <div class="cta-panel__actions">
         <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
-        <a class="button" href="tel:+61416977990">Call Sana</a>
+        <a class="button" href={`tel:${SITE.phone.e164}`}>Call Sana</a>
       </div>
     </div>
   </section>
