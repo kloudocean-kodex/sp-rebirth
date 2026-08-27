@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "workspaces": [
+    "studio"
+  ],
   "engines": {
     "node": ">=22.0.0"
   },
   "scripts": {
     "dev": "astro dev",
+    "dev:studio": "npm --workspace studio run dev",
     "build": "astro check && astro build",
+    "build:studio": "npm --workspace studio run build",
     "preview": "wrangler dev",
     "deploy": "npm run build && wrangler deploy",
     "typecheck": "astro check",
@@ -24,13 +29,17 @@
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.3",
     "@astrojs/react": "^6.0.4",
-    "@sanity/astro": "^3.2.6",
-    "@sanity/client": "^8.0.0",
+    "@portabletext/types": "^4.0.2",
+    "@sanity/astro": "^3.5.0",
+    "@sanity/client": "^8.3.0",
     "@sanity/image-url": "^1.1.0",
+    "@sanity/preview-url-secret": "^1.6.21",
+    "@sanity/visual-editing": "^5.7.3",
     "astro": "^7.2.7",
+    "astro-portabletext": "^0.11.1",
+    "groq": "^6.11.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "sanity": "^6.11.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
