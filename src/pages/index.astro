@@ -1,0 +1,138 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+
+const title = 'Property Management Melbourne | Sana Patel Real Estate';
+const description = 'Personal, proactive Melbourne property management with direct accountability, clear communication and a strategy built around your investment.';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Sana Patel Real Estate',
+    url: 'https://www.sanapatel.com.au/',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateAgent',
+    name: 'Sana Patel Real Estate',
+    url: 'https://www.sanapatel.com.au/',
+    telephone: '+61 416 977 990',
+    email: 'sana@sanapatel.com.au',
+    areaServed: 'Melbourne, Victoria, Australia',
+  },
+];
+---
+<BaseLayout {title} {description} canonicalPath="/" {schema}>
+  <SiteHeader slot="header" />
+
+  <section class="hero" aria-labelledby="hero-title">
+    <img
+      class="hero__media hero__poster"
+      src="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg"
+      alt=""
+      width="1600"
+      height="1000"
+      fetchpriority="high"
+    />
+    <video
+      class="hero__media hero__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg"
+      aria-hidden="true"
+    >
+      <source src="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Video-2025-09-30-at-1.22.28-PM-1.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__content">
+      <p class="eyebrow">Property Management · Melbourne</p>
+      <h1 id="hero-title" class="hero__title">Your investment deserves direct accountability.</h1>
+      <p class="hero__lead">Personal property management, proactive oversight and clear communication from someone who treats every decision as if the property were her own.</p>
+      <div class="hero__actions">
+        <a class="button button--solid" href="/rental-appraisal/">Request a rental appraisal</a>
+        <a class="button button--light" href="/switch-property-managers/">Thinking of switching?</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">A different standard</p>
+        <h2>More than rent collection.</h2>
+      </div>
+      <div class="statement__body">
+        <p>Good property management is the ongoing protection of rental performance, property condition, tenancy quality and owner confidence.</p>
+        <p>Sana Patel Real Estate is being rebuilt around one simple idea: rental providers should know who is responsible for their property, understand what is happening, and have a clear next step when something needs attention.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="journeys-title">
+    <div class="container-wide">
+      <p class="eyebrow">Start where you are</p>
+      <h2 id="journeys-title" style="font-size:var(--h2);max-width:14ch;margin-top:var(--space-2);">Three high-intent ways we can help.</h2>
+      <div class="grid journeys" style="margin-top:var(--space-4);">
+        <article class="journey-card">
+          <span class="journey-card__number">01</span>
+          <h3>Know what your property could rent for.</h3>
+          <p>Start with a practical rental appraisal and a clearer view of current rental positioning.</p>
+          <a href="/rental-appraisal/">Request an appraisal →</a>
+        </article>
+        <article class="journey-card">
+          <span class="journey-card__number">02</span>
+          <h3>Not getting enough from your current manager?</h3>
+          <p>Understand the switching process, what changes and what information Sana needs to make the transition orderly.</p>
+          <a href="/switch-property-managers/">Explore switching →</a>
+        </article>
+        <article class="journey-card">
+          <span class="journey-card__number">03</span>
+          <h3>Want a better property-management relationship?</h3>
+          <p>See how leasing, inspections, maintenance, arrears, renewals and communication fit into one accountable service.</p>
+          <a href="/rental-providers/">For rental providers →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section proof-band">
+    <div class="container proof-grid">
+      <div>
+        <p class="eyebrow">Service is the differentiator</p>
+        <h2>Built from a career spent looking after people.</h2>
+        <p style="margin-top:var(--space-3);max-width:38rem;color:rgba(255,255,255,.72);">Sana's background spans customer service, hospitality, aviation and residential property management. SP_REBIRTH turns that service discipline into a visible digital experience: clear expectations, useful communication and fewer dead ends.</p>
+      </div>
+      <div class="quote">
+        <p class="eyebrow">Verified reviews</p>
+        <blockquote>Client proof belongs inside the journey—not hidden on a separate page.</blockquote>
+        <footer>Trustindex / Google review integration will render only authenticated, attributable reviews. No fabricated testimonials.</footer>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">Your property · your next move</p>
+        <h2>Let's make the management of your investment feel clearer.</h2>
+        <p>Whether you are leasing a property, reviewing its rental position or considering a change of property manager, start with the conversation that matches your situation.</p>
+      </div>
+      <div class="cta-panel__actions">
+        <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
+        <a class="button" href="tel:+61416977990">Call Sana</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    .hero__video { display: none; }
+  }
+</style>
