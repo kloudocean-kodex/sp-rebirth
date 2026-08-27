@@ -109,7 +109,11 @@ describe('webhook consumer transport', () => {
     expect(result).toEqual({ ok: true, transport: 'webhook' });
     expect(fetcher).toHaveBeenCalledOnce();
 
-    const [destination, init] = fetcher.mock.calls[0];
+    const call = fetcher.mock.calls[0];
+    expect(call).toBeDefined();
+    if (!call) throw new Error('Expected webhook fetch to be called');
+
+    const [destination, init] = call;
     expect(destination.toString()).toBe('https://crm.example.test/intake');
     expect(init?.method).toBe('POST');
     expect(init?.headers).toMatchObject({
