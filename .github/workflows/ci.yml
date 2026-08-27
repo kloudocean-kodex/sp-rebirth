@@ -15,9 +15,9 @@ concurrency:
 
 jobs:
   build:
-    name: Tests, typecheck and production build
+    name: Tests, typecheck, build and browser QA
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
       - name: Checkout
@@ -41,3 +41,20 @@ jobs:
 
       - name: Production build
         run: npm run build
+
+      - name: Install Chromium for browser QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser, responsive and accessibility QA
+        run: npm run test:e2e
+
+      - name: Upload browser QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sp-rebirth-browser-qa-${{ github.run_number }}
+          path: |
+            test-results
+            playwright-report
+          if-no-files-found: ignore
+          retention-days: 7
