@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const reviewRoutes = [
   ['home', '/'],
@@ -9,7 +9,7 @@ const reviewRoutes = [
   ['about', '/about/'],
 ] as const;
 
-async function hydrateLazyMedia(page: Parameters<typeof test>[0] extends never ? never : any) {
+async function hydrateLazyMedia(page: Page) {
   await page.evaluate(async () => {
     await new Promise<void>((resolve) => {
       const step = Math.max(420, Math.round(window.innerHeight * 0.72));
