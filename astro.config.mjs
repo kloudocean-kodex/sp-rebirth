@@ -6,19 +6,12 @@ import { defineConfig } from 'astro/config';
 const projectId = process.env.PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.PUBLIC_SANITY_DATASET || 'production';
 
-if (!projectId) {
-  console.warn('[SP_REBIRTH] PUBLIC_SANITY_PROJECT_ID is not set. Configure Sanity before production builds.');
-}
+const integrations = [react()];
 
-export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL || 'https://www.sanapatel.com.au',
-  adapter: cloudflare({
-    session: false,
-    prerenderEnvironment: 'workerd',
-  }),
-  integrations: [
+if (projectId) {
+  integrations.unshift(
     sanity({
-      projectId: projectId || 'replace-me',
+      projectId,
       dataset,
       apiVersion: '2026-08-27',
       useCdn: true,
@@ -27,8 +20,18 @@ export default defineConfig({
         studioUrl: '/studio',
       },
     }),
-    react(),
-  ],
+  );
+} else {
+  console.warn('[SP_REBIRTH] Sanity is intentionally disabled until PUBLIC_SANITY_PROJECT_ID is configured.');
+}
+
+export default defineConfig({
+  site: process.env.PUBLIC_SITE_URL || 'https://www.sanapatel.com.au',
+  adapter: cloudflare({
+    session: false,
+    prerenderEnvironment: 'workerd',
+  }),
+  integrations,
   trailingSlash: 'always',
   compressHTML: true,
 });
