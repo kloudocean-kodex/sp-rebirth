@@ -76,7 +76,13 @@ test('thank-you acknowledges routing without fabricating downstream delivery or 
     });
   });
 
-  await page.goto('/thank-you/?type=rental_appraisal', { waitUntil: 'domcontentloaded' });
+  const response = await page.goto('/thank-you/?type=rental_appraisal', { waitUntil: 'domcontentloaded' });
+  expect(response).not.toBeNull();
+  const headers = response?.headers() ?? {};
+  expect(headers['cache-control']).toContain('no-store');
+  expect(headers['x-robots-tag']).toContain('noindex');
+  expect(headers['x-content-type-options']).toBe('nosniff');
+  expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");
 
   await expect(page.getByRole('heading', { name: /received securely/i })).toBeVisible();
   await expect(page.getByText(/being routed to Sana/i)).toBeVisible();

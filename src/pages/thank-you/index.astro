@@ -2,8 +2,13 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
+import { applyHtmlSecurityHeaders } from '@/config/http-security';
 
 export const prerender = false;
+
+applyHtmlSecurityHeaders(Astro.response.headers);
+Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow');
 
 const type = Astro.url.searchParams.get('type');
 type ThankYouContent = { title: string; body: string };
