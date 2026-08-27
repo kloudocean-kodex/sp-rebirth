@@ -1,0 +1,54 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+
+const title = 'For Renters Melbourne | Sana Patel Real Estate';
+const description = 'Information and contact options for renters and prospective renters dealing with Sana Patel Real Estate in Melbourne.';
+---
+<BaseLayout {title} {description} canonicalPath="/for-renters/">
+  <SiteHeader slot="header" />
+  <InnerHero
+    eyebrow="For Renters · Melbourne"
+    title="Renting should feel clear, respectful and well managed."
+    lead="Good property management matters to renters too. Clear communication, sensible maintenance coordination and a straightforward point of contact help create a better tenancy experience."
+    primaryLabel="Contact Sana"
+    primaryHref="/contact/"
+    image="https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-tenants-banner_2571182183.webp"
+  />
+
+  <section class="section">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">The renter journey</p>
+        <h2>Useful communication at the moments that matter.</h2>
+      </div>
+      <div class="statement__body">
+        <p>Sana Patel Real Estate's current service includes renter communication, tenancy administration, maintenance coordination and rent collection for managed properties.</p>
+        <p>This page will become the renter information hub for current processes, frequently asked questions and appropriate links once Sana's operating workflow and tenancy systems are confirmed for the new platform.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight renter-actions">
+    <div class="container-wide action-grid">
+      <article><span>01</span><h2>Looking for a rental?</h2><p>Contact Sana for current availability and the appropriate application path. SP_REBIRTH will not publish fake or stale property listings.</p><a href="/contact/">Ask about rentals →</a></article>
+      <article><span>02</span><h2>Already renting through Sana?</h2><p>For tenancy-specific questions or maintenance, use the contact method Sana has provided for your tenancy. If unsure, contact her directly.</p><a href="tel:+61416977990">Call Sana →</a></article>
+      <article><span>03</span><h2>Need general information?</h2><p>The new resources area will provide useful, reviewed renter information without presenting generic content as legal advice.</p><a href="/resources/">Browse resources →</a></article>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .renter-actions { background:var(--white); }
+  .action-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  article { min-height:20rem; padding:var(--space-3); border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+  article span { font-size:.72rem; opacity:.48; }
+  article h2 { margin-top:var(--space-3); font-size:clamp(1.8rem,2.8vw,2.8rem); }
+  article p { margin-top:var(--space-2); color:var(--ink-soft); }
+  article a { display:inline-block; margin-top:var(--space-3); font-size:.76rem; font-weight:750; letter-spacing:.08em; text-transform:uppercase; }
+  @media(max-width:800px){ .action-grid{grid-template-columns:1fr;} }
+</style>
