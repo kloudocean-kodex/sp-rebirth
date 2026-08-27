@@ -56,8 +56,15 @@ Her own desired website sequence is effectively a commercial funnel:
 - prompt maintenance
 - proactive approach
 - direct access to Sana
+- 24×7 direct access to Sana Patel
 
-One handwritten note says '24x7 direct access'. Treat this as **UNVERIFIED / REQUIRES SANA OPERATIONAL CONFIRMATION**. Do not publish a 24/7 availability promise unless Sana explicitly commits to it and the operating model can honour it.
+### Confirmed operating promise — 27 August 2026
+
+Sana has confirmed that she is willing to fulfil the handwritten **24×7 direct access to Sana Patel** promise. This is now a confirmed SP_REBIRTH service requirement rather than an unverified claim.
+
+Public wording should preserve an important operational distinction: **24×7 direct access means the rental provider has a direct path to Sana when something needs attention; it does not mean every repair, trade attendance, legal/process step or final resolution can be completed instantly at any hour.**
+
+The future operating model should investigate automation and AI-assisted triage, acknowledgement, prioritisation, context capture and escalation so that the promise remains responsive at scale without pretending automation is Sana. Human accountability stays with Sana; automation should support it.
 
 ## Headline territory from Sana
 
@@ -81,3 +88,5 @@ One shared profile-layout reference uses a large professional portrait, clear ro
 - Do not imply rent should always be increased at a particular interval.
 - Compliance content must link to current Victorian primary/authoritative sources and carry a review date.
 - Diagnostic funnels should create clarity, not fear.
+- Do not imply that AI or automation is Sana, a licensed professional or a human response when it is not.
+- For urgent renter safety or emergency situations, never rely solely on an AI/chat/web workflow; official emergency and urgent-repair pathways must remain clear.
