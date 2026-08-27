@@ -65,7 +65,7 @@ test('lead form start signal contains only the journey type', async ({ page }) =
   expect(JSON.stringify(leadStarted)).not.toContain('Test Visitor');
 });
 
-test('thank-you emits first-party delivery signal and does not call gtag', async ({ page }) => {
+test('thank-you acknowledges routing without fabricating downstream delivery or calling gtag', async ({ page }) => {
   await page.addInitScript(() => {
     Object.defineProperty(window, '__spGtagCalls', { value: [] as unknown[][], configurable: true });
     Object.defineProperty(window, 'gtag', {
@@ -78,10 +78,11 @@ test('thank-you emits first-party delivery signal and does not call gtag', async
 
   await page.goto('/thank-you/?type=rental_appraisal', { waitUntil: 'domcontentloaded' });
 
-  await expect.poll(async () => (await capturedEvents(page)).find((event) => event.name === 'lead_delivered')).toEqual({
-    name: 'lead_delivered',
-    formType: 'rental_appraisal',
-  });
+  await expect(page.getByRole('heading', { name: /received securely/i })).toBeVisible();
+  await expect(page.getByText(/being routed to Sana/i)).toBeVisible();
+
+  const events = await capturedEvents(page);
+  expect(events.find((event) => event.name === 'lead_delivered')).toBeUndefined();
 
   const gtagCalls = await page.evaluate(
     () => (window as Window & { __spGtagCalls?: unknown[][] }).__spGtagCalls ?? [],

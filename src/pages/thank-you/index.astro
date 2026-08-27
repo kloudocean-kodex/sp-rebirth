@@ -8,31 +8,30 @@ export const prerender = false;
 const type = Astro.url.searchParams.get('type');
 type ThankYouContent = { title: string; body: string };
 const generalContent: ThankYouContent = {
-  title: 'Thanks — your enquiry is with Sana.',
-  body: 'Your details were delivered successfully. Sana can now respond to the context you provided.',
+  title: 'Thanks — your enquiry has been received securely.',
+  body: 'Your details are being routed to Sana so she has the context you provided when she follows up.',
 };
 const labels: Record<string, ThankYouContent> = {
   rental_appraisal: {
-    title: 'Your rental appraisal request is with Sana.',
-    body: 'Sana has the details you submitted and can review the property context before responding.',
+    title: 'Your rental appraisal request has been received securely.',
+    body: 'Your property details are being routed to Sana so she can review the context before following up.',
   },
   switch_manager: {
-    title: 'Your switching enquiry is with Sana.',
-    body: 'Sana can review what you would like to improve and discuss the practical next step before any change is made.',
+    title: 'Your switching enquiry has been received securely.',
+    body: 'Your details are being routed to Sana so she has the context you provided when discussing the practical next step.',
   },
   general: generalContent,
 };
 const content: ThankYouContent = labels[type || ''] ?? generalContent;
-const deliveredType = type === 'rental_appraisal' || type === 'switch_manager' || type === 'general' ? type : 'general';
 ---
 <BaseLayout
   title="Thank You | Sana Patel Real Estate"
-  description="Your enquiry has been delivered to Sana Patel Real Estate."
+  description="Your enquiry has been received securely and is being routed to Sana Patel Real Estate."
   canonicalPath="/thank-you/"
   noindex={true}
 >
   <SiteHeader slot="header" />
-  <section class="thanks" data-thanks-form-type={deliveredType}>
+  <section class="thanks">
     <div class="container thanks__content">
       <p class="eyebrow">Enquiry received</p>
       <h1>{content.title}</h1>
@@ -45,19 +44,6 @@ const deliveredType = type === 'rental_appraisal' || type === 'switch_manager' |
   </section>
   <SiteFooter slot="footer" />
 </BaseLayout>
-
-<script>
-  import { emitGrowthEvent, type LeadJourney } from '@/lib/growth-events';
-
-  const container = document.querySelector<HTMLElement>('[data-thanks-form-type]');
-  const rawFormType = container?.dataset.thanksFormType;
-  const formType: LeadJourney =
-    rawFormType === 'rental_appraisal' || rawFormType === 'switch_manager' || rawFormType === 'general'
-      ? rawFormType
-      : 'general';
-
-  emitGrowthEvent({ name: 'lead_delivered', formType });
-</script>
 
 <style>
   .thanks { min-height:72svh; display:grid; align-items:center; padding-top:7rem; background:var(--paper); }
