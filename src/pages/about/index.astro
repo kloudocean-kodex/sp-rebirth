@@ -1,0 +1,81 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+
+const title = 'About Sana Patel | Melbourne Property Manager & Estate Agent';
+const description = 'Meet Sana Patel and the service philosophy behind Sana Patel Real Estate: direct accountability, clear communication and personal property management in Melbourne.';
+---
+<BaseLayout {title} {description} canonicalPath="/about/">
+  <SiteHeader slot="header" />
+  <InnerHero
+    eyebrow="About Sana"
+    title="Service standards shaped long before real estate."
+    lead="A career across customer service, hospitality, aviation and residential property management shaped Sana's belief that communication, ownership and follow-through are not extras—they are the service."
+    primaryLabel="Talk to Sana"
+    primaryHref="tel:+61416977990"
+    secondaryLabel="For rental providers"
+    secondaryHref="/rental-providers/"
+    image="https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pate_2570661269.webp"
+  />
+
+  <section class="section">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">The founder-led model</p>
+        <h2>Know who is accountable.</h2>
+      </div>
+      <div class="statement__body">
+        <p>Sana built her real-estate business around the part of property management clients feel most strongly: whether somebody is genuinely paying attention.</p>
+        <p>Her background includes more than a decade across service-focused roles and residential property management. That experience now informs a more personal model for Melbourne rental providers—one where communication is direct and the property is managed with context, not anonymity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight founder-grid-wrap">
+    <div class="container-wide founder-grid">
+      <figure>
+        <img src="https://www.sanapatel.com.au/wp-content/uploads/2025/07/sana-home.webp" alt="Sana Patel" width="1200" height="1500" loading="lazy" />
+      </figure>
+      <div class="founder-copy">
+        <p class="eyebrow">How Sana works</p>
+        <h2>Quietly thorough. Personally involved.</h2>
+        <div class="principles">
+          <article><h3>Accountability</h3><p>A clear point of responsibility rather than uncertainty about who owns the next step.</p></article>
+          <article><h3>Communication</h3><p>Useful updates at the moment they matter, not communication for the sake of activity.</p></article>
+          <article><h3>Care with judgement</h3><p>Looking after the property while making practical decisions around tenancy, maintenance and rental performance.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">See if the fit is right</p>
+        <h2>The first conversation should be useful.</h2>
+        <p>Tell Sana where your property is, what is happening now and what you would like to improve. There is no need to commit before understanding the approach.</p>
+      </div>
+      <div class="cta-panel__actions">
+        <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
+        <a class="button" href="/switch-property-managers/">Switch managers</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .founder-grid-wrap { background:var(--white); }
+  .founder-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:var(--space-5); align-items:center; }
+  figure { margin:0; }
+  figure img { width:100%; max-height:50rem; object-fit:cover; border-radius:var(--radius-md); box-shadow:var(--shadow-lift); }
+  .founder-copy h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:11ch; }
+  .principles { margin-top:var(--space-4); border-top:1px solid var(--line); }
+  .principles article { display:grid; grid-template-columns:.45fr 1fr; gap:var(--space-2); padding:1.4rem 0; border-bottom:1px solid var(--line); }
+  .principles h3 { font-size:1.5rem; }
+  .principles p { color:var(--ink-soft); }
+  @media(max-width:820px){ .founder-grid,.principles article{grid-template-columns:1fr;} }
+</style>
