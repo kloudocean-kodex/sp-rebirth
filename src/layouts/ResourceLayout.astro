@@ -37,7 +37,11 @@ const {
 ---
 <BaseLayout {title} {description} {canonicalPath} {noindex}>
   <SiteHeader slot="header" />
-  <InnerHero {eyebrow} title={heading} {lead} {image} />
+  {image ? (
+    <InnerHero {eyebrow} title={heading} {lead} image={image} />
+  ) : (
+    <InnerHero {eyebrow} title={heading} {lead} />
+  )}
 
   <section class="resource-meta">
     <div class="container resource-meta__inner">
