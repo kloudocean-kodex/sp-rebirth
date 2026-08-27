@@ -4,9 +4,30 @@ import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import InnerHero from '@/components/InnerHero.astro';
 import LeadForm from '@/components/LeadForm.astro';
+import FAQList from '@/components/FAQList.astro';
+import { SITE } from '@/config/site';
 
 const title = 'Rental Appraisal Melbourne | Sana Patel Real Estate';
 const description = 'Request a Melbourne rental appraisal with Sana Patel Real Estate. Start with your property, current situation and rental goals.';
+
+const faqs = [
+  {
+    question: 'Is a rental appraisal just an estimate of weekly rent?',
+    answer: 'A useful appraisal should provide context around the number. That includes the property itself, current competing rentals, presentation, likely renter demand, timing and any factors that may influence how the property competes in the market.',
+  },
+  {
+    question: 'Do I need to be ready to appoint a property manager?',
+    answer: 'No. The appraisal can begin as a practical conversation about the property and your goals. If property management is relevant, Sana can explain what the next step would look like without treating the appraisal as an automatic commitment.',
+  },
+  {
+    question: 'Can I request an appraisal if the property is already tenanted?',
+    answer: 'Yes. The current tenancy, lease timing and existing rental position form part of the context. Any formal rent change or tenancy action still needs to follow the applicable Victorian requirements and agreement circumstances.',
+  },
+  {
+    question: 'What information helps Sana assess the property?',
+    answer: 'The property address, suburb, current tenancy or vacancy status, key features, recent improvements and anything unusual about the current situation are useful starting points. Sana can ask for further information if needed.',
+  },
+];
 ---
 <BaseLayout {title} {description} canonicalPath="/rental-appraisal/">
   <SiteHeader slot="header" />
@@ -17,7 +38,7 @@ const description = 'Request a Melbourne rental appraisal with Sana Patel Real E
     primaryLabel="Start the appraisal"
     primaryHref="#appraisal-form"
     secondaryLabel="Call Sana"
-    secondaryHref="tel:+61416977990"
+    secondaryHref={`tel:${SITE.phone.e164}`}
     image="https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_1892310928.webp"
   />
 
@@ -37,10 +58,17 @@ const description = 'Request a Melbourne rental appraisal with Sana Patel Real E
   <section class="section section--tight appraisal-steps">
     <div class="container-wide step-grid">
       <article><span>01</span><h2>Tell us about the property</h2><p>Address, suburb and the current tenancy or vacancy situation.</p></article>
-      <article><span>02</span><h2>Market context</h2><p>Relevant competing rentals and the property's features are considered together.</p></article>
+      <article><span>02</span><h2>Understand the market context</h2><p>Relevant competing rentals and the property's features are considered together.</p></article>
       <article><span>03</span><h2>Talk through the next move</h2><p>Discuss rental positioning, timing and what management support would look like.</p></article>
     </div>
   </section>
+
+  <FAQList
+    eyebrow="Before you request it"
+    heading="An appraisal should leave you better informed."
+    intro="A clear appraisal process helps separate a useful rental strategy from an optimistic number with no context behind it."
+    items={faqs}
+  />
 
   <section class="section" id="appraisal-form">
     <div class="container">
@@ -55,8 +83,8 @@ const description = 'Request a Melbourne rental appraisal with Sana Patel Real E
   .appraisal-steps { background:var(--ink); color:var(--white); }
   .step-grid { display:grid; grid-template-columns:repeat(3,1fr); }
   .step-grid article { padding:var(--space-4); border:1px solid var(--line-light); }
-  .step-grid span { font-size:.72rem; letter-spacing:.12em; color:var(--accent-pale); }
+  .step-grid span { color:var(--accent-pale); font-size:.7rem; font-weight:700; letter-spacing:.06em; }
   .step-grid h2 { margin-top:var(--space-3); font-size:clamp(1.8rem,3vw,3rem); }
-  .step-grid p { margin-top:var(--space-2); color:rgba(255,255,255,.68); }
+  .step-grid p { margin-top:var(--space-2); color:rgba(255,255,255,.72); }
   @media(max-width:760px){ .step-grid{grid-template-columns:1fr;} }
 </style>
