@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /preview/
+Disallow: /thank-you/
+Disallow: /privacy/
+
+Sitemap: https://www.sanapatel.com.au/sitemap.xml
