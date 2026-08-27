@@ -37,12 +37,20 @@ function lead(): LeadPayload {
 }
 
 describe('lead delivery mode', () => {
-  it('uses webhook by default outside production', () => {
+  it('uses webhook by default only for explicitly identified staging', () => {
     expect(resolveLeadDeliveryMode({}, 'staging')).toBe('webhook');
   });
 
   it('allows staging to opt into Queue delivery', () => {
     expect(resolveLeadDeliveryMode({ LEAD_DELIVERY_MODE: 'queue' }, 'staging')).toBe('queue');
+  });
+
+  it('fails closed to Queue when deployment identity is missing', () => {
+    expect(resolveLeadDeliveryMode({ LEAD_DELIVERY_MODE: 'webhook' })).toBe('queue');
+  });
+
+  it('fails closed to Queue for an unrecognised deployment identity', () => {
+    expect(resolveLeadDeliveryMode({ LEAD_DELIVERY_MODE: 'webhook' }, 'preview')).toBe('queue');
   });
 
   it('forces Queue delivery in production even if webhook is requested', () => {

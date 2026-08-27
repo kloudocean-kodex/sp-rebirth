@@ -31,13 +31,14 @@ export type LeadDeliveryResult =
         | 'lead_delivery_failed';
     };
 
-export function resolveLeadDeliveryMode(
-  bindings: LeadDeliveryBindings,
-  deployEnv = 'staging',
-): LeadDeliveryMode {
-  // Production is intentionally queue-only. A forgotten runtime variable must not
-  // silently downgrade the 24×7 durability contract back to a synchronous webhook.
-  if (deployEnv === 'production') return 'queue';
+export function resolveLeadDeliveryMode(bindings: LeadDeliveryBindings, deployEnv?: string): LeadDeliveryMode {
+  const normalizedDeployEnv = deployEnv?.trim().toLowerCase();
+
+  // Synchronous webhook delivery is an explicit staging-only integration mode.
+  // Missing or unrecognised deployment identity fails closed to Queue so a
+  // production build cannot silently weaken durability because the public
+  // deployment marker was forgotten or misspelled.
+  if (normalizedDeployEnv !== 'staging') return 'queue';
 
   return bindings.LEAD_DELIVERY_MODE?.trim().toLowerCase() === 'queue' ? 'queue' : 'webhook';
 }
