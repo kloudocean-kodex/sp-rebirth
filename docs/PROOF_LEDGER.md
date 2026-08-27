@@ -2,6 +2,54 @@
 
 Purpose: separate verified proof from marketing language. Nothing in this file becomes a public claim automatically.
 
+## Engineering release evidence
+
+### Development checkpoint — 27 August 2026
+
+Status: **VERIFIED in GitHub CI; not production release approval.**
+
+Verified development SHA:
+- `69aeb76cd6942a73ee38825c8a4452d5759632f0`
+- commit: `fix: fail closed on unknown lead deploy env`
+
+Verified GitHub Actions run:
+- workflow: `SP_REBIRTH CI`
+- run number: `128`
+- run id: `33104234003`
+- result: `success`
+
+The run passed:
+- locked dependency installation
+- unit tests
+- strict Astro typecheck
+- production build
+- Wrangler deployment bundle dry-run with automatic provisioning and auto-create disabled
+- Chromium installation
+- desktop/mobile browser, responsive and accessibility QA
+- browser QA evidence upload
+
+Transport safety verified in source/tests at this checkpoint:
+- synchronous webhook delivery is permitted only when deployment identity is explicitly `staging`
+- missing, unrecognised or `production` deployment identity resolves to Queue mode
+- absent Queue binding fails closed rather than silently falling back to webhook
+- Queue send failure does not report lead acceptance
+- downstream webhook transport requires HTTPS, bearer authentication and stable lead-ID idempotency
+- Queue consumer acknowledges an individual message only after downstream acceptance and retries downstream failure with bounded backoff
+
+Still **NOT VERIFIED / NOT IMPLEMENTED** at this checkpoint:
+- authenticated Cloudflare account/resource inventory
+- real staging Worker deployment for this SHA
+- real staging Queue producer binding
+- real staging Queue consumer configuration
+- real staging Dead Letter Queue
+- forced retry exhaustion into the DLQ
+- DLQ replay/recovery proof
+- real downstream staging destination and idempotency proof
+- production Queue/DLQ resources
+- production domain/DNS cutover
+
+Do not describe CI bundling as staging runtime proof or production readiness.
+
 ## Current independent profile evidence
 
 ### realestate.com.au — Sana Patel agent profile

@@ -36,8 +36,9 @@ Do not configure `PUBLIC_DEPLOY_ENV=production` on a preview/staging Worker. Pub
 
 ### Staging before Queue provisioning
 
-The staging application may use the existing authenticated HTTPS webhook boundary while downstream CRM/notification integration is being proved:
+The staging application may use the existing authenticated HTTPS webhook boundary while downstream CRM/notification integration is being proved, but only when deployment identity is explicitly staging:
 
+- `PUBLIC_DEPLOY_ENV=staging`
 - `LEAD_DELIVERY_MODE=webhook`
 - `LEAD_DELIVERY_WEBHOOK_URL`
 - `LEAD_DELIVERY_TOKEN`
@@ -48,6 +49,7 @@ The form still fails closed when the downstream system cannot accept the lead.
 
 After the exact Cloudflare account, Queue and Dead Letter Queue names are verified, add the Queue producer/consumer bindings to `wrangler.jsonc`, then set:
 
+- `PUBLIC_DEPLOY_ENV=staging`
 - `LEAD_DELIVERY_MODE=queue`
 
 The lead endpoint returns success only after `LEAD_QUEUE.send()` resolves. The Queue consumer then forwards the same canonical lead envelope to the configured HTTPS downstream destination using the stable lead ID as the `Idempotency-Key` header.
@@ -59,11 +61,19 @@ Consumer behavior:
 - malformed/poison message -> acknowledge without forwarding and log identifiers only, never the message body
 - retry exhaustion -> Queue configuration must send the message to a verified DLQ before production relies on this path
 
-### Production
+### Production and unknown deployment identity
 
-Application code treats `PUBLIC_DEPLOY_ENV=production` as **Queue-only**, regardless of `LEAD_DELIVERY_MODE`. If the `LEAD_QUEUE` binding is absent, the form fails closed with a configuration error rather than silently reverting to synchronous webhook delivery.
+Synchronous webhook delivery is an **explicit staging-only** integration mode.
 
-This is intentional: the public 24×7 access promise must not depend on a single synchronous third-party handoff.
+Application code resolves all other deployment identities to **Queue-only**, including:
+
+- `PUBLIC_DEPLOY_ENV=production`
+- a missing `PUBLIC_DEPLOY_ENV`
+- an unrecognised or misspelled deployment identity
+
+This rule applies regardless of `LEAD_DELIVERY_MODE`. If the `LEAD_QUEUE` binding is absent, the form fails closed with a configuration error rather than silently reverting to synchronous webhook delivery.
+
+This is intentional: a forgotten or malformed deployment marker must not weaken the public 24×7 access promise into a single synchronous third-party handoff.
 
 ## Runtime variables, bindings and secrets
 
