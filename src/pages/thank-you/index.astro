@@ -21,6 +21,7 @@ const labels: Record<string, ThankYouContent> = {
   general: generalContent,
 };
 const content: ThankYouContent = labels[type || ''] ?? generalContent;
+const deliveredType = type === 'rental_appraisal' || type === 'switch_manager' || type === 'general' ? type : 'general';
 ---
 <BaseLayout
   title="Thank You | Sana Patel Real Estate"
@@ -29,7 +30,7 @@ const content: ThankYouContent = labels[type || ''] ?? generalContent;
   noindex={true}
 >
   <SiteHeader slot="header" />
-  <section class="thanks">
+  <section class="thanks" data-thanks-form-type={deliveredType}>
     <div class="container thanks__content">
       <p class="eyebrow">Enquiry received</p>
       <h1>{content.title}</h1>
@@ -43,11 +44,17 @@ const content: ThankYouContent = labels[type || ''] ?? generalContent;
   <SiteFooter slot="footer" />
 </BaseLayout>
 
-<script is:inline define:vars={{ type: type || 'general' }}>
-  window.dispatchEvent(new CustomEvent('sp:lead-delivered', { detail: { type } }));
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'generate_lead', { lead_type: type });
-  }
+<script>
+  import { emitGrowthEvent, type LeadJourney } from '@/lib/growth-events';
+
+  const container = document.querySelector<HTMLElement>('[data-thanks-form-type]');
+  const rawFormType = container?.dataset.thanksFormType;
+  const formType: LeadJourney =
+    rawFormType === 'rental_appraisal' || rawFormType === 'switch_manager' || rawFormType === 'general'
+      ? rawFormType
+      : 'general';
+
+  emitGrowthEvent({ name: 'lead_delivered', formType });
 </script>
 
 <style>
