@@ -1,0 +1,354 @@
+---
+const questions = [
+  {
+    name: 'rent_strategy',
+    category: 'rent',
+    title: 'Rental position',
+    question: 'Has the property’s rental position been deliberately reviewed against the market recently?',
+    answers: [
+      ['3', 'Yes — and I understand the evidence and decision.'],
+      ['2', 'It has been discussed, but the reasoning was not especially clear.'],
+      ['1', 'I do not think a proper review has happened recently.'],
+      ['0', 'I am not sure.'],
+    ],
+  },
+  {
+    name: 'inspections',
+    category: 'protection',
+    title: 'Inspections',
+    question: 'Do routine inspection reports help you understand the property’s condition and what needs follow-up?',
+    answers: [
+      ['3', 'Yes — useful detail, photos and clear follow-up where needed.'],
+      ['2', 'Usually, although the reports can be fairly basic.'],
+      ['1', 'The reporting is inconsistent or does not tell me much.'],
+      ['0', 'I am not sure / I cannot remember the last useful report.'],
+    ],
+  },
+  {
+    name: 'maintenance',
+    category: 'protection',
+    title: 'Maintenance',
+    question: 'How visible is the handling of maintenance from first report through to resolution?',
+    answers: [
+      ['3', 'Clear — I understand the issue, decision, cost and when it is closed.'],
+      ['2', 'Usually handled, but I sometimes need to chase or clarify.'],
+      ['1', 'There are unresolved or repeated issues I am concerned about.'],
+      ['0', 'I am not sure what is outstanding.'],
+    ],
+  },
+  {
+    name: 'communication',
+    category: 'visibility',
+    title: 'Communication',
+    question: 'When something important changes, do you know who is responsible and what happens next?',
+    answers: [
+      ['3', 'Yes — responsibility and next steps are normally clear.'],
+      ['2', 'Usually, although I sometimes need to follow up.'],
+      ['1', 'I often chase updates or get passed between people.'],
+      ['0', 'I am frequently unsure.'],
+    ],
+  },
+  {
+    name: 'lease_planning',
+    category: 'rent',
+    title: 'Tenancy planning',
+    question: 'Are lease, renewal or vacancy decisions planned ahead rather than becoming last-minute conversations?',
+    answers: [
+      ['3', 'Yes — I know the next decision point and the plan.'],
+      ['2', 'I know roughly when it is coming, but the plan is not very clear.'],
+      ['1', 'These decisions tend to feel reactive or last-minute.'],
+      ['0', 'I am not sure what the next tenancy decision is.'],
+    ],
+  },
+  {
+    name: 'safety_records',
+    category: 'protection',
+    title: 'Safety records',
+    question: 'Can you readily find the latest relevant gas, electrical and smoke-alarm safety records or outstanding recommendations?',
+    answers: [
+      ['3', 'Yes — I know where the relevant records and dates are.'],
+      ['2', 'I can find some of them, but not the full picture.'],
+      ['1', 'I know checks occur, but I do not have clear record visibility.'],
+      ['0', 'I am not sure.'],
+    ],
+  },
+  {
+    name: 'statements',
+    category: 'visibility',
+    title: 'Statements & rent',
+    question: 'Are rental statements and disbursements clear and arriving when you expect them?',
+    answers: [
+      ['3', 'Yes — they are clear, timely and easy to reconcile.'],
+      ['2', 'Mostly, with occasional questions or delays.'],
+      ['1', 'I have recurring questions, delays or gaps in visibility.'],
+      ['0', 'I am not sure.'],
+    ],
+  },
+] as const;
+---
+<div class="visibility-check" id="visibility-check">
+  <div class="visibility-check__intro">
+    <p class="eyebrow">Private · ungated · about 90 seconds</p>
+    <h2>How visible is the management of your investment?</h2>
+    <p>Answer seven practical questions. Your result is calculated in your browser and is not sent anywhere. You do not need to provide your name, phone number, email or property address to see it.</p>
+  </div>
+
+  <form class="visibility-check__form" data-visibility-check>
+    <ol class="check-questions">
+      {questions.map((item, index) => (
+        <li class="check-question" data-question={item.name} data-category={item.category}>
+          <fieldset>
+            <legend>
+              <span class="check-question__number">{String(index + 1).padStart(2, '0')}</span>
+              <span>
+                <small>{item.title}</small>
+                {item.question}
+              </span>
+            </legend>
+            <div class="check-options">
+              {item.answers.map(([value, label]) => (
+                <label>
+                  <input type="radio" name={item.name} value={value} required />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </li>
+      ))}
+    </ol>
+
+    <div class="check-submit">
+      <button class="button button--solid" type="submit">Show my visibility result</button>
+      <p>This self-check is educational only. It is not a rental valuation, compliance audit, legal advice or a judgement about another agency.</p>
+    </div>
+  </form>
+
+  <section class="check-result" hidden data-check-result aria-live="polite" tabindex="-1">
+    <div class="check-result__score">
+      <p class="eyebrow">Your self-assessment</p>
+      <strong data-overall-score>—</strong>
+      <span>Management Visibility Score</span>
+    </div>
+
+    <div class="check-result__summary">
+      <p class="check-result__band" data-result-band></p>
+      <h2 data-result-title></h2>
+      <p data-result-copy></p>
+    </div>
+
+    <div class="check-result__dimensions">
+      <article>
+        <div><span>Rent strategy</span><strong data-rent-score>—</strong></div>
+        <progress max="100" value="0" data-rent-progress>0%</progress>
+      </article>
+      <article>
+        <div><span>Property protection</span><strong data-protection-score>—</strong></div>
+        <progress max="100" value="0" data-protection-progress>0%</progress>
+      </article>
+      <article>
+        <div><span>Management visibility</span><strong data-visibility-score>—</strong></div>
+        <progress max="100" value="0" data-visibility-progress>0%</progress>
+      </article>
+    </div>
+
+    <div class="check-result__review">
+      <p class="eyebrow">Areas worth reviewing</p>
+      <ul data-review-items></ul>
+    </div>
+
+    <div class="check-result__actions">
+      <div>
+        <p class="eyebrow">What next?</p>
+        <h3>Use the result however you choose.</h3>
+        <p>If you want a second opinion, Sana can look at the property itself, the rental position and the management context before suggesting a next step.</p>
+      </div>
+      <div class="check-result__buttons">
+        <a class="button button--solid" href="/rental-appraisal/">Request a rental appraisal</a>
+        <a class="button" href="/switch-property-managers/">Talk about switching</a>
+        <button class="button" type="button" data-print-result>Print / save result</button>
+      </div>
+    </div>
+  </section>
+
+  <aside class="check-source-note">
+    <p><strong>Safety-record note:</strong> Victorian requirements vary by property and rental agreement. This check only asks whether you have visibility of relevant records; it does not determine compliance. See <a href="https://www.consumer.vic.gov.au/housing/renting/repairs-alterations-safety-and-pets/gas-electrical-and-water-safety-standards/rental-providers-gas-and-electrical-safety">Consumer Affairs Victoria</a> for current gas/electrical guidance and <a href="https://www.consumer.vic.gov.au/housing/renting/repairs-alterations-safety-and-pets/keeping-the-property-safe/smoke-alarms-and-fire-safety">smoke-alarm guidance</a>.</p>
+  </aside>
+</div>
+
+<script>
+  const check = document.querySelector('[data-visibility-check]');
+
+  if (check instanceof HTMLFormElement) {
+    const advice = {
+      rent_strategy: 'Ask when the rental position was last reviewed against current market evidence and what decision came from that review.',
+      inspections: 'Look for inspection reporting that shows property condition, photos, follow-up items and what happened next — not just a completed checklist.',
+      maintenance: 'Identify unresolved or recurring maintenance and whether each item has a clear owner, decision and closure point.',
+      communication: 'Clarify who is accountable for the property and what response standard you should expect when something important changes.',
+      lease_planning: 'Confirm the next tenancy decision point and whether renewal, re-leasing or vacancy planning is happening early enough to make a considered decision.',
+      safety_records: 'Locate the latest relevant safety-check records and any outstanding recommendations; use current Victorian guidance for the requirements that apply to your property.',
+      statements: 'Review whether rent statements and disbursements are timely, understandable and easy to reconcile without repeated follow-up.',
+    } as const;
+
+    const result = document.querySelector('[data-check-result]');
+
+    const setScore = (selector: string, score: number) => {
+      const value = document.querySelector(selector);
+      if (value) value.textContent = `${score}%`;
+    };
+
+    const setProgress = (selector: string, score: number) => {
+      const progress = document.querySelector(selector);
+      if (progress instanceof HTMLProgressElement) {
+        progress.value = score;
+        progress.textContent = `${score}%`;
+      }
+    };
+
+    check.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const data = new FormData(check);
+      const category = { rent: 0, protection: 0, visibility: 0 };
+      const categoryMax = { rent: 6, protection: 9, visibility: 6 };
+      let total = 0;
+      const lowVisibility: Array<keyof typeof advice> = [];
+
+      for (const question of document.querySelectorAll<HTMLElement>('[data-question]')) {
+        const name = question.dataset.question as keyof typeof advice | undefined;
+        const group = question.dataset.category as keyof typeof category | undefined;
+        if (!name || !group) continue;
+
+        const raw = data.get(name);
+        const score = typeof raw === 'string' ? Number.parseInt(raw, 10) : 0;
+        const safeScore = Number.isFinite(score) ? Math.max(0, Math.min(3, score)) : 0;
+        total += safeScore;
+        category[group] += safeScore;
+        if (safeScore <= 1) lowVisibility.push(name);
+      }
+
+      const overall = Math.round((total / 21) * 100);
+      const rent = Math.round((category.rent / categoryMax.rent) * 100);
+      const protection = Math.round((category.protection / categoryMax.protection) * 100);
+      const visibility = Math.round((category.visibility / categoryMax.visibility) * 100);
+
+      setScore('[data-overall-score]', overall);
+      setScore('[data-rent-score]', rent);
+      setScore('[data-protection-score]', protection);
+      setScore('[data-visibility-score]', visibility);
+      setProgress('[data-rent-progress]', rent);
+      setProgress('[data-protection-progress]', protection);
+      setProgress('[data-visibility-progress]', visibility);
+
+      const band = document.querySelector('[data-result-band]');
+      const title = document.querySelector('[data-result-title]');
+      const copy = document.querySelector('[data-result-copy]');
+
+      if (overall >= 80) {
+        if (band) band.textContent = 'Strong visibility';
+        if (title) title.textContent = 'You appear to have a clear view of how the property is being managed.';
+        if (copy) copy.textContent = 'That does not mean every decision will always be easy, but the core management picture appears visible. A periodic second opinion on rental position can still be useful.';
+      } else if (overall >= 60) {
+        if (band) band.textContent = 'Some gaps worth reviewing';
+        if (title) title.textContent = 'The management picture is visible in places, but not consistently.';
+        if (copy) copy.textContent = 'A few areas may deserve a more deliberate conversation so you understand the property’s position, outstanding decisions and who owns the next step.';
+      } else {
+        if (band) band.textContent = 'Limited visibility';
+        if (title) title.textContent = 'You may not have enough clarity to judge how actively the property is being managed.';
+        if (copy) copy.textContent = 'The useful next step is not automatically to switch agencies. It is to get clearer evidence around the areas you cannot currently see and decide from there.';
+      }
+
+      const list = document.querySelector('[data-review-items]');
+      if (list) {
+        list.replaceChildren();
+        const items = lowVisibility.length ? lowVisibility.slice(0, 4) : (['rent_strategy', 'inspections'] as const);
+        for (const key of items) {
+          const li = document.createElement('li');
+          li.textContent = advice[key];
+          list.appendChild(li);
+        }
+      }
+
+      if (result instanceof HTMLElement) {
+        result.hidden = false;
+        result.focus({ preventScroll: true });
+        result.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  const printButton = document.querySelector('[data-print-result]');
+  if (printButton instanceof HTMLButtonElement) {
+    printButton.addEventListener('click', () => window.print());
+  }
+</script>
+
+<style>
+  .visibility-check { display:grid; gap:var(--space-4); }
+  .visibility-check__intro { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:var(--space-4); align-items:end; }
+  .visibility-check__intro h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:13ch; }
+  .visibility-check__intro > p:last-child { max-width:42rem; color:var(--ink-soft); font-size:var(--body-lg); }
+  .visibility-check__form { display:grid; gap:var(--space-3); }
+  .check-questions { display:grid; gap:1rem; margin:0; padding:0; list-style:none; counter-reset:item; }
+  .check-question { border:1px solid var(--line); background:rgba(255,253,248,.76); box-shadow:var(--shadow-soft); }
+  .check-question fieldset { margin:0; padding:clamp(1.25rem,3vw,2rem); border:0; }
+  .check-question legend { width:100%; display:grid; grid-template-columns:auto 1fr; gap:1rem; align-items:start; padding:0; font-family:var(--font-display); font-size:clamp(1.35rem,2vw,1.9rem); font-weight:430; line-height:1.08; }
+  .check-question legend small { display:block; margin-bottom:.42rem; font-family:var(--font-sans); color:var(--accent); font-size:.68rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
+  .check-question__number { min-width:2.6rem; color:var(--accent); font-family:var(--font-sans); font-size:.72rem; font-weight:700; letter-spacing:.12em; padding-top:.35rem; }
+  .check-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem; margin-top:1.35rem; }
+  .check-options label { position:relative; display:grid; grid-template-columns:auto 1fr; gap:.75rem; align-items:start; padding:1rem; border:1px solid var(--line); background:var(--white); cursor:pointer; transition:border-color 160ms ease, background-color 160ms ease, transform 160ms ease; }
+  .check-options label:hover { border-color:var(--accent); transform:translateY(-1px); }
+  .check-options input { width:1.05rem; height:1.05rem; margin-top:.22rem; accent-color:var(--accent); }
+  .check-options label:has(input:checked) { border-color:var(--accent); background:var(--paper-deep); }
+  .check-options span { color:var(--ink-soft); font-size:.92rem; line-height:1.5; }
+  .check-submit { display:grid; grid-template-columns:auto minmax(0,1fr); gap:var(--space-2); align-items:center; padding-top:var(--space-2); }
+  .check-submit p { max-width:48rem; color:var(--ink-soft); font-size:.82rem; }
+  .check-result { scroll-margin-top:2rem; display:grid; grid-template-columns:.55fr 1.45fr; gap:var(--space-4); padding:clamp(1.5rem,4vw,3rem); background:var(--ink); color:var(--white); border-top:2px solid var(--accent-pale); }
+  .check-result[hidden] { display:none; }
+  .check-result__score { display:flex; flex-direction:column; justify-content:center; padding-right:var(--space-3); border-right:1px solid var(--line-light); }
+  .check-result__score strong { display:block; margin-top:var(--space-2); font-family:var(--font-display); font-size:clamp(4rem,9vw,8rem); font-weight:350; line-height:.85; color:var(--accent-pale); }
+  .check-result__score > span { margin-top:.7rem; color:rgba(255,255,255,.65); font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; }
+  .check-result__summary { align-self:center; }
+  .check-result__band { color:var(--accent-pale); font-size:.72rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; }
+  .check-result__summary h2 { margin-top:.65rem; font-size:var(--h2); max-width:15ch; }
+  .check-result__summary > p:last-child { margin-top:var(--space-2); max-width:44rem; color:rgba(255,255,255,.72); }
+  .check-result__dimensions { grid-column:1/-1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; padding-top:var(--space-3); border-top:1px solid var(--line-light); }
+  .check-result__dimensions article { padding:1rem 0; }
+  .check-result__dimensions article > div { display:flex; justify-content:space-between; gap:1rem; font-size:.82rem; }
+  .check-result__dimensions strong { color:var(--accent-pale); }
+  progress { width:100%; height:.35rem; margin-top:.8rem; border:0; border-radius:0; appearance:none; }
+  progress::-webkit-progress-bar { background:rgba(255,255,255,.12); }
+  progress::-webkit-progress-value { background:var(--accent-pale); }
+  progress::-moz-progress-bar { background:var(--accent-pale); }
+  .check-result__review { grid-column:1/-1; padding-top:var(--space-3); border-top:1px solid var(--line-light); }
+  .check-result__review ul { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem 2rem; margin:var(--space-2) 0 0; padding:0; list-style:none; }
+  .check-result__review li { position:relative; padding-left:1.25rem; color:rgba(255,255,255,.72); }
+  .check-result__review li::before { content:'•'; position:absolute; left:0; color:var(--accent-pale); }
+  .check-result__actions { grid-column:1/-1; display:grid; grid-template-columns:1fr auto; gap:var(--space-4); align-items:end; padding-top:var(--space-3); border-top:1px solid var(--line-light); }
+  .check-result__actions h3 { margin-top:.5rem; font-size:var(--h3); }
+  .check-result__actions p:last-child { margin-top:.7rem; max-width:42rem; color:rgba(255,255,255,.68); }
+  .check-result__buttons { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:.65rem; }
+  .check-result__buttons .button:not(.button--solid) { color:var(--white); }
+  .check-source-note { padding:1rem 1.15rem; border-left:2px solid var(--accent); background:rgba(255,253,248,.65); color:var(--ink-soft); font-size:.82rem; }
+  .check-source-note a { color:var(--accent-deep); }
+
+  @media(max-width:850px){
+    .visibility-check__intro,.check-result,.check-result__actions{grid-template-columns:1fr;}
+    .check-result__score{padding-right:0;padding-bottom:var(--space-3);border-right:0;border-bottom:1px solid var(--line-light);}
+    .check-result__dimensions,.check-result__review,.check-result__actions{grid-column:1;}
+    .check-result__buttons{justify-content:flex-start;}
+  }
+  @media(max-width:680px){
+    .check-options,.check-result__dimensions,.check-result__review ul{grid-template-columns:1fr;}
+    .check-submit{grid-template-columns:1fr;}
+    .check-submit .button{width:100%;}
+    .check-question legend{grid-template-columns:1fr;gap:.35rem;}
+  }
+  @media print{
+    .site-header,.site-footer,.visibility-check__form,.check-source-note,.check-result__buttons{display:none!important;}
+    .check-result{display:grid!important;color:#111;background:#fff;border:1px solid #bbb;}
+    .check-result__score,.check-result__dimensions,.check-result__review,.check-result__actions{border-color:#ccc;}
+    .check-result__score strong,.check-result__band,.check-result__dimensions strong{color:#6d532c;}
+    .check-result__summary>p:last-child,.check-result__review li,.check-result__actions p:last-child{color:#333;}
+  }
+</style>
