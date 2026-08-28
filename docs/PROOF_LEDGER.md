@@ -4,6 +4,92 @@ Purpose: separate verified proof from marketing language. Nothing in this file b
 
 ## Engineering release evidence
 
+### Continuation hardening and live WordPress inventory — 28 August 2026
+
+Status: **VERIFIED for the audited source/CI checkpoint and connected WordPress inventory; not isolated Cloudflare staging certification and not production release approval.**
+
+Verified code checkpoint:
+
+- branch: `audit/mobile-nav-contrast-fix`
+- verified code head: `7c347d7bbe1aa8ad8808945eaae0570294091614`
+- pull request: `#2`, open and unmerged, targeting `development`
+- `main` remained `a5df5c9e1f96f8f7c9390af5c86172e3eeaf51ff` and `development` remained `35b56039d3de6ad07435eb1dd2cad3c17b042b62` at the repository-governance read
+- documentation follow-ups after the verified code checkpoint may have a newer branch SHA; do not treat that as code verification until its exact workflow finishes
+
+Verified GitHub Actions run for code head `7c347d7bbe1aa8ad8808945eaae0570294091614`:
+
+- workflow: `SP_REBIRTH CI`
+- run number: `185`
+- run id: `33187586105`
+- result: `success`
+- dependency vulnerability audit: passed
+- unit tests: 48 passed
+- Astro typecheck: passed
+- ESLint: passed
+- Prettier format check: passed
+- Astro production build: passed
+- Sanity Studio build: passed
+- Wrangler deployment dry-run: passed
+- Chromium desktop/mobile functional, responsive and accessibility QA: passed
+- desktop Firefox functional/accessibility QA: passed
+- desktop WebKit functional/accessibility QA: passed
+- mobile WebKit functional/accessibility QA: passed
+- Playwright retries remain disabled
+
+Source and CI hardening added in this continuation:
+
+- GitHub Actions are pinned to immutable commit SHAs rather than mutable action tags
+- CI now runs `npm audit --audit-level=low`; the verified run reported no advisory gate failure
+- the CI format gate remains strict but prints the formatter-generated diff on failure so formatting defects can be fixed without guessing or weakening the gate
+- lead intake now fails closed when the browser `Origin` header is missing and still requires exact same-origin equality
+- HTML security headers now include host-scoped HSTS (`max-age=31536000`) without asserting `includeSubDomains` or preload before broader DNS ownership is proven
+- first-touch landing/referrer and explicit UTM attribution persist for the browser session only and continue across internal navigation
+- attribution URLs are sanitised on both browser capture and lead normalisation: only HTTP(S) URLs are accepted and credentials, query strings and fragments are removed
+- contact fields are not written to the session-attribution record and attribution failure never blocks the lead journey
+- the lead privacy-notice version advanced to `2026-08-28`; `2026-08-27` remains recognised at the Queue-consumer boundary so previously accepted legitimate messages are not poisoned by the notice revision
+
+Verified production WordPress inventory from read-only connected CMS checks:
+
+- production front page is WordPress page ID `10` and resolves to `/`
+- permalink structure is `/%postname%/`
+- seven published pages exist: `/`, `/about/`, `/lease/`, `/contact/`, `/for-rental-providers/`, `/for-renters/` and `/sale/`
+- no published WordPress posts exist
+- the production media library contains 112 attachment records
+- all 11 WordPress upload assets referenced by the Astro launch surface were found as production media attachments
+- the only changed currently published WordPress page path, `/for-rental-providers/`, is covered by the committed 301 redirect to `/rental-providers/`
+- no WordPress content, media, theme, plugin, setting or DNS state was changed during the inventory
+
+Fresh content-source verification:
+
+- current Consumer Affairs Victoria guidance still supports the resource-page statements that rental minimum standards apply at advertising from 25 November 2025
+- current guidance still states routine inspections may occur only after the first three months and at most every six months, with seven days' written notice for a general inspection
+- current guidance still lists 13 October 2026 changes for minimum-standards compliance records and two-year gas/electrical safety checks
+- current guidance still states new rental minimum energy-efficiency standards begin in phases from 1 March 2027 with standard-specific triggers
+
+Repository-governance findings — release blocking:
+
+- the repository remains public while its own README says unpublished client discovery/strategy must not be committed while public
+- source-derived discovery/strategy documents are present in the repository, so current visibility is not consistent with that stated policy
+- repository rulesets are empty
+- GitHub branch inventory reports `protected: false` for `main`, `development` and the audit branch
+- pull request `#2` has no requested individual or team reviewer at this checkpoint
+- the available integration cannot read or mutate the required repository visibility, secret-scanning/push-protection or branch-protection settings; those controls must be verified/remediated through an authorised GitHub administration path before release
+
+Current external-system blockers and unknowns:
+
+- no authenticated Cloudflare control-plane tool is available in this audit session; current Worker deployments, routes/custom domains, Builds configuration, Queue/DLQ resources, Turnstile, WAF/rate limiting, secrets/bindings, DNS and observability therefore remain **BLOCKED / UNVERIFIED NOW**
+- earlier account-backed Cloudflare statements later in this ledger are historical checkpoints only until re-verified against the current account
+- no isolated staging Queue producer/consumer, DLQ, forced retry exhaustion, replay/recovery or end-to-end downstream idempotency proof has been established for the current code
+- genuine Sanity project/origin/content configuration is not available to this audit; the Studio/schema/preview architecture builds successfully but live CMS content integration must not be fabricated
+- final CRM/email/downstream destination, analytics vendor, Search Console/GBP integration, verified review source, retention rules, overseas-processing position, consent approach and privacy/legal approval remain unverified
+- the live WordPress media dependency is verified, but final asset migration/preservation, restorable backup proof and rollback drill remain incomplete
+- a Semrush project/SEO report could not be retrieved because the connected subscription did not have sufficient API units; no Semrush metrics are claimed from this wave
+
+Release rule for this checkpoint:
+
+- do not merge to `main`, alter production DNS/domain routing, retire WordPress, remove the legacy uploads path, create guessed Cloudflare resources, or promote production based on this CI result
+- the next release-critical wave is authenticated GitHub governance remediation plus authenticated Cloudflare staging inventory/provisioning and failure-path UAT
+
 ### Development checkpoint — 28 August 2026
 
 Status: **VERIFIED in GitHub CI; not staging runtime proof and not production release approval.**
@@ -157,7 +243,7 @@ Mobile form interaction follow-up and current code head:
 - focused local mobile WebKit run with retries disabled: 10 passed.
 - local full matrix from this host: 157 passed, 14 intentional skips, and 39 Firefox launch failures (`spawn UNKNOWN`) because the Windows audit host lacks a compatible Firefox side-by-side runtime. Those 39 are an environment limitation, not application passes; the remote Linux Firefox job below is the authoritative Firefox result.
 - workflow run `33179981844`: **success** for all quality/build/dry-run and four-browser jobs at the current head. Primary Chromium: 83 passed/1 intentional skip; desktop Firefox: 35 passed/7 intentional skips; desktop WebKit: 35 passed/7 intentional skips; mobile WebKit: 36 passed/6 intentional skips. The run log contains no Playwright retry, flaky-test or failed-test marker.
-- final verification run `33180662561` for documentation head `36acdbfa6be5bbec406e2b6dad15b4128b7f5961`: **success** for the same four jobs and gates. Primary Chromium: 83 passed/1 intentional skip; desktop Firefox: 35 passed/7 intentional skips; desktop WebKit: 35 passed/7 intentional skips; mobile WebKit: 36 passed/6 intentional skips. No retry-like marker, flaky test or failed test was present in any job log.
+- final verification run `33180662561` for documentation head `36acdbfa6be5bbec406e2b6dad15b4128b7f5961`: **success** for the same four jobs and gates. Primary Chromium: 83 passed/1 intentional skip; desktop Firefox 35 passed/7 intentional skips, desktop WebKit 35 passed/7 intentional skips, mobile WebKit 36 passed/6 intentional skips. No retry-like marker, flaky test or failed test was present in any job log.
 - the pull request remains open and unmerged; no production promotion, DNS change or WordPress cutover was performed.
 
 Earlier GitHub Actions verification for code head `de618820aa536376635d4e8d23048d11034d8281`:
