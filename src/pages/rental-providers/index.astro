@@ -7,35 +7,43 @@ import FAQList from '@/components/FAQList.astro';
 import { SITE } from '@/config/site';
 
 const title = 'Rental Provider Property Management Melbourne | Sana Patel';
-const description = 'Personalised Melbourne property management for rental providers: rental appraisals, leasing, inspections, maintenance, arrears, renewals and 24×7 direct access to Sana Patel.';
+const description =
+  'Personalised Melbourne property management for rental providers: rental appraisals, leasing, inspections, maintenance, arrears, renewals and 24×7 direct access to Sana Patel.';
 
 const faqs = [
   {
     question: 'What does direct accountability mean in practice?',
-    answer: 'It means having a clear point of responsibility for the property and useful communication when something changes. The goal is not more messages. It is knowing what happened, why it matters, what is recommended and what happens next.',
+    answer:
+      'It means having a clear point of responsibility for the property and useful communication when something changes. The goal is not more messages. It is knowing what happened, why it matters, what is recommended and what happens next.',
   },
   {
     question: 'Do rental providers have 24×7 direct access to Sana?',
-    answer: 'Yes. Sana’s founder-led model includes 24×7 direct access when something needs attention. That means there is a direct path to Sana rather than the issue disappearing into a general queue. It does not mean every repair, contractor attendance, tenancy process or final resolution can be completed instantly at any hour; the practical next step still depends on the issue and the people or requirements involved.',
+    answer:
+      'Yes. Sana’s founder-led model includes 24×7 direct access when something needs attention. That means there is a direct path to Sana rather than the issue disappearing into a general queue. It does not mean every repair, contractor attendance, tenancy process or final resolution can be completed instantly at any hour; the practical next step still depends on the issue and the people or requirements involved.',
   },
   {
     question: 'Can Sana take over management if the property is already tenanted?',
-    answer: 'A management transfer can be considered while a property is tenanted, but the current management authority, notice requirements, tenancy documents and handover process should be reviewed before any action is taken. Sana can start by understanding the existing arrangement.',
+    answer:
+      'A management transfer can be considered while a property is tenanted, but the current management authority, notice requirements, tenancy documents and handover process should be reviewed before any action is taken. Sana can start by understanding the existing arrangement.',
   },
   {
     question: 'How is a rental appraisal approached?',
-    answer: 'A useful appraisal considers the property, current competing rentals, presentation, likely renter demand and timing. It should help establish a defensible rental position rather than simply produce the highest possible headline figure.',
+    answer:
+      'A useful appraisal considers the property, current competing rentals, presentation, likely renter demand and timing. It should help establish a defensible rental position rather than simply produce the highest possible headline figure.',
   },
   {
     question: 'How are maintenance issues handled?',
-    answer: 'The aim is clear triage, owner communication and coordination with appropriate trades or service providers. The right response depends on the issue, urgency, tenancy context and any applicable Victorian requirements.',
+    answer:
+      'The aim is clear triage, owner communication and coordination with appropriate trades or service providers. The right response depends on the issue, urgency, tenancy context and any applicable Victorian requirements.',
   },
   {
     question: 'Does property management remove every compliance risk?',
-    answer: 'No property manager can responsibly promise that. Requirements change and some matters require qualified trades or specialist advice. A stronger standard is a documented, proactive process for identifying issues, coordinating appropriate action and keeping the owner informed.',
+    answer:
+      'No property manager can responsibly promise that. Requirements change and some matters require qualified trades or specialist advice. A stronger standard is a documented, proactive process for identifying issues, coordinating appropriate action and keeping the owner informed.',
   },
 ];
 ---
+
 <BaseLayout {title} {description} canonicalPath="/rental-providers/">
   <SiteHeader slot="header" />
   <InnerHero
@@ -56,8 +64,15 @@ const faqs = [
         <h2>Management should be visible.</h2>
       </div>
       <div class="statement__body">
-        <p>A monthly rent payment is only one small part of property management. The real work is in the decisions between payments: rental positioning, renter selection, inspections, maintenance, arrears, renewals and communication.</p>
-        <p>Sana's approach is designed around direct accountability. You know who is managing your property, you can reach Sana directly 24×7, and you know what the next step is when something needs attention.</p>
+        <p>
+          A monthly rent payment is only one small part of property management. The real work is in the decisions
+          between payments: rental positioning, renter selection, inspections, maintenance, arrears, renewals and
+          communication.
+        </p>
+        <p>
+          Sana's approach is designed around direct accountability. You know who is managing your property, you can
+          reach Sana directly 24×7, and you know what the next step is when something needs attention.
+        </p>
       </div>
     </div>
   </section>
@@ -67,12 +82,37 @@ const faqs = [
       <p class="eyebrow">Complete property management</p>
       <h2 class="section-title">One accountable service across the tenancy lifecycle.</h2>
       <div class="service-grid">
-        <article><span>01</span><h3>Rental appraisal & rent reviews</h3><p>Evidence-led rental positioning and periodic review of how the property sits in the current market.</p></article>
-        <article><span>02</span><h3>Leasing & renter selection</h3><p>Marketing, enquiry management, applications, screening and a deliberate selection process.</p></article>
-        <article><span>03</span><h3>Routine inspections</h3><p>Structured inspections with useful reporting so property condition is not reduced to a checkbox.</p></article>
-        <article><span>04</span><h3>Maintenance coordination</h3><p>Clear issue triage, owner communication and coordination with appropriate trades and providers.</p></article>
-        <article><span>05</span><h3>Rent collection & arrears</h3><p>Consistent monitoring, timely communication and escalation within the applicable Victorian tenancy framework.</p></article>
-        <article><span>06</span><h3>Lease renewals</h3><p>Forward planning around expiry, rental position, tenancy history and the owner's objectives.</p></article>
+        <article>
+          <span>01</span><h3>Rental appraisal & rent reviews</h3><p>
+            Evidence-led rental positioning and periodic review of how the property sits in the current market.
+          </p>
+        </article>
+        <article>
+          <span>02</span><h3>Leasing & renter selection</h3><p>
+            Marketing, enquiry management, applications, screening and a deliberate selection process.
+          </p>
+        </article>
+        <article>
+          <span>03</span><h3>Routine inspections</h3><p>
+            Structured inspections with useful reporting so property condition is not reduced to a checkbox.
+          </p>
+        </article>
+        <article>
+          <span>04</span><h3>Maintenance coordination</h3><p>
+            Clear issue triage, owner communication and coordination with appropriate trades and providers.
+          </p>
+        </article>
+        <article>
+          <span>05</span><h3>Rent collection & arrears</h3><p>
+            Consistent monitoring, timely communication and escalation within the applicable Victorian tenancy
+            framework.
+          </p>
+        </article>
+        <article>
+          <span>06</span><h3>Lease renewals</h3><p>
+            Forward planning around expiry, rental position, tenancy history and the owner's objectives.
+          </p>
+        </article>
       </div>
     </div>
   </section>
@@ -82,11 +122,17 @@ const faqs = [
       <div>
         <p class="eyebrow">24×7 direct access</p>
         <h2>One accountable relationship. Available when it matters.</h2>
-        <p class="soft-copy">Rental providers can reach Sana directly 24×7 when something needs attention. The promise is access, acknowledgement and accountability—not pretending every repair, trade attendance or tenancy process can be completed instantly at any hour.</p>
+        <p class="soft-copy">
+          Rental providers can reach Sana directly 24×7 when something needs attention. The promise is access,
+          acknowledgement and accountability—not pretending every repair, trade attendance or tenancy process can be
+          completed instantly at any hour.
+        </p>
       </div>
       <div class="quote">
         <p class="eyebrow">A simple service standard</p>
-        <blockquote>If something changes, you should understand what happened, why it matters and what happens next.</blockquote>
+        <blockquote>
+          If something changes, you should understand what happened, why it matters and what happens next.
+        </blockquote>
         <footer>Direct access · clear context · proactive follow-through</footer>
       </div>
     </div>
@@ -103,7 +149,10 @@ const faqs = [
       <div>
         <p class="eyebrow">Getting started</p>
         <h2>Let's talk about your investment.</h2>
-        <p>Tell Sana about the property, its current situation and what you would like to improve. The first step should help both sides understand whether the fit is right.</p>
+        <p>
+          Tell Sana about the property, its current situation and what you would like to improve. The first step should
+          help both sides understand whether the fit is right.
+        </p>
       </div>
       <div class="cta-panel__actions">
         <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
@@ -116,14 +165,56 @@ const faqs = [
 </BaseLayout>
 
 <style>
-  .section-title { font-size:var(--h2); max-width:14ch; margin-top:var(--space-2); }
-  .service-section { background:var(--white); }
-  .service-grid { margin-top:var(--space-4); display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--line); border-left:1px solid var(--line); }
-  .service-grid article { min-height:17rem; padding:var(--space-3); border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
-  .service-grid span { color:var(--accent); font-size:.7rem; font-weight:700; letter-spacing:.06em; }
-  .service-grid h3 { margin-top:var(--space-3); font-size:var(--h3); max-width:12ch; }
-  .service-grid p { margin-top:var(--space-2); color:var(--ink-soft); max-width:31ch; }
-  .soft-copy { margin-top:var(--space-3); max-width:38rem; color:rgba(255,255,255,.76); }
-  @media(max-width:900px){ .service-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:620px){ .service-grid{grid-template-columns:1fr;} }
+  .section-title {
+    font-size: var(--h2);
+    max-width: 14ch;
+    margin-top: var(--space-2);
+  }
+  .service-section {
+    background: var(--white);
+  }
+  .service-grid {
+    margin-top: var(--space-4);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .service-grid article {
+    min-height: 17rem;
+    padding: var(--space-3);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .service-grid span {
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .service-grid h3 {
+    margin-top: var(--space-3);
+    font-size: var(--h3);
+    max-width: 12ch;
+  }
+  .service-grid p {
+    margin-top: var(--space-2);
+    color: var(--ink-soft);
+    max-width: 31ch;
+  }
+  .soft-copy {
+    margin-top: var(--space-3);
+    max-width: 38rem;
+    color: rgba(255, 255, 255, 0.76);
+  }
+  @media (max-width: 900px) {
+    .service-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 620px) {
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

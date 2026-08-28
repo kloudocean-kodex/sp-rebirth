@@ -6,7 +6,8 @@ import CredentialStrip from '@/components/CredentialStrip.astro';
 import { SITE } from '@/config/site';
 
 const title = 'Property Management Melbourne | Sana Patel Real Estate';
-const description = 'Founder-led Melbourne property management with 24×7 direct access to Sana Patel, proactive oversight, clear communication and evidence-led rental decisions.';
+const description =
+  'Founder-led Melbourne property management with 24×7 direct access to Sana Patel, proactive oversight, clear communication and evidence-led rental decisions.';
 const heroImage = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226.webp';
 
 const schema = [
@@ -39,22 +40,19 @@ const credentials = [
   { label: 'Service area', value: 'Melbourne · Victoria' },
 ];
 ---
+
 <BaseLayout {title} {description} canonicalPath="/" {schema}>
   <SiteHeader slot="header" />
 
   <section class="hero" aria-labelledby="hero-title">
-    <img
-      class="hero__media hero__poster"
-      src={heroImage}
-      alt=""
-      width="1920"
-      height="1080"
-      fetchpriority="high"
-    />
+    <img class="hero__media hero__poster" src={heroImage} alt="" width="1920" height="1080" fetchpriority="high" />
     <div class="hero__content">
       <p class="eyebrow">Property Management · Melbourne</p>
       <h1 id="hero-title" class="hero__title">Your property should never be a mystery.</h1>
-      <p class="hero__lead">24×7 direct access to Sana Patel, proactive oversight and clear communication around the decisions that shape your investment.</p>
+      <p class="hero__lead">
+        24×7 direct access to Sana Patel, proactive oversight and clear communication around the decisions that shape
+        your investment.
+      </p>
       <div class="hero__actions">
         <a class="button button--solid" href="/rental-appraisal/">Request a rental appraisal</a>
         <a class="button button--light" href="/switch-property-managers/">Thinking of switching?</a>
@@ -71,8 +69,14 @@ const credentials = [
         <h2>More than rent collection.</h2>
       </div>
       <div class="statement__body">
-        <p>Good property management is the ongoing care of rental performance, property condition, tenancy quality and owner confidence.</p>
-        <p>Sana Patel Real Estate is built around a simple owner experience: know who is responsible, know what changed, understand why it matters and know what happens next.</p>
+        <p>
+          Good property management is the ongoing care of rental performance, property condition, tenancy quality and
+          owner confidence.
+        </p>
+        <p>
+          Sana Patel Real Estate is built around a simple owner experience: know who is responsible, know what changed,
+          understand why it matters and know what happens next.
+        </p>
       </div>
     </div>
   </section>
@@ -80,18 +84,26 @@ const credentials = [
   <section class="section section--tight journey-section" aria-labelledby="journeys-title">
     <div class="container-wide">
       <p class="eyebrow">Start where you are</p>
-      <h2 id="journeys-title" class="journey-title">You do not have to be ready to switch before getting something useful.</h2>
+      <h2 id="journeys-title" class="journey-title">
+        You do not have to be ready to switch before getting something useful.
+      </h2>
       <div class="grid journeys">
         <article class="journey-card journey-card--featured">
           <span class="journey-card__number">01 · Just checking</span>
           <h3>How visible is the management of your investment?</h3>
-          <p>Take the free 90-second Property Management Visibility Check. See your result immediately—no name, email, phone or property address required first.</p>
+          <p>
+            Take the free 90-second Property Management Visibility Check. See your result immediately—no name, email,
+            phone or property address required first.
+          </p>
           <a href="/property-management-visibility-check/">Take the 90-second check →</a>
         </article>
         <article class="journey-card">
           <span class="journey-card__number">02 · Reviewing rent</span>
           <h3>Is the evidence ready for your next rental decision?</h3>
-          <p>Use the private 90-second Rental Position Check to see whether current market evidence, property context and timing are strong enough before anyone anchors you to a weekly figure.</p>
+          <p>
+            Use the private 90-second Rental Position Check to see whether current market evidence, property context and
+            timing are strong enough before anyone anchors you to a weekly figure.
+          </p>
           <a href="/rental-position-check/">Check my rental position →</a>
         </article>
         <article class="journey-card">
@@ -110,7 +122,11 @@ const credentials = [
       <div>
         <p class="eyebrow">24×7 direct access</p>
         <h2>Founder-led should mean reachable.</h2>
-        <p class="proof-copy">Sana's service model includes 24×7 direct access when something needs attention. The promise is a direct line of accountability and a responsive next step—not the fiction that every trade, repair or tenancy process can be completed instantly at any hour.</p>
+        <p class="proof-copy">
+          Sana's service model includes 24×7 direct access when something needs attention. The promise is a direct line
+          of accountability and a responsive next step—not the fiction that every trade, repair or tenancy process can
+          be completed instantly at any hour.
+        </p>
       </div>
       <div class="quote">
         <p class="eyebrow">What direct accountability means</p>
@@ -125,7 +141,10 @@ const credentials = [
       <div>
         <p class="eyebrow">Your property · your next move</p>
         <h2>Let's make the management of your investment feel clearer.</h2>
-        <p>Whether you are leasing a property, reviewing its rental position or considering a change of property manager, start with the conversation that matches your situation.</p>
+        <p>
+          Whether you are leasing a property, reviewing its rental position or considering a change of property manager,
+          start with the conversation that matches your situation.
+        </p>
       </div>
       <div class="cta-panel__actions">
         <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
@@ -138,15 +157,51 @@ const credentials = [
 </BaseLayout>
 
 <style>
-  .hero__poster { object-position:center; }
-  .journey-section { background:var(--white); }
-  .journey-title { font-size:var(--h2); max-width:18ch; margin-top:var(--space-2); }
-  .journeys { margin-top:var(--space-4); }
-  .journey-card--featured { background:var(--paper-deep); border-color:var(--accent); box-shadow:0 1.1rem 3rem rgba(34,31,27,.08); }
-  .journey-card.journey-card--featured > .journey-card__number { color:var(--accent-deep); opacity:1; }
-  .journey-more { margin-top:var(--space-3); text-align:right; }
-  .journey-more a { font-size:.76rem; font-weight:750; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; }
-  .journey-more a:hover { color:var(--accent-deep); }
-  .proof-copy { margin-top:var(--space-3); max-width:39rem; color:rgba(255,255,255,.76); }
-  @media(max-width:700px){ .journey-more{text-align:left;} }
+  .hero__poster {
+    object-position: center;
+  }
+  .journey-section {
+    background: var(--white);
+  }
+  .journey-title {
+    font-size: var(--h2);
+    max-width: 18ch;
+    margin-top: var(--space-2);
+  }
+  .journeys {
+    margin-top: var(--space-4);
+  }
+  .journey-card--featured {
+    background: var(--paper-deep);
+    border-color: var(--accent);
+    box-shadow: 0 1.1rem 3rem rgba(34, 31, 27, 0.08);
+  }
+  .journey-card.journey-card--featured > .journey-card__number {
+    color: var(--accent-deep);
+    opacity: 1;
+  }
+  .journey-more {
+    margin-top: var(--space-3);
+    text-align: right;
+  }
+  .journey-more a {
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .journey-more a:hover {
+    color: var(--accent-deep);
+  }
+  .proof-copy {
+    margin-top: var(--space-3);
+    max-width: 39rem;
+    color: rgba(255, 255, 255, 0.76);
+  }
+  @media (max-width: 700px) {
+    .journey-more {
+      text-align: left;
+    }
+  }
 </style>

@@ -39,13 +39,13 @@ test('Visibility Check emits lifecycle signals without answers, scores or contac
   }
   await page.getByRole('button', { name: 'Show my visibility result' }).click();
 
-  await expect.poll(async () => (await capturedEvents(page)).map((event) => event.name)).toEqual(
-    expect.arrayContaining(['visibility_check_started', 'visibility_check_completed']),
-  );
+  await expect
+    .poll(async () => (await capturedEvents(page)).map((event) => event.name))
+    .toEqual(expect.arrayContaining(['visibility_check_started', 'visibility_check_completed']));
 
   const events = await capturedEvents(page);
-  const visibilityEvents = events.filter((event) =>
-    event.name === 'visibility_check_started' || event.name === 'visibility_check_completed',
+  const visibilityEvents = events.filter(
+    (event) => event.name === 'visibility_check_started' || event.name === 'visibility_check_completed',
   );
 
   for (const event of visibilityEvents) {
@@ -61,10 +61,12 @@ test('lead form start signal contains only the journey type', async ({ page }) =
   await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
   await page.locator('input[name="full_name"]').fill('Test Visitor');
 
-  await expect.poll(async () => (await capturedEvents(page)).find((event) => event.name === 'lead_started')).toEqual({
-    name: 'lead_started',
-    formType: 'general',
-  });
+  await expect
+    .poll(async () => (await capturedEvents(page)).find((event) => event.name === 'lead_started'))
+    .toEqual({
+      name: 'lead_started',
+      formType: 'general',
+    });
 
   const leadStarted = (await capturedEvents(page)).find((event) => event.name === 'lead_started');
   expect(Object.keys(leadStarted ?? {}).sort()).toEqual(['formType', 'name']);
@@ -143,8 +145,6 @@ test('thank-you acknowledges routing without fabricating downstream delivery or 
   const events = await capturedEvents(page);
   expect(events.find((event) => event.name === 'lead_delivered')).toBeUndefined();
 
-  const gtagCalls = await page.evaluate(
-    () => (window as Window & { __spGtagCalls?: unknown[][] }).__spGtagCalls ?? [],
-  );
+  const gtagCalls = await page.evaluate(() => (window as Window & { __spGtagCalls?: unknown[][] }).__spGtagCalls ?? []);
   expect(gtagCalls).toEqual([]);
 });

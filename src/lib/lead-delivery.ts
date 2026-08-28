@@ -1,9 +1,4 @@
-import {
-  LEAD_LIMITS,
-  emailLooksValid,
-  isKnownLeadPrivacyNoticeVersion,
-  type LeadPayload,
-} from './leads';
+import { LEAD_LIMITS, emailLooksValid, isKnownLeadPrivacyNoticeVersion, type LeadPayload } from './leads';
 
 export type LeadDeliveryMode = 'queue' | 'webhook';
 

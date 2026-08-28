@@ -6,8 +6,8 @@
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
   "observability": {
-    "enabled": true
-  }
+    "enabled": true,
+  },
 
   // Queue producer/consumer bindings are intentionally added only after the
   // staging Queue and DLQ names are verified in the connected Cloudflare account.

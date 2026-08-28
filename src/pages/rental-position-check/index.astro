@@ -6,8 +6,10 @@ import InnerHero from '@/components/InnerHero.astro';
 import RentalPositionCheck from '@/components/RentalPositionCheck.astro';
 
 const title = 'Rental Position Check Melbourne | Sana Patel Real Estate';
-const description = 'A free private 90-second check for Melbourne rental providers. See whether you have the current market evidence, property context and timing clarity needed for a defensible rental decision.';
+const description =
+  'A free private 90-second check for Melbourne rental providers. See whether you have the current market evidence, property context and timing clarity needed for a defensible rental decision.';
 ---
+
 <BaseLayout {title} {description} canonicalPath="/rental-position-check/">
   <SiteHeader slot="header" />
 
@@ -34,8 +36,14 @@ const description = 'A free private 90-second check for Melbourne rental provide
         <h2>A number is not a strategy.</h2>
       </div>
       <div class="statement__body">
-        <p>Rental decisions are stronger when current comparable evidence, the property’s actual condition and features, renter demand, timing and the owner’s priorities are considered together.</p>
-        <p>This check is intentionally ungated. It helps you identify what evidence is already clear and what should be gathered before you rely on any property-specific rental opinion.</p>
+        <p>
+          Rental decisions are stronger when current comparable evidence, the property’s actual condition and features,
+          renter demand, timing and the owner’s priorities are considered together.
+        </p>
+        <p>
+          This check is intentionally ungated. It helps you identify what evidence is already clear and what should be
+          gathered before you rely on any property-specific rental opinion.
+        </p>
       </div>
     </div>
   </section>
@@ -45,7 +53,10 @@ const description = 'A free private 90-second check for Melbourne rental provide
       <div>
         <p class="eyebrow">Ready for property-specific evidence?</p>
         <h2>Move from a readiness check to a real appraisal.</h2>
-        <p>Sana can assess the property itself, current competing rentals, presentation, likely renter demand and timing, then explain the evidence behind the recommended rental position.</p>
+        <p>
+          Sana can assess the property itself, current competing rentals, presentation, likely renter demand and timing,
+          then explain the evidence behind the recommended rental position.
+        </p>
       </div>
       <div class="cta-panel__actions">
         <a class="button button--solid" href="/rental-appraisal/">Request an appraisal</a>
@@ -58,5 +69,7 @@ const description = 'A free private 90-second check for Melbourne rental provide
 </BaseLayout>
 
 <style>
-  .position-principle { background:var(--white); }
+  .position-principle {
+    background: var(--white);
+  }
 </style>

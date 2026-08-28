@@ -29,6 +29,7 @@ const labels: Record<string, ThankYouContent> = {
 };
 const content: ThankYouContent = labels[type || ''] ?? generalContent;
 ---
+
 <BaseLayout
   title="Thank You | Sana Patel Real Estate"
   description="Your enquiry has been received securely and is being routed to Sana Patel Real Estate."
@@ -51,9 +52,32 @@ const content: ThankYouContent = labels[type || ''] ?? generalContent;
 </BaseLayout>
 
 <style>
-  .thanks { min-height:72svh; display:grid; align-items:center; padding-top:7rem; background:var(--paper); }
-  .thanks__content { max-width:60rem; padding-block:var(--space-6); }
-  h1 { margin-top:var(--space-2); max-width:12ch; font-size:var(--h1); }
-  .thanks__content > p:last-of-type { margin-top:var(--space-3); max-width:40rem; color:var(--ink-soft); font-size:var(--body-lg); }
-  .thanks__actions { margin-top:var(--space-4); display:flex; flex-wrap:wrap; gap:.8rem; }
+  .thanks {
+    min-height: 72svh;
+    display: grid;
+    align-items: center;
+    padding-top: 7rem;
+    background: var(--paper);
+  }
+  .thanks__content {
+    max-width: 60rem;
+    padding-block: var(--space-6);
+  }
+  h1 {
+    margin-top: var(--space-2);
+    max-width: 12ch;
+    font-size: var(--h1);
+  }
+  .thanks__content > p:last-of-type {
+    margin-top: var(--space-3);
+    max-width: 40rem;
+    color: var(--ink-soft);
+    font-size: var(--body-lg);
+  }
+  .thanks__actions {
+    margin-top: var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
 </style>

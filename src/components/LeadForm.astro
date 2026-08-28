@@ -18,11 +18,14 @@ const {
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
 ---
+
 <div class="lead-form-shell">
   <div class="lead-form-intro">
     <p class="eyebrow">Private enquiry</p>
     <h2>{heading}</h2>
-    <p>Enough information to make the first conversation useful—without turning the form into an application process.</p>
+    <p>
+      Enough information to make the first conversation useful—without turning the form into an application process.
+    </p>
   </div>
 
   <form class="lead-form" method="post" action="/api/leads" data-lead-form data-form-type={type}>
@@ -56,25 +59,33 @@ const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
       <input name="email" type="email" autocomplete="email" maxlength="180" required />
     </label>
 
-    {type !== 'general' && (
-      <div class="field-grid field-grid--two">
-        <label>
-          <span>Property address <small>(optional at this stage)</small></span>
-          <input name="property_address" type="text" autocomplete="street-address" maxlength="240" />
-        </label>
-        <label>
-          <span>Suburb</span>
-          <input name="suburb" type="text" autocomplete="address-level2" maxlength="120" required />
-        </label>
-      </div>
-    )}
+    {
+      type !== 'general' && (
+        <div class="field-grid field-grid--two">
+          <label>
+            <span>
+              Property address <small>(optional at this stage)</small>
+            </span>
+            <input name="property_address" type="text" autocomplete="street-address" maxlength="240" />
+          </label>
+          <label>
+            <span>Suburb</span>
+            <input name="suburb" type="text" autocomplete="address-level2" maxlength="120" required />
+          </label>
+        </div>
+      )
+    }
 
-    {showCurrentManager && (
-      <label>
-        <span>Current property manager / agency <small>(optional)</small></span>
-        <input name="current_manager" type="text" maxlength="180" />
-      </label>
-    )}
+    {
+      showCurrentManager && (
+        <label>
+          <span>
+            Current property manager / agency <small>(optional)</small>
+          </span>
+          <input name="current_manager" type="text" maxlength="180" />
+        </label>
+      )
+    }
 
     <div class="field-grid field-grid--two">
       <label>
@@ -109,29 +120,38 @@ const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
 
     <div class="collection-notice" role="note">
       <strong>About your information</strong>
-      <p>Submitting this form asks Sana Patel Real Estate to contact you about this enquiry. We collect the details above plus limited page, referral and campaign information so Sana can respond and understand how genuine enquiries reach the website. This form does not subscribe you to marketing. Website security, hosting and the final lead/email providers may process the information as described in the <a href="/privacy/">privacy notice</a>.</p>
+      <p>
+        Submitting this form asks Sana Patel Real Estate to contact you about this enquiry. We collect the details above
+        plus limited page, referral and campaign information so Sana can respond and understand how genuine enquiries
+        reach the website. This form does not subscribe you to marketing. Website security, hosting and the final
+        lead/email providers may process the information as described in the <a href="/privacy/">privacy notice</a>.
+      </p>
     </div>
 
-    {turnstileSiteKey ? (
-      <div
-        class="cf-turnstile"
-        data-sitekey={turnstileSiteKey}
-        data-action={type}
-        data-theme="light"
-        data-size="flexible"
-        data-refresh-expired="auto"
-        data-refresh-timeout="auto"
-      ></div>
-    ) : (
-      <p class="configuration-note" role="note">Staging configuration pending: Cloudflare Turnstile site key.</p>
-    )}
+    {
+      turnstileSiteKey ? (
+        <div
+          class="cf-turnstile"
+          data-sitekey={turnstileSiteKey}
+          data-action={type}
+          data-theme="light"
+          data-size="flexible"
+          data-refresh-expired="auto"
+          data-refresh-timeout="auto"
+        />
+      ) : (
+        <p class="configuration-note" role="note">
+          Staging configuration pending: Cloudflare Turnstile site key.
+        </p>
+      )
+    }
 
     <button class="button button--solid" type="submit">{submitLabel}</button>
     <p class="form-status" aria-live="polite" data-form-status></p>
   </form>
 </div>
 
-{turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+{turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />}
 
 <script>
   import { emitGrowthEvent, type LeadJourney } from '@/lib/growth-events';
@@ -194,7 +214,9 @@ const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
         window.location.assign(`/thank-you/?type=${encodeURIComponent(formType)}`);
       } catch {
         emitGrowthEvent({ name: 'lead_failed', formType });
-        if (status) status.textContent = 'We could not safely deliver your enquiry. Please call Sana on 0416 977 990 or try again.';
+        if (status)
+          status.textContent =
+            'We could not safely deliver your enquiry. Please call Sana on 0416 977 990 or try again.';
 
         const widget = form.querySelector('.cf-turnstile');
         const turnstile = (window as Window & { turnstile?: TurnstileApi }).turnstile;
@@ -208,26 +230,127 @@ const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
 </script>
 
 <style>
-  .lead-form-shell { display:grid; grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr); gap:var(--space-5); align-items:start; }
-  .lead-form-intro h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:10ch; }
-  .lead-form-intro > p:last-child { margin-top:var(--space-2); color:var(--ink-soft); max-width:28rem; }
-  .lead-form { display:grid; gap:1.15rem; padding:clamp(1.4rem,3vw,2.5rem); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--white); box-shadow:var(--shadow-soft); }
-  .field-grid { display:grid; gap:1rem; }
-  .field-grid--two { grid-template-columns:1fr 1fr; }
-  label { display:grid; gap:.48rem; }
-  label > span { font-size:.74rem; font-weight:700; letter-spacing:.045em; text-transform:uppercase; }
-  label small { font-weight:500; opacity:.66; text-transform:none; letter-spacing:0; }
-  input, select, textarea { width:100%; border:1px solid rgba(23,23,19,.25); border-radius:var(--radius-sm); background:#fff; color:var(--ink); padding:.85rem .95rem; box-shadow:none; }
-  input, select { min-height:3.25rem; }
-  textarea { resize:vertical; min-height:9rem; }
-  input:focus, select:focus, textarea:focus { border-color:var(--accent-deep); outline:3px solid rgba(109,83,44,.16); outline-offset:1px; }
-  .collection-notice { padding:1rem 1.05rem; border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--ink-soft); font-size:.82rem; }
-  .collection-notice strong { color:var(--ink); font-size:.76rem; letter-spacing:.04em; text-transform:uppercase; }
-  .collection-notice p { margin-top:.35rem; }
-  .collection-notice a { color:var(--accent-deep); font-weight:650; }
-  .configuration-note { padding:.8rem 1rem; border-left:3px solid var(--accent); background:var(--paper); font-size:.82rem; color:var(--ink-soft); }
-  .form-status { min-height:1.5rem; color:var(--danger); font-size:.86rem; }
-  .hp { position:absolute !important; left:-10000px !important; width:1px !important; height:1px !important; overflow:hidden !important; }
-  button:disabled { opacity:.58; cursor:wait; }
-  @media(max-width:850px){ .lead-form-shell,.field-grid--two{grid-template-columns:1fr;} }
+  .lead-form-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+  .lead-form-intro h2 {
+    margin-top: var(--space-2);
+    font-size: var(--h2);
+    max-width: 10ch;
+  }
+  .lead-form-intro > p:last-child {
+    margin-top: var(--space-2);
+    color: var(--ink-soft);
+    max-width: 28rem;
+  }
+  .lead-form {
+    display: grid;
+    gap: 1.15rem;
+    padding: clamp(1.4rem, 3vw, 2.5rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--shadow-soft);
+  }
+  .field-grid {
+    display: grid;
+    gap: 1rem;
+  }
+  .field-grid--two {
+    grid-template-columns: 1fr 1fr;
+  }
+  label {
+    display: grid;
+    gap: 0.48rem;
+  }
+  label > span {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+  }
+  label small {
+    font-weight: 500;
+    opacity: 0.66;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid rgba(23, 23, 19, 0.25);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    color: var(--ink);
+    padding: 0.85rem 0.95rem;
+    box-shadow: none;
+  }
+  input,
+  select {
+    min-height: 3.25rem;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 9rem;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--accent-deep);
+    outline: 3px solid rgba(109, 83, 44, 0.16);
+    outline-offset: 1px;
+  }
+  .collection-notice {
+    padding: 1rem 1.05rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+  }
+  .collection-notice strong {
+    color: var(--ink);
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .collection-notice p {
+    margin-top: 0.35rem;
+  }
+  .collection-notice a {
+    color: var(--accent-deep);
+    font-weight: 650;
+  }
+  .configuration-note {
+    padding: 0.8rem 1rem;
+    border-left: 3px solid var(--accent);
+    background: var(--paper);
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .form-status {
+    min-height: 1.5rem;
+    color: var(--danger);
+    font-size: 0.86rem;
+  }
+  .hp {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
+  button:disabled {
+    opacity: 0.58;
+    cursor: wait;
+  }
+  @media (max-width: 850px) {
+    .lead-form-shell,
+    .field-grid--two {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

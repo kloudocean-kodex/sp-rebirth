@@ -21,9 +21,7 @@ export const GET: APIRoute = ({ site }) => {
   }
 
   const origin = site ?? new URL(SITE.url);
-  const urls = INDEXED_PATHS.map(
-    (path) => `<url><loc>${new URL(path, origin).toString()}</loc></url>`,
-  ).join('');
+  const urls = INDEXED_PATHS.map((path) => `<url><loc>${new URL(path, origin).toString()}</loc></url>`).join('');
 
   const body =
     `<?xml version="1.0" encoding="UTF-8"?>` +
