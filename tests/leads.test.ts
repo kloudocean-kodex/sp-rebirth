@@ -9,6 +9,7 @@ import {
   parseLeadFormType,
   readFormDataWithinLimit,
   requestOriginAllowed,
+  sanitizeAttributionUrl,
   supportedLeadContentType,
   validateLead,
 } from '../src/lib/leads';
@@ -44,6 +45,14 @@ describe('lead normalization', () => {
     expect(lead.fullName).toBe('Sana Example');
     expect(lead.email).toBe('sana@example.com');
     expect(lead.privacyNoticeVersion).toBe(CURRENT_LEAD_PRIVACY_NOTICE_VERSION);
+  });
+
+  it('strips query strings, fragments and embedded credentials from attribution URLs', () => {
+    expect(sanitizeAttributionUrl('https://user:secret@example.test/path/?email=private%40example.test#section')).toBe(
+      'https://example.test/path/',
+    );
+    expect(sanitizeAttributionUrl('javascript:alert(1)')).toBe('');
+    expect(sanitizeAttributionUrl('not a url')).toBe('');
   });
 });
 
