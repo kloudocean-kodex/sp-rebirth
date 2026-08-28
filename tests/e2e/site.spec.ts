@@ -12,6 +12,10 @@ const publicRoutes = [
   '/for-renters/',
   '/sale/',
   '/contact/',
+  '/resources/',
+  '/resources/victoria-rental-minimum-standards/',
+  '/resources/routine-inspections-victoria/',
+  '/resources/changing-property-managers-victoria/',
   '/privacy/',
 ] as const;
 
@@ -53,6 +57,8 @@ test('homepage hero uses the static premium media contract', async ({ page }) =>
   const heroPoster = page.locator('.hero__poster');
   await expect(heroPoster).toBeVisible();
   await expect(heroPoster).toHaveAttribute('src', /home-interior_413970226\.webp$/);
+  await expect(heroPoster).toHaveAttribute('srcset', /home-interior_413970226-768x432\.webp 768w/);
+  await expect(heroPoster).toHaveAttribute('sizes', '100vw');
   await expect(page.locator('.hero__video')).toHaveCount(0);
 });
 
