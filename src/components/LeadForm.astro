@@ -183,7 +183,12 @@ const privacyNoticeVersion = '2026-08-27';
           throw new Error(result?.error || 'submission_failed');
         }
 
-        emitGrowthEvent({ name: 'lead_accepted', formType });
+        // The honeypot intentionally returns a success-like 202 without a lead ID.
+        // Count only the API's real durable-acceptance contract (201 + lead ID) as
+        // lead_accepted so decoy bot submissions cannot inflate conversion signals.
+        if (response.status === 201 && typeof result.leadId === 'string' && result.leadId.length > 0) {
+          emitGrowthEvent({ name: 'lead_accepted', formType });
+        }
         window.location.assign(`/thank-you/?type=${encodeURIComponent(formType)}`);
       } catch {
         emitGrowthEvent({ name: 'lead_failed', formType });

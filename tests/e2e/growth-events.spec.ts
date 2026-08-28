@@ -24,6 +24,12 @@ async function capturedEvents(page: import('@playwright/test').Page): Promise<Ca
   });
 }
 
+async function fillGeneralLead(page: import('@playwright/test').Page) {
+  await page.locator('input[name="full_name"]').fill('Synthetic Visitor');
+  await page.locator('input[name="phone"]').fill('0412 345 678');
+  await page.locator('input[name="email"]').fill('synthetic@example.test');
+}
+
 test('Visibility Check emits lifecycle signals without answers, scores or contact data', async ({ page }) => {
   await page.goto('/property-management-visibility-check/', { waitUntil: 'domcontentloaded' });
 
@@ -63,6 +69,53 @@ test('lead form start signal contains only the journey type', async ({ page }) =
   const leadStarted = (await capturedEvents(page)).find((event) => event.name === 'lead_started');
   expect(Object.keys(leadStarted ?? {}).sort()).toEqual(['formType', 'name']);
   expect(JSON.stringify(leadStarted)).not.toContain('Test Visitor');
+});
+
+test('lead acceptance signal ignores success-like decoys and requires real durable acceptance', async ({ page }) => {
+  const acrossNavigation: CapturedGrowthEvent[] = [];
+  await page.exposeFunction('__captureSpGrowthEvent', (event: CapturedGrowthEvent) => {
+    acrossNavigation.push(event);
+  });
+  await page.addInitScript(() => {
+    window.addEventListener('sp:growth-event', (event) => {
+      if (!(event instanceof CustomEvent) || typeof event.detail !== 'object' || event.detail === null) return;
+      const capture = (
+        window as Window & {
+          __captureSpGrowthEvent?: (detail: Record<string, unknown>) => void;
+        }
+      ).__captureSpGrowthEvent;
+      capture?.({ ...(event.detail as Record<string, unknown>) });
+    });
+  });
+
+  let responseStatus = 202;
+  await page.route('**/api/leads', async (route) => {
+    const realAcceptance = responseStatus === 201;
+    await route.fulfill({
+      status: responseStatus,
+      contentType: 'application/json',
+      body: JSON.stringify(realAcceptance ? { ok: true, leadId: 'synthetic-lead-id' } : { ok: true }),
+    });
+  });
+
+  await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
+  await fillGeneralLead(page);
+  await Promise.all([
+    page.waitForURL(/\/thank-you\/\?type=general$/),
+    page.getByRole('button', { name: 'Send enquiry' }).click(),
+  ]);
+
+  expect(acrossNavigation.filter((event) => event.name === 'lead_accepted')).toHaveLength(0);
+
+  responseStatus = 201;
+  await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
+  await fillGeneralLead(page);
+  await Promise.all([
+    page.waitForURL(/\/thank-you\/\?type=general$/),
+    page.getByRole('button', { name: 'Send enquiry' }).click(),
+  ]);
+
+  await expect.poll(() => acrossNavigation.filter((event) => event.name === 'lead_accepted').length).toBe(1);
 });
 
 test('thank-you acknowledges routing without fabricating downstream delivery or calling gtag', async ({ page }) => {
