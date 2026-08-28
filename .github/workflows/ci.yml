@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build:
-    name: Tests, typecheck, build and browser QA
+    name: Tests, typecheck, build and Chromium QA
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
@@ -45,17 +45,67 @@ jobs:
       - name: Wrangler deployment bundle dry-run
         run: npx wrangler deploy --dry-run --outdir .wrangler-dry-run --experimental-provision=false --experimental-auto-create=false
 
-      - name: Install browser engines for QA
-        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Install Chromium for primary browser QA
+        run: npx playwright install --with-deps chromium
 
-      - name: Browser, responsive and accessibility QA
-        run: npm run test:e2e
+      - name: Chromium browser, responsive and accessibility QA
+        run: npx playwright test --project=desktop-chromium --project=mobile-chromium
 
-      - name: Upload browser QA evidence
+      - name: Upload Chromium QA evidence
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: sp-rebirth-browser-qa-${{ github.run_number }}
+          path: |
+            test-results
+            playwright-report
+          if-no-files-found: ignore
+          retention-days: 7
+
+  cross-browser:
+    name: Cross-browser QA · ${{ matrix.project }}
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: desktop-firefox
+            browser: firefox
+          - project: desktop-webkit
+            browser: webkit
+          - project: mobile-webkit
+            browser: webkit
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Use pinned Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Production build for browser runtime
+        run: npm run build
+
+      - name: Install ${{ matrix.browser }} for compatibility QA
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run ${{ matrix.project }} functional and accessibility QA
+        run: npx playwright test --project=${{ matrix.project }}
+
+      - name: Upload ${{ matrix.project }} QA evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: sp-rebirth-${{ matrix.project }}-qa-${{ github.run_number }}
           path: |
             test-results
             playwright-report

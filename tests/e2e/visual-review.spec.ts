@@ -9,6 +9,8 @@ const reviewRoutes = [
   ['about', '/about/'],
 ] as const;
 
+const visualCaptureProjects = new Set(['desktop-chromium', 'mobile-chromium']);
+
 async function hydrateLazyMedia(page: Page) {
   await page.evaluate(async () => {
     await new Promise<void>((resolve) => {
@@ -32,6 +34,11 @@ async function hydrateLazyMedia(page: Page) {
 
 for (const [name, path] of reviewRoutes) {
   test(`${name} visual review capture`, async ({ page }, testInfo) => {
+    test.skip(
+      !visualCaptureProjects.has(testInfo.project.name),
+      'Human visual-review evidence is captured on representative Chromium desktop/mobile viewports; cross-engine correctness is covered by functional and accessibility suites.',
+    );
+
     await page.goto(path, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toBeVisible();
 
