@@ -1,3 +1,4 @@
+import type {DocumentActionComponent} from 'sanity'
 import type {StructureBuilder} from 'sanity/structure'
 
 const singletonTypes = new Set(['siteSettings'])
@@ -18,7 +19,7 @@ export const structure = (S: StructureBuilder) =>
       S.documentTypeListItem('suburbPage').title('Suburb pages'),
     ])
 
-export const singletonActions = (prev: any[], context: {schemaType: string}) =>
+export const singletonActions = (prev: DocumentActionComponent[], context: {schemaType: string}) =>
   singletonTypes.has(context.schemaType)
     ? prev.filter(({action}) => action && ['publish', 'discardChanges', 'restore'].includes(action))
     : prev
