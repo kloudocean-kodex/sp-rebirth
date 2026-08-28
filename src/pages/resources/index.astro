@@ -5,8 +5,10 @@ import SiteFooter from '@/components/SiteFooter.astro';
 import InnerHero from '@/components/InnerHero.astro';
 
 const title = 'Property Management Resources Melbourne | Sana Patel Real Estate';
-const description = 'Reviewed property-management resources for Melbourne rental providers and renters, with authoritative source links where Victorian rules are discussed.';
+const description =
+  'Reviewed property-management resources for Melbourne rental providers and renters, with authoritative source links where Victorian rules are discussed.';
 ---
+
 <BaseLayout {title} {description} canonicalPath="/resources/" noindex={true}>
   <SiteHeader slot="header" />
   <InnerHero
@@ -23,8 +25,14 @@ const description = 'Reviewed property-management resources for Melbourne rental
         <h2>Publish less. Maintain it better.</h2>
       </div>
       <div class="statement__body">
-        <p>Property and tenancy rules change. Time-sensitive guides show when they were last reviewed and point back to Consumer Affairs Victoria or another authoritative source so readers can verify the current position.</p>
-        <p>The purpose is not to turn regulation into SEO filler. It is to help an owner understand the question, know what to check and recognise when their property needs a more specific conversation.</p>
+        <p>
+          Property and tenancy rules change. Time-sensitive guides show when they were last reviewed and point back to
+          Consumer Affairs Victoria or another authoritative source so readers can verify the current position.
+        </p>
+        <p>
+          The purpose is not to turn regulation into SEO filler. It is to help an owner understand the question, know
+          what to check and recognise when their property needs a more specific conversation.
+        </p>
       </div>
     </div>
   </section>
@@ -34,13 +42,19 @@ const description = 'Reviewed property-management resources for Melbourne rental
       <article>
         <p class="eyebrow">Rental providers</p>
         <h2>Victorian rental minimum standards</h2>
-        <p>What owners should be checking now, how agreement history can matter and which scheduled 2026–27 changes deserve early planning.</p>
+        <p>
+          What owners should be checking now, how agreement history can matter and which scheduled 2026–27 changes
+          deserve early planning.
+        </p>
         <a href="/resources/victoria-rental-minimum-standards/">Read the guide →</a>
       </article>
       <article>
         <p class="eyebrow">Property condition</p>
         <h2>What a routine inspection should tell you</h2>
-        <p>Current Victorian entry rules, what useful reporting looks like and the questions owners can ask about follow-through.</p>
+        <p>
+          Current Victorian entry rules, what useful reporting looks like and the questions owners can ask about
+          follow-through.
+        </p>
         <a href="/resources/routine-inspections-victoria/">Read the guide →</a>
       </article>
       <article>
@@ -56,12 +70,46 @@ const description = 'Reviewed property-management resources for Melbourne rental
 </BaseLayout>
 
 <style>
-  .resource-list { background:var(--white); }
-  .resource-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-3); }
-  article { min-height:25rem; padding:var(--space-3); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--paper); display:flex; flex-direction:column; }
-  article h2 { margin-top:var(--space-2); font-size:clamp(1.8rem,2.8vw,2.8rem); }
-  article > p:not(.eyebrow) { margin-top:var(--space-2); color:var(--ink-soft); }
-  article a { margin-top:auto; padding-top:var(--space-3); font-size:.76rem; font-weight:750; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; }
-  article a:hover { color:var(--accent-deep); }
-  @media(max-width:800px){ .resource-grid{grid-template-columns:1fr;} }
+  .resource-list {
+    background: var(--white);
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  article {
+    min-height: 25rem;
+    padding: var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+  }
+  article h2 {
+    margin-top: var(--space-2);
+    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+  }
+  article > p:not(.eyebrow) {
+    margin-top: var(--space-2);
+    color: var(--ink-soft);
+  }
+  article a {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  article a:hover {
+    color: var(--accent-deep);
+  }
+  @media (max-width: 800px) {
+    .resource-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

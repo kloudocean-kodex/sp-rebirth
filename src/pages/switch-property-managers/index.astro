@@ -7,31 +7,38 @@ import LeadForm from '@/components/LeadForm.astro';
 import FAQList from '@/components/FAQList.astro';
 
 const title = 'Switch Property Managers Melbourne | Sana Patel Real Estate';
-const description = 'Considering changing property managers in Melbourne? Understand the transition, what Sana needs from you and how a managed handover can begin.';
+const description =
+  'Considering changing property managers in Melbourne? Understand the transition, what Sana needs from you and how a managed handover can begin.';
 
 const faqs = [
   {
     question: 'Can I switch property managers while a renter is still living at the property?',
-    answer: 'A change of property manager can be considered during an active tenancy, but the current management authority, notice obligations, tenancy records and handover requirements should be reviewed before any transfer is initiated.',
+    answer:
+      'A change of property manager can be considered during an active tenancy, but the current management authority, notice obligations, tenancy records and handover requirements should be reviewed before any transfer is initiated.',
   },
   {
     question: 'Do I need to contact my current manager before speaking with Sana?',
-    answer: 'No. The first conversation can simply clarify what is happening now and what you would like to improve. Any formal notice, cancellation or transfer should only happen after the existing arrangement has been reviewed.',
+    answer:
+      'No. The first conversation can simply clarify what is happening now and what you would like to improve. Any formal notice, cancellation or transfer should only happen after the existing arrangement has been reviewed.',
   },
   {
     question: 'What information is useful for a switching conversation?',
-    answer: 'The property address, current manager, tenancy status, management agreement if available, upcoming lease dates and the main problems you want to solve are useful starting points. Sana can explain what else is needed after understanding the situation.',
+    answer:
+      'The property address, current manager, tenancy status, management agreement if available, upcoming lease dates and the main problems you want to solve are useful starting points. Sana can explain what else is needed after understanding the situation.',
   },
   {
     question: 'Will changing managers disrupt the renter?',
-    answer: 'A good handover should aim to minimise unnecessary disruption. The practical steps depend on the current arrangement and tenancy, so communication, records and timing should be planned rather than improvised.',
+    answer:
+      'A good handover should aim to minimise unnecessary disruption. The practical steps depend on the current arrangement and tenancy, so communication, records and timing should be planned rather than improvised.',
   },
   {
     question: 'What if I am only comparing my options?',
-    answer: 'That is a reasonable place to start. You can discuss what is not working, understand Sana’s approach and decide whether a formal change is worth considering before taking any action with the current manager.',
+    answer:
+      'That is a reasonable place to start. You can discuss what is not working, understand Sana’s approach and decide whether a formal change is worth considering before taking any action with the current manager.',
   },
 ];
 ---
+
 <BaseLayout {title} {description} canonicalPath="/switch-property-managers/">
   <SiteHeader slot="header" />
   <InnerHero
@@ -52,17 +59,36 @@ const faqs = [
         <h2>Start by understanding the handover.</h2>
       </div>
       <div class="statement__body">
-        <p>Changing property managers should be handled carefully, with the current management agreement and relevant notice requirements reviewed before any transition is initiated.</p>
-        <p>Sana can first understand your situation, identify what information is required and explain the practical next steps. No cancellation or transfer should happen blindly.</p>
+        <p>
+          Changing property managers should be handled carefully, with the current management agreement and relevant
+          notice requirements reviewed before any transition is initiated.
+        </p>
+        <p>
+          Sana can first understand your situation, identify what information is required and explain the practical next
+          steps. No cancellation or transfer should happen blindly.
+        </p>
       </div>
     </div>
   </section>
 
   <section class="section section--tight process-band">
     <div class="container-wide process-grid">
-      <article><span>01</span><h2>Tell Sana what is not working</h2><p>Communication, leasing, maintenance, reporting, arrears, responsiveness or simply a mismatch in service expectations.</p></article>
-      <article><span>02</span><h2>Review the current arrangement</h2><p>Understand the management agreement, property status and what is required for an orderly transition.</p></article>
-      <article><span>03</span><h2>Plan the handover</h2><p>If both sides agree to proceed, establish the transfer steps, information requirements and communication plan.</p></article>
+      <article>
+        <span>01</span><h2>Tell Sana what is not working</h2><p>
+          Communication, leasing, maintenance, reporting, arrears, responsiveness or simply a mismatch in service
+          expectations.
+        </p>
+      </article>
+      <article>
+        <span>02</span><h2>Review the current arrangement</h2><p>
+          Understand the management agreement, property status and what is required for an orderly transition.
+        </p>
+      </article>
+      <article>
+        <span>03</span><h2>Plan the handover</h2><p>
+          If both sides agree to proceed, establish the transfer steps, information requirements and communication plan.
+        </p>
+      </article>
     </div>
   </section>
 
@@ -92,7 +118,12 @@ const faqs = [
 
   <section class="section" id="switch-form" style="background:var(--paper-deep);">
     <div class="container">
-      <LeadForm type="switch_manager" heading="Tell Sana what you would like to improve" submitLabel="Discuss switching" showCurrentManager={true} />
+      <LeadForm
+        type="switch_manager"
+        heading="Tell Sana what you would like to improve"
+        submitLabel="Discuss switching"
+        showCurrentManager={true}
+      />
     </div>
   </section>
 
@@ -100,15 +131,57 @@ const faqs = [
 </BaseLayout>
 
 <style>
-  .process-band { background:var(--ink); color:var(--white); }
-  .process-grid { display:grid; grid-template-columns:repeat(3,1fr); }
-  .process-grid article { padding:var(--space-4); border:1px solid var(--line-light); }
-  .process-grid span { color:var(--accent-pale); font-size:.7rem; font-weight:700; letter-spacing:.06em; }
-  .process-grid h2 { margin-top:var(--space-3); font-size:clamp(1.8rem,3vw,3rem); }
-  .process-grid p { margin-top:var(--space-2); color:rgba(255,255,255,.72); }
-  .switch-reasons { display:grid; grid-template-columns:.8fr 1.2fr; gap:var(--space-5); }
-  .switch-reasons h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:12ch; }
-  .switch-reasons ul { margin:0; padding:0; list-style:none; border-top:1px solid var(--line); }
-  .switch-reasons li { padding:1.2rem 0; border-bottom:1px solid var(--line); color:var(--ink-soft); }
-  @media(max-width:800px){ .process-grid,.switch-reasons{grid-template-columns:1fr;} }
+  .process-band {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .process-grid article {
+    padding: var(--space-4);
+    border: 1px solid var(--line-light);
+  }
+  .process-grid span {
+    color: var(--accent-pale);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .process-grid h2 {
+    margin-top: var(--space-3);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+  }
+  .process-grid p {
+    margin-top: var(--space-2);
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .switch-reasons {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: var(--space-5);
+  }
+  .switch-reasons h2 {
+    margin-top: var(--space-2);
+    font-size: var(--h2);
+    max-width: 12ch;
+  }
+  .switch-reasons ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .switch-reasons li {
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+  }
+  @media (max-width: 800px) {
+    .process-grid,
+    .switch-reasons {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

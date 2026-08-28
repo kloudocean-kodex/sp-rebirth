@@ -20,19 +20,19 @@ A successful application deployment is therefore **not** proof that legacy WordP
 
 ## Observed launch-surface dependencies
 
-| # | Legacy asset | Observed use | Cutover status |
-|---|---|---|---|
-| 1 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Patel-Logo.webp` | site header / brand on every page | migration/preservation required; higher-quality approved master still preferred |
-| 2 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/favicon.jpg` | approved WordPress Site Icon / browser favicon | migration/preservation required |
-| 3 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226.webp` | homepage static hero and `SITE.defaultOgImage` | migration/preservation required; current source is 1920×1080 |
-| 4 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-owners_2624278291.webp` | `/rental-providers/` hero | migration/preservation required |
-| 5 | `https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.13.01-PM.jpeg` | `/about/` hero | migration/preservation required |
-| 6 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp` | `/about/` founder image and `/contact/` hero | migration/preservation required |
-| 7 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_1892310928.webp` | `/rental-appraisal/` hero and `/resources/` hero | migration/preservation required |
-| 8 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pate_371781052.webp` | `/switch-property-managers/` hero | migration/preservation required |
-| 9 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/lease-banner_2292016801.webp` | `/lease/` hero | migration/preservation required |
-| 10 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-tenants-banner_2571182183.webp` | `/for-renters/` hero | migration/preservation required |
-| 11 | `https://www.sanapatel.com.au/wp-content/uploads/2025/08/Sale_552591889.webp` | `/sale/` hero | migration/preservation required |
+| #   | Legacy asset                                                                                           | Observed use                                     | Cutover status                                                                  |
+| --- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------- |
+| 1   | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Patel-Logo.webp`                         | site header / brand on every page                | migration/preservation required; higher-quality approved master still preferred |
+| 2   | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/favicon.jpg`                                  | approved WordPress Site Icon / browser favicon   | migration/preservation required                                                 |
+| 3   | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226.webp`                 | homepage static hero and `SITE.defaultOgImage`   | migration/preservation required; current source is 1920×1080                    |
+| 4   | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-owners_2624278291.webp`                   | `/rental-providers/` hero                        | migration/preservation required                                                 |
+| 5   | `https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.13.01-PM.jpeg` | `/about/` hero                                   | migration/preservation required                                                 |
+| 6   | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp`                           | `/about/` founder image and `/contact/` hero     | migration/preservation required                                                 |
+| 7   | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_1892310928.webp`                | `/rental-appraisal/` hero and `/resources/` hero | migration/preservation required                                                 |
+| 8   | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pate_371781052.webp`                     | `/switch-property-managers/` hero                | migration/preservation required                                                 |
+| 9   | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/lease-banner_2292016801.webp`                 | `/lease/` hero                                   | migration/preservation required                                                 |
+| 10  | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-tenants-banner_2571182183.webp`           | `/for-renters/` hero                             | migration/preservation required                                                 |
+| 11  | `https://www.sanapatel.com.au/wp-content/uploads/2025/08/Sale_552591889.webp`                          | `/sale/` hero                                    | migration/preservation required                                                 |
 
 The shared CSS files inspected for this checkpoint do not introduce additional URL-based image backgrounds. `InnerHero.astro` simply renders the image URL supplied by each page.
 

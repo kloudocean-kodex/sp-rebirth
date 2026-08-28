@@ -21,16 +21,16 @@ test('Rental Position Check emits only non-PII lifecycle signals', async ({ page
   }
   await page.getByRole('button', { name: 'Show my readiness result' }).click();
 
-  const events = await page.evaluate(() =>
-    (window as Window & { __spRentalPositionEvents?: Record<string, unknown>[] }).__spRentalPositionEvents ?? [],
+  const events = await page.evaluate(
+    () => (window as Window & { __spRentalPositionEvents?: Record<string, unknown>[] }).__spRentalPositionEvents ?? [],
   );
 
   expect(events.map((event) => event.name)).toEqual(
     expect.arrayContaining(['rental_position_check_started', 'rental_position_check_completed']),
   );
 
-  const lifecycle = events.filter((event) =>
-    event.name === 'rental_position_check_started' || event.name === 'rental_position_check_completed',
+  const lifecycle = events.filter(
+    (event) => event.name === 'rental_position_check_started' || event.name === 'rental_position_check_completed',
   );
 
   for (const event of lifecycle) {

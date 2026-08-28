@@ -5,6 +5,7 @@ Research purpose: understand what the prospect sees before choosing Sana. This d
 ## Category language that is now crowded
 
 Current Melbourne competitors commonly claim some combination of:
+
 - boutique
 - premium but approachable
 - dedicated property manager
@@ -23,7 +24,9 @@ Conclusion: these may be supporting benefits, but they are too common to carry S
 ## Competitor conversion mechanics worth understanding
 
 ### Strong appraisal funnels
+
 Common patterns:
+
 - “free/no obligation” reassurance
 - property address/suburb first
 - clear explanation of what the appraisal includes
@@ -33,14 +36,18 @@ Common patterns:
 - FAQ immediately before or after form
 
 ### Switch-manager funnels
+
 Common patterns:
+
 - pain recognition: chasing updates, reactive management, turnover, unclear responsibility
 - no-obligation comparison
 - “we handle the transfer” simplification
 - questions about current manager and existing agreement
 
 ### Proof
+
 Common patterns:
+
 - current Google reviews
 - dynamic days-to-lease figures
 - property counts / retention / years experience
@@ -50,9 +57,11 @@ Common patterns:
 ## Sana's stronger territory
 
 ### Core idea
+
 **Your property should never be a mystery.**
 
 Supporting expression:
+
 - know who is responsible
 - know what changed
 - know why it matters
@@ -61,7 +70,9 @@ Supporting expression:
 This takes “direct communication” beyond access to a mobile number. It connects access to decision clarity and follow-through.
 
 ### Why it is credible
+
 Historical independent client language around Sana repeatedly highlights:
+
 - prompt/timely communication
 - efficiency
 - professionalism
@@ -83,6 +94,7 @@ Her service background across hospitality, aviation, customer service and proper
 ## Copy guardrails
 
 Prefer:
+
 - “Understand what happened, why it matters and what happens next.”
 - “A clear point of accountability.”
 - “Management should be visible.”
@@ -90,6 +102,7 @@ Prefer:
 - “A switch should feel controlled, not chaotic.”
 
 Avoid as unsupported/generalised headlines:
+
 - “Melbourne's best property manager”
 - “maximise your returns”
 - “stress-free guaranteed”
@@ -101,6 +114,7 @@ Avoid as unsupported/generalised headlines:
 ## Commercial implication
 
 The website should make Sana easier to choose for an owner who values:
+
 - responsiveness without noise
 - accountability without bureaucracy
 - personal involvement without small-business fragility
@@ -110,6 +124,7 @@ The website should make Sana easier to choose for an owner who values:
 ## SEO implication
 
 Do not optimise the entire site around one generic phrase (“property management Melbourne”). Build a search-intent portfolio around:
+
 - property management Melbourne
 - rental appraisal Melbourne
 - switch/change property managers Melbourne
@@ -120,6 +135,7 @@ Do not optimise the entire site around one generic phrase (“property managemen
 ## Conversion implication
 
 Every high-intent page should answer:
+
 1. Is this page about my situation?
 2. Why should I trust Sana with it?
 3. What exactly happens next?

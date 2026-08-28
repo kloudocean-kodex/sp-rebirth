@@ -7,11 +7,7 @@ import {
   resolveLeadDeliveryMode,
   type LeadQueueBinding,
 } from '../src/lib/lead-delivery';
-import {
-  CURRENT_LEAD_PRIVACY_NOTICE_VERSION,
-  LEAD_LIMITS,
-  type LeadPayload,
-} from '../src/lib/leads';
+import { CURRENT_LEAD_PRIVACY_NOTICE_VERSION, LEAD_LIMITS, type LeadPayload } from '../src/lib/leads';
 
 function lead(): LeadPayload {
   return {

@@ -32,6 +32,7 @@ The visual system should make information feel calm, ordered and deliberate. Vis
 Use for h1–h4, selected pull quotes and editorial emphasis.
 
 Why:
+
 - designed for continuous on-screen reading
 - sophisticated without looking ceremonial
 - optical-size axis supports both large display and smaller editorial headings
@@ -39,6 +40,7 @@ Why:
 - real italics are available for occasional editorial emphasis
 
 Rules:
+
 - large display: weight 320–380
 - h2: weight 360–430
 - h3/h4: weight 430–520
@@ -51,12 +53,14 @@ Rules:
 Use for body copy, navigation, labels, buttons, forms and metadata.
 
 Why:
+
 - designed for smaller text
 - clean and contemporary without the strong “software UI” character of Inter
 - variable weight/optical-size support
 - strong readability for mobile forms and navigation
 
 Rules:
+
 - body: 400–450
 - navigation/buttons/labels: 600–700
 - never use ultra-light body copy
@@ -92,6 +96,7 @@ Metal tones are not a third text hierarchy. Light brass/champagne must not be us
 ## Contrast policy
 
 WCAG 2.2 AA is the floor:
+
 - ordinary text >= 4.5:1
 - large text >= 3:1
 - focus indicators and meaningful UI boundaries must remain visible
@@ -122,6 +127,7 @@ Quiet luxury here means restraint, not excessive softness.
 Sana is the human differentiator. Founder photography should feel observational and confident rather than over-staged.
 
 Property/lifestyle imagery should:
+
 - feel distinctly Melbourne where possible
 - prioritise architecture, material, light and lived-in detail
 - avoid generic stock-agent handshakes and key handovers
@@ -142,6 +148,7 @@ Motion should signal polish, not demand attention.
 ## Copy / visual hierarchy
 
 The page hierarchy is:
+
 1. visitor situation / desired outcome
 2. Sana's approach and differentiator
 3. credible proof
@@ -153,10 +160,12 @@ Avoid generic blocks such as “Goals-driven / Responsive / Proactive” unless 
 ## CTA hierarchy
 
 Primary:
+
 - Request a rental appraisal
 - Discuss switching property managers
 
 Secondary:
+
 - Call Sana
 - Explore Sana's approach
 - Read a relevant resource
@@ -166,6 +175,7 @@ Do not create five competing primary CTAs on one viewport.
 ## Proof hierarchy
 
 Strongest to weakest:
+
 1. verified current client reviews
 2. independently sourced performance evidence with date/source context
 3. professional credentials / founder identity
@@ -187,6 +197,7 @@ Never manufacture testimonials, review counts, performance numbers or guarantees
 ## Design anti-patterns
 
 Do not:
+
 - make everything black + gold
 - use gold for paragraph text on ivory
 - use huge serif type on every section

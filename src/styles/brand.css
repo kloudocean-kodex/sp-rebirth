@@ -12,8 +12,7 @@
   body {
     background:
       radial-gradient(circle at 88% 3%, rgba(184, 154, 96, 0.095), transparent 28rem),
-      radial-gradient(circle at 8% 38%, rgba(109, 83, 44, 0.035), transparent 30rem),
-      var(--paper);
+      radial-gradient(circle at 8% 38%, rgba(109, 83, 44, 0.035), transparent 30rem), var(--paper);
   }
 }
 
@@ -33,7 +32,10 @@
     border-radius: var(--radius-sm);
     background: rgba(255, 253, 248, 0.965);
     box-shadow: 0 10px 34px rgba(0, 0, 0, 0.11);
-    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      border-color 180ms ease;
   }
 
   .brand:hover {
@@ -69,9 +71,13 @@
     transition: right 180ms ease;
   }
 
-  .site-nav > a:not(.button):hover { opacity: 1; }
+  .site-nav > a:not(.button):hover {
+    opacity: 1;
+  }
   .site-nav > a:not(.button):hover::after,
-  .site-nav > a:not(.button):focus-visible::after { right: 0; }
+  .site-nav > a:not(.button):focus-visible::after {
+    right: 0;
+  }
 
   .mobile-nav {
     display: none;
@@ -93,14 +99,45 @@
     backdrop-filter: blur(12px);
   }
 
-  .mobile-nav summary::-webkit-details-marker { display: none; }
-  .mobile-nav__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.065em; text-transform: uppercase; }
-  .mobile-nav__icon { width: 1rem; height: 0.8rem; position: relative; display: inline-block; }
-  .mobile-nav__icon i { position: absolute; left: 0; width: 100%; height: 1px; background: var(--gold-soft); transition: transform 180ms ease, top 180ms ease; }
-  .mobile-nav__icon i:first-child { top: 0.22rem; }
-  .mobile-nav__icon i:last-child { top: 0.62rem; }
-  .mobile-nav[open] .mobile-nav__icon i:first-child { top: 0.42rem; transform: rotate(45deg); }
-  .mobile-nav[open] .mobile-nav__icon i:last-child { top: 0.42rem; transform: rotate(-45deg); }
+  .mobile-nav summary::-webkit-details-marker {
+    display: none;
+  }
+  .mobile-nav__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.065em;
+    text-transform: uppercase;
+  }
+  .mobile-nav__icon {
+    width: 1rem;
+    height: 0.8rem;
+    position: relative;
+    display: inline-block;
+  }
+  .mobile-nav__icon i {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gold-soft);
+    transition:
+      transform 180ms ease,
+      top 180ms ease;
+  }
+  .mobile-nav__icon i:first-child {
+    top: 0.22rem;
+  }
+  .mobile-nav__icon i:last-child {
+    top: 0.62rem;
+  }
+  .mobile-nav[open] .mobile-nav__icon i:first-child {
+    top: 0.42rem;
+    transform: rotate(45deg);
+  }
+  .mobile-nav[open] .mobile-nav__icon i:last-child {
+    top: 0.42rem;
+    transform: rotate(-45deg);
+  }
 
   .mobile-nav__panel {
     position: absolute;
@@ -111,9 +148,7 @@
     padding: 0.55rem;
     border: 1px solid rgba(215, 195, 154, 0.3);
     border-radius: var(--radius-md);
-    background:
-      radial-gradient(circle at 92% 0%, rgba(184, 154, 96, 0.11), transparent 12rem),
-      rgba(15, 16, 13, 0.988);
+    background: radial-gradient(circle at 92% 0%, rgba(184, 154, 96, 0.11), transparent 12rem), rgba(15, 16, 13, 0.988);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
     backdrop-filter: blur(18px);
   }
@@ -129,9 +164,14 @@
     text-decoration: none;
   }
 
-  .mobile-nav__panel a:last-child { border-bottom: 0; }
+  .mobile-nav__panel a:last-child {
+    border-bottom: 0;
+  }
   .mobile-nav__panel a:hover,
-  .mobile-nav__panel a:focus-visible { color: var(--gold-soft); background: rgba(184, 154, 96, 0.05); }
+  .mobile-nav__panel a:focus-visible {
+    color: var(--gold-soft);
+    background: rgba(184, 154, 96, 0.05);
+  }
 
   .button--solid {
     background: var(--gold-deep);
@@ -188,16 +228,22 @@
     transition: width 220ms ease;
   }
 
-  .journey-card:hover::before { width: 8.8rem; }
-  .journey-card__number { color: var(--gold-deep); opacity: 0.75; }
-  .journey-card a { color: var(--gold-deep); text-decoration-color: rgba(109, 83, 44, 0.34); }
+  .journey-card:hover::before {
+    width: 8.8rem;
+  }
+  .journey-card__number {
+    color: var(--gold-deep);
+    opacity: 0.75;
+  }
+  .journey-card a {
+    color: var(--gold-deep);
+    text-decoration-color: rgba(109, 83, 44, 0.34);
+  }
 
   .proof-band {
     position: relative;
     overflow: clip;
-    background:
-      radial-gradient(circle at 88% 22%, rgba(184, 154, 96, 0.12), transparent 26rem),
-      var(--ink-lux);
+    background: radial-gradient(circle at 88% 22%, rgba(184, 154, 96, 0.12), transparent 26rem), var(--ink-lux);
   }
 
   .proof-band::before {
@@ -227,9 +273,7 @@
   .cta-panel {
     position: relative;
     border: 1px solid rgba(109, 83, 44, 0.17);
-    background:
-      radial-gradient(circle at 92% 12%, rgba(184, 154, 96, 0.12), transparent 18rem),
-      var(--paper-deep);
+    background: radial-gradient(circle at 92% 12%, rgba(184, 154, 96, 0.12), transparent 18rem), var(--paper-deep);
     box-shadow: 0 22px 68px rgba(27, 22, 15, 0.065);
   }
 
@@ -245,17 +289,19 @@
 
   .site-footer {
     border-top: 1px solid rgba(184, 154, 96, 0.32);
-    background:
-      radial-gradient(circle at 85% 0%, rgba(184, 154, 96, 0.085), transparent 24rem),
-      #0f100d;
+    background: radial-gradient(circle at 85% 0%, rgba(184, 154, 96, 0.085), transparent 24rem), #0f100d;
   }
 
   @media (max-width: 900px) {
     /* The component-scoped desktop-link rule is more specific than the
        global mobile collapse rule. Keep the two navigation modes exclusive
        so desktop links cannot overlap or intercept the mobile menu. */
-    .site-nav--desktop { display: none; }
-    .mobile-nav { display: block; }
+    .site-nav--desktop {
+      display: none;
+    }
+    .mobile-nav {
+      display: block;
+    }
     .mobile-nav summary {
       /* Keep the control legible when the header sits over a light inner hero. */
       background: var(--ink-lux);
@@ -264,13 +310,24 @@
   }
 
   @media (max-width: 620px) {
-    .site-nav--desktop .button { display: none; }
+    .site-nav--desktop .button {
+      display: none;
+    }
   }
 
   @media (max-width: 560px) {
-    .brand { padding: 0.42rem 0.55rem; }
-    .brand__logo { width: 8.7rem; }
-    .header-actions { gap: 0.45rem; }
-    .mobile-nav summary { min-height: 2.75rem; padding-inline: 0.72rem; }
+    .brand {
+      padding: 0.42rem 0.55rem;
+    }
+    .brand__logo {
+      width: 8.7rem;
+    }
+    .header-actions {
+      gap: 0.45rem;
+    }
+    .mobile-nav summary {
+      min-height: 2.75rem;
+      padding-inline: 0.72rem;
+    }
   }
 }

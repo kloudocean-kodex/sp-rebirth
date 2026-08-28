@@ -50,8 +50,7 @@ export interface LeadPayload {
 }
 
 export type BoundedFormDataResult =
-  | { ok: true; form: FormData }
-  | { ok: false; error: 'request_too_large' | 'invalid_form_data' };
+  { ok: true; form: FormData } | { ok: false; error: 'request_too_large' | 'invalid_form_data' };
 
 export function cleanText(value: FormDataEntryValue | null, max: number): string {
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
@@ -74,10 +73,7 @@ export function emailLooksValid(value: string): boolean {
   return value.length <= LEAD_LIMITS.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-export function createLeadPayload(
-  form: FormData,
-  options: { id: string; submittedAt: string },
-): LeadPayload {
+export function createLeadPayload(form: FormData, options: { id: string; submittedAt: string }): LeadPayload {
   return {
     id: options.id,
     submittedAt: options.submittedAt,

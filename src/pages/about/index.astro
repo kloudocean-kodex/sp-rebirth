@@ -7,7 +7,8 @@ import CredentialStrip from '@/components/CredentialStrip.astro';
 import { SITE } from '@/config/site';
 
 const title = 'About Sana Patel | Melbourne Property Manager & Estate Agent';
-const description = 'Meet Sana Patel and the service philosophy behind Sana Patel Real Estate: direct accountability, 24×7 direct access, clear communication and personal property management in Melbourne.';
+const description =
+  'Meet Sana Patel and the service philosophy behind Sana Patel Real Estate: direct accountability, 24×7 direct access, clear communication and personal property management in Melbourne.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -28,6 +29,7 @@ const credentials = [
   { label: 'Direct access', value: '24×7 to Sana Patel' },
 ];
 ---
+
 <BaseLayout {title} {description} canonicalPath="/about/" {schema}>
   <SiteHeader slot="header" />
   <InnerHero
@@ -53,8 +55,15 @@ const credentials = [
         <h2>Know who is accountable.</h2>
       </div>
       <div class="statement__body">
-        <p>Sana built her real-estate business around the part of property management clients feel most strongly: whether somebody is genuinely paying attention.</p>
-        <p>Her experience spans service-focused roles and residential property management. That background now informs a more personal model for Melbourne rental providers—one where communication is direct, access to Sana is available 24×7, and the property is managed with context rather than anonymity.</p>
+        <p>
+          Sana built her real-estate business around the part of property management clients feel most strongly: whether
+          somebody is genuinely paying attention.
+        </p>
+        <p>
+          Her experience spans service-focused roles and residential property management. That background now informs a
+          more personal model for Melbourne rental providers—one where communication is direct, access to Sana is
+          available 24×7, and the property is managed with context rather than anonymity.
+        </p>
       </div>
     </div>
   </section>
@@ -62,16 +71,39 @@ const credentials = [
   <section class="section section--tight founder-grid-wrap">
     <div class="container-wide founder-grid">
       <figure>
-        <img src="https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp" alt="Sana Patel, Managing Director of Sana Patel Real Estate" width="614" height="704" loading="lazy" />
+        <img
+          src="https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp"
+          alt="Sana Patel, Managing Director of Sana Patel Real Estate"
+          width="614"
+          height="704"
+          loading="lazy"
+        />
       </figure>
       <div class="founder-copy">
         <p class="eyebrow">How Sana works</p>
         <h2>Quietly thorough. Personally involved.</h2>
-        <p class="founder-copy__lead">The aim is not to make property management feel busy. It is to make the important things visible, understood and followed through.</p>
+        <p class="founder-copy__lead">
+          The aim is not to make property management feel busy. It is to make the important things visible, understood
+          and followed through.
+        </p>
         <div class="principles">
-          <article><h3>Accountability</h3><p>A clear point of responsibility rather than uncertainty about who owns the next step.</p></article>
-          <article><h3>24×7 direct access</h3><p>A direct path to Sana when something needs attention. Access can be immediate even when the final repair, trade attendance or process naturally takes longer.</p></article>
-          <article><h3>Care with judgement</h3><p>Looking after the property while making practical decisions around tenancy, maintenance and rental performance.</p></article>
+          <article>
+            <h3>Accountability</h3><p>
+              A clear point of responsibility rather than uncertainty about who owns the next step.
+            </p>
+          </article>
+          <article>
+            <h3>24×7 direct access</h3><p>
+              A direct path to Sana when something needs attention. Access can be immediate even when the final repair,
+              trade attendance or process naturally takes longer.
+            </p>
+          </article>
+          <article>
+            <h3>Care with judgement</h3><p>
+              Looking after the property while making practical decisions around tenancy, maintenance and rental
+              performance.
+            </p>
+          </article>
         </div>
       </div>
     </div>
@@ -84,9 +116,21 @@ const credentials = [
         <h2>Different industries. The same expectation of service.</h2>
       </div>
       <div class="service-origin__items">
-        <article><span>01</span><h3>Hospitality</h3><p>Notice what people need, communicate clearly and make the experience feel considered.</p></article>
-        <article><span>02</span><h3>Aviation</h3><p>Stay calm, follow process and understand that small details matter when people are relying on you.</p></article>
-        <article><span>03</span><h3>Property management</h3><p>Apply that service discipline to an owner's asset, renter experience and the decisions that connect both.</p></article>
+        <article>
+          <span>01</span><h3>Hospitality</h3><p>
+            Notice what people need, communicate clearly and make the experience feel considered.
+          </p>
+        </article>
+        <article>
+          <span>02</span><h3>Aviation</h3><p>
+            Stay calm, follow process and understand that small details matter when people are relying on you.
+          </p>
+        </article>
+        <article>
+          <span>03</span><h3>Property management</h3><p>
+            Apply that service discipline to an owner's asset, renter experience and the decisions that connect both.
+          </p>
+        </article>
       </div>
     </div>
   </section>
@@ -96,7 +140,10 @@ const credentials = [
       <div>
         <p class="eyebrow">See if the fit is right</p>
         <h2>The first conversation should be useful.</h2>
-        <p>Tell Sana where your property is, what is happening now and what you would like to improve. There is no need to commit before understanding the approach.</p>
+        <p>
+          Tell Sana where your property is, what is happening now and what you would like to improve. There is no need
+          to commit before understanding the approach.
+        </p>
       </div>
       <div class="cta-panel__actions">
         <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
@@ -109,23 +156,102 @@ const credentials = [
 </BaseLayout>
 
 <style>
-  .founder-grid-wrap { background:var(--white); }
-  .founder-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:var(--space-5); align-items:center; }
-  figure { margin:0; }
-  figure img { width:100%; max-height:50rem; aspect-ratio:614/704; object-fit:cover; object-position:center top; border-radius:var(--radius-md); box-shadow:var(--shadow-lift); }
-  .founder-copy h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:11ch; }
-  .founder-copy__lead { margin-top:var(--space-3); max-width:34rem; color:var(--ink-soft); font-size:var(--body-lg); }
-  .principles { margin-top:var(--space-4); border-top:1px solid var(--line); }
-  .principles article { display:grid; grid-template-columns:.45fr 1fr; gap:var(--space-2); padding:1.4rem 0; border-bottom:1px solid var(--line); }
-  .principles h3 { font-size:1.5rem; }
-  .principles p { color:var(--ink-soft); }
-  .service-origin { background:var(--paper-deep); }
-  .service-origin__grid { display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:var(--space-5); }
-  .service-origin__intro h2 { margin-top:var(--space-2); max-width:12ch; font-size:var(--h2); }
-  .service-origin__items { border-top:1px solid var(--line-strong); }
-  .service-origin__items article { display:grid; grid-template-columns:3rem minmax(0,.55fr) minmax(0,1fr); gap:var(--space-2); padding:1.45rem 0; border-bottom:1px solid var(--line); align-items:start; }
-  .service-origin__items span { color:var(--accent); font-size:.7rem; font-weight:700; letter-spacing:.06em; }
-  .service-origin__items h3 { font-size:clamp(1.35rem,2vw,1.8rem); }
-  .service-origin__items p { color:var(--ink-soft); }
-  @media(max-width:820px){ .founder-grid,.principles article,.service-origin__grid{grid-template-columns:1fr;} .service-origin__items article{grid-template-columns:2.5rem 1fr;} .service-origin__items p{grid-column:2;} }
+  .founder-grid-wrap {
+    background: var(--white);
+  }
+  .founder-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-5);
+    align-items: center;
+  }
+  figure {
+    margin: 0;
+  }
+  figure img {
+    width: 100%;
+    max-height: 50rem;
+    aspect-ratio: 614/704;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lift);
+  }
+  .founder-copy h2 {
+    margin-top: var(--space-2);
+    font-size: var(--h2);
+    max-width: 11ch;
+  }
+  .founder-copy__lead {
+    margin-top: var(--space-3);
+    max-width: 34rem;
+    color: var(--ink-soft);
+    font-size: var(--body-lg);
+  }
+  .principles {
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--line);
+  }
+  .principles article {
+    display: grid;
+    grid-template-columns: 0.45fr 1fr;
+    gap: var(--space-2);
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .principles h3 {
+    font-size: 1.5rem;
+  }
+  .principles p {
+    color: var(--ink-soft);
+  }
+  .service-origin {
+    background: var(--paper-deep);
+  }
+  .service-origin__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: var(--space-5);
+  }
+  .service-origin__intro h2 {
+    margin-top: var(--space-2);
+    max-width: 12ch;
+    font-size: var(--h2);
+  }
+  .service-origin__items {
+    border-top: 1px solid var(--line-strong);
+  }
+  .service-origin__items article {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 0.55fr) minmax(0, 1fr);
+    gap: var(--space-2);
+    padding: 1.45rem 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .service-origin__items span {
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .service-origin__items h3 {
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+  }
+  .service-origin__items p {
+    color: var(--ink-soft);
+  }
+  @media (max-width: 820px) {
+    .founder-grid,
+    .principles article,
+    .service-origin__grid {
+      grid-template-columns: 1fr;
+    }
+    .service-origin__items article {
+      grid-template-columns: 2.5rem 1fr;
+    }
+    .service-origin__items p {
+      grid-column: 2;
+    }
+  }
 </style>

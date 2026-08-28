@@ -17,11 +17,7 @@ const publicPageSourceFiles = [
   '../src/pages/rental-position-check/index.astro',
 ] as const;
 
-const prelaunchCopyPatterns = [
-  /\bSP_REBIRTH\b/i,
-  /\bthis page will become\b/i,
-  /\bthe new site will\b/i,
-] as const;
+const prelaunchCopyPatterns = [/\bSP_REBIRTH\b/i, /\bthis page will become\b/i, /\bthe new site will\b/i] as const;
 
 describe('site configuration', () => {
   it('uses HTTPS production and browser-icon origins', () => {

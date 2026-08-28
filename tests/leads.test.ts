@@ -82,12 +82,8 @@ describe('lead validation', () => {
     form.set('email', 'not-an-email');
     form.set('phone', '12');
     form.delete('privacy_notice_version');
-    const errors = validateLead(
-      createLeadPayload(form, { id: 'lead-1', submittedAt: '2026-08-27T00:00:00.000Z' }),
-    );
-    expect(errors).toEqual(
-      expect.arrayContaining(['full_name', 'email', 'phone', 'privacy_notice_version']),
-    );
+    const errors = validateLead(createLeadPayload(form, { id: 'lead-1', submittedAt: '2026-08-27T00:00:00.000Z' }));
+    expect(errors).toEqual(expect.arrayContaining(['full_name', 'email', 'phone', 'privacy_notice_version']));
   });
 
   it('rejects a client-tampered or stale privacy-notice version for new intake', () => {

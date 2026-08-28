@@ -113,10 +113,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const parsedForm = await readFormDataWithinLimit(request);
   if (!parsedForm.ok) {
-    return json(
-      { ok: false, error: parsedForm.error },
-      parsedForm.error === 'request_too_large' ? 413 : 400,
-    );
+    return json({ ok: false, error: parsedForm.error }, parsedForm.error === 'request_too_large' ? 413 : 400);
   }
   const form = parsedForm.form;
 
@@ -155,11 +152,7 @@ export const POST: APIRoute = async ({ request }) => {
   if (!turnstile.success) return json({ ok: false, error: 'verification_failed' }, 403);
 
   const deployEnv = import.meta.env.PUBLIC_DEPLOY_ENV;
-  const delivery = await acceptLeadForDelivery(
-    lead,
-    env as LeadDeliveryBindings,
-    deployEnv ? { deployEnv } : {},
-  );
+  const delivery = await acceptLeadForDelivery(lead, env as LeadDeliveryBindings, deployEnv ? { deployEnv } : {});
 
   if (!delivery.ok) {
     const configurationFailure =

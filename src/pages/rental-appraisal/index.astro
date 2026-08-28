@@ -8,27 +8,33 @@ import FAQList from '@/components/FAQList.astro';
 import { SITE } from '@/config/site';
 
 const title = 'Rental Appraisal Melbourne | Sana Patel Real Estate';
-const description = 'Request a Melbourne rental appraisal with Sana Patel Real Estate. Start with your property, current situation and rental goals.';
+const description =
+  'Request a Melbourne rental appraisal with Sana Patel Real Estate. Start with your property, current situation and rental goals.';
 
 const faqs = [
   {
     question: 'Is a rental appraisal just an estimate of weekly rent?',
-    answer: 'A useful appraisal should provide context around the number. That includes the property itself, current competing rentals, presentation, likely renter demand, timing and any factors that may influence how the property competes in the market.',
+    answer:
+      'A useful appraisal should provide context around the number. That includes the property itself, current competing rentals, presentation, likely renter demand, timing and any factors that may influence how the property competes in the market.',
   },
   {
     question: 'Do I need to be ready to appoint a property manager?',
-    answer: 'No. The appraisal can begin as a practical conversation about the property and your goals. If property management is relevant, Sana can explain what the next step would look like without treating the appraisal as an automatic commitment.',
+    answer:
+      'No. The appraisal can begin as a practical conversation about the property and your goals. If property management is relevant, Sana can explain what the next step would look like without treating the appraisal as an automatic commitment.',
   },
   {
     question: 'Can I request an appraisal if the property is already tenanted?',
-    answer: 'Yes. The current tenancy, lease timing and existing rental position form part of the context. Any formal rent change or tenancy action still needs to follow the applicable Victorian requirements and agreement circumstances.',
+    answer:
+      'Yes. The current tenancy, lease timing and existing rental position form part of the context. Any formal rent change or tenancy action still needs to follow the applicable Victorian requirements and agreement circumstances.',
   },
   {
     question: 'What information helps Sana assess the property?',
-    answer: 'The property address, suburb, current tenancy or vacancy status, key features, recent improvements and anything unusual about the current situation are useful starting points. Sana can ask for further information if needed.',
+    answer:
+      'The property address, suburb, current tenancy or vacancy status, key features, recent improvements and anything unusual about the current situation are useful starting points. Sana can ask for further information if needed.',
   },
 ];
 ---
+
 <BaseLayout {title} {description} canonicalPath="/rental-appraisal/">
   <SiteHeader slot="header" />
   <InnerHero
@@ -49,17 +55,35 @@ const faqs = [
         <h2>Context before confidence.</h2>
       </div>
       <div class="statement__body">
-        <p>The goal is not to produce the highest possible headline figure. It is to establish a defensible rental position and understand what may help the property compete well.</p>
-        <p>Sana can then discuss likely rental positioning, leasing considerations and whether full property management is the right next step.</p>
+        <p>
+          The goal is not to produce the highest possible headline figure. It is to establish a defensible rental
+          position and understand what may help the property compete well.
+        </p>
+        <p>
+          Sana can then discuss likely rental positioning, leasing considerations and whether full property management
+          is the right next step.
+        </p>
       </div>
     </div>
   </section>
 
   <section class="section section--tight appraisal-steps">
     <div class="container-wide step-grid">
-      <article><span>01</span><h2>Tell us about the property</h2><p>Address, suburb and the current tenancy or vacancy situation.</p></article>
-      <article><span>02</span><h2>Understand the market context</h2><p>Relevant competing rentals and the property's features are considered together.</p></article>
-      <article><span>03</span><h2>Talk through the next move</h2><p>Discuss rental positioning, timing and what management support would look like.</p></article>
+      <article>
+        <span>01</span><h2>Tell us about the property</h2><p>
+          Address, suburb and the current tenancy or vacancy situation.
+        </p>
+      </article>
+      <article>
+        <span>02</span><h2>Understand the market context</h2><p>
+          Relevant competing rentals and the property's features are considered together.
+        </p>
+      </article>
+      <article>
+        <span>03</span><h2>Talk through the next move</h2><p>
+          Discuss rental positioning, timing and what management support would look like.
+        </p>
+      </article>
     </div>
   </section>
 
@@ -68,7 +92,11 @@ const faqs = [
       <div>
         <p class="eyebrow">Prefer value before contact details?</p>
         <h2>Check whether your rental evidence is ready first.</h2>
-        <p>The free 90-second Rental Position Check does not ask for your name, phone, email or property address. It shows whether current market evidence, property context and decision timing are strong enough for a defensible rental conversation.</p>
+        <p>
+          The free 90-second Rental Position Check does not ask for your name, phone, email or property address. It
+          shows whether current market evidence, property context and decision timing are strong enough for a defensible
+          rental conversation.
+        </p>
       </div>
       <div class="readiness-bridge__action">
         <a class="button button--solid" href="/rental-position-check/">Take the private check</a>
@@ -94,20 +122,67 @@ const faqs = [
 </BaseLayout>
 
 <style>
-  .appraisal-steps { background:var(--ink); color:var(--white); }
-  .step-grid { display:grid; grid-template-columns:repeat(3,1fr); }
-  .step-grid article { padding:var(--space-4); border:1px solid var(--line-light); }
-  .step-grid span { color:var(--accent-pale); font-size:.7rem; font-weight:700; letter-spacing:.06em; }
-  .step-grid h2 { margin-top:var(--space-3); font-size:clamp(1.8rem,3vw,3rem); }
-  .step-grid p { margin-top:var(--space-2); color:rgba(255,255,255,.72); }
-  .readiness-bridge { background:var(--white); }
-  .readiness-bridge__inner { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(16rem,.65fr); gap:var(--space-4); align-items:end; }
-  .readiness-bridge h2 { margin-top:var(--space-2); max-width:14ch; font-size:var(--h2); }
-  .readiness-bridge p:last-child { margin-top:var(--space-2); max-width:44rem; color:var(--ink-soft); }
-  .readiness-bridge__action { display:grid; justify-items:start; gap:.7rem; }
-  .readiness-bridge__action small { color:var(--ink-soft); font-size:.76rem; }
-  @media(max-width:760px){
-    .step-grid,.readiness-bridge__inner{grid-template-columns:1fr;}
-    .readiness-bridge__action .button{width:100%;}
+  .appraisal-steps {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .step-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .step-grid article {
+    padding: var(--space-4);
+    border: 1px solid var(--line-light);
+  }
+  .step-grid span {
+    color: var(--accent-pale);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .step-grid h2 {
+    margin-top: var(--space-3);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+  }
+  .step-grid p {
+    margin-top: var(--space-2);
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .readiness-bridge {
+    background: var(--white);
+  }
+  .readiness-bridge__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+    gap: var(--space-4);
+    align-items: end;
+  }
+  .readiness-bridge h2 {
+    margin-top: var(--space-2);
+    max-width: 14ch;
+    font-size: var(--h2);
+  }
+  .readiness-bridge p:last-child {
+    margin-top: var(--space-2);
+    max-width: 44rem;
+    color: var(--ink-soft);
+  }
+  .readiness-bridge__action {
+    display: grid;
+    justify-items: start;
+    gap: 0.7rem;
+  }
+  .readiness-bridge__action small {
+    color: var(--ink-soft);
+    font-size: 0.76rem;
+  }
+  @media (max-width: 760px) {
+    .step-grid,
+    .readiness-bridge__inner {
+      grid-template-columns: 1fr;
+    }
+    .readiness-bridge__action .button {
+      width: 100%;
+    }
   }
 </style>

@@ -18,7 +18,8 @@ const questions = [
     name: 'last_review',
     category: 'evidence',
     title: 'Last rental review',
-    question: 'Do you know when the property’s rental position was last reviewed and what evidence supported the decision?',
+    question:
+      'Do you know when the property’s rental position was last reviewed and what evidence supported the decision?',
     answers: [
       ['3', 'Yes — I know when it was reviewed, the evidence used and the resulting decision.'],
       ['2', 'It was reviewed, but I do not have a clear record of the evidence or reasoning.'],
@@ -30,7 +31,8 @@ const questions = [
     name: 'demand_signals',
     category: 'evidence',
     title: 'Demand & supply',
-    question: 'Do you have current evidence about renter demand and competing supply rather than relying only on historical medians?',
+    question:
+      'Do you have current evidence about renter demand and competing supply rather than relying only on historical medians?',
     answers: [
       ['3', 'Yes — current competition and demand signals are part of the decision.'],
       ['2', 'I have some current context, but not enough to feel confident about it.'],
@@ -42,7 +44,8 @@ const questions = [
     name: 'condition_presentation',
     category: 'context',
     title: 'Condition & presentation',
-    question: 'Has the property’s current condition, presentation, maintenance and recent improvements been factored into the rental comparison?',
+    question:
+      'Has the property’s current condition, presentation, maintenance and recent improvements been factored into the rental comparison?',
     answers: [
       ['3', 'Yes — the property is being compared as it actually presents today.'],
       ['2', 'Mostly, although some condition or presentation factors may not be reflected.'],
@@ -54,7 +57,8 @@ const questions = [
     name: 'features_constraints',
     category: 'context',
     title: 'Property differences',
-    question: 'Can you identify the features or constraints that make this property stronger or weaker than its closest rental competitors?',
+    question:
+      'Can you identify the features or constraints that make this property stronger or weaker than its closest rental competitors?',
     answers: [
       ['3', 'Yes — I can explain the meaningful differences and how they affect the comparison.'],
       ['2', 'I know the main features, but I have not compared them carefully.'],
@@ -80,7 +84,10 @@ const questions = [
     title: 'Owner objective',
     question: 'Is the outcome you are trying to optimise clear before choosing a rental position?',
     answers: [
-      ['3', 'Yes — I understand the trade-offs between income, vacancy risk, timing, renter retention and property presentation.'],
+      [
+        '3',
+        'Yes — I understand the trade-offs between income, vacancy risk, timing, renter retention and property presentation.',
+      ],
       ['2', 'I know my main priority, but the trade-offs have not been discussed clearly.'],
       ['1', 'I am mainly focused on the headline weekly figure.'],
       ['0', 'No — I have not defined the decision beyond wanting the best possible rent.'],
@@ -88,43 +95,52 @@ const questions = [
   },
 ] as const;
 ---
+
 <div class="rental-position-check" id="rental-position-check">
   <div class="rental-position-check__intro">
     <div>
       <p class="eyebrow">Private · ungated · about 90 seconds</p>
       <h2>Is the evidence ready for a rental decision?</h2>
     </div>
-    <p>Answer seven practical questions. Your Rental Decision Readiness result is calculated in your browser and is not sent anywhere. No name, email, phone number or property address is required.</p>
+    <p>
+      Answer seven practical questions. Your Rental Decision Readiness result is calculated in your browser and is not
+      sent anywhere. No name, email, phone number or property address is required.
+    </p>
   </div>
 
   <form class="rental-position-check__form" data-rental-position-check>
     <ol class="position-questions">
-      {questions.map((item, index) => (
-        <li class="position-question" data-position-question={item.name} data-position-category={item.category}>
-          <fieldset>
-            <legend>
-              <span class="position-question__number">{String(index + 1).padStart(2, '0')}</span>
-              <span>
-                <small>{item.title}</small>
-                {item.question}
-              </span>
-            </legend>
-            <div class="position-options">
-              {item.answers.map(([value, label]) => (
-                <label>
-                  <input type="radio" name={item.name} value={value} required />
-                  <span>{label}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </li>
-      ))}
+      {
+        questions.map((item, index) => (
+          <li class="position-question" data-position-question={item.name} data-position-category={item.category}>
+            <fieldset>
+              <legend>
+                <span class="position-question__number">{String(index + 1).padStart(2, '0')}</span>
+                <span>
+                  <small>{item.title}</small>
+                  {item.question}
+                </span>
+              </legend>
+              <div class="position-options">
+                {item.answers.map(([value, label]) => (
+                  <label>
+                    <input type="radio" name={item.name} value={value} required />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          </li>
+        ))
+      }
     </ol>
 
     <div class="position-submit">
       <button class="button button--solid" type="submit">Show my readiness result</button>
-      <p>This is a decision-readiness self-check, not a rental valuation, automated valuation model, compliance audit or legal advice. It does not calculate what your property should rent for.</p>
+      <p>
+        This is a decision-readiness self-check, not a rental valuation, automated valuation model, compliance audit or
+        legal advice. It does not calculate what your property should rent for.
+      </p>
     </div>
   </form>
 
@@ -165,10 +181,15 @@ const questions = [
       <div>
         <p class="eyebrow">Move from readiness to evidence</p>
         <h3>Use the result before anyone gives you a headline number.</h3>
-        <p>If you want a property-specific view, Sana can assess the property, current competition and timing and explain the evidence behind the appraisal.</p>
+        <p>
+          If you want a property-specific view, Sana can assess the property, current competition and timing and explain
+          the evidence behind the appraisal.
+        </p>
       </div>
       <div class="position-result__buttons">
-        <a class="button button--solid" href="/rental-appraisal/" data-position-cta="rental_appraisal">Request an appraisal</a>
+        <a class="button button--solid" href="/rental-appraisal/" data-position-cta="rental_appraisal"
+          >Request an appraisal</a
+        >
         <a class="button" href={`tel:${SITE.phone.e164}`} data-position-cta="call_sana">Call Sana</a>
         <button class="button" type="button" data-position-print>Print / save result</button>
       </div>
@@ -176,7 +197,11 @@ const questions = [
   </section>
 
   <aside class="position-source-note">
-    <p><strong>Why there is no instant dollar estimate:</strong> a defensible property-specific rental opinion needs current, relevant evidence and professional context. Broad suburb medians and historical figures can be useful background, but they are not a substitute for assessing the property and the competition it faces now.</p>
+    <p>
+      <strong>Why there is no instant dollar estimate:</strong> a defensible property-specific rental opinion needs current,
+      relevant evidence and professional context. Broad suburb medians and historical figures can be useful background, but
+      they are not a substitute for assessing the property and the competition it faces now.
+    </p>
   </aside>
 </div>
 
@@ -187,13 +212,20 @@ const questions = [
 
   if (form instanceof HTMLFormElement) {
     const advice = {
-      current_comparables: 'Gather a small set of current competing rentals that are genuinely comparable in location, property type, size, condition and features — and note why each one belongs in the comparison.',
-      last_review: 'Record when the rental position was last reviewed, what evidence was used and what decision followed so the next review starts from facts rather than memory.',
-      demand_signals: 'Look beyond historical medians and check the current competitive set, how much comparable stock is available and what demand signals are visible now.',
-      condition_presentation: 'Assess the property as it presents today, including maintenance, cleanliness, presentation and improvements that may change how renters compare it with alternatives.',
-      features_constraints: 'List the meaningful strengths and constraints versus the closest competitors — not every feature, only the differences likely to influence renter choice.',
-      decision_timing: 'Identify the next renewal, re-leasing or vacancy decision date early enough to review evidence and act without being forced into a last-minute choice.',
-      owner_objective: 'Clarify the outcome you are optimising and the trade-offs you are prepared to make between weekly income, vacancy risk, timing, renter retention and property work.',
+      current_comparables:
+        'Gather a small set of current competing rentals that are genuinely comparable in location, property type, size, condition and features — and note why each one belongs in the comparison.',
+      last_review:
+        'Record when the rental position was last reviewed, what evidence was used and what decision followed so the next review starts from facts rather than memory.',
+      demand_signals:
+        'Look beyond historical medians and check the current competitive set, how much comparable stock is available and what demand signals are visible now.',
+      condition_presentation:
+        'Assess the property as it presents today, including maintenance, cleanliness, presentation and improvements that may change how renters compare it with alternatives.',
+      features_constraints:
+        'List the meaningful strengths and constraints versus the closest competitors — not every feature, only the differences likely to influence renter choice.',
+      decision_timing:
+        'Identify the next renewal, re-leasing or vacancy decision date early enough to review evidence and act without being forced into a last-minute choice.',
+      owner_objective:
+        'Clarify the outcome you are optimising and the trade-offs you are prepared to make between weekly income, vacancy risk, timing, renter retention and property work.',
     } as const;
 
     const result = document.querySelector('[data-position-result]');
@@ -254,22 +286,33 @@ const questions = [
 
       if (overall >= 80) {
         if (band) band.textContent = 'Well prepared';
-        if (title) title.textContent = 'You appear to have a strong evidence base for a considered rental conversation.';
-        if (copy) copy.textContent = 'The next step is to test that evidence against the property and current competition, then decide on the rental position with the trade-offs made explicit.';
+        if (title)
+          title.textContent = 'You appear to have a strong evidence base for a considered rental conversation.';
+        if (copy)
+          copy.textContent =
+            'The next step is to test that evidence against the property and current competition, then decide on the rental position with the trade-offs made explicit.';
       } else if (overall >= 60) {
         if (band) band.textContent = 'Some evidence gaps';
-        if (title) title.textContent = 'You have useful context, but a few missing pieces could materially change the decision.';
-        if (copy) copy.textContent = 'Close the most important evidence gaps before anchoring on a weekly figure. A stronger comparison makes the eventual appraisal easier to explain and challenge.';
+        if (title)
+          title.textContent = 'You have useful context, but a few missing pieces could materially change the decision.';
+        if (copy)
+          copy.textContent =
+            'Close the most important evidence gaps before anchoring on a weekly figure. A stronger comparison makes the eventual appraisal easier to explain and challenge.';
       } else {
         if (band) band.textContent = 'Build the evidence first';
-        if (title) title.textContent = 'There may not be enough current context yet to choose a rental position confidently.';
-        if (copy) copy.textContent = 'That is not a negative result. It means the useful next move is to collect current comparable evidence, property context and timing information before treating any headline figure as a strategy.';
+        if (title)
+          title.textContent = 'There may not be enough current context yet to choose a rental position confidently.';
+        if (copy)
+          copy.textContent =
+            'That is not a negative result. It means the useful next move is to collect current comparable evidence, property context and timing information before treating any headline figure as a strategy.';
       }
 
       const list = document.querySelector('[data-position-review-items]');
       if (list) {
         list.replaceChildren();
-        const items = evidenceGaps.length ? evidenceGaps.slice(0, 4) : (['current_comparables', 'decision_timing'] as const);
+        const items = evidenceGaps.length
+          ? evidenceGaps.slice(0, 4)
+          : (['current_comparables', 'decision_timing'] as const);
         for (const key of items) {
           const li = document.createElement('li');
           li.textContent = advice[key];
@@ -282,7 +325,10 @@ const questions = [
       if (result instanceof HTMLElement) {
         result.hidden = false;
         result.focus({ preventScroll: true });
-        result.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+        result.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'start',
+        });
       }
     });
   }
@@ -306,70 +352,350 @@ const questions = [
 </script>
 
 <style>
-  .rental-position-check { display:grid; gap:var(--space-4); }
-  .rental-position-check__intro { display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:var(--space-4); align-items:end; }
-  .rental-position-check__intro h2 { margin-top:var(--space-2); font-size:var(--h2); max-width:13ch; }
-  .rental-position-check__intro > p { max-width:42rem; color:var(--ink-soft); font-size:var(--body-lg); }
-  .rental-position-check__form { display:grid; gap:var(--space-3); }
-  .position-questions { display:grid; gap:1rem; margin:0; padding:0; list-style:none; }
-  .position-question { border:1px solid var(--line); background:rgba(255,253,248,.76); box-shadow:var(--shadow-soft); }
-  .position-question fieldset { margin:0; padding:clamp(1.25rem,3vw,2rem); border:0; }
-  .position-question legend { width:100%; display:grid; grid-template-columns:auto 1fr; gap:1rem; align-items:start; padding:0; font-family:var(--font-display); font-size:clamp(1.35rem,2vw,1.9rem); font-weight:430; line-height:1.08; }
-  .position-question legend small { display:block; margin-bottom:.42rem; font-family:var(--font-sans); color:var(--accent); font-size:.68rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
-  .position-question__number { min-width:2.6rem; color:var(--accent); font-family:var(--font-sans); font-size:.72rem; font-weight:700; letter-spacing:.12em; padding-top:.35rem; }
-  .position-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem; margin-top:1.35rem; }
-  .position-options label { position:relative; display:grid; grid-template-columns:auto 1fr; gap:.75rem; align-items:start; padding:1rem; min-height:3.2rem; border:1px solid var(--line); background:var(--white); cursor:pointer; transition:border-color 160ms ease, background-color 160ms ease, transform 160ms ease; }
-  .position-options label:hover { border-color:var(--accent); transform:translateY(-1px); }
-  .position-options input { width:1.05rem; height:1.05rem; margin-top:.22rem; accent-color:var(--accent); }
-  .position-options label:has(input:checked) { border-color:var(--accent); background:var(--paper-deep); }
-  .position-options span { color:var(--ink-soft); font-size:.92rem; line-height:1.5; }
-  .position-submit { display:grid; grid-template-columns:auto minmax(0,1fr); gap:var(--space-2); align-items:center; padding-top:var(--space-2); }
-  .position-submit p { max-width:50rem; color:var(--ink-soft); font-size:.82rem; }
-  .position-result { scroll-margin-top:2rem; display:grid; grid-template-columns:.55fr 1.45fr; gap:var(--space-4); padding:clamp(1.5rem,4vw,3rem); background:var(--ink); color:var(--white); border-top:2px solid var(--accent-pale); }
-  .position-result[hidden] { display:none; }
-  .position-result__score { display:flex; flex-direction:column; justify-content:center; padding-right:var(--space-3); border-right:1px solid var(--line-light); }
-  .position-result__score strong { display:block; margin-top:var(--space-2); font-family:var(--font-display); font-size:clamp(4rem,9vw,8rem); font-weight:350; line-height:.85; color:var(--accent-pale); }
-  .position-result__score > span { margin-top:.7rem; color:rgba(255,255,255,.65); font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; }
-  .position-result__summary { align-self:center; }
-  .position-result__band { color:var(--accent-pale); font-size:.72rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; }
-  .position-result__summary h2 { margin-top:.65rem; font-size:var(--h2); max-width:15ch; }
-  .position-result__summary > p:last-child { margin-top:var(--space-2); max-width:44rem; color:rgba(255,255,255,.72); }
-  .position-result__dimensions { grid-column:1/-1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; padding-top:var(--space-3); border-top:1px solid var(--line-light); }
-  .position-result__dimensions article { padding:1rem 0; }
-  .position-result__dimensions article > div { display:flex; justify-content:space-between; gap:1rem; font-size:.82rem; }
-  .position-result__dimensions strong { color:var(--accent-pale); }
-  progress { width:100%; height:.35rem; margin-top:.8rem; border:0; border-radius:0; appearance:none; }
-  progress::-webkit-progress-bar { background:rgba(255,255,255,.12); }
-  progress::-webkit-progress-value { background:var(--accent-pale); }
-  progress::-moz-progress-bar { background:var(--accent-pale); }
-  .position-result__review { grid-column:1/-1; padding-top:var(--space-3); border-top:1px solid var(--line-light); }
-  .position-result__review ul { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem 2rem; margin:var(--space-2) 0 0; padding:0; list-style:none; }
-  .position-result__review li { position:relative; padding-left:1.25rem; color:rgba(255,255,255,.72); }
-  .position-result__review li::before { content:'•'; position:absolute; left:0; color:var(--accent-pale); }
-  .position-result__actions { grid-column:1/-1; display:grid; grid-template-columns:1fr auto; gap:var(--space-4); align-items:end; padding-top:var(--space-3); border-top:1px solid var(--line-light); }
-  .position-result__actions h3 { margin-top:.5rem; font-size:var(--h3); }
-  .position-result__actions p:last-child { margin-top:.7rem; max-width:42rem; color:rgba(255,255,255,.68); }
-  .position-result__buttons { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:.65rem; }
-  .position-result__buttons .button:not(.button--solid) { color:var(--white); }
-  .position-source-note { padding:1rem 1.15rem; border-left:2px solid var(--accent); background:rgba(255,253,248,.65); color:var(--ink-soft); font-size:.82rem; }
+  .rental-position-check {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .rental-position-check__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: var(--space-4);
+    align-items: end;
+  }
+  .rental-position-check__intro h2 {
+    margin-top: var(--space-2);
+    font-size: var(--h2);
+    max-width: 13ch;
+  }
+  .rental-position-check__intro > p {
+    max-width: 42rem;
+    color: var(--ink-soft);
+    font-size: var(--body-lg);
+  }
+  .rental-position-check__form {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .position-questions {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .position-question {
+    border: 1px solid var(--line);
+    background: rgba(255, 253, 248, 0.76);
+    box-shadow: var(--shadow-soft);
+  }
+  .position-question fieldset {
+    margin: 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 0;
+  }
+  .position-question legend {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    font-weight: 430;
+    line-height: 1.08;
+  }
+  .position-question legend small {
+    display: block;
+    margin-bottom: 0.42rem;
+    font-family: var(--font-sans);
+    color: var(--accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .position-question__number {
+    min-width: 2.6rem;
+    color: var(--accent);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding-top: 0.35rem;
+  }
+  .position-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin-top: 1.35rem;
+  }
+  .position-options label {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 1rem;
+    min-height: 3.2rem;
+    border: 1px solid var(--line);
+    background: var(--white);
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      transform 160ms ease;
+  }
+  .position-options label:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .position-options input {
+    width: 1.05rem;
+    height: 1.05rem;
+    margin-top: 0.22rem;
+    accent-color: var(--accent);
+  }
+  .position-options label:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--paper-deep);
+  }
+  .position-options span {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  .position-submit {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2);
+    align-items: center;
+    padding-top: var(--space-2);
+  }
+  .position-submit p {
+    max-width: 50rem;
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+  }
+  .position-result {
+    scroll-margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 0.55fr 1.45fr;
+    gap: var(--space-4);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background: var(--ink);
+    color: var(--white);
+    border-top: 2px solid var(--accent-pale);
+  }
+  .position-result[hidden] {
+    display: none;
+  }
+  .position-result__score {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: var(--space-3);
+    border-right: 1px solid var(--line-light);
+  }
+  .position-result__score strong {
+    display: block;
+    margin-top: var(--space-2);
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 9vw, 8rem);
+    font-weight: 350;
+    line-height: 0.85;
+    color: var(--accent-pale);
+  }
+  .position-result__score > span {
+    margin-top: 0.7rem;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .position-result__summary {
+    align-self: center;
+  }
+  .position-result__band {
+    color: var(--accent-pale);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  .position-result__summary h2 {
+    margin-top: 0.65rem;
+    font-size: var(--h2);
+    max-width: 15ch;
+  }
+  .position-result__summary > p:last-child {
+    margin-top: var(--space-2);
+    max-width: 44rem;
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .position-result__dimensions {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--line-light);
+  }
+  .position-result__dimensions article {
+    padding: 1rem 0;
+  }
+  .position-result__dimensions article > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.82rem;
+  }
+  .position-result__dimensions strong {
+    color: var(--accent-pale);
+  }
+  progress {
+    width: 100%;
+    height: 0.35rem;
+    margin-top: 0.8rem;
+    border: 0;
+    border-radius: 0;
+    appearance: none;
+  }
+  progress::-webkit-progress-bar {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  progress::-webkit-progress-value {
+    background: var(--accent-pale);
+  }
+  progress::-moz-progress-bar {
+    background: var(--accent-pale);
+  }
+  .position-result__review {
+    grid-column: 1/-1;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--line-light);
+  }
+  .position-result__review ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .position-result__review li {
+    position: relative;
+    padding-left: 1.25rem;
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .position-result__review li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent-pale);
+  }
+  .position-result__actions {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-4);
+    align-items: end;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--line-light);
+  }
+  .position-result__actions h3 {
+    margin-top: 0.5rem;
+    font-size: var(--h3);
+  }
+  .position-result__actions p:last-child {
+    margin-top: 0.7rem;
+    max-width: 42rem;
+    color: rgba(255, 255, 255, 0.68);
+  }
+  .position-result__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.65rem;
+  }
+  .position-result__buttons .button:not(.button--solid) {
+    color: var(--white);
+  }
+  .position-source-note {
+    padding: 1rem 1.15rem;
+    border-left: 2px solid var(--accent);
+    background: rgba(255, 253, 248, 0.65);
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+  }
 
-  @media(max-width:850px){
-    .rental-position-check__intro,.position-result,.position-result__actions{grid-template-columns:1fr;}
-    .position-result__score{padding-right:0;padding-bottom:var(--space-3);border-right:0;border-bottom:1px solid var(--line-light);}
-    .position-result__dimensions,.position-result__review,.position-result__actions{grid-column:1;}
-    .position-result__buttons{justify-content:flex-start;}
+  @media (max-width: 850px) {
+    .rental-position-check__intro,
+    .position-result,
+    .position-result__actions {
+      grid-template-columns: 1fr;
+    }
+    .position-result__score {
+      padding-right: 0;
+      padding-bottom: var(--space-3);
+      border-right: 0;
+      border-bottom: 1px solid var(--line-light);
+    }
+    .position-result__dimensions,
+    .position-result__review,
+    .position-result__actions {
+      grid-column: 1;
+    }
+    .position-result__buttons {
+      justify-content: flex-start;
+    }
   }
-  @media(max-width:680px){
-    .position-options,.position-result__dimensions,.position-result__review ul{grid-template-columns:1fr;}
-    .position-submit{grid-template-columns:1fr;}
-    .position-submit .button{width:100%;}
-    .position-question legend{grid-template-columns:1fr;gap:.35rem;}
+  @media (max-width: 680px) {
+    .position-options,
+    .position-result__dimensions,
+    .position-result__review ul {
+      grid-template-columns: 1fr;
+    }
+    .position-submit {
+      grid-template-columns: 1fr;
+    }
+    .position-submit .button {
+      width: 100%;
+    }
+    .position-question legend {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
   }
-  @media print{
-    .site-header,.site-footer,.rental-position-check__form,.position-source-note,.position-result__buttons{display:none!important;}
-    .position-result{display:grid!important;color:#111;background:#fff;border:1px solid #bbb;}
-    .position-result__score,.position-result__dimensions,.position-result__review,.position-result__actions{border-color:#ccc;}
-    .position-result__score strong,.position-result__band,.position-result__dimensions strong{color:#6d532c;}
-    .position-result__summary>p:last-child,.position-result__review li,.position-result__actions p:last-child{color:#333;}
+  @media print {
+    .site-header,
+    .site-footer,
+    .rental-position-check__form,
+    .position-source-note,
+    .position-result__buttons {
+      display: none !important;
+    }
+    .position-result {
+      display: grid !important;
+      color: #111;
+      background: #fff;
+      border: 1px solid #bbb;
+    }
+    .position-result__score,
+    .position-result__dimensions,
+    .position-result__review,
+    .position-result__actions {
+      border-color: #ccc;
+    }
+    .position-result__score strong,
+    .position-result__band,
+    .position-result__dimensions strong {
+      color: #6d532c;
+    }
+    .position-result__summary > p:last-child,
+    .position-result__review li,
+    .position-result__actions p:last-child {
+      color: #333;
+    }
   }
 </style>

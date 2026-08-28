@@ -5,8 +5,10 @@ import SiteFooter from '@/components/SiteFooter.astro';
 import InnerHero from '@/components/InnerHero.astro';
 
 const title = 'Lease Property Melbourne | Rental Providers & Renters | Sana Patel Real Estate';
-const description = 'Choose the rental journey that matches you: Melbourne property management for rental providers or practical support for renters through Sana Patel Real Estate.';
+const description =
+  'Choose the rental journey that matches you: Melbourne property management for rental providers or practical support for renters through Sana Patel Real Estate.';
 ---
+
 <BaseLayout {title} {description} canonicalPath="/lease/">
   <SiteHeader slot="header" />
   <InnerHero
@@ -21,7 +23,10 @@ const description = 'Choose the rental journey that matches you: Melbourne prope
       <article>
         <p class="eyebrow">I own an investment property</p>
         <h2>For Rental Providers</h2>
-        <p>Property management, rental appraisal, leasing, inspections, maintenance, arrears, renewals and direct accountability.</p>
+        <p>
+          Property management, rental appraisal, leasing, inspections, maintenance, arrears, renewals and direct
+          accountability.
+        </p>
         <div class="actions">
           <a class="button button--solid" href="/rental-providers/">Explore property management</a>
           <a class="button" href="/rental-appraisal/">Rental appraisal</a>
@@ -30,7 +35,10 @@ const description = 'Choose the rental journey that matches you: Melbourne prope
       <article>
         <p class="eyebrow">I rent or want to rent a home</p>
         <h2>For Renters</h2>
-        <p>Find the renter pathway, understand how to contact Sana and access the practical information currently available for managed tenancies.</p>
+        <p>
+          Find the renter pathway, understand how to contact Sana and access the practical information currently
+          available for managed tenancies.
+        </p>
         <div class="actions">
           <a class="button button--solid" href="/for-renters/">For renters</a>
           <a class="button" href="/contact/">Contact Sana</a>
@@ -43,10 +51,40 @@ const description = 'Choose the rental journey that matches you: Melbourne prope
 </BaseLayout>
 
 <style>
-  .pathway-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3); }
-  article { min-height:30rem; padding:clamp(2rem,5vw,5rem); border:1px solid var(--line); border-radius:var(--radius-md); background:var(--white); box-shadow:var(--shadow-soft); display:flex; flex-direction:column; justify-content:flex-end; }
-  h2 { margin-top:var(--space-2); font-size:var(--h2); }
-  article > p:not(.eyebrow) { margin-top:var(--space-2); max-width:34rem; color:var(--ink-soft); }
-  .actions { margin-top:var(--space-4); display:flex; flex-wrap:wrap; gap:.8rem; }
-  @media(max-width:800px){ .pathway-grid{grid-template-columns:1fr;} }
+  .pathway-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  article {
+    min-height: 30rem;
+    padding: clamp(2rem, 5vw, 5rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  h2 {
+    margin-top: var(--space-2);
+    font-size: var(--h2);
+  }
+  article > p:not(.eyebrow) {
+    margin-top: var(--space-2);
+    max-width: 34rem;
+    color: var(--ink-soft);
+  }
+  .actions {
+    margin-top: var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  @media (max-width: 800px) {
+    .pathway-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

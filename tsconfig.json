@@ -8,12 +8,5 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react"
   },
-  "exclude": [
-    "dist",
-    ".astro",
-    ".wrangler",
-    ".wrangler-dry-run",
-    "studio/dist",
-    "studio/.sanity"
-  ]
+  "exclude": ["dist", ".astro", ".wrangler", ".wrangler-dry-run", "studio/dist", "studio/.sanity"]
 }
