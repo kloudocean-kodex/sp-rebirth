@@ -6,7 +6,7 @@ import {
   cleanText,
   createLeadPayload,
   declaredBodyTooLarge,
-  normalizeFormType,
+  parseLeadFormType,
   readFormDataWithinLimit,
   requestOriginAllowed,
   supportedLeadContentType,
@@ -120,10 +120,16 @@ export const POST: APIRoute = async ({ request }) => {
   }
   const form = parsedForm.form;
 
-  const formType = normalizeFormType(form.get('form_type'));
+  const parsedFormType = parseLeadFormType(form.get('form_type'));
+  const formType: LeadFormType = parsedFormType ?? 'general';
 
   // Honeypot: genuine visitors never fill this field. Return a success-like response without forwarding data.
+  // Preserve the decoy even for malformed form-type values so bots do not learn which validation failed.
   if (cleanText(form.get('company_website'), 200)) return delivered(request, formType);
+
+  if (!parsedFormType) {
+    return json({ ok: false, error: 'validation_failed', fields: ['form_type'] }, 400);
+  }
 
   const lead = createLeadPayload(form, {
     id: crypto.randomUUID(),

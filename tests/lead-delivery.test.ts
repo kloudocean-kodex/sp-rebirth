@@ -7,7 +7,11 @@ import {
   resolveLeadDeliveryMode,
   type LeadQueueBinding,
 } from '../src/lib/lead-delivery';
-import { LEAD_LIMITS, type LeadPayload } from '../src/lib/leads';
+import {
+  CURRENT_LEAD_PRIVACY_NOTICE_VERSION,
+  LEAD_LIMITS,
+  type LeadPayload,
+} from '../src/lib/leads';
 
 function lead(): LeadPayload {
   return {
@@ -23,7 +27,7 @@ function lead(): LeadPayload {
     situation: 'Currently vacant',
     timeframe: 'Within 30 days',
     message: 'Synthetic test lead',
-    privacyNoticeVersion: '2026-08-27',
+    privacyNoticeVersion: CURRENT_LEAD_PRIVACY_NOTICE_VERSION,
     attribution: {
       landingPage: 'https://staging.example/rental-appraisal/',
       referrer: '',
@@ -180,5 +184,9 @@ describe('Queue safety helpers', () => {
     expect(isLeadPayload({ ...lead(), email: 'not-an-email' })).toBe(false);
     expect(isLeadPayload({ ...lead(), propertyAddress: '', suburb: '' })).toBe(false);
     expect(isLeadPayload({ ...lead(), submittedAt: 'not-a-date' })).toBe(false);
+  });
+
+  it('rejects Queue payloads claiming an unrecognised privacy-notice version', () => {
+    expect(isLeadPayload({ ...lead(), privacyNoticeVersion: '2099-01-01' })).toBe(false);
   });
 });

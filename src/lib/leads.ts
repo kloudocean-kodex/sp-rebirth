@@ -1,6 +1,13 @@
 export const LEAD_FORM_TYPES = ['rental_appraisal', 'switch_manager', 'general'] as const;
 export type LeadFormType = (typeof LEAD_FORM_TYPES)[number];
 
+// Keep previously approved notice versions here when the public notice changes so
+// already-queued legitimate leads remain processable while new intake is pinned to
+// CURRENT_LEAD_PRIVACY_NOTICE_VERSION.
+export const LEAD_PRIVACY_NOTICE_VERSIONS = ['2026-08-27'] as const;
+export type LeadPrivacyNoticeVersion = (typeof LEAD_PRIVACY_NOTICE_VERSIONS)[number];
+export const CURRENT_LEAD_PRIVACY_NOTICE_VERSION: LeadPrivacyNoticeVersion = '2026-08-27';
+
 export const LEAD_LIMITS = {
   name: 120,
   email: 180,
@@ -50,9 +57,17 @@ export function cleanText(value: FormDataEntryValue | null, max: number): string
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
 }
 
-export function normalizeFormType(value: FormDataEntryValue | null): LeadFormType {
+export function parseLeadFormType(value: FormDataEntryValue | null): LeadFormType | null {
   const candidate = cleanText(value, 80);
-  return (LEAD_FORM_TYPES as readonly string[]).includes(candidate) ? (candidate as LeadFormType) : 'general';
+  return (LEAD_FORM_TYPES as readonly string[]).includes(candidate) ? (candidate as LeadFormType) : null;
+}
+
+export function normalizeFormType(value: FormDataEntryValue | null): LeadFormType {
+  return parseLeadFormType(value) ?? 'general';
+}
+
+export function isKnownLeadPrivacyNoticeVersion(value: string): value is LeadPrivacyNoticeVersion {
+  return (LEAD_PRIVACY_NOTICE_VERSIONS as readonly string[]).includes(value);
 }
 
 export function emailLooksValid(value: string): boolean {
@@ -94,7 +109,13 @@ export function validateLead(lead: LeadPayload): string[] {
   if (lead.fullName.length < 2) errors.push('full_name');
   if (!emailLooksValid(lead.email)) errors.push('email');
   if (lead.phone.length < 6) errors.push('phone');
-  if (!lead.privacyNoticeVersion) errors.push('privacy_notice_version');
+
+  // New submissions must attest to exactly the notice rendered by this build.
+  // Historical known versions are accepted only at the Queue-consumer boundary
+  // so an already accepted lead is not poisoned by a later notice revision.
+  if (lead.privacyNoticeVersion !== CURRENT_LEAD_PRIVACY_NOTICE_VERSION) {
+    errors.push('privacy_notice_version');
+  }
 
   if (
     (lead.formType === 'rental_appraisal' || lead.formType === 'switch_manager') &&

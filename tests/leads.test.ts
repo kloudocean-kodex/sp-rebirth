@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CURRENT_LEAD_PRIVACY_NOTICE_VERSION,
   LEAD_LIMITS,
   cleanText,
   createLeadPayload,
   declaredBodyTooLarge,
   normalizeFormType,
+  parseLeadFormType,
   readFormDataWithinLimit,
   requestOriginAllowed,
   supportedLeadContentType,
@@ -17,7 +19,7 @@ function validForm(type = 'general') {
   form.set('full_name', '  Sana   Example  ');
   form.set('email', 'SANA@example.com');
   form.set('phone', '0416 977 990');
-  form.set('privacy_notice_version', '2026-08-27');
+  form.set('privacy_notice_version', CURRENT_LEAD_PRIVACY_NOTICE_VERSION);
   return form;
 }
 
@@ -27,9 +29,10 @@ describe('lead normalization', () => {
     expect(cleanText('123456', 4)).toBe('1234');
   });
 
-  it('allows only known form types', () => {
-    expect(normalizeFormType('rental_appraisal')).toBe('rental_appraisal');
-    expect(normalizeFormType('switch_manager')).toBe('switch_manager');
+  it('distinguishes strict form-type parsing from internal fallback normalization', () => {
+    expect(parseLeadFormType('rental_appraisal')).toBe('rental_appraisal');
+    expect(parseLeadFormType('switch_manager')).toBe('switch_manager');
+    expect(parseLeadFormType('anything_else')).toBeNull();
     expect(normalizeFormType('anything_else')).toBe('general');
   });
 
@@ -40,7 +43,7 @@ describe('lead normalization', () => {
     });
     expect(lead.fullName).toBe('Sana Example');
     expect(lead.email).toBe('sana@example.com');
-    expect(lead.privacyNoticeVersion).toBe('2026-08-27');
+    expect(lead.privacyNoticeVersion).toBe(CURRENT_LEAD_PRIVACY_NOTICE_VERSION);
   });
 });
 
@@ -85,6 +88,17 @@ describe('lead validation', () => {
     expect(errors).toEqual(
       expect.arrayContaining(['full_name', 'email', 'phone', 'privacy_notice_version']),
     );
+  });
+
+  it('rejects a client-tampered or stale privacy-notice version for new intake', () => {
+    const form = validForm();
+    form.set('privacy_notice_version', '2099-01-01');
+    const lead = createLeadPayload(form, {
+      id: 'lead-1',
+      submittedAt: '2026-08-27T00:00:00.000Z',
+    });
+
+    expect(validateLead(lead)).toContain('privacy_notice_version');
   });
 });
 

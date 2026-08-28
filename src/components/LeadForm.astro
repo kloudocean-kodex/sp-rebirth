@@ -1,4 +1,6 @@
 ---
+import { CURRENT_LEAD_PRIVACY_NOTICE_VERSION } from '@/lib/leads';
+
 interface Props {
   type: 'rental_appraisal' | 'switch_manager' | 'general';
   heading?: string;
@@ -14,7 +16,7 @@ const {
 } = Astro.props;
 
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
-const privacyNoticeVersion = '2026-08-27';
+const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
 ---
 <div class="lead-form-shell">
   <div class="lead-form-intro">

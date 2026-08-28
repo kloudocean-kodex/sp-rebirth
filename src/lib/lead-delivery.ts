@@ -1,4 +1,9 @@
-import { LEAD_LIMITS, emailLooksValid, type LeadPayload } from './leads';
+import {
+  LEAD_LIMITS,
+  emailLooksValid,
+  isKnownLeadPrivacyNoticeVersion,
+  type LeadPayload,
+} from './leads';
 
 export type LeadDeliveryMode = 'queue' | 'webhook';
 
@@ -139,7 +144,12 @@ export function isLeadPayload(value: unknown): value is LeadPayload {
   if (!stringWithin(value.situation, 0, LEAD_LIMITS.short)) return false;
   if (!stringWithin(value.timeframe, 0, LEAD_LIMITS.short)) return false;
   if (!stringWithin(value.message, 0, LEAD_LIMITS.message)) return false;
-  if (!stringWithin(value.privacyNoticeVersion, 1, LEAD_LIMITS.noticeVersion)) return false;
+  if (
+    !stringWithin(value.privacyNoticeVersion, 1, LEAD_LIMITS.noticeVersion) ||
+    !isKnownLeadPrivacyNoticeVersion(value.privacyNoticeVersion)
+  ) {
+    return false;
+  }
 
   if ((formType === 'rental_appraisal' || formType === 'switch_manager') && !value.propertyAddress && !value.suburb) {
     return false;
