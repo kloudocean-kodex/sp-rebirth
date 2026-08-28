@@ -22,7 +22,15 @@ function parseStoredAttribution(raw: string | null): LeadAttribution | null {
     const parsed: unknown = JSON.parse(raw);
     if (!isRecord(parsed)) return null;
 
-    const fields = ['landingPage', 'referrer', 'utmSource', 'utmMedium', 'utmCampaign', 'utmContent', 'utmTerm'] as const;
+    const fields = [
+      'landingPage',
+      'referrer',
+      'utmSource',
+      'utmMedium',
+      'utmCampaign',
+      'utmContent',
+      'utmTerm',
+    ] as const;
     if (fields.some((field) => typeof parsed[field] !== 'string')) return null;
 
     return {
