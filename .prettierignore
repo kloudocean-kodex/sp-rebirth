@@ -1,0 +1,10 @@
+.astro/
+.wrangler/
+.wrangler-dry-run/
+dist/
+node_modules/
+playwright-report/
+studio/.sanity/
+studio/dist/
+test-results/
+package-lock.json

@@ -251,7 +251,16 @@
   }
 
   @media (max-width: 900px) {
+    /* The component-scoped desktop-link rule is more specific than the
+       global mobile collapse rule. Keep the two navigation modes exclusive
+       so desktop links cannot overlap or intercept the mobile menu. */
+    .site-nav--desktop { display: none; }
     .mobile-nav { display: block; }
+    .mobile-nav summary {
+      /* Keep the control legible when the header sits over a light inner hero. */
+      background: var(--ink-lux);
+      color: var(--white);
+    }
   }
 
   @media (max-width: 620px) {

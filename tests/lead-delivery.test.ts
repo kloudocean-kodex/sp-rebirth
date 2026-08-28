@@ -107,9 +107,11 @@ describe('Queue acceptance', () => {
 
 describe('webhook consumer transport', () => {
   it('uses HTTPS, bearer authentication and the stable lead id as idempotency key', async () => {
-    const fetcher = vi.fn(
-      async (_input: string | URL | Request, _init?: RequestInit) => new Response(null, { status: 204 }),
-    );
+    const fetcher = vi.fn<typeof fetch>(async (input, init) => {
+      void input;
+      void init;
+      return new Response(null, { status: 204 });
+    });
 
     const result = await deliverLeadToWebhook(
       lead(),
@@ -138,9 +140,11 @@ describe('webhook consumer transport', () => {
   });
 
   it('rejects insecure webhook destinations before making a network call', async () => {
-    const fetcher = vi.fn(
-      async (_input: string | URL | Request, _init?: RequestInit) => new Response(null, { status: 204 }),
-    );
+    const fetcher = vi.fn<typeof fetch>(async (input, init) => {
+      void input;
+      void init;
+      return new Response(null, { status: 204 });
+    });
 
     const result = await deliverLeadToWebhook(
       lead(),
