@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import InnerHero from '@/components/InnerHero.astro';
+import { SITE } from '@/config/site';
 
 interface SourceLink {
   label: string;
@@ -17,6 +18,7 @@ interface Props {
   heading: string;
   lead: string;
   reviewedOn: string;
+  reviewedOnIso: string;
   sources: SourceLink[];
   image?: string;
   noindex?: boolean;
@@ -30,13 +32,36 @@ const {
   heading,
   lead,
   reviewedOn,
+  reviewedOnIso,
   sources,
   image,
   noindex = true,
 } = Astro.props;
+
+if (!/^\d{4}-\d{2}-\d{2}$/.test(reviewedOnIso)) {
+  throw new Error(`Resource review date must use YYYY-MM-DD: ${reviewedOnIso}`);
+}
+
+const pageUrl = new URL(canonicalPath, Astro.site ?? SITE.url).toString();
+const publisher = {
+  '@type': 'Organization',
+  name: SITE.name,
+  url: SITE.url,
+};
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: heading,
+  description,
+  url: pageUrl,
+  mainEntityOfPage: pageUrl,
+  dateModified: reviewedOnIso,
+  author: publisher,
+  publisher,
+};
 ---
 
-<BaseLayout {title} {description} {canonicalPath} {noindex}>
+<BaseLayout {title} {description} {canonicalPath} {noindex} {schema}>
   <SiteHeader slot="header" />
   {
     image ? (
@@ -140,31 +165,29 @@ const {
   }
   .resource-article :global(h2) {
     margin-top: var(--space-5);
-    font-size: clamp(2rem, 4vw, 3.5rem);
-  }
-  .resource-article :global(h3) {
-    margin-top: var(--space-4);
-    font-size: clamp(1.45rem, 2.4vw, 2rem);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    max-width: 19ch;
   }
   .resource-article :global(p),
-  .resource-article :global(ul),
-  .resource-article :global(ol) {
-    margin-top: 1.15rem;
+  .resource-article :global(li) {
     color: var(--ink-soft);
+    font-size: 1.03rem;
+    line-height: 1.72;
+  }
+  .resource-article :global(p) {
+    margin-top: var(--space-2);
   }
   .resource-article :global(ul),
   .resource-article :global(ol) {
-    padding-left: 1.25rem;
-  }
-  .resource-article :global(li + li) {
-    margin-top: 0.65rem;
+    margin: var(--space-2) 0 0 1.2rem;
+    display: grid;
+    gap: 0.65rem;
   }
   .resource-article :global(.note) {
-    margin-top: var(--space-3);
-    padding: 1.2rem 1.35rem;
-    border-left: 3px solid var(--accent);
+    padding: 1.15rem 1.25rem;
+    border-left: 4px solid var(--accent);
     background: var(--paper-deep);
-    color: var(--ink-soft);
+    color: var(--ink);
   }
   .source-panel {
     padding-block: var(--space-5);
@@ -173,31 +196,29 @@ const {
   }
   .source-panel__inner {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
     gap: var(--space-5);
   }
   .source-panel h2 {
     margin-top: var(--space-2);
-    font-size: var(--h2);
     max-width: 12ch;
+    font-size: var(--h2);
   }
   .source-panel ul {
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
-    border-top: 1px solid var(--line-light);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
   .source-panel li {
-    border-bottom: 1px solid var(--line-light);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
   }
   .source-panel a {
     display: block;
+    min-height: 3.4rem;
     padding: 1rem 0;
-    color: rgba(255, 255, 255, 0.82);
-    text-decoration: none;
-  }
-  .source-panel a:hover {
-    color: var(--champagne);
+    color: var(--white);
+    font-weight: 650;
   }
   @media (max-width: 760px) {
     .resource-meta__inner,
