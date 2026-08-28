@@ -23,7 +23,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:a11y": "playwright test tests/a11y",
+    "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
     "lint": "eslint .",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
