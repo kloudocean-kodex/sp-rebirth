@@ -11,14 +11,20 @@ export default defineConfig({
   reporter: process.env.CI ? [['list'], ['html', { outputFolder: 'playwright-report', open: 'never' }]] : 'list',
   outputDir: 'test-results',
   use: {
-    baseURL: 'http://127.0.0.1:8788',
+    baseURL: 'https://127.0.0.1:8788',
+    ignoreHTTPSErrors: true,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
   webServer: {
-    command: 'npx wrangler dev --port 8788',
-    url: 'http://127.0.0.1:8788',
+    // Exercise the same secure-context behavior as production. The site's CSP includes
+    // upgrade-insecure-requests; serving browser QA over plain HTTP causes WebKit to
+    // upgrade local CSS/JS to HTTPS while the dev server is still HTTP, which correctly
+    // fails TLS and produces a false picture of the rendered application.
+    command: 'npx wrangler dev --port 8788 --local-protocol=https',
+    url: 'https://127.0.0.1:8788',
+    ignoreHTTPSErrors: true,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },
