@@ -6,6 +6,7 @@ import InnerHero from '@/components/InnerHero.astro';
 
 const title = 'For Renters Melbourne | Sana Patel Real Estate';
 const description = 'Information and contact options for renters and prospective renters dealing with Sana Patel Real Estate in Melbourne.';
+const cavRepairsUrl = 'https://www.consumer.vic.gov.au/housing/renting/repairs-alterations-safety-and-pets/repairs/repairs-in-rental-properties';
 ---
 <BaseLayout {title} {description} canonicalPath="/for-renters/">
   <SiteHeader slot="header" />
@@ -25,17 +26,47 @@ const description = 'Information and contact options for renters and prospective
         <h2>Useful communication at the moments that matter.</h2>
       </div>
       <div class="statement__body">
-        <p>Sana Patel Real Estate's current service includes renter communication, tenancy administration, maintenance coordination and rent collection for managed properties.</p>
-        <p>This page will become the renter information hub for current processes, frequently asked questions and appropriate links once Sana's operating workflow and tenancy systems are confirmed for the new platform.</p>
+        <p>For renters in homes managed by Sana Patel Real Estate, the standard is straightforward: respectful communication, clear tenancy administration and a practical path when maintenance or another tenancy issue needs attention.</p>
+        <p>Use the contact method supplied for your tenancy for property-specific matters. If you are unsure which channel applies, contact Sana directly rather than sending sensitive tenancy details through a generic public form.</p>
       </div>
     </div>
   </section>
 
   <section class="section section--tight renter-actions">
     <div class="container-wide action-grid">
-      <article><span>01</span><h2>Looking for a rental?</h2><p>Contact Sana for current availability and the appropriate application path. SP_REBIRTH will not publish fake or stale property listings.</p><a href="/contact/">Ask about rentals →</a></article>
-      <article><span>02</span><h2>Already renting through Sana?</h2><p>For tenancy-specific questions or maintenance, use the contact method Sana has provided for your tenancy. If unsure, contact her directly.</p><a href="tel:+61416977990">Call Sana →</a></article>
-      <article><span>03</span><h2>Need general information?</h2><p>The new resources area will provide useful, reviewed renter information without presenting generic content as legal advice.</p><a href="/resources/">Browse resources →</a></article>
+      <article>
+        <span>01</span>
+        <h2>Looking for a rental?</h2>
+        <p>Contact Sana for current availability and the appropriate application path. This site does not publish listings unless their availability can be kept current.</p>
+        <a href="/contact/">Ask about rentals →</a>
+      </article>
+      <article>
+        <span>02</span>
+        <h2>Already renting through Sana?</h2>
+        <p>For tenancy-specific questions or maintenance, use the contact details and process supplied for your tenancy. If you are unsure what to use, contact Sana directly.</p>
+        <a href="tel:+61416977990">Call Sana →</a>
+      </article>
+      <article>
+        <span>03</span>
+        <h2>Is the repair urgent?</h2>
+        <p>Consumer Affairs Victoria says renters should contact the rental provider or agent straight away, use the emergency number supplied at move-in and confirm an urgent-repair request in writing.</p>
+        <a href={cavRepairsUrl}>Read current Victorian repairs guidance →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section renter-guidance">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">Safety before convenience</p>
+        <h2>A public website should never be the only urgent pathway.</h2>
+        <p>If there is immediate danger, use emergency services rather than waiting on a web form. For rental-property repairs, follow the contact process supplied for your tenancy and use current Consumer Affairs Victoria guidance if you need to understand the Victorian repair categories and next steps.</p>
+        <p class="review-note">Victorian repairs guidance checked against Consumer Affairs Victoria on 28 August 2026. This page is general information, not legal advice.</p>
+      </div>
+      <div class="cta-panel__actions">
+        <a class="button button--solid" href={cavRepairsUrl}>Consumer Affairs Victoria</a>
+        <a class="button" href="/contact/">Contact Sana</a>
+      </div>
     </div>
   </section>
 
@@ -50,5 +81,7 @@ const description = 'Information and contact options for renters and prospective
   article h2 { margin-top:var(--space-3); font-size:clamp(1.8rem,2.8vw,2.8rem); }
   article p { margin-top:var(--space-2); color:var(--ink-soft); }
   article a { display:inline-block; margin-top:var(--space-3); font-size:.76rem; font-weight:750; letter-spacing:.08em; text-transform:uppercase; }
+  .renter-guidance { background:var(--paper-deep); }
+  .review-note { margin-top:1rem; color:var(--ink-soft); font-size:.82rem; }
   @media(max-width:800px){ .action-grid{grid-template-columns:1fr;} }
 </style>

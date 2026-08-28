@@ -5,14 +5,14 @@ import SiteFooter from '@/components/SiteFooter.astro';
 import InnerHero from '@/components/InnerHero.astro';
 
 const title = 'Sell Property Melbourne | Sana Patel Real Estate';
-const description = 'Talk with Sana Patel Real Estate about selling residential property in Melbourne, from preparing the campaign through negotiation and settlement coordination.';
+const description = 'Talk with Sana Patel Real Estate about selling residential property in Melbourne, from preparing the campaign through buyer communication and settlement coordination.';
 ---
 <BaseLayout {title} {description} canonicalPath="/sale/">
   <SiteHeader slot="header" />
   <InnerHero
     eyebrow="Selling · Melbourne"
     title="A considered sales campaign, from preparation to settlement."
-    lead="Sana Patel Real Estate's existing service includes residential sales assistance from listing through settlement. SP_REBIRTH keeps that pathway available without allowing it to dilute the site's primary property-management growth focus."
+    lead="Residential sales remain a focused service alongside property management. Sana keeps the journey personal and accountable, from understanding the property and campaign priorities through buyer communication and settlement coordination."
     primaryLabel="Talk to Sana about selling"
     primaryHref="/contact/"
     image="https://www.sanapatel.com.au/wp-content/uploads/2025/08/Sale_552591889.webp"
@@ -22,21 +22,41 @@ const description = 'Talk with Sana Patel Real Estate about selling residential 
     <div class="container statement">
       <div>
         <p class="eyebrow">Sell with context</p>
-        <h2>One person accountable for the journey.</h2>
+        <h2>Start with the property, not a template.</h2>
       </div>
       <div class="statement__body">
-        <p>Selling a home involves presentation, campaign decisions, buyer communication, negotiation and coordination through settlement. The new site will explain Sana's actual sales process once it has been reviewed with her rather than inventing a generic agency formula.</p>
-        <p>If you are considering selling now, contact Sana directly so the conversation can begin with the property and your objectives.</p>
+        <p>A residential sale involves more than putting a listing online. The property, its presentation, likely timing and the owner's priorities should shape the campaign before marketing decisions are made.</p>
+        <p>Sana can begin with the property and your objectives, then explain a practical path through campaign preparation, buyer interest, offers and coordination toward settlement.</p>
       </div>
     </div>
   </section>
 
-  <section class="section section--tight sales-note">
+  <section class="section section--tight sales-process">
+    <div class="container-wide process-grid">
+      <article>
+        <span>01</span>
+        <h2>Property & priorities</h2>
+        <p>Understand the home, likely timing, presentation considerations and what matters most about the sale before recommending a campaign.</p>
+      </article>
+      <article>
+        <span>02</span>
+        <h2>Campaign & buyer interest</h2>
+        <p>Shape the presentation and marketing approach around the property, then keep buyer communication and offers visible rather than leaving the owner guessing.</p>
+      </article>
+      <article>
+        <span>03</span>
+        <h2>Decision to settlement</h2>
+        <p>Keep the next steps clear as an offer is considered and, once a sale proceeds, coordinate the agency side of the journey with the owner's appointed legal and settlement professionals.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container cta-panel">
       <div>
         <p class="eyebrow">Planning a sale?</p>
-        <h2>Start with the property, not a template.</h2>
-        <p>Tell Sana where the property is, your likely timing and what matters most about the move. The detailed campaign recommendation should follow the property—not precede it.</p>
+        <h2>Begin with a property-specific conversation.</h2>
+        <p>Tell Sana where the property is, your likely timing and what matters most about the move. A useful campaign recommendation should follow the property and your objectives—not precede them.</p>
       </div>
       <div class="cta-panel__actions">
         <a class="button button--solid" href="/contact/">Contact Sana</a>
@@ -47,3 +67,13 @@ const description = 'Talk with Sana Patel Real Estate about selling residential 
 
   <SiteFooter slot="footer" />
 </BaseLayout>
+
+<style>
+  .sales-process { background:var(--ink); color:var(--white); }
+  .process-grid { display:grid; grid-template-columns:repeat(3,1fr); }
+  .process-grid article { min-height:22rem; padding:var(--space-4); border:1px solid var(--line-light); }
+  .process-grid span { color:var(--accent-pale); font-size:.7rem; font-weight:700; letter-spacing:.06em; }
+  .process-grid h2 { margin-top:var(--space-3); font-size:clamp(1.8rem,3vw,3rem); }
+  .process-grid p { margin-top:var(--space-2); color:rgba(255,255,255,.72); }
+  @media(max-width:760px){ .process-grid{grid-template-columns:1fr;} }
+</style>
