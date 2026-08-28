@@ -46,6 +46,18 @@ test('confirmed 24x7 direct-access service promise remains visible', async ({ pa
   await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
 });
 
+test('homepage cinematic video is desktop-only and motion-preference safe', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const video = page.locator('.hero__video');
+  const source = video.locator('source');
+  await expect(video).toHaveAttribute('preload', 'none');
+  await expect(source).toHaveAttribute(
+    'media',
+    '(min-width: 900px) and (prefers-reduced-motion: no-preference)',
+  );
+});
+
 test('staging robots policy blocks crawling', async ({ request }) => {
   const response = await request.get('/robots.txt');
   expect(response.ok()).toBeTruthy();
