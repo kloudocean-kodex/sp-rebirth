@@ -87,7 +87,8 @@ Status: **VERIFIED for the local audit branch and an unpromoted Worker version; 
 Source state:
 
 - branch: `audit/mobile-nav-contrast-fix`
-- verified code/CI commit: `3e2e55530314e4b193da77702bbfb9c9afccbf2c`
+- verified code/CI commit: `de618820aa536376635d4e8d23048d11034d8281`
+- prior functional/CI baseline: `3e2e55530314e4b193da77702bbfb9c9afccbf2c`
 - the audit branch also contains documentation-only follow-ups after that verified code/CI commit
 - `origin/main` baseline at audit: `a5df5c9e1f96f8f7c9390af5c86172e3eeaf51ff`
 - pull request: `#2` targeting `development`
@@ -102,6 +103,7 @@ Repository gates run from that exact local state:
 - Astro production build: passed
 - Sanity Studio build: passed (expected warning: no Studio app ID is configured)
 - Wrangler deployment dry-run: passed with automatic provisioning and draft binding creation disabled
+- the documented `test:a11y` command was corrected to target the existing accessibility suite and passed 7/7 Chromium checks
 
 GitHub Actions verification for commit `3e2e55530314e4b193da77702bbfb9c9afccbf2c`:
 
@@ -115,6 +117,15 @@ GitHub Actions verification for commit `3e2e55530314e4b193da77702bbfb9c9afccbf2c
 Refreshed GitHub Actions verification for the current documentation head `cca8cbe8b32526a4e930a411e84ce9934e318c50`:
 
 - workflow run `33171277886`: **success**
+- primary Chromium job: 83 passed, 1 intentional skip
+- desktop Firefox job: 35 passed, 7 intentional skips
+- desktop WebKit job: 35 passed, 7 intentional skips
+- mobile WebKit job: 36 passed, 6 intentional skips
+- all quality, build, dry-run and browser jobs completed successfully
+
+Latest GitHub Actions verification for the current code head `de618820aa536376635d4e8d23048d11034d8281`:
+
+- workflow run `33172698521`: **success**
 - primary Chromium job: 83 passed, 1 intentional skip
 - desktop Firefox job: 35 passed, 7 intentional skips
 - desktop WebKit job: 35 passed, 7 intentional skips
