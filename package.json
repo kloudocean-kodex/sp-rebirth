@@ -29,6 +29,15 @@
     "format": "prettier --write .",
     "cf-typegen": "wrangler types"
   },
+  "overrides": {
+    "@vercel/frameworks": {
+      "js-yaml": "3.15.1",
+      "smol-toml": "1.6.1"
+    },
+    "typeid-js": {
+      "uuid": "11.1.1"
+    }
+  },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.3",
     "@astrojs/react": "^6.0.4",
