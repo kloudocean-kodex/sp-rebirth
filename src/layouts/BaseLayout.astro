@@ -86,5 +86,15 @@ const schemaPayload = schema ?? defaultSchema;
       <slot />
     </main>
     <slot name="footer" />
+
+    <script>
+      import { captureSessionAttribution } from '@/lib/attribution';
+
+      try {
+        captureSessionAttribution(window.sessionStorage, window.location.href, document.referrer);
+      } catch {
+        // Attribution is optional and must never block rendering or navigation.
+      }
+    </script>
   </body>
 </html>
