@@ -1,7 +1,5 @@
 import { expect, test } from '@playwright/test';
 
-type CapturedGrowthEvent = Record<string, unknown>;
-
 test('Rental Position Check emits only non-PII lifecycle signals', async ({ page }) => {
   await page.addInitScript(() => {
     const captured: Record<string, unknown>[] = [];
