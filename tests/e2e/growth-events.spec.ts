@@ -64,25 +64,28 @@ test('Visibility Check emits lifecycle signals without answers, scores or contac
   }
 });
 
-test('lead form preserves first-touch campaign attribution without carrying arbitrary query-string data', async ({ page }) => {
-  await page.goto(
-    '/?utm_source=Google&utm_medium=cpc&utm_campaign=Spring&utm_content=hero&utm_term=property&email=private%40example.test#offer',
-    { waitUntil: 'domcontentloaded' },
-  );
-  await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
+test(
+  'lead form preserves first-touch campaign attribution without carrying arbitrary query-string data',
+  async ({ page }) => {
+    await page.goto(
+      '/?utm_source=Google&utm_medium=cpc&utm_campaign=Spring&utm_content=hero&utm_term=property&email=private%40example.test#offer',
+      { waitUntil: 'domcontentloaded' },
+    );
+    await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.locator('input[name="landing_page"]')).toHaveValue('https://127.0.0.1:8788/');
-  await expect(page.locator('input[name="utm_source"]')).toHaveValue('Google');
-  await expect(page.locator('input[name="utm_medium"]')).toHaveValue('cpc');
-  await expect(page.locator('input[name="utm_campaign"]')).toHaveValue('Spring');
-  await expect(page.locator('input[name="utm_content"]')).toHaveValue('hero');
-  await expect(page.locator('input[name="utm_term"]')).toHaveValue('property');
+    await expect(page.locator('input[name="landing_page"]')).toHaveValue('https://127.0.0.1:8788/');
+    await expect(page.locator('input[name="utm_source"]')).toHaveValue('Google');
+    await expect(page.locator('input[name="utm_medium"]')).toHaveValue('cpc');
+    await expect(page.locator('input[name="utm_campaign"]')).toHaveValue('Spring');
+    await expect(page.locator('input[name="utm_content"]')).toHaveValue('hero');
+    await expect(page.locator('input[name="utm_term"]')).toHaveValue('property');
 
-  const landingPage = await page.locator('input[name="landing_page"]').inputValue();
-  expect(landingPage).not.toContain('private@example.test');
-  expect(landingPage).not.toContain('?');
-  expect(landingPage).not.toContain('#');
-});
+    const landingPage = await page.locator('input[name="landing_page"]').inputValue();
+    expect(landingPage).not.toContain('private@example.test');
+    expect(landingPage).not.toContain('?');
+    expect(landingPage).not.toContain('#');
+  },
+);
 
 test('lead form start signal contains only the journey type', async ({ page }) => {
   await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
