@@ -22,20 +22,28 @@ A successful application deployment is therefore **not** proof that legacy WordP
 
 | # | Legacy asset | Observed use | Cutover status |
 |---|---|---|---|
-| 1 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Patel-Logo.webp` | site header / brand on every page | migration/preservation required |
+| 1 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Patel-Logo.webp` | site header / brand on every page | migration/preservation required; higher-quality approved master still preferred |
 | 2 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/favicon.jpg` | approved WordPress Site Icon / browser favicon | migration/preservation required |
-| 3 | `https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg` | homepage hero poster and `SITE.defaultOgImage` | migration/preservation required |
-| 4 | `https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Video-2025-09-30-at-1.22.28-PM-1.mp4` | homepage hero video; source selection is currently desktop/no-reduced-motion only | migration/replacement required |
-| 5 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-owners_2624278291.webp` | `/rental-providers/` hero | migration/preservation required |
-| 6 | `https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.13.01-PM.jpeg` | `/about/` hero | migration/preservation required |
-| 7 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp` | `/about/` founder image and `/contact/` hero | migration/preservation required |
-| 8 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_1892310928.webp` | `/rental-appraisal/` hero and `/resources/` hero | migration/preservation required |
-| 9 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pate_371781052.webp` | `/switch-property-managers/` hero | migration/preservation required |
-| 10 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/lease-banner_2292016801.webp` | `/lease/` hero | migration/preservation required |
-| 11 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-tenants-banner_2571182183.webp` | `/for-renters/` hero | migration/preservation required |
-| 12 | `https://www.sanapatel.com.au/wp-content/uploads/2025/08/Sale_552591889.webp` | `/sale/` hero | migration/preservation required |
+| 3 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226.webp` | homepage static hero and `SITE.defaultOgImage` | migration/preservation required; current source is 1920×1080 |
+| 4 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-owners_2624278291.webp` | `/rental-providers/` hero | migration/preservation required |
+| 5 | `https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.13.01-PM.jpeg` | `/about/` hero | migration/preservation required |
+| 6 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp` | `/about/` founder image and `/contact/` hero | migration/preservation required |
+| 7 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_1892310928.webp` | `/rental-appraisal/` hero and `/resources/` hero | migration/preservation required |
+| 8 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pate_371781052.webp` | `/switch-property-managers/` hero | migration/preservation required |
+| 9 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/lease-banner_2292016801.webp` | `/lease/` hero | migration/preservation required |
+| 10 | `https://www.sanapatel.com.au/wp-content/uploads/2025/07/for-tenants-banner_2571182183.webp` | `/for-renters/` hero | migration/preservation required |
+| 11 | `https://www.sanapatel.com.au/wp-content/uploads/2025/08/Sale_552591889.webp` | `/sale/` hero | migration/preservation required |
 
 The shared CSS files inspected for this checkpoint do not introduce additional URL-based image backgrounds. `InnerHero.astro` simply renders the image URL supplied by each page.
+
+## Homepage media intentionally retired from the new application
+
+The following legacy assets remain on the existing WordPress site but are no longer intended to be dependencies of the Astro homepage after the static-hero change:
+
+- `https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg`
+- `https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Video-2025-09-30-at-1.22.28-PM-1.mp4`
+
+Do not delete them from WordPress merely because the new application stops referencing them; the live legacy site may still use them until cutover.
 
 ## What is not yet proven
 
@@ -43,7 +51,7 @@ The shared CSS files inspected for this checkpoint do not introduce additional U
 - whether the legacy hosting account will be retained after WordPress is retired
 - whether each source asset is the highest-quality approved master
 - whether final media should live as repository static assets, Sanity assets, another approved asset store, or a deliberately retained legacy path
-- whether the homepage video should be replaced or re-encoded after measured performance and visual review
+- whether a final Melbourne-specific aerial or other premium homepage master will replace the interim owned static hero
 - whether the final asset strategy changes CSP `img-src` / `media-src` requirements
 
 Do not infer any of those answers from the current source references.
@@ -52,7 +60,7 @@ Do not infer any of those answers from the current source references.
 
 Before production cutover or legacy WordPress retirement:
 
-1. obtain/verify the approved source file for every asset above
+1. obtain/verify the approved source file for every active asset above
 2. verify usage rights and that the selected file is the intended final-quality version
 3. select the final media destination deliberately
 4. migrate one canonical copy of each unique asset; do not create unnecessary duplicates for repeated page use
@@ -60,7 +68,7 @@ Before production cutover or legacy WordPress retirement:
 6. update CSP only if the chosen trusted asset origin requires it
 7. run unit/type/build/Wrangler/browser/accessibility gates
 8. browser-test every indexed launch page at desktop and mobile sizes
-9. verify logo, favicon, hero posters, video fallback, lazy images and social-preview image URLs return successfully from the new/preserved origin
+9. verify logo, favicon, hero images, lazy images and social-preview image URLs return successfully from the new/preserved origin
 10. verify the final production host can serve those assets independently of the WordPress application lifecycle
 11. only then permit the legacy upload origin to be removed, redirected or decommissioned
 

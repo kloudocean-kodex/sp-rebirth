@@ -9,8 +9,7 @@ export const SITE = {
   email: 'sana@sanapatel.com.au',
   areaServed: 'Melbourne, Victoria, Australia',
   favicon: 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/favicon.jpg',
-  defaultOgImage:
-    'https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg',
+  defaultOgImage: 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226.webp',
 } as const;
 
 /**

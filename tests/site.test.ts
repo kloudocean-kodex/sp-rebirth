@@ -64,4 +64,11 @@ describe('site configuration', () => {
       }
     }
   });
+
+  it('keeps the homepage hero static and aligned with the default social image', () => {
+    const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
+    expect(source).not.toMatch(/<video\b/i);
+    expect(source).toContain('home-interior_413970226.webp');
+    expect(SITE.defaultOgImage).toContain('home-interior_413970226.webp');
+  });
 });

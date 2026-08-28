@@ -7,6 +7,7 @@ import { SITE } from '@/config/site';
 
 const title = 'Property Management Melbourne | Sana Patel Real Estate';
 const description = 'Founder-led Melbourne property management with 24×7 direct access to Sana Patel, proactive oversight, clear communication and evidence-led rental decisions.';
+const heroImage = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226.webp';
 
 const schema = [
   {
@@ -44,29 +45,12 @@ const credentials = [
   <section class="hero" aria-labelledby="hero-title">
     <img
       class="hero__media hero__poster"
-      src="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg"
+      src={heroImage}
       alt=""
-      width="1600"
-      height="1000"
+      width="1920"
+      height="1080"
       fetchpriority="high"
     />
-    <video
-      class="hero__media hero__video"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="none"
-      disablepictureinpicture
-      poster="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg"
-      aria-hidden="true"
-    >
-      <source
-        src="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Video-2025-09-30-at-1.22.28-PM-1.mp4"
-        type="video/mp4"
-        media="(min-width: 900px) and (prefers-reduced-motion: no-preference)"
-      />
-    </video>
     <div class="hero__content">
       <p class="eyebrow">Property Management · Melbourne</p>
       <h1 id="hero-title" class="hero__title">Your property should never be a mystery.</h1>
@@ -106,9 +90,9 @@ const credentials = [
         </article>
         <article class="journey-card">
           <span class="journey-card__number">02 · Reviewing rent</span>
-          <h3>Want a clearer view of your property's rental position?</h3>
-          <p>Start with a practical appraisal based on the property, current competition, presentation, renter demand and timing.</p>
-          <a href="/rental-appraisal/">Request an appraisal →</a>
+          <h3>Is the evidence ready for your next rental decision?</h3>
+          <p>Use the private 90-second Rental Position Check to see whether current market evidence, property context and timing are strong enough before anyone anchors you to a weekly figure.</p>
+          <a href="/rental-position-check/">Check my rental position →</a>
         </article>
         <article class="journey-card">
           <span class="journey-card__number">03 · Ready for change</span>
@@ -154,6 +138,7 @@ const credentials = [
 </BaseLayout>
 
 <style>
+  .hero__poster { object-position:center; }
   .journey-section { background:var(--white); }
   .journey-title { font-size:var(--h2); max-width:18ch; margin-top:var(--space-2); }
   .journeys { margin-top:var(--space-4); }
@@ -164,7 +149,4 @@ const credentials = [
   .journey-more a:hover { color:var(--accent-deep); }
   .proof-copy { margin-top:var(--space-3); max-width:39rem; color:rgba(255,255,255,.76); }
   @media(max-width:700px){ .journey-more{text-align:left;} }
-  @media (prefers-reduced-motion: reduce) {
-    .hero__video { display: none; }
-  }
 </style>

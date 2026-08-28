@@ -32,6 +32,7 @@ const logoSrc = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pa
         <nav class="mobile-nav__panel" aria-label="Mobile navigation">
           <a href="/rental-providers/">Rental Providers</a>
           <a href="/rental-appraisal/">Rental Appraisal</a>
+          <a href="/rental-position-check/">Rental Position Check</a>
           <a href="/switch-property-managers/">Switch Property Managers</a>
           <a href="/about/">About Sana</a>
           <a href="/resources/">Resources</a>
@@ -43,3 +44,25 @@ const logoSrc = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pa
     </div>
   </div>
 </header>
+
+<style>
+  .brand {
+    padding:.5rem .72rem;
+    border-color:rgba(215,195,154,.48);
+    background:linear-gradient(145deg,rgba(15,16,13,.97),rgba(27,27,22,.9));
+    box-shadow:0 12px 36px rgba(0,0,0,.2);
+  }
+  .brand:hover {
+    border-color:rgba(215,195,154,.82);
+    background:linear-gradient(145deg,rgba(18,19,16,.99),rgba(31,30,24,.94));
+    box-shadow:0 16px 44px rgba(0,0,0,.25);
+  }
+  .site-nav > a:not(.button) {
+    min-height:2.75rem;
+    display:inline-flex;
+    align-items:center;
+  }
+  @media(max-width:900px){
+    .brand{padding:.42rem .58rem;}
+  }
+</style>
