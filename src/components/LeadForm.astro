@@ -154,6 +154,7 @@ const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
 {turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />}
 
 <script>
+  import { readSessionAttribution } from '@/lib/attribution';
   import { emitGrowthEvent, type LeadJourney } from '@/lib/growth-events';
 
   type TurnstileApi = { reset: (widget?: HTMLElement | string) => void };
@@ -162,7 +163,6 @@ const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
   for (const form of forms) {
     if (!(form instanceof HTMLFormElement)) continue;
 
-    const params = new URLSearchParams(window.location.search);
     const rawFormType = form.dataset.formType;
     const formType: LeadJourney =
       rawFormType === 'rental_appraisal' || rawFormType === 'switch_manager' || rawFormType === 'general'
@@ -174,10 +174,17 @@ const privacyNoticeVersion = CURRENT_LEAD_PRIVACY_NOTICE_VERSION;
       if (field instanceof HTMLInputElement) field.value = value || '';
     };
 
-    set('landing_page', window.location.href.slice(0, 700));
-    set('referrer', document.referrer.slice(0, 700));
-    for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
-      set(key, params.get(key));
+    try {
+      const attribution = readSessionAttribution(window.sessionStorage, window.location.href, document.referrer);
+      set('landing_page', attribution.landingPage);
+      set('referrer', attribution.referrer);
+      set('utm_source', attribution.utmSource);
+      set('utm_medium', attribution.utmMedium);
+      set('utm_campaign', attribution.utmCampaign);
+      set('utm_content', attribution.utmContent);
+      set('utm_term', attribution.utmTerm);
+    } catch {
+      // Attribution is optional and must never block lead submission.
     }
 
     form.addEventListener('input', () => emitGrowthEvent({ name: 'lead_started', formType }), { once: true });
