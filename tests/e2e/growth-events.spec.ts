@@ -32,10 +32,17 @@ async function fillGeneralLead(page: import('@playwright/test').Page) {
 
 test('Visibility Check emits lifecycle signals without answers, scores or contact data', async ({ page }) => {
   await page.goto('/property-management-visibility-check/', { waitUntil: 'domcontentloaded' });
+  await page.waitForLoadState('load');
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+  });
 
   const questions = page.locator('[data-visibility-check] [data-question]');
   for (let index = 0; index < 7; index += 1) {
-    await questions.nth(index).locator('input[type="radio"]').first().check();
+    const option = questions.nth(index).locator('label').first();
+    await expect(option).toBeVisible();
+    await option.click();
+    await expect(option.locator('input[type="radio"]')).toBeChecked();
   }
   await page.getByRole('button', { name: 'Show my visibility result' }).click();
 
