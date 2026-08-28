@@ -1,6 +1,7 @@
 export type LeadJourney = 'rental_appraisal' | 'switch_manager' | 'general';
 export type VisibilityCheckCta = 'rental_appraisal' | 'switch_manager';
 export type RentalPositionCheckCta = 'rental_appraisal' | 'call_sana';
+export type ContactChannel = 'phone' | 'email';
 
 export type GrowthEvent =
   | { name: 'visibility_check_started' }
@@ -11,6 +12,7 @@ export type GrowthEvent =
   | { name: 'rental_position_check_completed' }
   | { name: 'rental_position_check_cta_selected'; cta: RentalPositionCheckCta }
   | { name: 'rental_position_check_printed' }
+  | { name: 'contact_selected'; channel: ContactChannel }
   | { name: 'lead_started'; formType: LeadJourney }
   | { name: 'lead_submit_attempted'; formType: LeadJourney }
   | { name: 'lead_accepted'; formType: LeadJourney }
