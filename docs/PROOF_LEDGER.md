@@ -87,8 +87,8 @@ Status: **VERIFIED for the local audit branch and an unpromoted Worker version; 
 Source state:
 
 - branch: `audit/mobile-nav-contrast-fix`
-- verified code/CI commit: `de618820aa536376635d4e8d23048d11034d8281`
-- prior functional/CI baseline: `3e2e55530314e4b193da77702bbfb9c9afccbf2c`
+- verified code/CI commit: `a2192b1fd1bea68a51e3ef9087e5e83362c73985`
+- prior functional/CI baseline: `de618820aa536376635d4e8d23048d11034d8281`
 - the audit branch also contains documentation-only follow-ups after that verified code/CI commit
 - `origin/main` baseline at audit: `a5df5c9e1f96f8f7c9390af5c86172e3eeaf51ff`
 - pull request: `#2` targeting `development`
@@ -123,6 +123,14 @@ Refreshed GitHub Actions verification for the current documentation head `cca8cb
 - mobile WebKit job: 36 passed, 6 intentional skips
 - all quality, build, dry-run and browser jobs completed successfully
 
+Responsive-style readiness follow-up for current code head `a2192b1fd1bea68a51e3ef9087e5e83362c73985`:
+
+- an earlier run (`33173568173`) recorded one first-attempt mobile WebKit `target-size` failure before its retry passed; this was treated as a test-readiness defect, not silently accepted
+- the accessibility suite now waits for the browser load event and asserts the intended responsive navigation mode before Axe analysis; no rule, route or assertion was skipped or weakened
+- targeted local mobile WebKit accessibility run with retries disabled: 7/7 passed
+- workflow run `33174952905`: **success**; primary Chromium 83 passed/1 intentional skip, desktop Firefox 35 passed/7 intentional skips, desktop WebKit 35 passed/7 intentional skips, mobile WebKit 36 passed/6 intentional skips
+- the current workflow log contains no retry, `target-size`, or test-failure record
+
 Latest GitHub Actions verification for the current code head `de618820aa536376635d4e8d23048d11034d8281`:
 
 - workflow run `33172698521`: **success**
@@ -155,7 +163,7 @@ Read-only Workers Observability check (24 hours ending 28 August 2026 13:00 UTC)
 
 Release blockers and unknowns remain:
 
-- the branch has passed the refreshed GitHub workflow, but the pull request remains unmerged pending review and the separate production release gates
+- the branch has passed the latest refreshed GitHub workflow, but the pull request remains unmerged pending review and the separate production release gates
 - the active `main` deployment is still the prior version; the corrected staging-safe sitemap behavior exists only in the unpromoted audit version until an approved merge/deploy
 - no isolated staging Worker/Queue/DLQ, Turnstile keys, downstream sandbox, retry-exhaustion, DLQ replay or end-to-end idempotency proof exists
 - the dependency audit reports eight production-tree vulnerabilities (one high, seven moderate) in the Sanity/CLI toolchain; remediation requires compatibility review rather than a blind major downgrade
