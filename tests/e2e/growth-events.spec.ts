@@ -86,6 +86,39 @@ test('lead form preserves first-touch campaign attribution without carrying arbi
   expect(landingPage).not.toContain('#');
 });
 
+test('direct contact selections emit channel-only measurement without the phone number or email address', async ({
+  page,
+}) => {
+  await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
+
+  await page.evaluate(() => {
+    const phone = document.querySelector<HTMLAnchorElement>('a[href^="tel:"]');
+    if (!phone) throw new Error('Expected a phone contact link');
+    phone.addEventListener('click', (event) => event.preventDefault(), { once: true });
+    phone.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+    const email = document.querySelector<HTMLAnchorElement>('a[href^="mailto:"]');
+    if (!email) throw new Error('Expected an email contact link');
+    email.addEventListener('click', (event) => event.preventDefault(), { once: true });
+    email.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+  });
+
+  await expect
+    .poll(async () => (await capturedEvents(page)).filter((event) => event.name === 'contact_selected'))
+    .toEqual([
+      { name: 'contact_selected', channel: 'phone' },
+      { name: 'contact_selected', channel: 'email' },
+    ]);
+
+  const contactEvents = (await capturedEvents(page)).filter((event) => event.name === 'contact_selected');
+  for (const event of contactEvents) {
+    expect(Object.keys(event).sort()).toEqual(['channel', 'name']);
+    const serialized = JSON.stringify(event).toLowerCase();
+    expect(serialized).not.toContain('0416');
+    expect(serialized).not.toContain('@');
+  }
+});
+
 test('lead form start signal contains only the journey type', async ({ page }) => {
   await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
   await page.locator('input[name="full_name"]').fill('Test Visitor');
