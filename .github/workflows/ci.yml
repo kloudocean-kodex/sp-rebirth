@@ -46,7 +46,14 @@ jobs:
         run: npm run lint
 
       - name: Prettier format check
-        run: npm run format:check
+        shell: bash
+        run: |
+          if ! npm run format:check; then
+            npx prettier --write .
+            git diff --check
+            git diff -- . ':(exclude)package-lock.json'
+            exit 1
+          fi
 
       - name: Production build
         run: npm run build
