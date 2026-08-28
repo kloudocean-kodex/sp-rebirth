@@ -38,6 +38,17 @@ After `package-lock.json` is committed, configure:
 - **Deploy command:** `npm run deploy`
 - **Non-production branch deploy command:** `npm run deploy:preview`
 
+### Current account-backed hold (28 August 2026)
+
+The connected account currently has one Workers Builds trigger watching `main`, while its shared build variables still identify the build as `staging` and its deploy command is `npm run deploy`. That combination is an intentional pre-release hold, not a production release configuration: a future push to `main` must not be allowed to publish a staging-marked build to the Worker that is labelled production.
+
+Before enabling or relying on automatic `main` deployments, choose and verify one of these explicit architectures:
+
+- separate staging and production Workers with branch-appropriate variables and secrets; or
+- a protected, manual production deployment workflow with an approved production environment and release gate.
+
+Do not leave a single production-branch trigger using shared staging variables, and do not change it to production values until the domain, Queue/DLQ, Turnstile, downstream delivery, rollback and UAT gates below are complete.
+
 Cloudflare Workers Builds exposes production and non-production deploy commands separately. Do not leave the non-production branch command at its default plain `npx wrangler versions upload` once account-backed preview builds are enabled; use the repository script so preview version uploads retain the same no-auto-provision safety boundary as production deployments.
 
 The build command disables Cloudflare's automatic dependency installer so GitHub CI and Cloudflare use the same npm lockfile and install semantics. The deploy/upload flags independently prevent automatic resource provisioning or draft-binding creation during an intentional deployment or preview version upload.
