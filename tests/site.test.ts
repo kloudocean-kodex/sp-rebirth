@@ -14,6 +14,7 @@ const publicPageSourceFiles = [
   '../src/pages/rental-appraisal/index.astro',
   '../src/pages/switch-property-managers/index.astro',
   '../src/pages/property-management-visibility-check/index.astro',
+  '../src/pages/rental-position-check/index.astro',
 ] as const;
 
 const prelaunchCopyPatterns = [

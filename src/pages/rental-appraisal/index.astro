@@ -63,6 +63,20 @@ const faqs = [
     </div>
   </section>
 
+  <section class="section section--tight readiness-bridge">
+    <div class="container readiness-bridge__inner">
+      <div>
+        <p class="eyebrow">Prefer value before contact details?</p>
+        <h2>Check whether your rental evidence is ready first.</h2>
+        <p>The free 90-second Rental Position Check does not ask for your name, phone, email or property address. It shows whether current market evidence, property context and decision timing are strong enough for a defensible rental conversation.</p>
+      </div>
+      <div class="readiness-bridge__action">
+        <a class="button button--solid" href="/rental-position-check/">Take the private check</a>
+        <small>No instant valuation · no gated result</small>
+      </div>
+    </div>
+  </section>
+
   <FAQList
     eyebrow="Before you request it"
     heading="An appraisal should leave you better informed."
@@ -86,5 +100,14 @@ const faqs = [
   .step-grid span { color:var(--accent-pale); font-size:.7rem; font-weight:700; letter-spacing:.06em; }
   .step-grid h2 { margin-top:var(--space-3); font-size:clamp(1.8rem,3vw,3rem); }
   .step-grid p { margin-top:var(--space-2); color:rgba(255,255,255,.72); }
-  @media(max-width:760px){ .step-grid{grid-template-columns:1fr;} }
+  .readiness-bridge { background:var(--white); }
+  .readiness-bridge__inner { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(16rem,.65fr); gap:var(--space-4); align-items:end; }
+  .readiness-bridge h2 { margin-top:var(--space-2); max-width:14ch; font-size:var(--h2); }
+  .readiness-bridge p:last-child { margin-top:var(--space-2); max-width:44rem; color:var(--ink-soft); }
+  .readiness-bridge__action { display:grid; justify-items:start; gap:.7rem; }
+  .readiness-bridge__action small { color:var(--ink-soft); font-size:.76rem; }
+  @media(max-width:760px){
+    .step-grid,.readiness-bridge__inner{grid-template-columns:1fr;}
+    .readiness-bridge__action .button{width:100%;}
+  }
 </style>

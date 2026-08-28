@@ -1,11 +1,16 @@
 export type LeadJourney = 'rental_appraisal' | 'switch_manager' | 'general';
 export type VisibilityCheckCta = 'rental_appraisal' | 'switch_manager';
+export type RentalPositionCheckCta = 'rental_appraisal' | 'call_sana';
 
 export type GrowthEvent =
   | { name: 'visibility_check_started' }
   | { name: 'visibility_check_completed' }
   | { name: 'visibility_check_cta_selected'; cta: VisibilityCheckCta }
   | { name: 'visibility_check_printed' }
+  | { name: 'rental_position_check_started' }
+  | { name: 'rental_position_check_completed' }
+  | { name: 'rental_position_check_cta_selected'; cta: RentalPositionCheckCta }
+  | { name: 'rental_position_check_printed' }
   | { name: 'lead_started'; formType: LeadJourney }
   | { name: 'lead_submit_attempted'; formType: LeadJourney }
   | { name: 'lead_accepted'; formType: LeadJourney }

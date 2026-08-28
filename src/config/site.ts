@@ -28,6 +28,7 @@ export const INDEXED_PATHS = [
   '/rental-appraisal/',
   '/switch-property-managers/',
   '/property-management-visibility-check/',
+  '/rental-position-check/',
 ] as const;
 
 export const INTERNAL_PATH_PREFIXES = ['/api/', '/preview/'] as const;

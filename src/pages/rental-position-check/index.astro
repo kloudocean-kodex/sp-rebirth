@@ -1,0 +1,62 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import InnerHero from '@/components/InnerHero.astro';
+import RentalPositionCheck from '@/components/RentalPositionCheck.astro';
+
+const title = 'Rental Position Check Melbourne | Sana Patel Real Estate';
+const description = 'A free private 90-second check for Melbourne rental providers. See whether you have the current market evidence, property context and timing clarity needed for a defensible rental decision.';
+---
+<BaseLayout {title} {description} canonicalPath="/rental-position-check/">
+  <SiteHeader slot="header" />
+
+  <InnerHero
+    eyebrow="For Rental Providers · Free 90-Second Check"
+    title="Before you choose a weekly rent, check whether the evidence is ready."
+    lead="Seven practical questions. An immediate private result. No contact details or property address required. This does not guess a rental figure — it shows whether the evidence behind the decision is strong enough."
+    primaryLabel="Start the free check"
+    primaryHref="#rental-position-check"
+    secondaryLabel="Request an appraisal"
+    secondaryHref="/rental-appraisal/"
+  />
+
+  <section class="section">
+    <div class="container">
+      <RentalPositionCheck />
+    </div>
+  </section>
+
+  <section class="section section--tight position-principle">
+    <div class="container statement">
+      <div>
+        <p class="eyebrow">Why this exists</p>
+        <h2>A number is not a strategy.</h2>
+      </div>
+      <div class="statement__body">
+        <p>Rental decisions are stronger when current comparable evidence, the property’s actual condition and features, renter demand, timing and the owner’s priorities are considered together.</p>
+        <p>This check is intentionally ungated. It helps you identify what evidence is already clear and what should be gathered before you rely on any property-specific rental opinion.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">Ready for property-specific evidence?</p>
+        <h2>Move from a readiness check to a real appraisal.</h2>
+        <p>Sana can assess the property itself, current competing rentals, presentation, likely renter demand and timing, then explain the evidence behind the recommended rental position.</p>
+      </div>
+      <div class="cta-panel__actions">
+        <a class="button button--solid" href="/rental-appraisal/">Request an appraisal</a>
+        <a class="button" href="/rental-providers/">See Sana's approach</a>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .position-principle { background:var(--white); }
+</style>
