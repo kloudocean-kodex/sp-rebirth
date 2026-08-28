@@ -2,7 +2,7 @@
 
 Status: architecture and operating contract. The **24×7 direct access to Sana Patel** promise is confirmed. Vendor selection, channel rules, urgency rules and human-response expectations remain release-gated until Sana's real operating workflow is confirmed.
 
-Last reviewed: 27 August 2026.
+Last reviewed: 28 August 2026.
 
 ## 1. What the public promise means
 
@@ -210,7 +210,8 @@ Current event vocabulary:
 - `lead_submit_attempted`
 - `lead_accepted`
 - `lead_failed`
-- `lead_delivered`
+
+There is deliberately no browser-side `lead_delivered` event. In Queue mode the browser can prove durable acceptance only; downstream delivery must be measured from the Queue consumer, CRM or other server-side system of record.
 
 Approved event payloads contain only event/journey identifiers such as `formType` or CTA name. They must never contain a person's name, phone, email, property address, message, Visibility Check answers or score.
 
@@ -236,18 +237,17 @@ Do not claim conversion or revenue attribution merely because a browser event fi
 
 ## 15. Legacy WordPress migration observations
 
-Read-only production inspection on 27 August 2026 verified:
+Read-only production inspection verified that the legacy site uses Gravity Forms, abuse-prevention tooling and SMTP-backed mail delivery, and that historical form records exist in the WordPress database.
 
-- Gravity Forms is active.
-- Gravity Forms Zero Spam is active.
-- WP Mail SMTP is active.
-- Two Gravity Forms exist: `Get In Touch` and `Subscription Form`.
-- The `Get In Touch` form asks visitors to self-report where they heard about the business (Google ads, Instagram ads, Facebook ads, marketing flyers or other).
-- The current database contains 9 active and 3 spam entries for `Get In Touch`, plus 2 active `Subscription Form` entries.
+Public repository documentation must not contain customer records, submission contents or operational record counts. The detailed retention/export inventory is an internal migration artifact, not website source code.
 
-Those counts prove only what is currently stored in these Gravity Forms tables. They do **not** prove total historical leads, business-wide enquiries, conversion rate or channel performance.
+Migration implications:
 
-Migration implication: retain automatic referrer/UTM attribution in SP_REBIRTH and decide whether an optional self-reported source field is still useful for referrals/offline channels. Do not require a manual source dropdown merely because the old site did.
+- preserve automatic referrer/UTM attribution in SP_REBIRTH
+- decide whether an optional self-reported source field is still useful for referrals/offline channels
+- define the retention/export disposition for historical enquiry and subscription records before WordPress retirement
+- verify any export in a private, access-controlled location
+- do not require a manual source dropdown merely because the old site did
 
 ## 16. Release gates for the 24×7 claim
 
