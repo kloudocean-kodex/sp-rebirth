@@ -125,7 +125,9 @@ export function validateLead(lead: LeadPayload): string[] {
 }
 
 export function requestOriginAllowed(originHeader: string | null, requestUrl: URL): boolean {
-  if (!originHeader) return true;
+  // Lead intake is a browser same-origin contract. Fail closed when Origin is absent
+  // rather than treating non-browser/direct POSTs as implicitly trusted.
+  if (!originHeader) return false;
   try {
     return new URL(originHeader).origin === requestUrl.origin;
   } catch {
