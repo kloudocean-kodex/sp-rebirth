@@ -56,6 +56,23 @@ export function cleanText(value: FormDataEntryValue | null, max: number): string
   return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
 }
 
+export function sanitizeAttributionUrl(value: FormDataEntryValue | null): string {
+  const candidate = cleanText(value, LEAD_LIMITS.url);
+  if (!candidate) return '';
+
+  try {
+    const url = new URL(candidate);
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') return '';
+    url.username = '';
+    url.password = '';
+    url.search = '';
+    url.hash = '';
+    return url.toString().slice(0, LEAD_LIMITS.url);
+  } catch {
+    return '';
+  }
+}
+
 export function parseLeadFormType(value: FormDataEntryValue | null): LeadFormType | null {
   const candidate = cleanText(value, 80);
   return (LEAD_FORM_TYPES as readonly string[]).includes(candidate) ? (candidate as LeadFormType) : null;
@@ -89,8 +106,8 @@ export function createLeadPayload(form: FormData, options: { id: string; submitt
     message: cleanText(form.get('message'), LEAD_LIMITS.message),
     privacyNoticeVersion: cleanText(form.get('privacy_notice_version'), LEAD_LIMITS.noticeVersion),
     attribution: {
-      landingPage: cleanText(form.get('landing_page'), LEAD_LIMITS.url),
-      referrer: cleanText(form.get('referrer'), LEAD_LIMITS.url),
+      landingPage: sanitizeAttributionUrl(form.get('landing_page')),
+      referrer: sanitizeAttributionUrl(form.get('referrer')),
       utmSource: cleanText(form.get('utm_source'), LEAD_LIMITS.short),
       utmMedium: cleanText(form.get('utm_medium'), LEAD_LIMITS.short),
       utmCampaign: cleanText(form.get('utm_campaign'), LEAD_LIMITS.short),
