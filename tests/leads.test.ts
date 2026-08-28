@@ -99,11 +99,11 @@ describe('lead validation', () => {
 });
 
 describe('request boundary', () => {
-  it('requires an exact same origin when the Origin header is present', () => {
+  it('requires an explicit exact same Origin', () => {
     const requestUrl = new URL('https://staging.example.test/api/leads');
 
     expect(requestOriginAllowed('https://staging.example.test', requestUrl)).toBe(true);
-    expect(requestOriginAllowed(null, requestUrl)).toBe(true);
+    expect(requestOriginAllowed(null, requestUrl)).toBe(false);
     expect(requestOriginAllowed('http://staging.example.test', requestUrl)).toBe(false);
     expect(requestOriginAllowed('https://staging.example.test:8443', requestUrl)).toBe(false);
     expect(requestOriginAllowed('https://other.example.test', requestUrl)).toBe(false);
