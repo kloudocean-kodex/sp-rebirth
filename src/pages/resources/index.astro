@@ -9,7 +9,7 @@ const description =
   'Reviewed property-management resources for Melbourne rental providers and renters, with authoritative source links where Victorian rules are discussed.';
 ---
 
-<BaseLayout {title} {description} canonicalPath="/resources/" noindex={true}>
+<BaseLayout {title} {description} canonicalPath="/resources/">
   <SiteHeader slot="header" />
   <InnerHero
     eyebrow="Rent Smart · Resources"
@@ -98,18 +98,15 @@ const description =
   article a {
     margin-top: auto;
     padding-top: var(--space-3);
-    font-size: 0.76rem;
-    font-weight: 750;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-  article a:hover {
     color: var(--accent-deep);
+    font-weight: 700;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 820px) {
     .resource-grid {
       grid-template-columns: 1fr;
+    }
+    article {
+      min-height: auto;
     }
   }
 </style>
