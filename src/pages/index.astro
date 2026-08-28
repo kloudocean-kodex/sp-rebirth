@@ -9,6 +9,12 @@ const title = 'Property Management Melbourne | Sana Patel Real Estate';
 const description =
   'Founder-led Melbourne property management with 24×7 direct access to Sana Patel, proactive oversight, clear communication and evidence-led rental decisions.';
 const heroImage = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226.webp';
+const heroSrcset = [
+  'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226-768x432.webp 768w',
+  'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226-1024x576.webp 1024w',
+  'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226-1536x864.webp 1536w',
+  `${heroImage} 1920w`,
+].join(', ');
 
 const schema = [
   {
@@ -45,7 +51,16 @@ const credentials = [
   <SiteHeader slot="header" />
 
   <section class="hero" aria-labelledby="hero-title">
-    <img class="hero__media hero__poster" src={heroImage} alt="" width="1920" height="1080" fetchpriority="high" />
+    <img
+      class="hero__media hero__poster"
+      src={heroImage}
+      srcset={heroSrcset}
+      sizes="100vw"
+      alt=""
+      width="1920"
+      height="1080"
+      fetchpriority="high"
+    />
     <div class="hero__content">
       <p class="eyebrow">Property Management · Melbourne</p>
       <h1 id="hero-title" class="hero__title">Your property should never be a mystery.</h1>
@@ -178,30 +193,61 @@ const credentials = [
   }
   .journey-card.journey-card--featured > .journey-card__number {
     color: var(--accent-deep);
-    opacity: 1;
   }
   .journey-more {
     margin-top: var(--space-3);
-    text-align: right;
   }
   .journey-more a {
-    font-size: 0.76rem;
-    font-weight: 750;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
+    font-weight: 700;
   }
-  .journey-more a:hover {
-    color: var(--accent-deep);
+  .proof-band {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .proof-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: var(--space-5);
+    align-items: center;
+  }
+  .proof-grid h2 {
+    margin-top: var(--space-2);
+    font-size: var(--h2);
+    max-width: 11ch;
   }
   .proof-copy {
     margin-top: var(--space-3);
-    max-width: 39rem;
-    color: rgba(255, 255, 255, 0.76);
+    max-width: 33rem;
+    color: var(--ink-on-dark-soft);
   }
-  @media (max-width: 700px) {
-    .journey-more {
-      text-align: left;
+  .quote {
+    padding-left: var(--space-4);
+    border-left: 1px solid rgba(215, 195, 154, 0.45);
+  }
+  .quote blockquote {
+    margin: var(--space-2) 0 0;
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 4.2rem);
+    font-weight: 350;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+  }
+  .quote footer {
+    margin-top: var(--space-3);
+    color: var(--ink-on-dark-soft);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 800px) {
+    .proof-grid {
+      grid-template-columns: 1fr;
+    }
+    .quote {
+      padding: var(--space-3) 0 0;
+      border-left: 0;
+      border-top: 1px solid rgba(215, 195, 154, 0.45);
     }
   }
 </style>
