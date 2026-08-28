@@ -89,12 +89,31 @@ const schemaPayload = schema ?? defaultSchema;
 
     <script>
       import { captureSessionAttribution } from '@/lib/attribution';
+      import { emitGrowthEvent } from '@/lib/growth-events';
 
       try {
         captureSessionAttribution(window.sessionStorage, window.location.href, document.referrer);
       } catch {
         // Attribution is optional and must never block rendering or navigation.
       }
+
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+
+        const anchor = target.closest('a[href]');
+        if (!(anchor instanceof HTMLAnchorElement)) return;
+
+        const href = anchor.getAttribute('href')?.trim().toLowerCase() ?? '';
+        if (href.startsWith('tel:')) {
+          emitGrowthEvent({ name: 'contact_selected', channel: 'phone' });
+          return;
+        }
+
+        if (href.startsWith('mailto:')) {
+          emitGrowthEvent({ name: 'contact_selected', channel: 'email' });
+        }
+      });
     </script>
   </body>
 </html>
