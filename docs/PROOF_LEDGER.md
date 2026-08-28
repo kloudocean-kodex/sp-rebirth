@@ -80,6 +80,53 @@ Still **NOT VERIFIED / NOT IMPLEMENTED** at this checkpoint:
 
 Do not describe CI bundling as staging runtime proof or production readiness.
 
+### Independent audit wave — 28 August 2026
+
+Status: **VERIFIED for the local audit branch and an unpromoted Worker version; not production approval.**
+
+Source state:
+
+- branch: `audit/mobile-nav-contrast-fix`
+- commit: `d6a9682a5ab4dcfd8fc5714da92e8eaa85a792a5`
+- `origin/main` baseline at audit: `a5df5c9e1f96f8f7c9390af5c86172e3eeaf51ff`
+- no merge or push to `main` was performed
+
+Repository gates run from that exact local state:
+
+- unit tests: 44 passed
+- Astro typecheck: 66 files, 0 errors, 0 warnings, 0 hints
+- ESLint: passed
+- Prettier format check: passed
+- Astro production build: passed
+- Sanity Studio build: passed (expected warning: no Studio app ID is configured)
+- Wrangler deployment dry-run: passed with automatic provisioning and draft binding creation disabled
+
+Browser evidence from the same state:
+
+- Chromium desktop/mobile plus WebKit desktop/mobile: 154 passed, 14 intentional skips
+- accessibility, responsive navigation, conversion journeys, route/redirect behavior, analytics-safety assertions and visual captures passed in those projects
+- Firefox could not launch on the Windows audit host because its executable is missing a compatible side-by-side runtime; this is a host limitation, not a Firefox application result. GitHub Linux CI must provide the authoritative Firefox result.
+
+Account-backed Cloudflare evidence:
+
+- the authenticated account contains the `sp-rebirth` Worker, currently exposed only through its `workers.dev` hostname; no Sana custom domain or route is attached
+- the active 100% deployment remains the previously deployed `main` version; the audit version was not promoted
+- the Worker has no configured lead secrets, Queue/DLQ bindings, D1 database, R2 bucket or verified Turnstile configuration
+- Workers Builds was corrected to use the locked install/build contract, the guarded repository deploy script, `SKIP_DEPENDENCY_INSTALL=1`, and an explicit `PUBLIC_DEPLOY_ENV=staging` plus the verified workers.dev canonical URL; previews remain disabled because a version preview is not an isolated staging environment
+- an unpromoted preview version was uploaded from this audit state and returned `sitemap.xml` as HTTP 404 with `noindex`, `robots.txt` as crawl-blocking, and the expected security headers. Negative lead probes rejected missing verification and cross-site origins without forwarding a lead.
+
+Release blockers and unknowns remain:
+
+- the audit branch has not passed the refreshed GitHub workflow, including the Linux Firefox matrix
+- no isolated staging Worker/Queue/DLQ, Turnstile keys, downstream sandbox, retry-exhaustion, DLQ replay or end-to-end idempotency proof exists
+- the dependency audit reports eight production-tree vulnerabilities (one high, seven moderate) in the Sanity/CLI toolchain; remediation requires compatibility review rather than a blind major downgrade
+- Sanity project/origin/content credentials, approved analytics/Search Console/GBP integrations, review source and CRM/mail destination are not verified
+- the complete Sana/WhatsApp source conversation and competitor-research provenance are not present as an authoritative export; repository notes are source-derived summaries, not proof of exhaustive capture
+- legacy WordPress URL/media inventory, redirect coverage, backup/rollback proof and DNS cutover approval are outstanding
+- production `PUBLIC_DEPLOY_ENV`, production site URL, production Queue/DLQ and production secrets must remain unset until the explicit release gate
+
+This wave is evidence for the next engineering review only. It must not be described as staging certification, production readiness or permission to replace the live WordPress website.
+
 ## Current independent profile evidence
 
 ### realestate.com.au — Sana Patel agent profile
