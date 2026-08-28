@@ -14,10 +14,17 @@ test('Rental Position Check emits only non-PII lifecycle signals', async ({ page
   });
 
   await page.goto('/rental-position-check/', { waitUntil: 'domcontentloaded' });
+  await page.waitForLoadState('load');
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+  });
 
   const questions = page.locator('[data-rental-position-check] [data-position-question]');
   for (let index = 0; index < 7; index += 1) {
-    await questions.nth(index).locator('input[type="radio"]').first().check();
+    const option = questions.nth(index).locator('label').first();
+    await expect(option).toBeVisible();
+    await option.click();
+    await expect(option.locator('input[type="radio"]')).toBeChecked();
   }
   await page.getByRole('button', { name: 'Show my readiness result' }).click();
 
