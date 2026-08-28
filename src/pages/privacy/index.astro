@@ -83,9 +83,15 @@ const description =
 
       <h2>Analytics, cookies and campaign measurement</h2>
       <p>
-        Analytics will not be enabled merely because a tracking ID exists. The production implementation will document
-        what is measured, which cookies or similar technologies are used, whether consent or another choice mechanism is
-        appropriate, and how visitors can exercise any available choices.
+        The pre-launch site uses first-party browser session storage to retain the initial landing path, referrer path and
+        explicit UTM campaign fields while a visitor moves between pages in the same browser session. Query strings and
+        fragments are removed from stored landing/referrer URLs, and lead contact fields are not written to that session
+        record. If browser storage is unavailable, the lead journey continues without persisted attribution.
+      </p>
+      <p>
+        Third-party analytics will not be enabled merely because a tracking ID exists. The production implementation
+        will document what is measured, which cookies or similar technologies are used, whether consent or another
+        choice mechanism is appropriate, and how visitors can exercise any available choices.
       </p>
 
       <h2>Retention and security</h2>
