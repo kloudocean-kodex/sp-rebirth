@@ -15,6 +15,17 @@ const publicPageSourceFiles = [
   '../src/pages/switch-property-managers/index.astro',
   '../src/pages/property-management-visibility-check/index.astro',
   '../src/pages/rental-position-check/index.astro',
+  '../src/pages/resources/index.astro',
+  '../src/pages/resources/victoria-rental-minimum-standards/index.astro',
+  '../src/pages/resources/routine-inspections-victoria/index.astro',
+  '../src/pages/resources/changing-property-managers-victoria/index.astro',
+] as const;
+
+const reviewedResourcePaths = [
+  '/resources/',
+  '/resources/victoria-rental-minimum-standards/',
+  '/resources/routine-inspections-victoria/',
+  '/resources/changing-property-managers-victoria/',
 ] as const;
 
 const prelaunchCopyPatterns = [/\bSP_REBIRTH\b/i, /\bthis page will become\b/i, /\bthe new site will\b/i] as const;
@@ -38,6 +49,12 @@ describe('site configuration', () => {
       expect(path === '/' || path.endsWith('/')).toBe(true);
       expect(path.includes('?')).toBe(false);
       expect(path.includes('#')).toBe(false);
+    }
+  });
+
+  it('publishes the reviewed resource hub and guides in the production crawl surface', () => {
+    for (const path of reviewedResourcePaths) {
+      expect(INDEXED_PATHS).toContain(path);
     }
   });
 
