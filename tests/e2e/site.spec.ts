@@ -6,6 +6,7 @@ const publicRoutes = [
   '/rental-appraisal/',
   '/switch-property-managers/',
   '/property-management-visibility-check/',
+  '/rental-position-check/',
   '/about/',
   '/lease/',
   '/for-renters/',
@@ -46,16 +47,13 @@ test('confirmed 24x7 direct-access service promise remains visible', async ({ pa
   await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
 });
 
-test('homepage cinematic video is desktop-only and motion-preference safe', async ({ page }) => {
+test('homepage hero uses the static premium media contract', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const video = page.locator('.hero__video');
-  const source = video.locator('source');
-  await expect(video).toHaveAttribute('preload', 'none');
-  await expect(source).toHaveAttribute(
-    'media',
-    '(min-width: 900px) and (prefers-reduced-motion: no-preference)',
-  );
+  const heroPoster = page.locator('.hero__poster');
+  await expect(heroPoster).toBeVisible();
+  await expect(heroPoster).toHaveAttribute('src', /home-interior_413970226\.webp$/);
+  await expect(page.locator('.hero__video')).toHaveCount(0);
 });
 
 test('staging robots policy blocks crawling', async ({ request }) => {
@@ -88,6 +86,7 @@ test('mobile navigation keeps the full customer journey accessible', async ({ pa
   for (const label of [
     'Rental Providers',
     'Rental Appraisal',
+    'Rental Position Check',
     'Switch Property Managers',
     'About Sana',
     'Resources',
