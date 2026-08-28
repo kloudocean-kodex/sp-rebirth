@@ -44,6 +44,25 @@ The build command disables Cloudflare's automatic dependency installer so GitHub
 
 Do not configure `PUBLIC_DEPLOY_ENV=production` on a preview/staging Worker. Public pages default to `noindex,nofollow`, `robots.txt` blocks crawling, and `sitemap.xml` is unavailable until production is deliberately enabled.
 
+## Preview versions are not isolated staging
+
+`wrangler versions upload` uploads a new version of a Worker and can expose that version through a preview URL, but a version preview is **not** by itself a separately isolated staging environment.
+
+This distinction becomes critical once the Worker has stateful or external bindings such as Queues. A preview version can carry the Worker's binding configuration; therefore a browser-visible preview URL must never be treated as proof that lead-delivery testing is isolated from production resources.
+
+Before Queue-backed staging E2E is allowed:
+
+- establish a separately identifiable staging Worker/environment strategy in the authenticated Cloudflare account
+- bind only the verified staging Queue and staging DLQ to that staging target
+- keep staging runtime secrets separate from production secrets
+- keep `PUBLIC_DEPLOY_ENV=staging`
+- verify the resulting Worker/resource bindings from the account rather than inferring them from source
+- do not perform forced-failure, retry-exhaustion or DLQ-replay tests against a preview version that shares production bindings
+
+Cloudflare environment names, Worker names, Queue names and DLQ names must come from authenticated account inventory and the approved staging strategy. Do not invent them in repository configuration.
+
+A version preview remains useful for code/version inspection, but it does not satisfy the project's staging-infrastructure or Queue-recovery proof gates.
+
 ## Lead transport modes
 
 ### Staging before Queue provisioning
@@ -131,11 +150,11 @@ Before the Queue binding is committed:
 5. bind the Queue as `LEAD_QUEUE`
 6. perform a non-provisioning Wrangler dry-run
 7. deploy/upload with `--experimental-provision=false --experimental-auto-create=false`
-8. perform synthetic non-customer end-to-end delivery proof
-9. deliberately force downstream failure and prove retry + DLQ behavior
+8. perform synthetic non-customer end-to-end delivery proof on the isolated staging Worker/resources
+9. deliberately force downstream failure and prove retry + DLQ behavior on staging only
 10. replay/recover the synthetic lead without duplicate downstream contact
 11. only then mirror the proven configuration for production
 
 ## Release rule
 
-A Cloudflare deployment is not considered releasable merely because it built successfully. Promotion requires the repository release gates, including tests, typecheck, production build, staging QA, accessibility, SEO/crawl validation, lead-delivery proof, Queue/DLQ recovery proof, redirect verification, privacy/data-flow review, and explicit production approval.
+A Cloudflare deployment is not considered releasable merely because it built successfully. Promotion requires the repository release gates, including tests, typecheck, production build, staging QA, accessibility, SEO/crawl validation, lead-delivery proof, Queue/DLQ recovery proof, redirect verification, privacy/data-flow review, legacy-media cutover proof, and explicit production approval.
