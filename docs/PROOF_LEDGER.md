@@ -88,7 +88,8 @@ Source state:
 
 - branch: `audit/mobile-nav-contrast-fix`
 - verified code/CI baseline: `a2192b1fd1bea68a51e3ef9087e5e83362c73985`
-- latest audited pull-request head: `e638950b42de0911eccc54640e479b192f48c6f8`
+- latest audited code head: `e638950b42de0911eccc54640e479b192f48c6f8`
+- latest pull-request head (documentation-only evidence pointer): `f7f2605f5b405cc5dc8700890c2ad95750d34e08`
 - prior functional/CI baseline: `de618820aa536376635d4e8d23048d11034d8281`
 - the audit branch contains the responsive-test fix, retry-policy hardening, dependency-tree remediation and documentation follow-ups after that baseline
 - `origin/main` baseline at audit: `a5df5c9e1f96f8f7c9390af5c86172e3eeaf51ff`
@@ -142,6 +143,12 @@ Final audit refresh for the current pull-request head `e638950b42de0911eccc54640
 - workflow run `33176898291`: **success** for all quality/build/dry-run and browser jobs; primary Chromium 83 passed/1 intentional skip, desktop Firefox 35 passed/7 intentional skips, desktop WebKit 35 passed/7 intentional skips, mobile WebKit 36 passed/6 intentional skips
 - the run log contains no Playwright retry or test-failure record; repeated local TLS handshake messages are the test web-server's non-fatal certificate noise and did not fail a job
 - the PR remains open and unmerged; no production promotion, DNS change or WordPress cutover was performed
+
+Documentation-head verification:
+
+- workflow run `33177508729`: **success** for `f7f2605f5b405cc5dc8700890c2ad95750d34e08`; it re-ran the same quality/build/dry-run and four-browser matrix after the ledger update
+- totals: Chromium 83 passed/1 intentional skip, desktop Firefox 35 passed/7 intentional skips, desktop WebKit 35 passed/7 intentional skips, mobile WebKit 36 passed/6 intentional skips
+- no Playwright retry marker or failed test was present in the run log
 
 Latest GitHub Actions verification for the current code head `de618820aa536376635d4e8d23048d11034d8281`:
 
