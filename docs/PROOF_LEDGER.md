@@ -4,18 +4,18 @@ Purpose: separate verified proof from marketing language. Nothing in this file b
 
 ## Engineering release evidence
 
-### Development checkpoint — 27 August 2026
+### Development checkpoint — 28 August 2026
 
-Status: **VERIFIED in GitHub CI; not production release approval.**
+Status: **VERIFIED in GitHub CI; not staging runtime proof and not production release approval.**
 
 Verified development SHA:
-- `69aeb76cd6942a73ee38825c8a4452d5759632f0`
-- commit: `fix: fail closed on unknown lead deploy env`
+- `8ea7609cfa58af4073285224a12af97ac2121760`
+- commit: `fix: secure dynamic thank-you response`
 
 Verified GitHub Actions run:
 - workflow: `SP_REBIRTH CI`
-- run number: `128`
-- run id: `33104234003`
+- run number: `136`
+- run id: `33108467099`
 - result: `success`
 
 The run passed:
@@ -23,18 +23,38 @@ The run passed:
 - unit tests
 - strict Astro typecheck
 - production build
-- Wrangler deployment bundle dry-run with automatic provisioning and auto-create disabled
+- Wrangler deployment bundle dry-run
 - Chromium installation
 - desktop/mobile browser, responsive and accessibility QA
 - browser QA evidence upload
 
-Transport safety verified in source/tests at this checkpoint:
+Deployment safety verified in source/tests at this checkpoint:
+- actual production deploy command disables Wrangler automatic provisioning and resource auto-create
+- non-production version-upload command disables Wrangler automatic provisioning and resource auto-create
+- deployment-contract tests keep Queue bindings absent until authenticated Cloudflare resource inventory/provisioning is completed deliberately
+
+Lead intake and transport safety verified in source/tests at this checkpoint:
 - synchronous webhook delivery is permitted only when deployment identity is explicitly `staging`
 - missing, unrecognised or `production` deployment identity resolves to Queue mode
 - absent Queue binding fails closed rather than silently falling back to webhook
 - Queue send failure does not report lead acceptance
+- declared request-size limits are backed by an actual bounded request-body stream read, so missing/chunked `Content-Length` cannot bypass the application limit
+- browser-origin enforcement compares the full expected origin rather than host-only equivalence
+- lead intake accepts only explicitly supported form media types rather than substring MIME matches
+- Queue consumer validates the canonical lead contract before downstream delivery, including field limits and form-specific constraints
+- invalid/poison Queue messages are not forwarded downstream
 - downstream webhook transport requires HTTPS, bearer authentication and stable lead-ID idempotency
 - Queue consumer acknowledges an individual message only after downstream acceptance and retries downstream failure with bounded backoff
+
+Acknowledgement and analytics semantics verified at this checkpoint:
+- durable Queue acceptance is not represented to the browser as downstream delivery
+- the thank-you page acknowledges secure receipt/routing without claiming the enquiry has already reached the final destination
+- the browser does not emit a fabricated `lead_delivered` event on Queue acceptance
+
+Dynamic response security verified at this checkpoint:
+- the on-demand `/thank-you/` response applies the browser-security baseline explicitly rather than assuming Cloudflare static `_headers` applies to Worker-generated HTML
+- the dynamic thank-you response is `no-store` and carries `X-Robots-Tag: noindex, nofollow`
+- tests keep the dynamic response policy aligned with the static `_headers` security baseline
 
 Still **NOT VERIFIED / NOT IMPLEMENTED** at this checkpoint:
 - authenticated Cloudflare account/resource inventory
@@ -44,9 +64,11 @@ Still **NOT VERIFIED / NOT IMPLEMENTED** at this checkpoint:
 - real staging Dead Letter Queue
 - forced retry exhaustion into the DLQ
 - DLQ replay/recovery proof
-- real downstream staging destination and idempotency proof
+- real downstream staging destination and end-to-end idempotency proof
 - production Queue/DLQ resources
 - production domain/DNS cutover
+- Sanity Presentation iframe allow-list against the actual trusted Studio origin
+- repository privacy/governance remediation for unpublished client discovery material currently stored in a public repository
 
 Do not describe CI bundling as staging runtime proof or production readiness.
 
