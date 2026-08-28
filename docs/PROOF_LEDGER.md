@@ -87,7 +87,8 @@ Status: **VERIFIED for the local audit branch and an unpromoted Worker version; 
 Source state:
 
 - branch: `audit/mobile-nav-contrast-fix`
-- commit: `3e2e55530314e4b193da77702bbfb9c9afccbf2c`
+- verified code/CI commit: `3e2e55530314e4b193da77702bbfb9c9afccbf2c`
+- the audit branch also contains documentation-only follow-ups after that verified code/CI commit
 - `origin/main` baseline at audit: `a5df5c9e1f96f8f7c9390af5c86172e3eeaf51ff`
 - pull request: `#2` targeting `development`
 - no merge to `development` or `main` was performed
@@ -111,6 +112,15 @@ GitHub Actions verification for commit `3e2e55530314e4b193da77702bbfb9c9afccbf2c
 - mobile WebKit job: 36 passed, 6 intentional skips
 - quality, build, dry-run and all four browser jobs completed; no test failure was hidden by a skipped dependency job
 
+Refreshed GitHub Actions verification for the current documentation head `cca8cbe8b32526a4e930a411e84ce9934e318c50`:
+
+- workflow run `33171277886`: **success**
+- primary Chromium job: 83 passed, 1 intentional skip
+- desktop Firefox job: 35 passed, 7 intentional skips
+- desktop WebKit job: 35 passed, 7 intentional skips
+- mobile WebKit job: 36 passed, 6 intentional skips
+- all quality, build, dry-run and browser jobs completed successfully
+
 Browser evidence from the same state:
 
 - Chromium desktop/mobile plus WebKit desktop/mobile: 154 passed, 14 intentional skips
@@ -125,9 +135,17 @@ Account-backed Cloudflare evidence:
 - Workers Builds was corrected to use the locked install/build contract, the guarded repository deploy script, `SKIP_DEPENDENCY_INSTALL=1`, and an explicit `PUBLIC_DEPLOY_ENV=staging` plus the verified workers.dev canonical URL; previews remain disabled because a version preview is not an isolated staging environment
 - an unpromoted preview version was uploaded from this audit state and returned `sitemap.xml` as HTTP 404 with `noindex`, `robots.txt` as crawl-blocking, and the expected security headers. Negative lead probes rejected missing verification and cross-site origins without forwarding a lead.
 
+Read-only Workers Observability check (24 hours ending 28 August 2026 13:00 UTC):
+
+- the service returned 37 response-status records across the observed requests (301, 308, 400, 403, 404 and 405)
+- no response with status 500 or above was observed in that window
+- observed log levels were informational and observed Worker outcomes were `ok`
+- this is a telemetry snapshot, not proof of complete availability, lead delivery or production readiness
+
 Release blockers and unknowns remain:
 
 - the branch has passed the refreshed GitHub workflow, but the pull request remains unmerged pending review and the separate production release gates
+- the active `main` deployment is still the prior version; the corrected staging-safe sitemap behavior exists only in the unpromoted audit version until an approved merge/deploy
 - no isolated staging Worker/Queue/DLQ, Turnstile keys, downstream sandbox, retry-exhaustion, DLQ replay or end-to-end idempotency proof exists
 - the dependency audit reports eight production-tree vulnerabilities (one high, seven moderate) in the Sanity/CLI toolchain; remediation requires compatibility review rather than a blind major downgrade
 - Sanity project/origin/content credentials, approved analytics/Search Console/GBP integrations, review source and CRM/mail destination are not verified
