@@ -88,8 +88,8 @@ Source state:
 
 - branch: `audit/mobile-nav-contrast-fix`
 - verified code/CI baseline: `a2192b1fd1bea68a51e3ef9087e5e83362c73985`
-- latest audited code head: `e638950b42de0911eccc54640e479b192f48c6f8`
-- latest pull-request head (documentation-only evidence pointer): `f7f2605f5b405cc5dc8700890c2ad95750d34e08`
+- latest audited code head: `a9e570853201eaab3c0dc0a83470242a265b7c71`
+- latest pull-request head: `a9e570853201eaab3c0dc0a83470242a265b7c71`
 - prior functional/CI baseline: `de618820aa536376635d4e8d23048d11034d8281`
 - the audit branch contains the responsive-test fix, retry-policy hardening, dependency-tree remediation and documentation follow-ups after that baseline
 - `origin/main` baseline at audit: `a5df5c9e1f96f8f7c9390af5c86172e3eeaf51ff`
@@ -125,7 +125,7 @@ Refreshed GitHub Actions verification for the current documentation head `cca8cb
 - mobile WebKit job: 36 passed, 6 intentional skips
 - all quality, build, dry-run and browser jobs completed successfully
 
-Responsive-style readiness follow-up for current code head `a2192b1fd1bea68a51e3ef9087e5e83362c73985`:
+Earlier responsive-style readiness follow-up for code head `a2192b1fd1bea68a51e3ef9087e5e83362c73985`:
 
 - an earlier run (`33173568173`) recorded one first-attempt mobile WebKit `target-size` failure before its retry passed; this was treated as a test-readiness defect, not silently accepted
 - the accessibility suite now waits for the browser load event and asserts the intended responsive navigation mode before Axe analysis; no rule, route or assertion was skipped or weakened
@@ -133,7 +133,7 @@ Responsive-style readiness follow-up for current code head `a2192b1fd1bea68a51e3
 - workflow run `33174952905`: **success**; primary Chromium 83 passed/1 intentional skip, desktop Firefox 35 passed/7 intentional skips, desktop WebKit 35 passed/7 intentional skips, mobile WebKit 36 passed/6 intentional skips
 - the current workflow log contains no retry, `target-size`, or test-failure record
 
-Final audit refresh for the current pull-request head `e638950b42de0911eccc54640e479b192f48c6f8`:
+Earlier final audit refresh for pull-request head `e638950b42de0911eccc54640e479b192f48c6f8`:
 
 - dependency tree was freshly installed with `npm ci --no-audit --no-fund`; targeted npm overrides address the reachable `js-yaml`, `smol-toml` and `uuid` transitive advisories without a blind Sanity major-version change
 - `npm audit --omit=dev --json`: zero vulnerabilities
@@ -150,7 +150,16 @@ Documentation-head verification:
 - totals: Chromium 83 passed/1 intentional skip, desktop Firefox 35 passed/7 intentional skips, desktop WebKit 35 passed/7 intentional skips, mobile WebKit 36 passed/6 intentional skips
 - no Playwright retry marker or failed test was present in the run log
 
-Latest GitHub Actions verification for the current code head `de618820aa536376635d4e8d23048d11034d8281`:
+Mobile form interaction follow-up and current code head:
+
+- workflow run `33178036745` (for `d97c16cbe829023f9d02624ff192bcd10e851666`) failed on one first-attempt mobile WebKit radio interaction; the trace showed the native control did not toggle while the responsive layout was still settling. This failure is retained as evidence and was not hidden with a retry or a weakened assertion.
+- commit `a9e570853201eaab3c0dc0a83470242a265b7c71` updates the four affected form/event suites to wait for the full load event and font readiness, click the visible label as a user would, and explicitly verify the radio becomes checked. No route, product assertion, accessibility rule or coverage was removed.
+- focused local mobile WebKit run with retries disabled: 10 passed.
+- local full matrix from this host: 157 passed, 14 intentional skips, and 39 Firefox launch failures (`spawn UNKNOWN`) because the Windows audit host lacks a compatible Firefox side-by-side runtime. Those 39 are an environment limitation, not application passes; the remote Linux Firefox job below is the authoritative Firefox result.
+- workflow run `33179981844`: **success** for all quality/build/dry-run and four-browser jobs at the current head. Primary Chromium: 83 passed/1 intentional skip; desktop Firefox: 35 passed/7 intentional skips; desktop WebKit: 35 passed/7 intentional skips; mobile WebKit: 36 passed/6 intentional skips. The run log contains no Playwright retry, flaky-test or failed-test marker.
+- the pull request remains open and unmerged; no production promotion, DNS change or WordPress cutover was performed.
+
+Earlier GitHub Actions verification for code head `de618820aa536376635d4e8d23048d11034d8281`:
 
 - workflow run `33172698521`: **success**
 - primary Chromium job: 83 passed, 1 intentional skip
