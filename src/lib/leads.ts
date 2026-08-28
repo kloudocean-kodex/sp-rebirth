@@ -4,9 +4,9 @@ export type LeadFormType = (typeof LEAD_FORM_TYPES)[number];
 // Keep previously approved notice versions here when the public notice changes so
 // already-queued legitimate leads remain processable while new intake is pinned to
 // CURRENT_LEAD_PRIVACY_NOTICE_VERSION.
-export const LEAD_PRIVACY_NOTICE_VERSIONS = ['2026-08-27'] as const;
+export const LEAD_PRIVACY_NOTICE_VERSIONS = ['2026-08-27', '2026-08-28'] as const;
 export type LeadPrivacyNoticeVersion = (typeof LEAD_PRIVACY_NOTICE_VERSIONS)[number];
-export const CURRENT_LEAD_PRIVACY_NOTICE_VERSION: LeadPrivacyNoticeVersion = '2026-08-27';
+export const CURRENT_LEAD_PRIVACY_NOTICE_VERSION: LeadPrivacyNoticeVersion = '2026-08-28';
 
 export const LEAD_LIMITS = {
   name: 120,
