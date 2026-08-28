@@ -9,6 +9,8 @@ const criticalRoutes = [
   '/property-management-visibility-check/',
   '/about/',
   '/contact/',
+  '/resources/',
+  '/resources/victoria-rental-minimum-standards/',
 ] as const;
 
 for (const path of criticalRoutes) {
