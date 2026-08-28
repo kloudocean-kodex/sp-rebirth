@@ -143,6 +143,7 @@ test('thank-you acknowledges routing without fabricating downstream delivery or 
   const headers = response?.headers() ?? {};
   expect(headers['cache-control']).toContain('no-store');
   expect(headers['x-robots-tag']).toContain('noindex');
+  expect(headers['strict-transport-security']).toContain('max-age=31536000');
   expect(headers['x-content-type-options']).toBe('nosniff');
   expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");
 
