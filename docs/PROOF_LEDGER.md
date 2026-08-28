@@ -89,7 +89,7 @@ Source state:
 - branch: `audit/mobile-nav-contrast-fix`
 - verified code/CI baseline: `a2192b1fd1bea68a51e3ef9087e5e83362c73985`
 - latest audited code head: `a9e570853201eaab3c0dc0a83470242a265b7c71`
-- latest pull-request head: `a9e570853201eaab3c0dc0a83470242a265b7c71`
+- latest pull-request head: `36acdbfa6be5bbec406e2b6dad15b4128b7f5961` (documentation-only follow-up; code remains at `a9e570853201eaab3c0dc0a83470242a265b7c71`)
 - prior functional/CI baseline: `de618820aa536376635d4e8d23048d11034d8281`
 - the audit branch contains the responsive-test fix, retry-policy hardening, dependency-tree remediation and documentation follow-ups after that baseline
 - `origin/main` baseline at audit: `a5df5c9e1f96f8f7c9390af5c86172e3eeaf51ff`
@@ -157,6 +157,7 @@ Mobile form interaction follow-up and current code head:
 - focused local mobile WebKit run with retries disabled: 10 passed.
 - local full matrix from this host: 157 passed, 14 intentional skips, and 39 Firefox launch failures (`spawn UNKNOWN`) because the Windows audit host lacks a compatible Firefox side-by-side runtime. Those 39 are an environment limitation, not application passes; the remote Linux Firefox job below is the authoritative Firefox result.
 - workflow run `33179981844`: **success** for all quality/build/dry-run and four-browser jobs at the current head. Primary Chromium: 83 passed/1 intentional skip; desktop Firefox: 35 passed/7 intentional skips; desktop WebKit: 35 passed/7 intentional skips; mobile WebKit: 36 passed/6 intentional skips. The run log contains no Playwright retry, flaky-test or failed-test marker.
+- final verification run `33180662561` for documentation head `36acdbfa6be5bbec406e2b6dad15b4128b7f5961`: **success** for the same four jobs and gates. Primary Chromium: 83 passed/1 intentional skip; desktop Firefox: 35 passed/7 intentional skips; desktop WebKit: 35 passed/7 intentional skips; mobile WebKit: 36 passed/6 intentional skips. No retry-like marker, flaky test or failed test was present in any job log.
 - the pull request remains open and unmerged; no production promotion, DNS change or WordPress cutover was performed.
 
 Earlier GitHub Actions verification for code head `de618820aa536376635d4e8d23048d11034d8281`:
