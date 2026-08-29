@@ -87,33 +87,68 @@ const schemaPayload = schema ?? defaultSchema;
     </main>
     <slot name="footer" />
 
-    <script>
-      import { captureSessionAttribution } from '@/lib/attribution';
-      import { emitGrowthEvent } from '@/lib/growth-events';
+    <script is:inline>
+      (() => {
+        const storageKey = 'sp:lead-attribution:v1';
+        const maxValue = 180;
+        const maxUrl = 700;
+        const clean = (value) =>
+          typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, maxValue) : '';
+        const sanitizeUrl = (value) => {
+          const candidate = typeof value === 'string' ? value.trim().slice(0, maxUrl) : '';
+          if (!candidate) return '';
+          try {
+            const url = new URL(candidate);
+            if (url.protocol !== 'https:' && url.protocol !== 'http:') return '';
+            url.username = '';
+            url.password = '';
+            url.search = '';
+            url.hash = '';
+            return url.toString().slice(0, maxUrl);
+          } catch {
+            return '';
+          }
+        };
 
-      try {
-        captureSessionAttribution(window.sessionStorage, window.location.href, document.referrer);
-      } catch {
-        // Attribution is optional and must never block rendering or navigation.
-      }
-
-      document.addEventListener('click', (event) => {
-        const target = event.target;
-        if (!(target instanceof Element)) return;
-
-        const anchor = target.closest('a[href]');
-        if (!(anchor instanceof HTMLAnchorElement)) return;
-
-        const href = anchor.getAttribute('href')?.trim().toLowerCase() ?? '';
-        if (href.startsWith('tel:')) {
-          emitGrowthEvent({ name: 'contact_selected', channel: 'phone' });
-          return;
+        try {
+          if (!window.sessionStorage.getItem(storageKey)) {
+            const current = new URL(window.location.href);
+            window.sessionStorage.setItem(
+              storageKey,
+              JSON.stringify({
+                landingPage: sanitizeUrl(current.toString()),
+                referrer: sanitizeUrl(document.referrer),
+                utmSource: clean(current.searchParams.get('utm_source')),
+                utmMedium: clean(current.searchParams.get('utm_medium')),
+                utmCampaign: clean(current.searchParams.get('utm_campaign')),
+                utmContent: clean(current.searchParams.get('utm_content')),
+                utmTerm: clean(current.searchParams.get('utm_term')),
+              }),
+            );
+          }
+        } catch {
+          // Attribution is optional and must never block rendering or navigation.
         }
 
-        if (href.startsWith('mailto:')) {
-          emitGrowthEvent({ name: 'contact_selected', channel: 'email' });
-        }
-      });
+        const emit = (event) => {
+          const detail = Object.freeze(event);
+          window.dispatchEvent(new CustomEvent('sp:growth-event', { detail }));
+          window.dispatchEvent(new CustomEvent(`sp:${event.name}`, { detail }));
+        };
+
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          const anchor = target.closest('a[href]');
+          if (!(anchor instanceof HTMLAnchorElement)) return;
+          const href = anchor.getAttribute('href')?.trim().toLowerCase() ?? '';
+          if (href.startsWith('tel:')) {
+            emit({ name: 'contact_selected', channel: 'phone' });
+            return;
+          }
+          if (href.startsWith('mailto:')) emit({ name: 'contact_selected', channel: 'email' });
+        });
+      })();
     </script>
   </body>
 </html>

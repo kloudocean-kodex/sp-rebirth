@@ -193,6 +193,10 @@ const credentials = [
   }
   .journey-card.journey-card--featured > .journey-card__number {
     color: var(--accent-deep);
+    /* The base card number is intentionally subdued, but this darker accent
+       is composited over the featured card when opacity is reduced. Keep the
+       semantic step label at full contrast so WCAG AA remains true. */
+    opacity: 1;
   }
   .journey-more {
     margin-top: var(--space-3);
