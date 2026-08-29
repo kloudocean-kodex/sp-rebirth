@@ -1,0 +1,170 @@
+---
+import ResourceLayout from '@/layouts/ResourceLayout.astro';
+
+const sources = [
+  {
+    label: 'Consumer Affairs Victoria — Applying for a property',
+    href: 'https://www.consumer.vic.gov.au/housing/renting/starting-and-changing-rental-agreements/applying-signing-and-moving-in/applying-for-a-property',
+  },
+  {
+    label: 'Consumer Affairs Victoria — Pets in rental properties',
+    href: 'https://www.consumer.vic.gov.au/housing/renting/repairs-alterations-safety-and-pets/pets',
+  },
+  {
+    label: 'Consumer Affairs Victoria — Renters giving notice of intention to vacate',
+    href: 'https://www.consumer.vic.gov.au/housing/renting/moving-out-giving-notice-and-evictions/giving-notice-as-a-renter/renter-giving-notice',
+  },
+  {
+    label: 'Consumer Affairs Victoria — Smoke alarms and fire safety',
+    href: 'https://www.consumer.vic.gov.au/housing/renting/repairs-alterations-safety-and-pets/keeping-the-property-safe/smoke-alarms-and-fire-safety',
+  },
+  {
+    label: 'Consumer Affairs Victoria — Repairs in rental properties',
+    href: 'https://www.consumer.vic.gov.au/housing/renting/repairs-alterations-safety-and-pets/repairs/repairs-in-rental-properties',
+  },
+  {
+    label: 'Consumer Affairs Victoria — Rental minimum standards checklist',
+    href: 'https://www.consumer.vic.gov.au/library/publications/housing-and-accommodation/renting/rental-minimum-standards/rental-minimum-standards-checklist-for-rental-providers-pdf.pdf',
+  },
+  {
+    label: 'Consumer Affairs Victoria — Forms and publications',
+    href: 'https://www.consumer.vic.gov.au/resources-and-tools/forms-and-publications',
+  },
+] as const;
+
+const checkedOn = '29 August 2026';
+---
+
+<ResourceLayout
+  title="Victorian Rental Forms & Guidance | Sana Patel Real Estate"
+  description="A maintained index of current Consumer Affairs Victoria rental forms and guidance for Victorian renters and rental providers, with source dates and clear document boundaries."
+  canonicalPath="/resources/forms-and-guidance/"
+  eyebrow="Rent Smart · Forms & guidance"
+  heading="Use the current form. Keep the decision human."
+  lead="A concise, maintained starting point for Victorian renters and rental providers. Follow the official source for the current form, eligibility and timing before you act."
+  reviewedOn={checkedOn}
+  reviewedOnIso="2026-08-29"
+  noindex={false}
+  {sources}
+>
+  <p class="note">
+    General information only, not legal advice. Victorian rental rules and prescribed forms can change. Sana Patel Real
+    Estate does not submit a form, make a VCAT application or decide a request through this page.
+  </p>
+
+  <h2>Start with the official source</h2>
+  <p>
+    The links below take you to Consumer Affairs Victoria (CAV), the authoritative source for current Victorian rental
+    guidance. The page you reach is the source of truth for the form, supporting evidence, delivery method and any
+    timeframes that apply to your situation.
+  </p>
+
+  <div class="guidance-grid">
+    <section class="guidance-card">
+      <p class="eyebrow">For renters</p>
+      <h3>Applying for a property</h3>
+      <p>
+        CAV explains the rental-application process and the prescribed form requirement from 31 March 2026. Use its
+        current application pathway rather than an old agency template.
+      </p>
+      <a href={sources[0].href} target="_blank" rel="noopener noreferrer">Open applying-for-a-property guidance ↗</a>
+    </section>
+
+    <section class="guidance-card">
+      <p class="eyebrow">For renters with pets</p>
+      <h3>Pet request form</h3>
+      <p>
+        CAV says a separate pet request is used for each pet and sets out the rental provider’s response process. Keep a
+        copy of anything you send and check the current CAV page before lodging a request.
+      </p>
+      <a href={sources[1].href} target="_blank" rel="noopener noreferrer">Open pet guidance and forms ↗</a>
+    </section>
+
+    <section class="guidance-card">
+      <p class="eyebrow">Moving out</p>
+      <h3>Notice of intention to vacate</h3>
+      <p>
+        CAV lists the reasons and notice rules that can apply when a renter ends a rental agreement. Do not rely on a
+        generic “28 days” template without checking the reason and current official form.
+      </p>
+      <a href={sources[2].href} target="_blank" rel="noopener noreferrer">Open renter notice guidance ↗</a>
+    </section>
+
+    <section class="guidance-card">
+      <p class="eyebrow">Safety and maintenance</p>
+      <h3>Smoke alarms, repairs and minimum standards</h3>
+      <p>
+        Use CAV’s current safety and repairs guidance for urgent-repair pathways, smoke-alarm responsibilities and the
+        rental-provider minimum-standards checklist. Safety issues still need the right human and qualified-trade
+        follow-up.
+      </p>
+      <div class="link-stack">
+        <a href={sources[3].href} target="_blank" rel="noopener noreferrer">Smoke alarms and fire safety ↗</a>
+        <a href={sources[4].href} target="_blank" rel="noopener noreferrer">Repairs in rental properties ↗</a>
+        <a href={sources[5].href} target="_blank" rel="noopener noreferrer">Minimum standards checklist ↗</a>
+      </div>
+    </section>
+  </div>
+
+  <h2>What is and is not published here</h2>
+  <ul>
+    <li>
+      <strong>Published:</strong> links to current official guidance, a plain-language orientation and the date this index
+      was checked ({checkedOn}).
+    </li>
+    <li>
+      <strong>Not published or submitted:</strong> supplied legacy DOCX/PDF templates, agency-branded forms, a completed renter
+      application, a pet approval or refusal, a notice to vacate, or any VCAT filing.
+    </li>
+    <li>
+      <strong>Pending approval:</strong> any Sana-specific form, package, fee, policy or downstream workflow must be approved
+      with its owner, audience, effective date and destination before it is made public.
+    </li>
+  </ul>
+
+  <p class="note note--quiet">
+    If a document looks different from the official source, stop and verify it before using it. A maintained link is
+    more useful than a copied form that quietly becomes out of date.
+  </p>
+</ResourceLayout>
+
+<style>
+  .guidance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: var(--space-4);
+  }
+  .guidance-card {
+    display: grid;
+    align-content: start;
+    gap: 0.8rem;
+    padding: 1.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--paper);
+  }
+  .guidance-card h3 {
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+  }
+  .guidance-card p:not(.eyebrow) {
+    margin-top: 0;
+  }
+  .guidance-card a {
+    color: var(--accent-deep);
+    font-weight: 700;
+  }
+  .link-stack {
+    display: grid;
+    gap: 0.55rem;
+  }
+  .note--quiet {
+    margin-top: var(--space-4);
+    border-left-color: var(--ink-soft);
+  }
+  @media (max-width: 680px) {
+    .guidance-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

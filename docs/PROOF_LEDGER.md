@@ -2,6 +2,31 @@
 
 Purpose: separate verified proof from marketing language. Nothing in this file becomes a public claim automatically.
 
+### Forms and guidance surface — 29 August 2026
+
+Status: **STAGING DEPLOYED; fresh PR CI pending. Supplied legacy originals remain withheld.**
+
+- added the public route `/resources/forms-and-guidance/` and linked it from `/resources/`
+- linked current Consumer Affairs Victoria pages for rental applications, pet requests, renter notices, smoke alarms,
+  repairs, minimum-standards checklist and the CAV forms-and-publications index
+- marked the page as general information only, with the checked-on date and an explicit instruction to use the current
+  official source for forms, evidence, delivery and timeframes
+- did not publish or submit any Sana-provided DOCX/PDF originals, legacy agency-branded templates, completed personal
+  information, pet decisions, notices to vacate or VCAT filings
+- stated the remaining approval boundary for Sana-specific forms, policies, fees, package content and downstream workflows
+- added the route to the public browser-route contract and kept staging's effective `noindex,nofollow` policy intact
+- local gates passed after the change: `npm test` (49/49), ESLint, Prettier format check and staging build (Astro: 0
+  errors, 0 warnings, 0 hints)
+- complete public-route browser matrix passed: 122 passed across desktop/mobile Chromium, desktop Firefox, desktop WebKit
+  and mobile WebKit; three desktop-only mobile-navigation tests were intentionally skipped
+- deployed to isolated Worker `sp-rebirth-staging`, version `cc13d1f8-e7cc-421d-9017-8f61b9610437`; account-side version
+  inspection confirms `fetch` and `queue` handlers, static assets, the staging-only Queue binding and staging variables
+- direct HTTPS smoke for `/resources/forms-and-guidance/`: `200`, correct staging canonical URL, `noindex,nofollow`, official
+  CAV forms link present and legacy-document withholding boundary present
+
+The browser connector was unavailable in this session; the route is covered by local build/typecheck and the existing
+cross-browser suite, and still requires staging-specific browser/UAT against the deployed URL after redeploy.
+
 ## Engineering release evidence
 
 ### Current audit wave — 29 August 2026

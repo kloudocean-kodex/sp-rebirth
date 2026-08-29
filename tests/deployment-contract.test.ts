@@ -28,10 +28,11 @@ describe('Cloudflare deployment contract', () => {
     );
   });
 
-  it('does not commit guessed Queue resources before account verification', () => {
-    // This assertion is intentionally temporary. When the real staging Queue and
-    // DLQ have been verified/provisioned, replace it with assertions for those
-    // exact reviewed bindings rather than deleting deployment-contract coverage.
-    expect(wrangler).not.toMatch(/"queues"\s*:/);
+  it('keeps the verified lead Queue contract isolated to staging', () => {
+    expect(wrangler).toMatch(/"env"\s*:\s*\{[\s\S]*"staging"\s*:/);
+    expect(wrangler).toMatch(/"name"\s*:\s*"sp-rebirth-staging"/);
+    expect(wrangler).toMatch(/"binding"\s*:\s*"LEAD_QUEUE"/);
+    expect(wrangler).toMatch(/"queue"\s*:\s*"sp-rebirth-staging-leads"/);
+    expect(wrangler).toMatch(/"dead_letter_queue"\s*:\s*"sp-rebirth-staging-leads-dlq"/);
   });
 });

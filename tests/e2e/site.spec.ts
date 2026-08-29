@@ -16,6 +16,7 @@ const publicRoutes = [
   '/resources/victoria-rental-minimum-standards/',
   '/resources/routine-inspections-victoria/',
   '/resources/changing-property-managers-victoria/',
+  '/resources/forms-and-guidance/',
   '/privacy/',
 ] as const;
 
@@ -73,6 +74,17 @@ test('staging robots policy blocks crawling', async ({ request }) => {
 test('staging does not publish a crawl sitemap', async ({ request }) => {
   const response = await request.get('/sitemap.xml');
   expect(response.status()).toBe(404);
+});
+
+test('forms guidance keeps official Victorian sources and legacy-document boundaries visible', async ({ page }) => {
+  await page.goto('/resources/forms-and-guidance/', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.getByText(/general information only, not legal advice/i)).toBeVisible();
+  await expect(page.getByText(/not published or submitted/i)).toBeVisible();
+  await expect(page.getByRole('link', { name: /consumer affairs victoria — forms and publications/i })).toHaveAttribute(
+    'href',
+    'https://www.consumer.vic.gov.au/resources-and-tools/forms-and-publications',
+  );
 });
 
 test('legacy rental-provider URL permanently redirects to the canonical journey', async ({ request }) => {
