@@ -22,6 +22,13 @@ describe('Cloudflare deployment contract', () => {
     );
   });
 
+  it('builds an indexable production bundle only for the canonical production origin', () => {
+    expect(packageJson).toMatch(/"build:production"\s*:\s*"node scripts\/build-production\.mjs"/);
+    const productionBuild = readFileSync(join(root, 'scripts', 'build-production.mjs'), 'utf8');
+    expect(productionBuild).toContain("PUBLIC_DEPLOY_ENV: 'production'");
+    expect(productionBuild).toContain("PUBLIC_SITE_URL: 'https://www.sanapatel.com.au'");
+  });
+
   it('disables automatic resource provisioning in the preview upload script', () => {
     expect(packageJson).toMatch(
       /"deploy:preview"\s*:\s*"[^"]*wrangler versions upload[^"]*--experimental-provision=false[^"]*--experimental-auto-create=false[^"]*"/,

@@ -1,4 +1,4 @@
-name: SP_REBIRTH staging deployment
+name: SP_REBIRTH production deployment
 
 on:
   workflow_dispatch:
@@ -7,18 +7,17 @@ permissions:
   contents: read
 
 concurrency:
-  group: sp-rebirth-staging-deploy
+  group: sp-rebirth-production-deploy
   cancel-in-progress: false
 
 jobs:
   deploy:
-    name: Deploy isolated staging Worker
-    if: github.ref == 'refs/heads/development'
+    name: Deploy production Worker after approval
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment:
-      name: staging
-      url: https://sp-rebirth-staging.rajputrupali138.workers.dev/
+      name: production
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -37,13 +36,13 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Require the staging deployment credential
+      - name: Require the production deployment credential
         shell: bash
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
-            echo "CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is not configured in the staging environment."
+            echo "CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is not configured in the production environment."
             exit 1
           fi
 
-      - name: Deploy staging Worker
-        run: npm run deploy:staging
+      - name: Deploy production Worker
+        run: npm run deploy:production

@@ -32,6 +32,7 @@ export const INDEXED_PATHS = [
   '/resources/victoria-rental-minimum-standards/',
   '/resources/routine-inspections-victoria/',
   '/resources/changing-property-managers-victoria/',
+  '/resources/forms-and-guidance/',
 ] as const;
 
 export const INTERNAL_PATH_PREFIXES = ['/api/', '/preview/'] as const;
