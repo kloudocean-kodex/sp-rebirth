@@ -21,7 +21,7 @@ export default [
   ...typescriptPlugin.configs['flat/recommended'],
   ...astroPlugin.configs['flat/recommended'],
   {
-    files: ['**/*.config.{js,mjs,cjs}', 'eslint.config.mjs'],
+    files: ['**/*.config.{js,mjs,cjs}', 'eslint.config.mjs', 'scripts/**/*.{js,mjs,cjs}'],
     languageOptions: {
       globals: globals.node,
     },
