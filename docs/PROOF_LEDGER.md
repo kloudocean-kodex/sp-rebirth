@@ -4,7 +4,7 @@ Purpose: separate verified proof from marketing language. Nothing in this file b
 
 ### Forms and guidance surface — 29 August 2026
 
-Status: **STAGING DEPLOYED; fresh PR CI pending. Supplied legacy originals remain withheld.**
+Status: **STAGING DEPLOYED AND PR CI VERIFIED; supplied legacy originals remain withheld.**
 
 - added the public route `/resources/forms-and-guidance/` and linked it from `/resources/`
 - linked current Consumer Affairs Victoria pages for rental applications, pet requests, renter notices, smoke alarms,
@@ -23,6 +23,9 @@ Status: **STAGING DEPLOYED; fresh PR CI pending. Supplied legacy originals remai
   inspection confirms `fetch` and `queue` handlers, static assets, the staging-only Queue binding and staging variables
 - direct HTTPS smoke for `/resources/forms-and-guidance/`: `200`, correct staging canonical URL, `noindex,nofollow`, official
   CAV forms link present and legacy-document withholding boundary present
+- GitHub Actions run `33236898191` for commit `a4e10cb9238231a76ed5ddf381b3217faf45de99`: **success** — dependency
+  audit, 49 unit tests, Astro typecheck, ESLint, full-repository Prettier check, production and Studio builds, Wrangler
+  dry-run, Chromium QA, desktop Firefox, desktop WebKit and mobile WebKit all passed
 
 The browser connector was unavailable in this session; the route is covered by local build/typecheck and the existing
 cross-browser suite, and still requires staging-specific browser/UAT against the deployed URL after redeploy.
