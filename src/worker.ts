@@ -1,4 +1,5 @@
 import { handle } from '@astrojs/cloudflare/handler';
+import { applyHtmlSecurityHeaders } from './config/http-security';
 import { consumeLeadQueueMessage, type QueueMessageLike } from './lib/lead-queue-consumer';
 import type { LeadDeliveryBindings } from './lib/lead-delivery';
 
@@ -13,7 +14,14 @@ interface LeadQueueBatch {
 
 export default {
   async fetch(request: Request, env: WorkerEnv, ctx: AstroExecutionContext): Promise<Response> {
-    return handle(request, env, ctx);
+    const response = await handle(request, env, ctx);
+    const headers = new Headers(response.headers);
+    applyHtmlSecurityHeaders(headers);
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
   },
 
   async queue(batch: LeadQueueBatch, env: WorkerEnv): Promise<void> {

@@ -4,6 +4,28 @@ Purpose: separate verified proof from marketing language. Nothing in this file b
 
 ## Engineering release evidence
 
+### Current audit wave — 29 August 2026
+
+Status: **LOCAL FIXES VERIFIED; PR CI and Cloudflare release gates still open.**
+
+Verified against branch `audit/mobile-nav-contrast-fix` at source head `2b6c019fc7298e44e4f253357aba58465239ca82` plus the uncommitted working-tree fixes recorded in this section:
+
+- `npm ci` completed from a clean dependency install (Node 24.19.0 emitted only the repository's existing Node 22 engine warning)
+- `npm test`: 7 files and 49 tests passed
+- `npm audit --audit-level=low`: 0 vulnerabilities
+- `npm run build`: Astro diagnostics 0 errors, 0 warnings, 0 hints; production build completed
+- desktop Chromium accessibility: 9 passed after the featured journey-number contrast correction
+- desktop Firefox accessibility: 9 passed
+- desktop WebKit accessibility: 9 passed
+- Chromium growth-event/attribution/security suite: 6 passed; first-touch attribution, contact channel events and thank-you security headers now pass
+- Chromium homepage hero media contract: passed; the expected static `srcset` is present in the built and served output
+- ESLint: passed
+- full Playwright matrix, serialised at one worker to remove host contention: 229 passed and 21 intentional visual-review skips across desktop Chromium, mobile Chromium, desktop Firefox, desktop WebKit and mobile WebKit
+
+The earlier all-project local Playwright run (before the deterministic fixes were served from the refreshed checkout) recorded 206 passed, 21 intentional visual-review skips and 23 failures. The failures were traced to the deferred attribution/contact listener, the Worker response not preserving dynamic security headers in local serving, stale test-server output for the hero `srcset`, and Firefox timeout contention under five-project parallel load. The refreshed serialised matrix is now green locally; a fresh PR workflow remains required for repository release evidence.
+
+Still open after this wave: fresh GitHub CI for the new commit; protected branch/environment configuration; authenticated Cloudflare inventory; isolated staging and production Workers, domains, secrets, Turnstile keys, queues/DLQs and downstream destinations; retry/DLQ replay and idempotency proof; final CMS/analytics/CRM/review/legal approvals; WordPress backup, asset cutover and rollback drill; and the explicit production promotion gate.
+
 ### Continuation hardening and live WordPress inventory — 28 August 2026
 
 Status: **VERIFIED for the audited source/CI checkpoint and connected WordPress inventory; not isolated Cloudflare staging certification and not production release approval.**
