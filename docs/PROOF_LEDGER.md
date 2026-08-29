@@ -21,10 +21,13 @@ Verified against branch `audit/mobile-nav-contrast-fix` at source head `2b6c019f
 - Chromium homepage hero media contract: passed; the expected static `srcset` is present in the built and served output
 - ESLint: passed
 - full Playwright matrix, serialised at one worker to remove host contention: 229 passed and 21 intentional visual-review skips across desktop Chromium, mobile Chromium, desktop Firefox, desktop WebKit and mobile WebKit
+- GitHub Actions run `33231896004` for commit `a1d9e7ddf00e78244d03f61bf23ca0e269a1a6e2`: **success** — quality/build/Chromium QA, desktop Firefox, desktop WebKit and mobile WebKit all passed
+- authenticated Cloudflare inventory confirmed the account contains Worker `sp-rebirth`; its current 100% deployment is version `9a3fff3e-0af6-49d9-92c5-f4dac0d77cc2` and its only reported binding is static `ASSETS`
+- the authenticated Queue inventory contains no SP_REBIRTH Queue or DLQ, and `wrangler.jsonc` has no `staging` environment definition
 
 The earlier all-project local Playwright run (before the deterministic fixes were served from the refreshed checkout) recorded 206 passed, 21 intentional visual-review skips and 23 failures. The failures were traced to the deferred attribution/contact listener, the Worker response not preserving dynamic security headers in local serving, stale test-server output for the hero `srcset`, and Firefox timeout contention under five-project parallel load. The refreshed serialised matrix is now green locally; a fresh PR workflow remains required for repository release evidence.
 
-Still open after this wave: fresh GitHub CI for the new commit; protected branch/environment configuration; authenticated Cloudflare inventory; isolated staging and production Workers, domains, secrets, Turnstile keys, queues/DLQs and downstream destinations; retry/DLQ replay and idempotency proof; final CMS/analytics/CRM/review/legal approvals; WordPress backup, asset cutover and rollback drill; and the explicit production promotion gate.
+Still open after this wave: protected branch/environment configuration; an approved isolated staging strategy and its Worker/domain/secrets/Turnstile keys/Queue/DLQ/downstream destination; retry/DLQ replay and idempotency proof; separately verified production resources; final CMS/analytics/CRM/review/legal approvals; WordPress backup, asset cutover and rollback drill; and the explicit production promotion gate.
 
 ### Continuation hardening and live WordPress inventory — 28 August 2026
 
