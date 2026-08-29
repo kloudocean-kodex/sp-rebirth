@@ -30,6 +30,25 @@ Status: **STAGING DEPLOYED AND PR CI VERIFIED; supplied legacy originals remain 
 The browser connector was unavailable in this session; the route is covered by local build/typecheck and the existing
 cross-browser suite, and still requires staging-specific browser/UAT against the deployed URL after redeploy.
 
+### Protected release topology — 29 August 2026
+
+Status: **CONFIGURED; workflow credentials and production promotion remain intentionally unexecuted.**
+
+- `development` and `main` now require the four CI checks (quality/Chromium, desktop Firefox, desktop WebKit and mobile
+  WebKit), up-to-date branches, linear history and resolved conversations; force pushes and branch deletion are disabled,
+  with protections enforced for administrators too
+- the existing `staging` GitHub environment is restricted to the `development` branch; its workflow now also refuses to
+  run from another ref
+- created a separate `production` GitHub environment, restricted to `main`, with an explicit environment approval gate
+  before the manual production deployment job can access its environment
+- added a main-only, manually dispatched production workflow and deterministic production build wrapper; production build
+  uses only `PUBLIC_DEPLOY_ENV=production` and the canonical `https://www.sanapatel.com.au` origin
+- added `/resources/forms-and-guidance/` to the explicitly curated production index surface; the verified production
+  bundle has that canonical URL, the official CAV link and no `noindex` meta tag
+- no staging or production environment deployment credentials are currently configured in GitHub, so neither automated
+  deployment workflow can be started successfully yet
+- no production Worker, custom domain, DNS, WordPress, customer data path or cutover routing was changed
+
 ## Engineering release evidence
 
 ### Current audit wave — 29 August 2026
