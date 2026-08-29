@@ -27,7 +27,23 @@ Verified against branch `audit/mobile-nav-contrast-fix` at source head `2b6c019f
 
 The earlier all-project local Playwright run (before the deterministic fixes were served from the refreshed checkout) recorded 206 passed, 21 intentional visual-review skips and 23 failures. The failures were traced to the deferred attribution/contact listener, the Worker response not preserving dynamic security headers in local serving, stale test-server output for the hero `srcset`, and Firefox timeout contention under five-project parallel load. The refreshed serialised matrix is now green locally; a fresh PR workflow remains required for repository release evidence.
 
-Still open after this wave: protected branch/environment configuration; an approved isolated staging strategy and its Worker/domain/secrets/Turnstile keys/Queue/DLQ/downstream destination; retry/DLQ replay and idempotency proof; separately verified production resources; final CMS/analytics/CRM/review/legal approvals; WordPress backup, asset cutover and rollback drill; and the explicit production promotion gate.
+Still open after this wave: protected branch/environment configuration; staging Turnstile keys, runtime secrets and an approved downstream destination; retry/DLQ replay and idempotency proof; separately verified production resources; final CMS/analytics/CRM/review/legal approvals; WordPress backup, asset cutover and rollback drill; and the explicit production promotion gate.
+
+### Isolated staging infrastructure — 29 August 2026
+
+Status: **STAGING WORKER AND QUEUE BOUNDARIES DEPLOYED; LEAD DELIVERY AND PRODUCTION GATES OPEN.**
+
+- created Queue `sp-rebirth-staging-leads` (account resource ID `ca681a19c01c485cbc7d2c037c1edd02`)
+- created Dead Letter Queue `sp-rebirth-staging-leads-dlq` (account resource ID `90cc55c67e004c7ba98921c05f8aa968`)
+- deployed Worker `sp-rebirth-staging`, version `ea9a8f9e-9bc2-4314-860a-84bb19d91b91`, with 100% traffic to that version
+- account-side version inspection confirmed handlers `fetch, queue`, producer binding `LEAD_QUEUE`, static `ASSETS`, `PUBLIC_DEPLOY_ENV=staging`, and `LEAD_DELIVERY_MODE=queue`
+- consumer policy is bounded to one-message batches, one concurrent invocation, three retries, 15-second retry delay and the verified staging DLQ
+- live HTTP smoke checks passed: home `200`, staging canonical URL, crawl-blocking `robots.txt`, absent `sitemap.xml` (`404`), and thank-you `no-store`, HSTS and `noindex` headers
+- synthetic lead probe was rejected with `verification_required` before queue acceptance because Turnstile is intentionally not configured yet
+
+Staging URL: `https://sp-rebirth-staging.rajputrupali138.workers.dev/`.
+
+The in-app browser connector was unavailable in this session; the live smoke evidence above was collected through direct HTTPS requests and account-side Wrangler inspection. Full browser QA remains covered by the green GitHub matrix, while staging-specific browser/UAT still needs to run against this deployed URL.
 
 ### Continuation hardening and live WordPress inventory — 28 August 2026
 

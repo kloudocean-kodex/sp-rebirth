@@ -5,12 +5,44 @@
   "compatibility_date": "2026-08-27",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": true,
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist/client",
+  },
   "observability": {
     "enabled": true,
   },
 
-  // Queue producer/consumer bindings are intentionally added only after the
-  // staging Queue and DLQ names are verified in the connected Cloudflare account.
-  // The Worker entrypoint is queue-capable now; production promotion remains
-  // blocked until those bindings and recovery tests are present.
+  // The production/default Worker intentionally has no lead-transport binding.
+  // Queue mode is enabled only on the isolated staging Worker below.
+  "env": {
+    "staging": {
+      "name": "sp-rebirth-staging",
+      "workers_dev": true,
+      "vars": {
+        "PUBLIC_DEPLOY_ENV": "staging",
+        "PUBLIC_SITE_URL": "https://sp-rebirth-staging.rajputrupali138.workers.dev",
+        "LEAD_DELIVERY_MODE": "queue",
+      },
+      "queues": {
+        "producers": [
+          {
+            "binding": "LEAD_QUEUE",
+            "queue": "sp-rebirth-staging-leads",
+          },
+        ],
+        "consumers": [
+          {
+            "queue": "sp-rebirth-staging-leads",
+            "max_batch_size": 1,
+            "max_batch_timeout": 5,
+            "max_retries": 3,
+            "retry_delay": 15,
+            "max_concurrency": 1,
+            "dead_letter_queue": "sp-rebirth-staging-leads-dlq",
+          },
+        ],
+      },
+    },
+  },
 }
