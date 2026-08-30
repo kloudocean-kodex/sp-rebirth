@@ -2,6 +2,33 @@
 
 Purpose: separate verified proof from marketing language. Nothing in this file becomes a public claim automatically.
 
+### GrowthEngine positioning and accessibility refinement — 30 August 2026
+
+Status: **LOCAL CANDIDATE VERIFIED; development push and staging redeploy pending. Production remains untouched.**
+
+- reviewed a representative current Melbourne property-management set (TTS, Wolfbrook, Smart Property Manager, EZPZ,
+  Belle Maison, ANF, 8 Miles, Ryan Property, Ritz and MP Property) plus current Consumer Affairs Victoria guidance
+- confirmed that “boutique”, “personal”, “premium”, “direct access” and appraisal promises are crowded category language;
+  did not copy competitor numbers, reviews, fees or performance claims
+- added `ManagementComparison.astro` to the switch journey: five observable questions covering accountability, rent
+  evidence, inspection follow-through, maintenance visibility and a controlled handover; the page links to current CAV
+  guidance, which recommends researching agents and speaking with at least two or three locally
+- added a switching-journey browser contract test and expanded the accessibility route list to all public routes
+- the expanded a11y run initially found a real pre-existing WCAG color-contrast issue on `/for-renters/` (three step
+  markers, 3.18:1); replaced opacity-based text with the high-contrast `--gold-deep` token and rebuilt; targeted rerun
+  passed on desktop/mobile Chromium, desktop Firefox, desktop WebKit and mobile WebKit (5/5)
+- local gates after the fix: `npm test` (50/50), ESLint, Prettier check, production build and staging build all passed
+  (Astro diagnostics 0 errors, 0 warnings, 0 hints)
+- full cross-browser public-route contract after the refinement: 127 passed, 3 intentional desktop-only navigation skips
+  across 130 tests
+- visual-review captures for six key journeys at desktop and mobile Chromium: 12/12 passed; switch-page capture reviewed
+  for hierarchy, responsive flow, contrast and CTA clarity
+- existing supplied property photography remains in use; no artificial property imagery or unlicensed stock was added
+- competitor source URLs and the positioning decision are recorded in `docs/COMPETITOR_POSITIONING_2026.md`
+
+Required next action is a commit/push to protected `development`, fresh GitHub CI, then a staging redeploy and deployed-URL
+smoke/UAT. No production Worker, custom domain, DNS, WordPress site or live lead destination has been mutated.
+
 ### Forms and guidance surface — 29 August 2026
 
 Status: **STAGING DEPLOYED AND PR CI VERIFIED; supplied legacy originals remain withheld.**

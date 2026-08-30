@@ -54,6 +54,33 @@ Common patterns:
 - independent credentials
 - founder/team visibility
 
+### Fresh market scan — 30 August 2026
+
+The current Melbourne search set reinforced the category pattern rather than revealing a new defensible slogan:
+
+- TTS combines “boutique” language with a same-day appraisal and performance/fee claims.
+- Wolfbrook, Smart Property Manager, Belle Maison, ANF, Ryan Property and Ritz all lead with some combination of
+  premium/boutique, personal care, direct access, owner involvement or a single point of contact.
+- EZPZ and 8 Miles make their appraisal, transparent-fee or performance framing tangible with explicit deliverables or
+  numbers. Those mechanics are commercially effective but cannot be copied without current source evidence and Sana's
+  approval.
+- MP Property makes visibility concrete through portal access and a described rental-analysis method.
+
+Strategic decision: make **visible accountability** more concrete than an access claim. The switching journey now gives
+owners a five-question comparison brief—accountability, rent evidence, inspection follow-through, maintenance visibility
+and controlled transition—rather than asking them to trust another “boutique” promise.
+
+Research sources checked 30 August 2026:
+
+- https://www.ttsrealestate.com.au/
+- https://wolfbrook.com.au/
+- https://ezpzproperty.com.au/get-appraisal
+- https://bellemaisonpm.net.au/
+- https://anfpropertygroup.com.au/
+- https://www.8milesestate.com.au/
+- https://mpproperty.com.au/manage
+- https://www.consumer.vic.gov.au/housing/renting/starting-and-changing-rental-agreements/using-a-property-manager-or-agent
+
 ## Sana's stronger territory
 
 ### Core idea

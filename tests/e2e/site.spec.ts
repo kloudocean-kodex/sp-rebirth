@@ -87,6 +87,17 @@ test('forms guidance keeps official Victorian sources and legacy-document bounda
   );
 });
 
+test('switching journey compares observable accountability rather than generic agency claims', async ({ page }) => {
+  await page.goto('/switch-property-managers/', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.getByRole('heading', { name: /compare the management, not the marketing/i })).toBeVisible();
+  await expect(page.getByText(/who owns the next step/i).first()).toBeVisible();
+  await expect(page.getByRole('link', { name: /read the current guidance/i })).toHaveAttribute(
+    'href',
+    'https://www.consumer.vic.gov.au/housing/renting/starting-and-changing-rental-agreements/using-a-property-manager-or-agent',
+  );
+});
+
 test('legacy rental-provider URL permanently redirects to the canonical journey', async ({ request }) => {
   const response = await request.get('/for-rental-providers/', { maxRedirects: 0 });
   expect(response.status()).toBe(301);
