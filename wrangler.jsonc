@@ -36,8 +36,8 @@
     "enabled": true,
   },
 
-  // The production/default Worker intentionally has no lead-transport binding.
-  // Queue mode is enabled only on the isolated staging Worker below.
+  // The production/default Worker uses the separately provisioned production
+  // Queue. The isolated staging Worker below has its own Queue and DLQ.
   "env": {
     "staging": {
       "name": "sp-rebirth-staging",
