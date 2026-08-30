@@ -9,6 +9,29 @@
     "binding": "ASSETS",
     "directory": "./dist/client",
   },
+  // The default Worker is the production target. Its Queue producer/consumer
+  // resources are provisioned in the authenticated account and deliberately
+  // use different names from staging. Runtime secrets remain in Worker/GitHub
+  // secret stores and are never committed here.
+  "queues": {
+    "producers": [
+      {
+        "binding": "LEAD_QUEUE",
+        "queue": "sp-rebirth-production-leads",
+      },
+    ],
+    "consumers": [
+      {
+        "queue": "sp-rebirth-production-leads",
+        "max_batch_size": 1,
+        "max_batch_timeout": 5,
+        "max_retries": 3,
+        "retry_delay": 15,
+        "max_concurrency": 1,
+        "dead_letter_queue": "sp-rebirth-production-leads-dlq",
+      },
+    ],
+  },
   "observability": {
     "enabled": true,
   },

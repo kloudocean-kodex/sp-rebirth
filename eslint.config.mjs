@@ -9,6 +9,7 @@ export default [
       '.astro/**',
       '.wrangler/**',
       '.wrangler-dry-run/**',
+      '.wrangler-dry-run-*/**',
       'dist/**',
       'node_modules/**',
       'playwright-report/**',

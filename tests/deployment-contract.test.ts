@@ -35,7 +35,9 @@ describe('Cloudflare deployment contract', () => {
     );
   });
 
-  it('keeps the verified lead Queue contract isolated to staging', () => {
+  it('binds separately verified production and staging Queue resources', () => {
+    expect(wrangler).toMatch(/"queue"\s*:\s*"sp-rebirth-production-leads"/);
+    expect(wrangler).toMatch(/"dead_letter_queue"\s*:\s*"sp-rebirth-production-leads-dlq"/);
     expect(wrangler).toMatch(/"env"\s*:\s*\{[\s\S]*"staging"\s*:/);
     expect(wrangler).toMatch(/"name"\s*:\s*"sp-rebirth-staging"/);
     expect(wrangler).toMatch(/"binding"\s*:\s*"LEAD_QUEUE"/);
