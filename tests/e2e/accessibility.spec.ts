@@ -11,6 +11,13 @@ const criticalRoutes = [
   '/contact/',
   '/resources/',
   '/resources/victoria-rental-minimum-standards/',
+  '/resources/routine-inspections-victoria/',
+  '/resources/changing-property-managers-victoria/',
+  '/resources/forms-and-guidance/',
+  '/privacy/',
+  '/lease/',
+  '/for-renters/',
+  '/sale/',
 ] as const;
 
 for (const path of criticalRoutes) {
