@@ -4,7 +4,7 @@ Purpose: separate verified proof from marketing language. Nothing in this file b
 
 ### GrowthEngine positioning and accessibility refinement — 30 August 2026
 
-Status: **LOCAL CANDIDATE VERIFIED; development push and staging redeploy pending. Production remains untouched.**
+Status: **MERGED TO DEVELOPMENT, CI VERIFIED AND STAGING DEPLOYED. Production remains untouched.**
 
 - reviewed a representative current Melbourne property-management set (TTS, Wolfbrook, Smart Property Manager, EZPZ,
   Belle Maison, ANF, 8 Miles, Ryan Property, Ritz and MP Property) plus current Consumer Affairs Victoria guidance
@@ -25,9 +25,18 @@ Status: **LOCAL CANDIDATE VERIFIED; development push and staging redeploy pendin
   for hierarchy, responsive flow, contrast and CTA clarity
 - existing supplied property photography remains in use; no artificial property imagery or unlicensed stock was added
 - competitor source URLs and the positioning decision are recorded in `docs/COMPETITOR_POSITIONING_2026.md`
+- PR #4 merged into protected `development` as commit `6132333c08653866ae076e069abfb16e3106a6da`; GitHub CI run
+  `33313073036` passed quality/Chromium, desktop Firefox, desktop WebKit and mobile WebKit jobs
+- exact merged commit deployed to isolated staging Worker `sp-rebirth-staging`; deployment version
+  `46bed1f0-cc22-4c00-a99a-b6483c185ef1` is at 100% with `fetch, queue`, staging Queue binding, static assets and
+  staging-only variables
+- direct HTTPS smoke passed for `/`, `/switch-property-managers/` and `/resources/forms-and-guidance/` (200, staging
+  canonical); comparison/CAV link, official forms link and withholding boundary were present; `/robots.txt` remains
+  `Disallow: /`; `/sitemap.xml` remains 404
 
-Required next action is a commit/push to protected `development`, fresh GitHub CI, then a staging redeploy and deployed-URL
-smoke/UAT. No production Worker, custom domain, DNS, WordPress site or live lead destination has been mutated.
+Required next action is deployed staging UAT against real approved lead-delivery credentials/destination, followed by the
+separate production resource, content/legal, WordPress backup/cutover and explicit promotion gates. No production Worker,
+custom domain, DNS, WordPress site or live lead destination has been mutated.
 
 ### Forms and guidance surface — 29 August 2026
 
