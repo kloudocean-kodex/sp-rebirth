@@ -601,22 +601,69 @@ Treatment in SP_REBIRTH:
 - remove guarantees that cannot be responsibly substantiated
 - avoid claiming legal protection/full compliance
 
-## Trustindex / Google proof — pending connection
+## Trustindex / Google proof — connected and staged for integration
 
-Required before launch:
+Verified in Sana's authenticated Trustindex account on 1 September 2026:
 
-- authoritative current review count
-- current rating
-- review-source URL
-- permission/integration method through Sana's Trustindex subscription
-- selected review IDs/content
-- date last refreshed
+- company: `Sana Patel Real Estate`
+- package shown by Trustindex: `Single package`
+- connected review platform: Google
+- company URL: `https://www.sanapatel.com.au`
+- public Trustindex summary: `https://www.trustindex.io/reviews/www.sanapatel.com.au`
+- Google Place ID: `ChIJ56JfW3H5QQcRERAx5fE3MgM`
+- dashboard snapshot at review time: `5.0` from `33 reviews`; this is dated evidence, not a value to hard-code
+- one existing website widget: `Slider I. - with header`, internal record `789687`, public widget ID
+  `3c2a66b785b296885c763bd7b28`
+- widget last-saved value shown by Trustindex: `2026.08.31. 14:56`
+- live embed contract:
+  `<script defer async src='https://cdn.trustindex.io/loader.js?3c2a66b785b296885c763bd7b28'></script>`
+- widget settings observed: all review ratings, all review languages, English interface, review photos enabled, verified
+  source enabled, Trustindex verification enabled, lazy loading enabled and rich snippets disabled
+- public widget payload contained ten current Google review cards at inspection time and linked each card back to the
+  Google source; reviewer text has not been copied into repository source
+- the connected WordPress site has no active Trustindex plugin and its current public homepage did not expose a
+  Trustindex embed; this GrowthEngine integration is isolated from the live WordPress site
 
-Implementation rule:
+Implemented on the Trustindex proof branch:
 
-- review count and rating should come from the source/integration where possible, not hand-maintained text
-- if cached, include a refresh/expiry policy
-- never show a rating or count if the source cannot be verified
+- one homepage review-proof section using the existing public widget rather than creating a duplicate
+- a server-rendered direct Google source link that remains useful when JavaScript, Trustindex or reviewer avatars are
+  blocked
+- no hard-coded rating/count and no self-serving `aggregateRating` or review JSON-LD
+- exact Content Security Policy allowances for `cdn.trustindex.io` and the currently observed
+  `lh3.googleusercontent.com` reviewer-image origin; no wildcard Trustindex allowance
+- explicit pre-launch privacy disclosure for Trustindex CDN content and Google-hosted reviewer images
+- tests for configuration, source fallback, vendor failure and CSP alignment
+- a first-party intersection boundary that defers the third-party loader until the review panel approaches the viewport;
+  this preserves the initial page path while still activating Trustindex's own lazy widget reliably
+- a branded connecting state plus a direct Google-source fallback when the vendor script or network is unavailable
+
+Verified locally against the live Trustindex service on 1 September 2026:
+
+- the initial Trustindex loader, current widget payload, widget stylesheet, verification graphics, Google artwork,
+  reviewer avatars and Trustindex font assets all returned successfully during the final run
+- the live widget rendered one active instance in desktop Chromium, mobile Chromium, desktop Firefox, desktop WebKit
+  and mobile WebKit: `5/5` configurations passed
+- the loaded review section passed the automated WCAG 2.0/2.1/2.2 A/AA scan in all five configurations
+- the desktop carousel control was keyboard focusable; the narrow touch layout intentionally rendered a single card
+  without requiring a desktop-only next control
+- the first live inspection found that Trustindex's own lazy loader waited for user activity after the host entered the
+  page; the first-party intersection boundary fixed that root cause rather than adding a timeout or weakening a test
+- the same inspection found a blocked Trustindex stylesheet preload to `fonts.googleapis.com`; the policy now permits
+  that exact origin in `connect-src`, and the five-configuration rerun passed
+- deterministic visual-regression captures deliberately preserve the branded connecting state and do not depend on a
+  third-party response; the separate opt-in live-provider suite proves the external rendering path
+
+Release rules:
+
+- Trustindex remains the owner of refresh timing and the website must continue to display source-loaded values
+- re-check the widget payload, rating/count, account status, source link, privacy wording and network origins immediately
+  before production promotion
+- the existing account's public company description and `Product` rich-snippet setting require a separately approved
+  Trustindex-profile correction; neither has been silently changed
+- Google does not award review-star search features to self-serving LocalBusiness/Organization reviews on the business's
+  own site, including reviews delivered by a third-party widget; do not enable Trustindex rich snippets to imply otherwise
+- treat the carousel as trust/conversion content, not as a guarantee of search ranking or conversion uplift
 
 ## Proof hierarchy for the final site
 

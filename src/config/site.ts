@@ -17,8 +17,20 @@ export const SITE = {
     image: 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp',
   },
   profiles: {
-    business: ['https://www.realestate.com.au/agency/sana-patel-real-estate-KRFFJV'],
+    business: [
+      'https://www.realestate.com.au/agency/sana-patel-real-estate-KRFFJV',
+      'https://www.google.com/maps/search/?api=1&query=Sana%20Patel%20Real%20Estate&query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM',
+      'https://www.trustindex.io/reviews/www.sanapatel.com.au',
+    ],
     founder: ['https://www.realestate.com.au/agent/sana-patel-3829096', 'https://au.linkedin.com/in/sana-p-726457138'],
+  },
+  reviews: {
+    provider: 'Trustindex',
+    trustindexWidgetId: '3c2a66b785b296885c763bd7b28',
+    trustindexSummaryUrl: 'https://www.trustindex.io/reviews/www.sanapatel.com.au',
+    googlePlaceId: 'ChIJ56JfW3H5QQcRERAx5fE3MgM',
+    googleProfileUrl:
+      'https://www.google.com/maps/search/?api=1&query=Sana%20Patel%20Real%20Estate&query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM',
   },
 } as const;
 

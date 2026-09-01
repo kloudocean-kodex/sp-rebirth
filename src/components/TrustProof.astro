@@ -1,0 +1,219 @@
+---
+import { SITE } from '@/config/site';
+---
+
+<section class="section trust-proof" aria-labelledby="trust-proof-title">
+  <div class="container-wide trust-proof__shell">
+    <div class="trust-proof__intro">
+      <div>
+        <p class="eyebrow">Current Google reviews</p>
+        <h2 id="trust-proof-title">Trust is stronger when the source stays visible.</h2>
+      </div>
+      <div class="trust-proof__context">
+        <p>
+          Sana's current Google reviews are displayed through her connected Trustindex account. The rating, review
+          count, names and comments load from that source instead of being retyped as fixed website claims.
+        </p>
+        <a href={SITE.reviews.googleProfileUrl} target="_blank" rel="noopener noreferrer nofollow">
+          Read the current reviews on Google <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="trust-proof__widget"
+      data-review-provider="Trustindex"
+      data-trustindex-widget-id={SITE.reviews.trustindexWidgetId}
+      data-trustindex-state="waiting"
+      aria-busy="true"
+    >
+      <div class="trust-proof__loading" aria-hidden="true">
+        <span>Live Google review stream</span>
+        <strong>Connecting to the current source…</strong>
+      </div>
+      <noscript>
+        <p>
+          The live review carousel requires JavaScript. You can still
+          <a href={SITE.reviews.googleProfileUrl} target="_blank" rel="noopener noreferrer nofollow"
+            >read Sana's current reviews on Google</a
+          >.
+        </p>
+      </noscript>
+    </div>
+
+    <p class="trust-proof__note">
+      Review content is supplied by Google through Trustindex and can change when the connected source refreshes.
+    </p>
+  </div>
+</section>
+
+<script>
+  const trustindexHosts = document.querySelectorAll<HTMLElement>('[data-trustindex-widget-id]');
+
+  const loadTrustindex = (host: HTMLElement) => {
+    if (host.dataset.trustindexState !== 'waiting') return;
+
+    const widgetId = host.dataset.trustindexWidgetId;
+    if (!widgetId || !/^[a-f0-9]{24,64}$/.test(widgetId)) {
+      host.dataset.trustindexState = 'unavailable';
+      host.setAttribute('aria-busy', 'false');
+      return;
+    }
+
+    host.dataset.trustindexState = 'loading';
+    const loading = host.querySelector<HTMLElement>('.trust-proof__loading');
+
+    const markReady = (event: Event) => {
+      const detail = (event as CustomEvent<{ widget?: { widget?: Element } }>).detail;
+      const widget = detail?.widget?.widget;
+      if (!widget || !host.contains(widget)) return;
+
+      loading?.remove();
+      host.dataset.trustindexState = 'ready';
+      host.setAttribute('aria-busy', 'false');
+      window.removeEventListener('widget-ready', markReady);
+    };
+
+    window.addEventListener('widget-ready', markReady);
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.defer = true;
+    script.src = `https://cdn.trustindex.io/loader.js?${widgetId}`;
+    script.referrerPolicy = 'origin';
+    script.setAttribute('fetchpriority', 'low');
+    script.addEventListener('error', () => {
+      host.dataset.trustindexState = 'unavailable';
+      host.setAttribute('aria-busy', 'false');
+      loading?.querySelector('strong')?.replaceChildren('Live reviews are temporarily unavailable.');
+      window.removeEventListener('widget-ready', markReady);
+    });
+    host.append(script);
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const host = entry.target as HTMLElement;
+          observer.unobserve(host);
+          loadTrustindex(host);
+        }
+      },
+      { rootMargin: '100px 0px' },
+    );
+
+    trustindexHosts.forEach((host) => observer.observe(host));
+  } else {
+    trustindexHosts.forEach(loadTrustindex);
+  }
+</script>
+
+<style>
+  .trust-proof {
+    position: relative;
+    overflow: clip;
+    background:
+      radial-gradient(circle at 8% 4%, rgba(184, 154, 96, 0.13), transparent 26rem),
+      linear-gradient(180deg, var(--paper-deep), var(--paper));
+  }
+  .trust-proof::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184, 154, 96, 0.78), transparent);
+  }
+  .trust-proof__shell {
+    position: relative;
+  }
+  .trust-proof__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(20rem, 1fr);
+    gap: var(--space-5);
+    align-items: end;
+  }
+  .trust-proof h2 {
+    max-width: 13ch;
+    margin-top: var(--space-2);
+    font-size: var(--h2);
+  }
+  .trust-proof__context {
+    max-width: 42rem;
+    color: var(--ink-soft);
+  }
+  .trust-proof__context a {
+    display: inline-flex;
+    gap: 0.35rem;
+    margin-top: var(--space-2);
+    color: var(--accent-deep);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    text-underline-offset: 0.28em;
+  }
+  .trust-proof__widget {
+    min-height: 19rem;
+    margin-top: var(--space-4);
+    padding: clamp(1rem, 2.7vw, 2.3rem);
+    border: 1px solid rgba(109, 83, 44, 0.18);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 253, 248, 0.88);
+    box-shadow: 0 1.4rem 4rem rgba(35, 29, 20, 0.075);
+  }
+  .trust-proof__loading {
+    min-height: 14rem;
+    display: grid;
+    place-content: center;
+    gap: 0.7rem;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  .trust-proof__loading::before {
+    content: '';
+    width: 3.4rem;
+    height: 1px;
+    margin-inline: auto;
+    background: var(--gold);
+  }
+  .trust-proof__loading span {
+    color: var(--accent-deep);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.065em;
+    text-transform: uppercase;
+  }
+  .trust-proof__loading strong {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.4vw, 2.15rem);
+    font-weight: 380;
+  }
+  .trust-proof__widget noscript p {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: var(--space-4);
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  .trust-proof__widget noscript a {
+    color: var(--accent-deep);
+    font-weight: 700;
+  }
+  .trust-proof__note {
+    margin-top: var(--space-2);
+    color: var(--ink-soft);
+    font-size: 0.74rem;
+  }
+  @media (max-width: 800px) {
+    .trust-proof__intro {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+    .trust-proof__widget {
+      min-height: 25rem;
+      padding: 0.8rem;
+    }
+  }
+</style>
