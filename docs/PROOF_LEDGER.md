@@ -791,3 +791,24 @@ Next release evidence required:
 - clean pull-request CI, review and merge into `development`
 - isolated staging deployment and live image/video/header/browser verification
 - production promotion, domain routing and WordPress cutover remain separate explicit gates
+
+### Visual merge and browser-harness follow-up — 1 September 2026
+
+- PR `#10` merged the visual wave only into `development` as `f6237c5`; its pull-request run `33522240567` was green:
+  125 Chromium tests passed with three intentional skips, desktop Firefox passed 56 with eight intentional skips,
+  desktop WebKit passed 56 with eight intentional skips and mobile WebKit passed 57 with seven intentional skips
+- the first post-merge run `33523286277` retained a real harness failure: Chromium, Firefox and mobile WebKit passed, but
+  the local Wrangler proxy exited during desktop WebKit after 29 tests had passed; 27 later cases failed with connection
+  refused, not page assertions
+- both successful and failed HTTPS-local runs contained repeated self-signed TLS certificate-alert handshakes before the
+  proxy exit; the same blank Wrangler proxy termination had already been reproduced on the Windows audit host
+- the corrective branch keeps the real Wrangler/Worker runtime on an internal HTTP port and places a small Node HTTP
+  proxy on the Playwright origin. It removes only `upgrade-insecure-requests` from local QA responses so browser assets
+  remain on that local origin; it does not change production source headers, builds, dry-runs or deployed staging
+- the production security contract now explicitly asserts that `upgrade-insecure-requests` remains present, and unit
+  tests cover that the local sanitizer preserves every other sample directive
+- local corrective proof with the original two desktop-WebKit workers: 56 passed, eight intentional skips, zero retries,
+  no certificate-alert flood and no Worker/proxy exit across the complete suite
+
+The failed post-merge run remains part of the evidence. A clean corrective PR run and post-merge `development` run are
+still required before isolated staging deployment.
