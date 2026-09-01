@@ -35,6 +35,10 @@ Three dependencies are site-wide:
 - `SITE.favicon` preserves the existing approved WordPress Site Icon and is served from the legacy upload origin in browser chrome
 - `SITE.defaultOgImage` is served from the legacy WordPress upload origin and is inherited by pages that do not provide a page-specific social image
 
+The same logo should not be embedded into permanent transactional email directly from the legacy WebP URL. Before the
+permanent email provider is approved, obtain the authentic master, create an email-compatible PNG (and an SVG only where
+the destination supports it), host it on the final approved asset origin and verify blocked-image/alt-text fallbacks.
+
 A successful application deployment is therefore **not** proof that legacy WordPress can be decommissioned safely.
 
 ## Observed launch-surface dependencies
@@ -64,6 +68,22 @@ The following legacy assets remain on the existing WordPress site but are no lon
 
 Do not delete them from WordPress merely because the new application stops referencing them; the live legacy site may still use them until cutover.
 
+## Licensed candidate retained for approval — 1 September 2026
+
+- review asset: `docs/assets/rea-agency-hero-candidate-melbourne-shan-s.jpg` (`1536×800`, JPEG)
+- source: `https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-u4LMg1HXTTI`
+- creator/source description: Shan S; Melbourne, Victoria; sunrise aerial
+- source and Unsplash licence rechecked 1 September 2026; the source identifies the photo as a free download and the
+  licence permits commercial/non-commercial use and modification
+- SHA-256: `A548C01BC24843CB060EB13912D8D6516412A0365D1E4B98C705048FAD87132D`
+- state: retained inside documentation review assets only; not referenced by the website, not deployed as public media
+  and not published to REA
+- intended review use: REA agency-level cover or supporting Melbourne location media; it must never be presented as a
+  property managed by Sana
+
+This record preserves the exact reviewed candidate and provenance without changing the launch surface. Publication still
+requires action-time approval and target-specific crop/render review.
+
 ## What is not yet proven
 
 - whether every historical/search/backlink URL outside the seven currently published WordPress pages has been inventoried
@@ -74,6 +94,8 @@ Do not delete them from WordPress merely because the new application stops refer
 - whether final media should live as repository static assets, Sanity assets, another approved asset store, or a deliberately retained legacy path
 - whether a final Melbourne-specific aerial or other premium homepage master will replace the interim owned static hero
 - whether the final asset strategy changes CSP `img-src` / `media-src` requirements
+- whether the licensed Melbourne aerial candidate is approved for the REA agency cover, website use, both or neither
+- whether Sana has approved authentic landscape founder photography and a captioned short profile video
 
 Do not infer any of those answers from the current source references or the production media-library inventory.
 
@@ -91,8 +113,10 @@ Before production cutover or legacy WordPress retirement:
 8. browser-test every indexed launch page at desktop and mobile sizes
 9. verify logo, favicon, hero images, lazy images and social-preview image URLs return successfully from the new/preserved origin
 10. verify the final production host can serve those assets independently of the WordPress application lifecycle
-11. verify a restorable WordPress backup and a practical rollback path
-12. only then permit the legacy upload origin to be removed, redirected or decommissioned
+11. verify creator/source/licence records for retained stock media and consent records for identifiable people/properties
+12. verify email-logo rendering against the selected permanent provider without depending on the WordPress origin
+13. verify a restorable WordPress backup and a practical rollback path
+14. only then permit the legacy upload origin to be removed, redirected or decommissioned
 
 ## Release rule
 

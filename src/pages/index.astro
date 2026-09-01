@@ -15,26 +15,44 @@ const heroSrcset = [
   'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226-1536x864.webp 1536w',
   `${heroImage} 1920w`,
 ].join(', ');
+const businessId = new URL('/#business', SITE.url).toString();
+const founderId = new URL('/about/#sana-patel', SITE.url).toString();
+const websiteId = new URL('/#website', SITE.url).toString();
 
 const schema = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': websiteId,
     name: SITE.name,
     url: SITE.url,
+    publisher: {
+      '@id': businessId,
+    },
   },
   {
     '@context': 'https://schema.org',
     '@type': 'RealEstateAgent',
+    '@id': businessId,
     name: SITE.name,
     url: SITE.url,
     telephone: SITE.phone.schema,
     email: SITE.email,
     areaServed: SITE.areaServed,
+    logo: {
+      '@type': 'ImageObject',
+      url: SITE.logo,
+    },
+    image: SITE.defaultOgImage,
+    sameAs: [...SITE.profiles.business],
     founder: {
       '@type': 'Person',
-      name: 'Sana Patel',
+      '@id': founderId,
+      name: SITE.founder.name,
       jobTitle: 'Managing Director / Licensed Estate Agent',
+      url: SITE.founder.profileUrl,
+      image: SITE.founder.image,
+      sameAs: [...SITE.profiles.founder],
     },
   },
 ];
