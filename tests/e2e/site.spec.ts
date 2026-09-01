@@ -44,6 +44,21 @@ test('homepage exposes the value-first diagnostic before requiring a sales conve
   await expect(visibilityCheck).toHaveAttribute('href', '/property-management-visibility-check/');
 });
 
+test('homepage review proof keeps an accessible source link if the vendor widget is unavailable', async ({ page }) => {
+  await page.route('https://cdn.trustindex.io/**', (route) => route.abort('blockedbyclient'));
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.getByRole('heading', { name: /trust is stronger when the source stays visible/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /read the current reviews on google/i })).toHaveAttribute(
+    'href',
+    /query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM/,
+  );
+  await expect(page.locator('[data-review-provider="Trustindex"]')).toHaveAttribute(
+    'data-trustindex-widget-id',
+    /^[a-f0-9]{24,64}$/,
+  );
+});
+
 test('confirmed 24x7 direct-access service promise remains visible', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText('24×7 to Sana Patel', { exact: true })).toBeVisible();

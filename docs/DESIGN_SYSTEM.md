@@ -207,6 +207,21 @@ Strongest to weakest:
 
 Never manufacture testimonials, review counts, performance numbers or guarantees.
 
+### Source-driven review treatment
+
+- place the Trustindex carousel after the homepage journey choices, where proof can answer doubt without competing with
+  the hero's primary action
+- frame the vendor widget inside the warm limestone system; do not restyle individual review text into fake editorial
+  testimonials
+- keep a visible Google source link outside the vendor script so the section remains coherent when JavaScript or a
+  content blocker prevents the carousel from loading
+- rating, count, reviewer names, dates, avatars and comments must remain source-driven; never repeat them as undated
+  marketing copy
+- do not put the review carousel on every page or add a floating badge unless later measurement shows a genuine user need
+- do not emit self-serving review or aggregate-rating schema for the business's own reviews
+- allow only the exact third-party hosts the live widget actually requires, and re-audit those hosts before production
+- test desktop, mobile, keyboard, zoom, screen-reader semantics, third-party failure and performance before release
+
 ## Accessibility details
 
 - visible skip link

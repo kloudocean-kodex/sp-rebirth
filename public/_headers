@@ -5,7 +5,7 @@
   X-Frame-Options: DENY
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
   Cross-Origin-Opener-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: https://www.sanapatel.com.au https://cdn.sanity.io; media-src 'self' https://www.sanapatel.com.au https://cdn.sanity.io; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io; frame-src https://challenges.cloudflare.com; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: https://www.sanapatel.com.au https://cdn.sanity.io https://cdn.trustindex.io https://lh3.googleusercontent.com; media-src 'self' https://www.sanapatel.com.au https://cdn.sanity.io; font-src 'self' data: https://fonts.gstatic.com https://cdn.trustindex.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.trustindex.io; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://cdn.trustindex.io; connect-src 'self' https://challenges.cloudflare.com https://*.sanity.io https://cdn.trustindex.io https://fonts.googleapis.com; frame-src https://challenges.cloudflare.com; upgrade-insecure-requests
 
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable

@@ -48,6 +48,8 @@ describe('site configuration', () => {
     expect(publicProfiles).toContain('https://www.realestate.com.au/agency/sana-patel-real-estate-KRFFJV');
     expect(publicProfiles).toContain('https://www.realestate.com.au/agent/sana-patel-3829096');
     expect(publicProfiles).toContain('https://au.linkedin.com/in/sana-p-726457138');
+    expect(publicProfiles).toContain(SITE.reviews.googleProfileUrl);
+    expect(publicProfiles).toContain(SITE.reviews.trustindexSummaryUrl);
     expect(new Set(publicProfiles).size).toBe(publicProfiles.length);
 
     for (const profile of publicProfiles) expect(new URL(profile).protocol).toBe('https:');
@@ -110,5 +112,19 @@ describe('site configuration', () => {
     expect(source).not.toMatch(/<video\b/i);
     expect(source).toContain('home-interior_413970226.webp');
     expect(SITE.defaultOgImage).toContain('home-interior_413970226.webp');
+  });
+
+  it('uses a source-driven Trustindex review widget without hard-coded aggregate claims', () => {
+    const component = readFileSync(new URL('../src/components/TrustProof.astro', import.meta.url), 'utf8');
+    const homepage = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
+
+    expect(SITE.reviews.provider).toBe('Trustindex');
+    expect(SITE.reviews.trustindexWidgetId).toMatch(/^[a-f0-9]{24,64}$/);
+    expect(new URL(SITE.reviews.googleProfileUrl).hostname).toBe('www.google.com');
+    expect(new URL(SITE.reviews.trustindexSummaryUrl).hostname).toBe('www.trustindex.io');
+    expect(component).toContain('https://cdn.trustindex.io/loader.js?');
+    expect(component).toContain('data-trustindex-widget-id');
+    expect(component).not.toMatch(/aggregateRating|reviewRating|ratingValue|reviewCount/);
+    expect(homepage).toContain('<TrustProof />');
   });
 });
