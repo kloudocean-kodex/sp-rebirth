@@ -109,9 +109,30 @@ describe('site configuration', () => {
 
   it('keeps the homepage hero static and aligned with the default social image', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
-    expect(source).not.toMatch(/<video\b/i);
+    const heroStart = source.indexOf('<section class="hero"');
+    const heroEnd = source.indexOf('<CredentialStrip', heroStart);
+    const heroSource = source.slice(heroStart, heroEnd);
+
+    expect(heroStart).toBeGreaterThan(-1);
+    expect(heroEnd).toBeGreaterThan(heroStart);
+    expect(heroSource).not.toMatch(/<video\b/i);
+    expect(heroSource).toContain('hero__media hero__poster');
     expect(source).toContain('home-interior_413970226.webp');
     expect(SITE.defaultOgImage).toContain('home-interior_413970226.webp');
+  });
+
+  it('labels licensed Melbourne atmosphere as context rather than managed-property proof', () => {
+    const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
+
+    expect(source).toContain("import { Picture, getImage } from 'astro:assets'");
+    expect(source).toContain('aerial-view-of-city-buildings-during-daytime-u4LMg1HXTTI');
+    expect(source).toContain('not a managed-property representation');
+    expect(source).toContain('Aerial view of central Melbourne in warm morning light');
+    expect(source).toContain('Sana Patel standing in a bright residential interior');
+    expect(source).toContain('melbourne-brighton-drone-pexels-38304339-360p.mp4');
+    expect(source).toContain('melbourne-brighton-drone-pexels-38304339-540p.mp4');
+    expect(source).toContain('preload="none"');
+    expect(source).not.toMatch(/<video[^>]+autoplay/i);
   });
 
   it('uses a source-driven Trustindex review widget without hard-coded aggregate claims', () => {

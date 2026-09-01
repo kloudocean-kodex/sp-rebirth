@@ -2,6 +2,45 @@
 
 Purpose: separate verified proof from marketing language. Nothing in this file becomes a public claim automatically.
 
+### Trustindex merge and isolated staging deployment — 1 September 2026
+
+Status: **MERGED TO DEVELOPMENT, FULL CI GREEN AND DEPLOYED TO ISOLATED STAGING; production remains untouched.**
+
+- PR `#9` merged only into `development` as squash commit `34fe574`; `main`, production DNS, the custom domain and the
+  live WordPress site were not changed
+- replacement GitHub Actions run `33508872789` completed successfully across quality, dependency audit, unit tests,
+  typecheck, lint, builds, Chromium, desktop Firefox, desktop WebKit and mobile WebKit
+- desktop Firefox remains complete and unchanged but is intentionally serialised at one worker after the retained
+  two-worker evidence reproduced random navigation stalls on different finished routes; retries remain disabled and no
+  timeout, assertion or coverage was weakened
+- the first direct staging build used an out-of-contract host runtime and crashed during prerender; the repository pins
+  Node `22.23.2` and npm `10.9.8`, so subsequent release work used that exact runtime
+- the interrupted build left NUL-corrupted `_redirects` and `robots.txt` files; Wrangler rejected that malformed upload
+  before activation. The corrupt bundle was preserved outside the repository for diagnosis, `dist` was rebuilt from
+  empty with the pinned runtime, and byte-level checks confirmed the rebuilt redirects, robots, HTML and headers files
+  contained no NUL bytes
+- the clean pinned-runtime bundle deployed successfully to the isolated `sp-rebirth-staging` Worker as version
+  `3913e6df-292b-4d92-b74e-dea7e655f801`, with the staging Queue producer and consumer bindings retained
+- direct HTTPS proof returned `200` for the homepage, a staging canonical, `noindex,nofollow`, HSTS, the reviewed CSP,
+  clickjacking, MIME-sniffing, referrer and permissions protections; `/robots.txt` is `Disallow: /` and
+  `/sitemap.xml` is deliberately `404` with `x-robots-tag: noindex, nofollow`
+- the deployed homepage rendered its static hero, coherent content and direct Google source fallback with no browser
+  warning/error; the live Trustindex stream loaded one current provider widget and the source-supplied review content
+- a dedicated iPhone 13 screenshot confirmed the responsive single-column hierarchy and no visible horizontal overflow;
+  the complete mobile WebKit contract is independently green in the CI run above
+- the staged appraisal form posts to the same-origin `/api/leads` endpoint, exposes its privacy notice and includes the
+  configured Turnstile widget without leaking either secret or public key into this ledger
+- authenticated Cloudflare Turnstile analytics confirm the exact staging hostname and Managed mode. At inspection time,
+  nine challenges had been issued, five solved non-interactively and three Siteverify requests had returned valid tokens
+  with zero invalid tokens; the four unsolved challenges were attributed by Cloudflare to HeadlessChrome, explaining why
+  anti-bot automation did not receive a browser token
+- the earlier synthetic success, deduplication, controlled retry/DLQ/replay and branded-email evidence remains the
+  authoritative side-effecting UAT; no duplicate synthetic lead or email was created during this deployment inspection
+
+The manual staging workflow is present only on `development`, while GitHub Actions discovers manually dispatched
+workflows from the default branch. Direct pinned-runtime deployment closed this staging proof wave, but CI/CD workflow
+discoverability remains an engineering item to resolve without weakening the branch/environment release boundaries.
+
 ### Staging lead-delivery UAT, branded email and REA profile audit — 1 September 2026
 
 Status: **STAGING SUCCESS, DEDUPLICATION, RETRY/DLQ AND RECOVERY PATHS VERIFIED; REA IMPROVEMENT DRAFT PREPARED BUT NOT PUBLISHED. Production remains untouched.**
@@ -697,3 +736,58 @@ Before production:
 - record URL/source/date
 - obtain Sana approval for credentials/award wording
 - obtain legal/compliance review where the claim could imply statutory or financial outcomes
+
+## Visual editorial media wave — development evidence (1 September 2026)
+
+Status: isolated development branch only. No production Worker, DNS record, custom domain or WordPress route was changed.
+
+Implemented:
+
+- preserved the homepage's static-image hero reliability contract
+- added a warm, editorial Melbourne-and-founder story below the opening statement, using the licensed Melbourne still
+  already retained in the repository and Sana's currently published portrait
+- added optional, user-initiated Brighton Beach aerial motion in two responsive MP4 renditions; there is no autoplay,
+  the still image remains the default, native controls remain available and Escape/close restores focus to the launcher
+- labelled the Melbourne imagery as location context rather than a managed-property representation and retained direct
+  Unsplash/Pexels source links
+- generated the video poster through Astro's image pipeline so it is shipped as an optimized, content-addressed WebP
+  rather than a missing source-image URL
+
+Media proof:
+
+- `melbourne-brighton-drone-pexels-38304339-360p.mp4`: 2,636,109 bytes; SHA-256
+  `013B03FF0B3BF588CC9A1A4C9D17146D6A816D2CECF05B09A8D9602FEA6B21CA`
+- `melbourne-brighton-drone-pexels-38304339-540p.mp4`: 6,436,480 bytes; SHA-256
+  `2FEDB008FAAD3DB52DFC5F2FB1FA3B6E1B99555AD8D688F176409C6BBA56CD7B`
+- both files remain below Cloudflare's documented 25 MiB individual static-asset limit
+- real headless Chromium playback selected 960×540 on desktop and 640×360 on mobile; both reached ready state 4,
+  remained muted and advanced beyond two seconds
+
+Local verification at the final implementation state:
+
+- unit/security/lead/deployment tests: 55 passed, 0 failed
+- Astro typecheck: 74 files, 0 errors, 0 warnings and 0 hints
+- staging build: passed; optimized AVIF/WebP/JPEG derivatives and the content-addressed WebP video poster were emitted
+- ESLint: full repository pass
+- Prettier: all files intentionally changed by this wave passed; the repository-wide Windows check also reported eight
+  unrelated working-tree files with line-ending/style drift, so the clean Linux CI checkout remains the authoritative
+  repository-wide formatting gate
+- homepage functional/media contract passed in desktop Chromium, mobile Chromium, desktop Firefox, desktop WebKit and
+  mobile WebKit; the mobile WebKit slice passed 29/29 first attempt
+- homepage automated WCAG A/AA analysis passed in the same five browser/device configurations
+- representative full-page desktop/mobile Chromium captures passed and were visually inspected for responsive hierarchy,
+  clipping, source labels, button placement and the intended warm/light-to-dark rhythm
+- Cloudflare staging deploy dry-run passed: 64 static assets discovered; Worker bundle 1,218.56 KiB raw / 255.40 KiB gzip
+
+Retained limitation, not converted into a pass:
+
+- Wrangler 4.127.0 on this Windows host terminated its local proxy without an application exception after eight routes in
+  one long accessibility run. Tests executed after the proxy exited failed because the server was unavailable and were
+  stopped. Smaller fresh-server runs proved the changed homepage across all five configurations. The complete route matrix
+  still requires the normal GitHub Linux CI result before merge.
+
+Next release evidence required:
+
+- clean pull-request CI, review and merge into `development`
+- isolated staging deployment and live image/video/header/browser verification
+- production promotion, domain routing and WordPress cutover remain separate explicit gates
