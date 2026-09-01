@@ -13,20 +13,20 @@ export default defineConfig({
   reporter: process.env.CI ? [['list'], ['html', { outputFolder: 'playwright-report', open: 'never' }]] : 'list',
   outputDir: 'test-results',
   use: {
-    baseURL: 'https://127.0.0.1:8788',
-    ignoreHTTPSErrors: true,
+    baseURL: 'http://127.0.0.1:8788',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
   webServer: {
-    // Exercise the same secure-context behavior as production. The site's CSP includes
-    // upgrade-insecure-requests; serving browser QA over plain HTTP causes WebKit to
-    // upgrade local CSS/JS to HTTPS while the dev server is still HTTP, which correctly
-    // fails TLS and produces a false picture of the rendered application.
-    command: 'npx wrangler dev --port 8788 --local-protocol=https',
-    url: 'https://127.0.0.1:8788',
-    ignoreHTTPSErrors: true,
+    // Keep the real Wrangler/Worker runtime, but place a tiny HTTP proxy in front of it for
+    // browser QA. Wrangler's local self-signed TLS listener has terminated nondeterministically
+    // after repeated WebKit certificate-alert handshakes on both Windows and Linux. The proxy
+    // removes only upgrade-insecure-requests from the local response so relative assets remain
+    // on the local HTTP origin. Unit tests, the production build/dry-run and live staging retain
+    // and verify the complete production CSP and HTTPS contract.
+    command: 'node scripts/browser-test-server.mjs',
+    url: 'http://127.0.0.1:8788',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

@@ -15,6 +15,7 @@ describe('HTML security header contract', () => {
   it('permits only the exact Trustindex widget delivery hosts currently required', () => {
     const policy = HTML_SECURITY_HEADERS['Content-Security-Policy'];
 
+    expect(policy).toContain('upgrade-insecure-requests');
     expect(policy).toContain('script-src');
     expect(policy).toContain('connect-src');
     expect(policy).toContain('https://cdn.trustindex.io');

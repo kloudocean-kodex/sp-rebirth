@@ -71,9 +71,10 @@ test('lead form preserves first-touch campaign attribution without carrying arbi
     '/?utm_source=Google&utm_medium=cpc&utm_campaign=Spring&utm_content=hero&utm_term=property&email=private%40example.test#offer',
     { waitUntil: 'domcontentloaded' },
   );
+  const expectedLandingPage = new URL('/', page.url()).toString();
   await page.goto('/contact/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.locator('input[name="landing_page"]')).toHaveValue('https://127.0.0.1:8788/');
+  await expect(page.locator('input[name="landing_page"]')).toHaveValue(expectedLandingPage);
   await expect(page.locator('input[name="utm_source"]')).toHaveValue('Google');
   await expect(page.locator('input[name="utm_medium"]')).toHaveValue('cpc');
   await expect(page.locator('input[name="utm_campaign"]')).toHaveValue('Spring');
