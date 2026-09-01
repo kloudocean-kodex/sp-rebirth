@@ -28,13 +28,30 @@ const canonical = new URL(canonicalPath, site);
 const ogImage = new URL(image, site);
 const isProduction = import.meta.env.PUBLIC_DEPLOY_ENV === 'production';
 const effectiveNoindex = noindex || !isProduction;
+const businessId = new URL('/#business', site).toString();
+const founderId = new URL('/about/#sana-patel', site).toString();
 const defaultSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'RealEstateAgent',
+  '@id': businessId,
   name: SITE.name,
   url: site.toString(),
   telephone: SITE.phone.schema,
   email: SITE.email,
+  areaServed: SITE.areaServed,
+  logo: {
+    '@type': 'ImageObject',
+    url: SITE.logo,
+  },
+  image: SITE.defaultOgImage,
+  sameAs: [...SITE.profiles.business],
+  founder: {
+    '@type': 'Person',
+    '@id': founderId,
+    name: SITE.founder.name,
+    url: SITE.founder.profileUrl,
+    sameAs: [...SITE.profiles.founder],
+  },
 };
 const schemaPayload = schema ?? defaultSchema;
 ---

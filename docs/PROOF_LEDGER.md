@@ -2,6 +2,125 @@
 
 Purpose: separate verified proof from marketing language. Nothing in this file becomes a public claim automatically.
 
+### Staging lead-delivery UAT, branded email and REA profile audit — 1 September 2026
+
+Status: **STAGING SUCCESS, DEDUPLICATION, RETRY/DLQ AND RECOVERY PATHS VERIFIED; REA IMPROVEMENT DRAFT PREPARED BUT NOT PUBLISHED. Production remains untouched.**
+
+- submitted one clearly labelled synthetic lead through the deployed staging browser form and passed the live Turnstile,
+  Worker intake and Queue-acceptance path; the browser reached the secure `/thank-you/?type=general` acknowledgement
+- verified the corresponding authenticated Pipedream execution completed successfully in 4,304 ms, returned HTTP `200`,
+  reported `accepted: true` and `duplicate: false`, and returned the same synthetic lead ID as the inbound Queue envelope
+- verified the connected Gmail account created exactly one Sent message for that lead; its MIME structure is
+  `multipart/alternative` with both a plain-text body and a responsive HTML body
+- replayed the exact same bridge event; the second execution completed successfully in 2,338 ms, exited as
+  `duplicate_already_delivered`, returned HTTP `200` and left the Gmail Sent count at exactly one, verifying the bridge's
+  exact-event duplicate suppression without creating a second email
+- ran a controlled staging-only delivery failure by temporarily replacing the staging Worker's delivery credential with
+  a deliberate invalid UAT value, then submitted a second clearly labelled synthetic lead; the public form still reached
+  the thank-you page because intake was durably accepted before downstream delivery
+- observed the primary Queue backlog reach one and then return to zero after its configured retry attempts, while the
+  staging DLQ backlog reached one with the exact synthetic lead ID and source-Queue metadata
+- restored the original staging credential from a private temporary rollback file that was never printed, committed or
+  copied into documentation; removed that temporary file immediately after the restored path was proven
+- requeued the exact DLQ payload to the staging primary Queue through the authenticated Cloudflare dashboard; Pipedream
+  event `3IiYBG6BZFQ2sGXFJVUFBgaQLyv` completed successfully in 3,851 ms, returned HTTP `200`, `accepted: true` and
+  `duplicate: false`, and returned the same lead ID
+- verified Gmail contained exactly one Sent message for the recovered synthetic lead, then acknowledged only the
+  delivered synthetic DLQ copy; authoritative Queue metrics reported zero messages and zero bytes in both the staging
+  primary Queue and DLQ
+- updated only the temporary bridge email's presentation layer to the approved ink, limestone, parchment, porcelain,
+  brass, champagne and bronze palette; retained the existing plain-text alternative, lead fields, bearer authentication,
+  idempotency and delivery logic
+- deployed that isolated Pipedream presentation change as active workflow version 12, then submitted a fresh synthetic
+  lead through the public staging form; the bridge completed successfully with HTTP `200`, `accepted: true` and
+  `duplicate: false`, and Gmail contained exactly one corresponding Sent message
+- visually inspected the fresh HTML email: black brand header, warm gold/ivory content card, clear field hierarchy and a
+  responsive single-column container were present; device-specific rendering in the recipient's mailbox remains a
+  separate confirmation item
+- did not embed the legacy WebP logo in email because that would introduce both an avoidable WordPress-retirement
+  dependency and weaker email-client compatibility; use an approved migrated PNG/SVG master when the permanent provider
+  and asset origin are selected, without redrawing or recolouring Sana's wordmark
+- no webhook URL, bearer token, Worker secret, Turnstile secret, personal Gmail address or other credential is recorded in
+  this repository
+- recipient-inbox receipt and visual rendering on the recipient's devices still require confirmation; provider acceptance
+  and sender-side Sent evidence do not prove how the message rendered in the recipient's mailbox
+- Pipedream Free plus a personal Gmail sender is an explicitly temporary staging/early-volume bridge, not the approved
+  permanent production CRM or transactional-email system
+- current public REA evidence was read on 1 September 2026: Sana's agent profile reports Managing Director / OIEC and
+  nine years' experience; the agency profile reports seven leases in the last 12 months, a `$595pw` median leased price
+  and 13 median days advertised. These are dated third-party platform observations, not timeless marketing claims
+- authenticated Agent Admin shows residential property management selected and genuine licence/start-year data present;
+  About Me, tagline, specialities and LinkedIn improvements have been drafted in the browser but **Save was not invoked**
+- Awards and Community Involvement remain blank because no independently verifiable award record or specific community
+  activity was found; a self-published profile or legacy-site statement is not sufficient proof for publication
+- the live agent profile has no cover photo or professional video, and the live agency profile has no hero image; a
+  licensed Melbourne sunrise stock candidate was prepared for later agency-hero approval, while an AI-expanded Sana
+  concept remains unpublished because authentic founder photography is the preferred production standard
+- no REA profile, agency branding, production Worker, custom domain, DNS record or WordPress resource was changed
+
+Required next evidence is: recipient-inbox confirmation; action-time approval before saving the REA draft or agency
+branding; authentic landscape founder photography plus an approved YouTube profile video before those media fields can
+be described as complete; and a separate production-provider decision and production UAT before any release promotion.
+
+### Sana-supplied forms, package and competitor-capture triage — 1 September 2026
+
+Status: **SOURCE MATERIAL REVIEWED; SAFE CONCEPTS RETAINED; LEGACY OR UNVERIFIED CLAIMS REMAIN WITHHELD.**
+
+- reviewed all 14 newly supplied WhatsApp image captures, six DOCX files and the three-page property-management package
+  PDF from the local `SP_rebirth` source folder; no supplied source file was modified
+- the supplied “FREE Investment Property Health Check” validates demand for a diagnostic acquisition journey, but it
+  requests contact details before returning value; the implemented SP_REBIRTH Visibility Check is deliberately stronger:
+  it gives an immediate, ungated result first and offers contact as the visitor's next choice
+- the health-check footer's “Rated 5.0 on Google” statement was not independently verified and is not approved for reuse;
+  the current public REA agency page also shows no REA review rating, which is a different platform and does not prove or
+  disprove a Google rating
+- competitor captures show that complete REA profiles combine a useful hero, genuine founder photo/video, concrete
+  specialities, verified reviews and current performance evidence; they also show that operational performance can exist
+  behind a visually incomplete profile, so presentation and service proof must be improved separately
+- the supplied Instagram capture shows an inconsistent visual grid and mostly low-view, generic imagery; the recommended
+  content system is founder/process explainers, current Victorian guidance, local Melbourne insights and permissioned
+  operational stories—not more anonymous stock-agent tiles
+- structurally reviewed the supplied pet, vacate, maintenance, rental-application and smoke-alarm DOCX files; visual DOCX
+  rendering was unavailable in the audit environment, so their final layout is explicitly unverified
+- withheld the legacy pet, vacate and maintenance documents because they retain another agency's identity and contain
+  outdated, over-broad or legally risky language; the official-style pet and rental-application forms should be linked
+  from the current Consumer Affairs Victoria source rather than republished as frozen copies
+- the package PDF confirms a useful Gold/Platinum service architecture and the original black/gold/ivory visual direction,
+  but fees, inclusions, conditions and legal footer require Sana's current commercial approval and legal/content review;
+  pages two and three also have crowded footer treatment that should be corrected before publication
+- current official guidance was rechecked: the prescribed rental application applies from 31 March 2026; pet requests
+  use the prescribed process and cannot attract a pet bond; renter notice periods depend on the reason and evidence; and
+  smoke-alarm obligations include annual checks from 25 November 2025
+
+### Entity, search and AI-discovery implementation — 1 September 2026
+
+Status: **CODE AND LOCAL GATES VERIFIED ON FEATURE BRANCH; CI/PR VERIFICATION REQUIRED BEFORE DEVELOPMENT OR STAGING PROMOTION.**
+
+- consolidated verified business/founder identity references, logo/image metadata and current REA/LinkedIn profile URLs
+  in the site configuration; connected the website, business and founder with stable JSON-LD identifiers rather than
+  creating disconnected schema entities on each page
+- changed the default organization schema to the more specific `RealEstateAgent` type without adding an unverified street
+  address, rating, award, service price or performance claim
+- production robots policy now explicitly permits `OAI-SearchBot`, `Claude-SearchBot` and `Claude-User` while preserving
+  the `/api/` and `/preview/` exclusions for every group; staging remains a blanket `Disallow: /`
+- Googlebot remains covered by the ordinary production wildcard policy; no `Google-Extended` or model-training crawler
+  permission was invented as a supposed prerequisite for Gemini search visibility
+- added unit contracts for verified entity profiles, discovery-crawler groups, internal-path exclusions and the complete
+  staging block
+- this improves crawl eligibility and entity clarity; it cannot guarantee a ranking or inclusion in Google AI results,
+  ChatGPT, Claude or Gemini. Production Search Console, Google Business Profile, Bing Webmaster/IndexNow, crawl logs,
+  referrals and qualified leads must be measured after cutover
+- pinned Node `22.23.2` / npm `10.9.8` local gates passed: 52/52 unit tests, Astro typecheck with zero errors/warnings/hints,
+  ESLint, full Prettier check, production build and isolated staging build
+- inspected built output rather than relying only on source assertions: production emitted all three explicit discovery
+  groups, retained `/api/` and `/preview/` exclusions and emitted the production sitemap; staging emitted only
+  `User-agent: *` / `Disallow: /`, a staging canonical and `noindex,nofollow`
+- an initial all-project local Playwright invocation ran four workers and produced full-page screenshot timeouts under
+  visual-capture contention; it was stopped after the repeatable pattern was established rather than misreported as an
+  application failure or hidden with retries
+- the exact 12 representative desktop/mobile Chromium visual captures then passed with one worker and the unchanged
+  30-second test limit; complete CI Chromium/Firefox/WebKit jobs remain the required remote merge evidence
+
 ### GrowthEngine positioning and accessibility refinement — 30 August 2026
 
 Status: **MERGED TO DEVELOPMENT, CI VERIFIED AND STAGING DEPLOYED. Production remains untouched.**

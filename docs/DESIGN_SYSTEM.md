@@ -135,6 +135,29 @@ Property/lifestyle imagery should:
 
 Cinematic video is optional enhancement, never required for comprehension or conversion.
 
+### Media authenticity and sourcing
+
+- first choice for people and service proof: genuine, approved Sana/team/client/property media with documented consent
+- first choice for location atmosphere: correctly identified Melbourne imagery from an approved licensed source, stored
+  on the chosen SP_REBIRTH asset origin rather than hotlinked
+- generated media may support mood boards, textures or clearly non-evidentiary atmosphere, but must not fabricate Sana,
+  a client, a managed property, an inspection, a result or a testimonial
+- record creator/source/licence and download date for every stock asset retained for production review
+- produce responsive AVIF/WebP/JPEG derivatives with explicit dimensions; keep an email-compatible PNG/SVG logo master
+  separate from web-only formats
+- do not add imagery merely to fill space. Each visual should establish person, place, process, proof or useful context
+
+### Video contract
+
+- the primary founder video should be a real 45–60 second Sana introduction, not an AI avatar or generic stock montage
+- use a simple structure: owner problem, Sana's operating approach, observable promise, low-pressure next step
+- add accurate captions/transcript, poster image, keyboard-accessible controls and a non-video path to the same content
+- licensed drone/property B-roll may support the founder narrative but must not imply portfolio ownership or a service
+  result
+- never autoplay audible media; defer optional video, preserve the current static hero and skip motion for reduced-motion
+  users
+- validate mobile data cost, poster rendering, captions, controls, LCP/INP and layout stability before release
+
 ## Motion
 
 Motion should signal polish, not demand attention.

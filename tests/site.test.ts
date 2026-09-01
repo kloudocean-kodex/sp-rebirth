@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { INDEXED_PATHS, INTERNAL_PATH_PREFIXES, SITE } from '../src/config/site';
+import { AI_DISCOVERY_USER_AGENTS, INDEXED_PATHS, INTERNAL_PATH_PREFIXES, SITE } from '../src/config/site';
+import { buildRobotsPolicy } from '../src/pages/robots.txt';
 
 const publicPageSourceFiles = [
   '../src/pages/index.astro',
@@ -39,6 +40,32 @@ describe('site configuration', () => {
     expect(siteUrl.hostname).toBe('www.sanapatel.com.au');
     expect(faviconUrl.protocol).toBe('https:');
     expect(faviconUrl.hostname).toBe('www.sanapatel.com.au');
+  });
+
+  it('connects the business and founder to verified public entity profiles', () => {
+    const publicProfiles = [...SITE.profiles.business, ...SITE.profiles.founder];
+
+    expect(publicProfiles).toContain('https://www.realestate.com.au/agency/sana-patel-real-estate-KRFFJV');
+    expect(publicProfiles).toContain('https://www.realestate.com.au/agent/sana-patel-3829096');
+    expect(publicProfiles).toContain('https://au.linkedin.com/in/sana-p-726457138');
+    expect(new Set(publicProfiles).size).toBe(publicProfiles.length);
+
+    for (const profile of publicProfiles) expect(new URL(profile).protocol).toBe('https:');
+  });
+
+  it('allows opted-in AI discovery crawlers without exposing internal runtime routes', () => {
+    const policy = buildRobotsPolicy(true, new URL(SITE.url));
+    const groups = policy.split('\n\n');
+
+    for (const userAgent of AI_DISCOVERY_USER_AGENTS) {
+      const group = groups.find((candidate) => candidate.startsWith(`User-agent: ${userAgent}\n`));
+      expect(group).toBeDefined();
+      expect(group).toContain('Allow: /');
+      for (const prefix of INTERNAL_PATH_PREFIXES) expect(group).toContain(`Disallow: ${prefix}`);
+    }
+
+    expect(policy).toContain(`Sitemap: ${new URL('/sitemap.xml', SITE.url).toString()}`);
+    expect(buildRobotsPolicy(false, new URL(SITE.url))).toBe('User-agent: *\nDisallow: /\n');
   });
 
   it('keeps the indexed crawl surface unique and canonical', () => {
