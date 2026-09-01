@@ -5,11 +5,17 @@ import SiteFooter from '@/components/SiteFooter.astro';
 import CredentialStrip from '@/components/CredentialStrip.astro';
 import TrustProof from '@/components/TrustProof.astro';
 import { SITE } from '@/config/site';
+import { Picture, getImage } from 'astro:assets';
+import melbourneAerial from '../../docs/assets/rea-agency-hero-candidate-melbourne-shan-s.jpg';
 
 const title = 'Property Management Melbourne | Sana Patel Real Estate';
 const description =
   'Founder-led Melbourne property management with 24×7 direct access to Sana Patel, proactive oversight, clear communication and evidence-led rental decisions.';
 const heroImage = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226.webp';
+const founderEditorialImage =
+  'https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.13.01-PM.jpeg';
+const melbourneAerialSource = 'https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-u4LMg1HXTTI';
+const melbourneVideoPoster = await getImage({ src: melbourneAerial, width: 1280, format: 'webp' });
 const heroSrcset = [
   'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226-768x432.webp 768w',
   'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_413970226-1024x576.webp 1024w',
@@ -115,6 +121,102 @@ const credentials = [
     </div>
   </section>
 
+  <section class="section section--tight editorial-story" aria-labelledby="editorial-story-title">
+    <div class="container-wide editorial-story__shell">
+      <div class="editorial-story__intro">
+        <div>
+          <p class="eyebrow">Melbourne context · direct accountability</p>
+          <h2 id="editorial-story-title">A clearer view begins with place—and the person responsible.</h2>
+        </div>
+        <div class="editorial-story__copy">
+          <p>
+            Useful rental advice starts with the property itself: condition, position, comparable evidence and timing.
+            It becomes useful when one accountable person turns that context into a clear next step.
+          </p>
+          <a href="/about/">Explore Sana's approach →</a>
+        </div>
+      </div>
+
+      <div class="editorial-story__media">
+        <figure class="editorial-story__figure editorial-story__figure--place" data-drone-stage>
+          <Picture
+            src={melbourneAerial}
+            formats={['avif', 'webp']}
+            fallbackFormat="jpg"
+            widths={[640, 960, 1280, 1536]}
+            sizes="(max-width: 800px) calc(100vw - 2rem), 62vw"
+            alt="Aerial view of central Melbourne in warm morning light"
+            loading="lazy"
+            decoding="async"
+            class="editorial-story__image editorial-story__image--place"
+          />
+
+          <button
+            class="drone-launch"
+            type="button"
+            aria-controls="melbourne-drone-player"
+            aria-expanded="false"
+            data-drone-launch
+          >
+            <span class="drone-launch__icon" aria-hidden="true">▶</span>
+            <span>
+              <strong>View Melbourne in motion</strong>
+              <small>Optional · muted drone footage</small>
+            </span>
+          </button>
+
+          <div class="drone-player" data-drone-player hidden>
+            <video
+              id="melbourne-drone-player"
+              controls
+              muted
+              playsinline
+              preload="none"
+              poster={melbourneVideoPoster.src}
+              aria-describedby="melbourne-media-context"
+              data-drone-video
+            >
+              <source
+                src="/media/melbourne-brighton-drone-pexels-38304339-540p.mp4"
+                type="video/mp4"
+                media="(min-width: 700px)"
+              />
+              <source src="/media/melbourne-brighton-drone-pexels-38304339-360p.mp4" type="video/mp4" />
+              Your browser does not support embedded video. The Melbourne still image and source link remain available.
+            </video>
+            <button class="drone-close" type="button" data-drone-close>Return to still image</button>
+          </div>
+
+          <figcaption id="melbourne-media-context">
+            Melbourne still by
+            <a href={melbourneAerialSource} target="_blank" rel="noopener noreferrer">Shan S / Unsplash ↗</a> · optional Brighton
+            Beach drone footage by
+            <a
+              href="https://www.pexels.com/video/aerial-view-of-brighton-beach-huts-in-melbourne-38304339/"
+              target="_blank"
+              rel="noopener noreferrer">New Zealand / Pexels ↗</a
+            > · location context, not a managed-property representation.
+          </figcaption>
+        </figure>
+
+        <figure class="editorial-story__figure editorial-story__figure--founder">
+          <img
+            src={founderEditorialImage}
+            alt="Sana Patel standing in a bright residential interior"
+            width="1200"
+            height="1600"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            <strong>Sana Patel</strong>
+            <span>Managing Director / Licensed Estate Agent</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <section class="section section--tight journey-section" aria-labelledby="journeys-title">
     <div class="container-wide">
       <p class="eyebrow">Start where you are</p>
@@ -192,9 +294,238 @@ const credentials = [
   <SiteFooter slot="footer" />
 </BaseLayout>
 
+<script>
+  const droneStages = document.querySelectorAll('[data-drone-stage]');
+
+  for (const stage of droneStages) {
+    const launch = stage.querySelector('[data-drone-launch]');
+    const player = stage.querySelector('[data-drone-player]');
+    const video = stage.querySelector('[data-drone-video]');
+    const close = stage.querySelector('[data-drone-close]');
+
+    if (
+      !(launch instanceof HTMLButtonElement) ||
+      !(player instanceof HTMLElement) ||
+      !(video instanceof HTMLVideoElement) ||
+      !(close instanceof HTMLButtonElement)
+    )
+      continue;
+
+    const openPlayer = () => {
+      player.hidden = false;
+      launch.hidden = true;
+      launch.setAttribute('aria-expanded', 'true');
+      video.load();
+      void video.play().catch(() => {
+        // Native controls remain available if browser autoplay policy, data
+        // saving or codec support prevents immediate user-initiated playback.
+      });
+      close.focus();
+    };
+
+    const closePlayer = () => {
+      video.pause();
+      video.currentTime = 0;
+      player.hidden = true;
+      launch.hidden = false;
+      launch.setAttribute('aria-expanded', 'false');
+      launch.focus();
+    };
+
+    launch.addEventListener('click', openPlayer);
+    close.addEventListener('click', closePlayer);
+    stage.addEventListener('keydown', (event) => {
+      if (event instanceof KeyboardEvent && event.key === 'Escape' && !player.hidden) closePlayer();
+    });
+  }
+</script>
+
 <style>
   .hero__poster {
     object-position: center;
+  }
+  .editorial-story {
+    background:
+      radial-gradient(circle at 84% 12%, rgba(215, 195, 154, 0.34), transparent 25rem),
+      linear-gradient(180deg, var(--paper-deep), var(--paper));
+  }
+  .editorial-story__shell {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .editorial-story__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.72fr);
+    gap: var(--space-4);
+    align-items: end;
+  }
+  .editorial-story__intro h2 {
+    max-width: 16ch;
+    margin-top: var(--space-2);
+    font-size: var(--h2);
+  }
+  .editorial-story__copy {
+    max-width: 35rem;
+    padding-bottom: 0.35rem;
+    color: var(--ink-soft);
+  }
+  .editorial-story__copy a {
+    display: inline-flex;
+    margin-top: var(--space-2);
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .editorial-story__media {
+    display: grid;
+    grid-template-columns: minmax(0, 1.72fr) minmax(18rem, 0.72fr);
+    gap: clamp(0.8rem, 1.4vw, 1.35rem);
+    align-items: stretch;
+  }
+  .editorial-story__figure {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid rgba(109, 83, 44, 0.2);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--shadow-soft);
+  }
+  .editorial-story__figure--place {
+    min-height: clamp(25rem, 48vw, 42rem);
+  }
+  .editorial-story__figure--place::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 60%, rgba(23, 23, 19, 0.62));
+  }
+  .drone-launch {
+    position: absolute;
+    z-index: 2;
+    top: var(--space-2);
+    right: var(--space-2);
+    min-height: 3.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.68rem 0.9rem;
+    border: 1px solid rgba(255, 253, 248, 0.52);
+    border-radius: var(--radius-md);
+    background: rgba(23, 23, 19, 0.78);
+    color: var(--white);
+    box-shadow: 0 0.75rem 2.4rem rgba(23, 23, 19, 0.24);
+    cursor: pointer;
+    text-align: left;
+    backdrop-filter: blur(0.7rem);
+  }
+  .drone-launch:hover {
+    background: rgba(23, 23, 19, 0.92);
+  }
+  .drone-launch__icon {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid rgba(255, 253, 248, 0.45);
+    border-radius: 50%;
+    font-size: 0.72rem;
+  }
+  .drone-launch strong,
+  .drone-launch small {
+    display: block;
+  }
+  .drone-launch strong {
+    font-size: 0.78rem;
+    letter-spacing: 0.025em;
+  }
+  .drone-launch small {
+    margin-top: 0.08rem;
+    color: rgba(255, 253, 248, 0.76);
+    font-size: 0.66rem;
+  }
+  .drone-player {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    background: var(--ink);
+  }
+  .drone-player[hidden] {
+    display: none;
+  }
+  .drone-player video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .drone-close {
+    position: absolute;
+    z-index: 1;
+    top: var(--space-2);
+    right: var(--space-2);
+    min-height: 2.75rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid rgba(255, 253, 248, 0.56);
+    border-radius: var(--radius-sm);
+    background: rgba(23, 23, 19, 0.88);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .editorial-story__figure--place :global(picture),
+  .editorial-story__figure--place :global(img),
+  .editorial-story__figure--founder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .editorial-story__figure--place :global(picture) {
+    position: absolute;
+    inset: 0;
+  }
+  .editorial-story__image--place {
+    object-position: 54% center;
+  }
+  .editorial-story__figure--founder {
+    display: grid;
+    min-height: clamp(25rem, 48vw, 42rem);
+  }
+  .editorial-story__figure--founder img {
+    grid-area: 1 / 1;
+    object-position: 38% 32%;
+  }
+  .editorial-story__figure figcaption {
+    position: absolute;
+    z-index: 1;
+    inset: auto var(--space-2) var(--space-2);
+    color: var(--white);
+    font-size: 0.73rem;
+    line-height: 1.45;
+    text-shadow: 0 1px 1.2rem rgba(23, 23, 19, 0.72);
+  }
+  .editorial-story__figure--place figcaption a {
+    font-weight: 700;
+  }
+  .editorial-story__figure--founder::after {
+    content: '';
+    position: absolute;
+    inset: 40% 0 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, rgba(23, 23, 19, 0.72));
+  }
+  .editorial-story__figure--founder figcaption {
+    display: grid;
+    gap: 0.1rem;
+  }
+  .editorial-story__figure--founder figcaption strong {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 430;
+  }
+  .editorial-story__figure--founder figcaption span {
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
   }
   .journey-section {
     background: var(--white);
@@ -266,6 +597,27 @@ const credentials = [
     text-transform: uppercase;
   }
   @media (max-width: 800px) {
+    .editorial-story__intro,
+    .editorial-story__media {
+      grid-template-columns: 1fr;
+    }
+    .editorial-story__copy {
+      max-width: 42rem;
+    }
+    .editorial-story__figure--place {
+      min-height: clamp(22rem, 104vw, 32rem);
+    }
+    .editorial-story__figure--founder {
+      min-height: clamp(28rem, 128vw, 42rem);
+    }
+    .editorial-story__figure--founder img {
+      object-position: 38% 28%;
+    }
+    .drone-launch {
+      right: var(--space-1);
+      top: var(--space-1);
+      max-width: calc(100% - (2 * var(--space-1)));
+    }
     .proof-grid {
       grid-template-columns: 1fr;
     }

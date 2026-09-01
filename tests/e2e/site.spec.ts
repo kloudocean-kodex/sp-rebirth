@@ -78,6 +78,59 @@ test('homepage hero uses the static premium media contract', async ({ page }) =>
   await expect(page.locator('.hero__video')).toHaveCount(0);
 });
 
+test('homepage editorial media keeps Melbourne atmosphere and founder proof clearly labelled', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const story = page.locator('.editorial-story');
+  await expect(story.getByRole('heading', { name: /a clearer view begins with place/i })).toBeVisible();
+  await expect(story.getByAltText('Aerial view of central Melbourne in warm morning light')).toHaveAttribute(
+    'loading',
+    'lazy',
+  );
+  await expect(story.getByAltText('Sana Patel standing in a bright residential interior')).toHaveAttribute(
+    'loading',
+    'lazy',
+  );
+  await expect(story.getByText(/not a managed-property representation/i)).toBeVisible();
+  await expect(story.getByRole('link', { name: /Shan S \/ Unsplash/i })).toHaveAttribute(
+    'href',
+    'https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-u4LMg1HXTTI',
+  );
+
+  const droneVideo = story.locator('[data-drone-video]');
+  await expect(droneVideo).toHaveAttribute('preload', 'none');
+  await expect(droneVideo).not.toHaveAttribute('autoplay', '');
+  await expect(droneVideo.locator('source')).toHaveCount(2);
+
+  const posterUrl = await droneVideo.getAttribute('poster');
+  expect(posterUrl).toMatch(/^\/_astro\/.+\.webp$/);
+  const posterResponse = await page.request.get(posterUrl!);
+  expect(posterResponse.ok()).toBeTruthy();
+});
+
+test('optional Melbourne motion layer remains user-controlled and keyboard-dismissible', async ({ page }) => {
+  await page.route('**/melbourne-brighton-drone-pexels-38304339-*.mp4', (route) => route.abort('blockedbyclient'));
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const story = page.locator('.editorial-story');
+  const launch = story.getByRole('button', { name: /view Melbourne in motion/i });
+  const player = story.locator('[data-drone-player]');
+
+  await expect(launch).toBeVisible();
+  await expect(launch).toHaveAttribute('aria-expanded', 'false');
+  await expect(player).toBeHidden();
+
+  await launch.click();
+  await expect(player).toBeVisible();
+  await expect(story.getByRole('button', { name: /return to still image/i })).toBeFocused();
+
+  await page.keyboard.press('Escape');
+  await expect(player).toBeHidden();
+  await expect(launch).toBeVisible();
+  await expect(launch).toBeFocused();
+  await expect(launch).toHaveAttribute('aria-expanded', 'false');
+});
+
 test('staging robots policy blocks crawling', async ({ request }) => {
   const response = await request.get('/robots.txt');
   expect(response.ok()).toBeTruthy();

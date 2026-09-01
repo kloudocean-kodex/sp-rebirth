@@ -37,6 +37,25 @@ What not to copy:
 - overly delicate or low-contrast typography
 - language that would make Sana feel less commercially authoritative
 
+## NorthEdge redesign repository
+
+The current public NorthEdge domain does not represent the warm redesign Sana liked. The reviewed reference is the
+`kloudocean-kodex/Northedge-website` repository rendered locally on 1 September 2026.
+
+What to borrow:
+
+- warm ivory foundations with eucalyptus and restrained brass rather than a black-dominant luxury palette
+- a real place-led hero, generous editorial spacing and a calm serif/sans hierarchy
+- selective use of a deep green or ink surface to ground the page instead of making every section dark
+- locally meaningful architecture and aerial imagery with a clear role in the story
+- an understated footer and call-to-action rhythm
+
+What not to copy:
+
+- the exact Jost / Cormorant pairing; SP_REBIRTH retains Newsreader / DM Sans
+- its exact colours, layout, content model or brand devices
+- any property, founder or performance implication that Sana's evidence does not support
+
 ## Rhyco Homes
 
 What to borrow:
@@ -78,7 +97,8 @@ SP_REBIRTH should therefore feel:
 ### Colour
 
 - limestone / warm ivory base
-- charcoal / near-black anchor surfaces
+- soft eucalyptus / sunlit stone as supporting atmosphere where contrast remains accessible
+- charcoal / near-black only for a restrained proof band, footer or logo-grounding moment—not the dominant page field
 - parchment section contrast
 - brushed brass / champagne details
 - deep bronze only for accessible interactive states
@@ -89,6 +109,12 @@ SP_REBIRTH should therefore feel:
 - Sana and real property/lifestyle imagery should carry more weight than generic icons
 - dusk / golden-hour / warm interior imagery can support Melbourne real-estate context
 - image crops should feel editorial, not catalogue-like
+- licensed drone or aerial imagery may establish Melbourne place, but must be captioned as location context and must not
+  imply that a pictured building or property is managed by Sana
+- generated imagery is limited to non-evidentiary atmosphere, texture or concept review; it must not fabricate Sana,
+  clients, managed properties, listings, inspections or results
+- drone motion is an optional user-controlled layer over a strong static composition—not a mandatory autoplay hero;
+  preserve native controls, a still fallback, mobile source sizing and reduced-motion/data-saving respect
 
 ### Layout
 
@@ -109,6 +135,7 @@ SP_REBIRTH should therefore feel:
 ## Non-negotiables
 
 - preserve Sana's original logo/wordmark
+- do not turn the site into a full-black experience; dark surfaces are limited, intentional anchors
 - do not imitate any reference site's exact styling
 - do not invent review counts, awards, statistics or client outcomes
 - accessibility and conversion clarity outrank decorative styling

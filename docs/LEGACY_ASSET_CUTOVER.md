@@ -76,13 +76,36 @@ Do not delete them from WordPress merely because the new application stops refer
 - source and Unsplash licence rechecked 1 September 2026; the source identifies the photo as a free download and the
   licence permits commercial/non-commercial use and modification
 - SHA-256: `A548C01BC24843CB060EB13912D8D6516412A0365D1E4B98C705048FAD87132D`
-- state: retained inside documentation review assets only; not referenced by the website, not deployed as public media
-  and not published to REA
+- state: selected on feature branch `feat/visual-editorial-media-20260901` for an optimized, below-the-fold homepage
+  location-context treatment; not yet merged, deployed from that branch or published to REA
 - intended review use: REA agency-level cover or supporting Melbourne location media; it must never be presented as a
   property managed by Sana
 
-This record preserves the exact reviewed candidate and provenance without changing the launch surface. Publication still
-requires action-time approval and target-specific crop/render review.
+The website treatment uses Astro-generated AVIF/WebP/JPEG derivatives, an explicit source credit and a public statement
+that the image is not a managed-property representation. It does not change the static homepage hero. Merge/deployment
+still require successful CI and staging visual/performance/accessibility review; REA publication remains a separate
+action-time approval.
+
+## Licensed Melbourne motion candidate — 1 September 2026
+
+- source page: `https://www.pexels.com/video/aerial-view-of-brighton-beach-huts-in-melbourne-38304339/`
+- creator shown by Pexels: `New Zealand`
+- source description: aerial footage of the Brighton Bathing Boxes on Melbourne's coast
+- Pexels licence rechecked 1 September 2026: free website/commercial use and modification are permitted; attribution is
+  not required by the licence but is retained in the public caption; the implementation must not imply endorsement
+- retained responsive files:
+  - `public/media/melbourne-brighton-drone-pexels-38304339-360p.mp4` — 2,636,109 bytes — SHA-256
+    `013B03FF0B3BF588CC9A1A4C9D17146D6A816D2CECF05B09A8D9602FEA6B21CA`
+  - `public/media/melbourne-brighton-drone-pexels-38304339-540p.mp4` — 6,436,480 bytes — SHA-256
+    `2FEDB008FAAD3DB52DFC5F2FB1FA3B6E1B99555AD8D688F176409C6BBA56CD7B`
+- both files are below Cloudflare Workers' current 25 MiB individual static-asset limit
+- delivery contract: optional and user-initiated; muted; native controls; `preload="none"`; smaller source below 700px;
+  static optimized Melbourne image remains the default and reduced-motion/data-saving visitors are never forced to load
+  or play the video
+- public context: footage establishes Melbourne place only and is explicitly not represented as a Sana-managed property
+
+The responsive files are retained on the feature branch for testing. They are not yet merged, deployed, published to
+REA or evidence of Sana's property portfolio.
 
 ## What is not yet proven
 
