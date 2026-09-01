@@ -95,10 +95,13 @@ jobs:
         include:
           - project: desktop-firefox
             browser: firefox
+            workers: 1
           - project: desktop-webkit
             browser: webkit
+            workers: 2
           - project: mobile-webkit
             browser: webkit
+            workers: 2
 
     steps:
       - name: Checkout
@@ -121,7 +124,11 @@ jobs:
         run: npx playwright install --with-deps ${{ matrix.browser }}
 
       - name: Run ${{ matrix.project }} functional and accessibility QA
-        run: npx playwright test --project=${{ matrix.project }}
+        # Firefox has repeatedly shown random local-server navigation stalls with
+        # two concurrent pages despite the rendered document being complete.
+        # Serialisation preserves the full suite and assertions without retries
+        # or inflated timeouts; WebKit retains parallel execution.
+        run: npx playwright test --project=${{ matrix.project }} --workers=${{ matrix.workers }}
 
       - name: Upload ${{ matrix.project }} QA evidence
         if: always()

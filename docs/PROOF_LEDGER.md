@@ -654,6 +654,21 @@ Verified locally against the live Trustindex service on 1 September 2026:
 - deterministic visual-regression captures deliberately preserve the branded connecting state and do not depend on a
   third-party response; the separate opt-in live-provider suite proves the external rendering path
 
+PR CI follow-up on 1 September 2026:
+
+- workflow run `33505854345` passed the complete quality/build/Chromium job, desktop WebKit and mobile WebKit
+- desktop Firefox rendered the complete `/privacy/` page but twice exceeded the 30-second navigation boundary while
+  two Firefox pages were sharing the local test server; the retained failure screenshot and page snapshot both showed
+  the finished page, so this is recorded as test-host contention rather than an application pass
+- a local repeated two-worker Firefox reproduction passed `/privacy/` and then stalled on a different resources route,
+  independently confirming that the route was not the root cause
+- the workflow now runs the unchanged Firefox suite with one worker, matching the already-established serialised local
+  evidence; WebKit keeps two workers, and no retries, timeout inflation, assertion weakening or coverage reduction was
+  introduced
+- the complete local desktop Firefox run at one worker passed: 54 passed and 8 intentional skips across accessibility,
+  growth-event privacy, public-route structure, conversion journeys, security/indexing contracts and lead-flow behavior
+- a replacement GitHub Actions run and an all-green branch result remain required before merge
+
 Release rules:
 
 - Trustindex remains the owner of refresh timing and the website must continue to display source-loaded values
