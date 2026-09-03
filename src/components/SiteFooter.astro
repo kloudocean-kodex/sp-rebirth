@@ -5,10 +5,10 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container-wide">
-    <div class="footer-grid">
+    <div class="footer-grid footer-grid--simplified">
       <div>
         <p class="eyebrow">{SITE.name}</p>
-        <h2>Your property deserves clear accountability.</h2>
+        <h2>Clear property management. Directly with Sana.</h2>
       </div>
       <div>
         <p><strong>Talk to Sana</strong></p>
@@ -16,9 +16,17 @@ const year = new Date().getFullYear();
         <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
       </div>
       <div>
-        <p><strong>Explore</strong></p>
+        <p><strong>For owners</strong></p>
+        <p><a href="/rental-providers/">Property management</a></p>
         <p><a href="/rental-appraisal/">Rental appraisal</a></p>
-        <p><a href="/switch-property-managers/">Switch property managers</a></p>
+        <p><a href="/switch-property-managers/">Switch property manager</a></p>
+      </div>
+      <div>
+        <p><strong>More</strong></p>
+        <p><a href="/about/">About Sana</a></p>
+        <p><a href="/resources/">Resources</a></p>
+        <p><a href="/for-renters/">For renters</a></p>
+        <p><a href="/sale/">Selling</a></p>
         <p><a href="/privacy/">Privacy</a></p>
       </div>
     </div>
@@ -28,3 +36,22 @@ const year = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-grid--simplified {
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(10rem, 0.55fr));
+  }
+  .footer-grid--simplified > div:not(:first-child) p + p {
+    margin-top: 0.45rem;
+  }
+  @media (max-width: 860px) {
+    .footer-grid--simplified {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .footer-grid--simplified {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
