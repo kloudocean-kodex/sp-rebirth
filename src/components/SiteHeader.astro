@@ -1,6 +1,8 @@
 ---
+import { SITE } from '@/config/site';
+
 const ctaHref = '/rental-appraisal/';
-const logoSrc = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Patel-Logo.webp';
+const logoSrc = SITE.logo;
 ---
 
 <header class="site-header">
@@ -11,10 +13,13 @@ const logoSrc = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pa
 
     <div class="header-actions">
       <nav class="site-nav site-nav--desktop" aria-label="Primary navigation">
-        <a href="/rental-providers/">Rental Providers</a>
-        <a href="/switch-property-managers/">Switch Managers</a>
-        <a href="/about/">About Sana</a>
-        <a href="/resources/">Resources</a>
+        <a href="/#services">Services</a>
+        <a href="/#why-sana">Why Sana</a>
+        <a href="/#reviews">Reviews</a>
+        <a class="header-call" href={`tel:${SITE.phone.e164}`}>
+          <span>Call Sana</span>
+          <strong>{SITE.phone.display}</strong>
+        </a>
         <a class="button button--light" href={ctaHref}>Rental Appraisal</a>
       </nav>
 
@@ -24,15 +29,12 @@ const logoSrc = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pa
           <span class="mobile-nav__icon" aria-hidden="true"><i></i><i></i></span>
         </summary>
         <nav class="mobile-nav__panel" aria-label="Mobile navigation">
-          <a href="/rental-providers/">Rental Providers</a>
-          <a href="/rental-appraisal/">Rental Appraisal</a>
-          <a href="/rental-position-check/">Rental Position Check</a>
-          <a href="/switch-property-managers/">Switch Property Managers</a>
-          <a href="/about/">About Sana</a>
-          <a href="/resources/">Resources</a>
-          <a href="/for-renters/">For Renters</a>
-          <a href="/sale/">Selling</a>
-          <a href="/contact/">Contact</a>
+          <a href="/#services">Services</a>
+          <a href="/#why-sana">Why Sana</a>
+          <a href="/#reviews">Reviews</a>
+          <a href="/switch-property-managers/">Switch Property Manager</a>
+          <a class="mobile-nav__call" href={`tel:${SITE.phone.e164}`}>Call Sana · {SITE.phone.display}</a>
+          <a class="mobile-nav__primary" href={ctaHref}>Request a Rental Appraisal</a>
         </nav>
       </details>
     </div>
@@ -41,20 +43,56 @@ const logoSrc = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Pa
 
 <style>
   .brand {
-    padding: 0.5rem 0.72rem;
-    border-color: rgba(215, 195, 154, 0.48);
-    background: linear-gradient(145deg, rgba(15, 16, 13, 0.97), rgba(27, 27, 22, 0.9));
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+    padding: 0.46rem 0.66rem;
+    border-color: rgba(215, 195, 154, 0.4);
+    background: rgba(10, 11, 9, 0.92);
+    box-shadow: none;
   }
   .brand:hover {
-    border-color: rgba(215, 195, 154, 0.82);
-    background: linear-gradient(145deg, rgba(18, 19, 16, 0.99), rgba(31, 30, 24, 0.94));
-    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.25);
+    border-color: rgba(215, 195, 154, 0.8);
+    background: rgba(18, 19, 16, 0.98);
+    box-shadow: none;
   }
   .site-nav > a:not(.button) {
     min-height: 2.75rem;
     display: inline-flex;
     align-items: center;
+  }
+  .header-call {
+    display: grid !important;
+    align-content: center;
+    gap: 0.08rem;
+    padding-inline: 0.25rem;
+    text-transform: none !important;
+  }
+  .header-call span {
+    color: var(--gold-soft);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .header-call strong {
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 650;
+    letter-spacing: 0.01em;
+  }
+  .mobile-nav__call,
+  .mobile-nav__primary {
+    margin: 0.35rem 0.35rem 0;
+    border: 1px solid rgba(215, 195, 154, 0.35) !important;
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+  .mobile-nav__primary {
+    background: var(--gold-deep);
+    color: var(--white) !important;
+  }
+  @media (max-width: 1080px) {
+    .header-call strong {
+      display: none;
+    }
   }
   @media (max-width: 900px) {
     .brand {
