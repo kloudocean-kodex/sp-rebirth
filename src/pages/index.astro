@@ -97,7 +97,9 @@ const ownerJourneys = [
           actually call.
         </p>
         <div class="hero__actions">
-          <a class="button button--solid hero-refresh__call" href={`tel:${SITE.phone.e164}`}>Call Sana · {SITE.phone.display}</a>
+          <a class="button button--solid hero-refresh__call" href={`tel:${SITE.phone.e164}`}
+            >Call Sana · {SITE.phone.display}</a
+          >
           <a class="button button--light" href="/rental-appraisal/">Request a rental appraisal</a>
         </div>
         <p class="hero-refresh__credential">Managing Director / Licensed Estate Agent · Melbourne</p>
@@ -136,7 +138,9 @@ const ownerJourneys = [
               <h3>{journey.title}</h3>
               <p>{journey.body}</p>
             </div>
-            <a href={journey.href}>{journey.link} <span aria-hidden="true">→</span></a>
+            <a href={journey.href}>
+              {journey.link} <span aria-hidden="true">→</span>
+            </a>
           </article>
         ))
       }
@@ -188,7 +192,10 @@ const ownerJourneys = [
           </article>
           <article>
             <h3>Practical oversight</h3>
-            <p>Leasing, inspections, maintenance, tenancy and rental decisions are considered as connected parts of the investment.</p>
+            <p>
+              Leasing, inspections, maintenance, tenancy and rental decisions are considered as connected parts of the
+              investment.
+            </p>
           </article>
         </div>
         <div class="founder-section__actions">
@@ -404,9 +411,7 @@ const ownerJourneys = [
 
   .clarity-band {
     padding-block: var(--space-6);
-    background:
-      radial-gradient(circle at 88% 8%, rgba(184, 154, 96, 0.13), transparent 28rem),
-      #11120f;
+    background: radial-gradient(circle at 88% 8%, rgba(184, 154, 96, 0.13), transparent 28rem), #11120f;
     color: var(--white);
   }
   .clarity-band__inner {
@@ -440,9 +445,7 @@ const ownerJourneys = [
   }
 
   .founder-section {
-    background:
-      radial-gradient(circle at 8% 20%, rgba(184, 154, 96, 0.12), transparent 24rem),
-      var(--paper);
+    background: radial-gradient(circle at 8% 20%, rgba(184, 154, 96, 0.12), transparent 24rem), var(--paper);
   }
   .founder-section__grid {
     display: grid;
@@ -571,9 +574,7 @@ const ownerJourneys = [
   .direct-contact {
     position: relative;
     overflow: clip;
-    background:
-      radial-gradient(circle at 88% 0%, rgba(184, 154, 96, 0.18), transparent 25rem),
-      #0f100d;
+    background: radial-gradient(circle at 88% 0%, rgba(184, 154, 96, 0.18), transparent 25rem), #0f100d;
     color: var(--white);
   }
   .direct-contact::before {
