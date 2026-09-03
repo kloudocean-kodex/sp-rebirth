@@ -41,7 +41,10 @@ test('homepage prioritises direct contact and three clear owner decisions', asyn
 
   const hero = page.locator('.hero-refresh');
   await expect(hero.getByRole('heading', { name: /clear property management\. directly with sana/i })).toBeVisible();
-  await expect(hero.getByRole('link', { name: /call sana · 0416 977 990/i })).toHaveAttribute('href', 'tel:+61416977990');
+  await expect(hero.getByRole('link', { name: /call sana · 0416 977 990/i })).toHaveAttribute(
+    'href',
+    'tel:+61416977990',
+  );
   await expect(hero.getByRole('link', { name: /request a rental appraisal/i })).toHaveAttribute(
     'href',
     '/rental-appraisal/',
