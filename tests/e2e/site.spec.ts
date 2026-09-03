@@ -36,20 +36,29 @@ for (const path of publicRoutes) {
   });
 }
 
-test('homepage exposes the value-first diagnostic before requiring a sales conversation', async ({ page }) => {
+test('homepage prioritises direct contact and three clear owner decisions', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const visibilityCheck = page.getByRole('link', { name: /take the 90-second check/i });
-  await expect(visibilityCheck).toBeVisible();
-  await expect(visibilityCheck).toHaveAttribute('href', '/property-management-visibility-check/');
+  const hero = page.locator('.hero-refresh');
+  await expect(hero.getByRole('heading', { name: /clear property management\. directly with sana/i })).toBeVisible();
+  await expect(hero.getByRole('link', { name: /call sana · 0416 977 990/i })).toHaveAttribute('href', 'tel:+61416977990');
+  await expect(hero.getByRole('link', { name: /request a rental appraisal/i })).toHaveAttribute(
+    'href',
+    '/rental-appraisal/',
+  );
+
+  const services = page.locator('#services');
+  await expect(services.getByRole('heading', { name: /manage my property/i })).toBeVisible();
+  await expect(services.getByRole('heading', { name: /appraise or lease my property/i })).toBeVisible();
+  await expect(services.getByRole('heading', { name: /change property manager/i })).toBeVisible();
 });
 
 test('homepage review proof keeps an accessible source link if the vendor widget is unavailable', async ({ page }) => {
   await page.route('https://cdn.trustindex.io/**', (route) => route.abort('blockedbyclient'));
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByRole('heading', { name: /trust is stronger when the source stays visible/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /read the current reviews on google/i })).toHaveAttribute(
+  await expect(page.getByRole('heading', { name: /read the current reviews/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /read reviews on google/i })).toHaveAttribute(
     'href',
     /query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM/,
   );
@@ -67,68 +76,35 @@ test('confirmed 24x7 direct-access service promise remains visible', async ({ pa
   await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
 });
 
-test('homepage hero uses the static premium media contract', async ({ page }) => {
+test('homepage hero keeps a static concept-media contract until approved photography arrives', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const heroPoster = page.locator('.hero__poster');
-  await expect(heroPoster).toBeVisible();
-  await expect(heroPoster).toHaveAttribute('src', /home-interior_413970226\.webp$/);
-  await expect(heroPoster).toHaveAttribute('srcset', /home-interior_413970226-768x432\.webp 768w/);
-  await expect(heroPoster).toHaveAttribute('sizes', '100vw');
-  await expect(page.locator('.hero__video')).toHaveCount(0);
+  const portrait = page.locator('.hero-refresh__portrait');
+  await expect(portrait).toBeVisible();
+  await expect(portrait).toHaveAttribute('src', '/media/founder-concept-placeholder.svg');
+  await expect(portrait).toHaveAttribute('fetchpriority', 'high');
+  await expect(page.locator('.hero-refresh video')).toHaveCount(0);
+  await expect(page.getByText(/replace with approved sana photography before production/i)).toBeVisible();
 });
 
-test('homepage editorial media keeps Melbourne atmosphere and founder proof clearly labelled', async ({ page }) => {
+test('homepage removes optional diagnostic and motion detours from the primary experience', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const story = page.locator('.editorial-story');
-  await expect(story.getByRole('heading', { name: /a clearer view begins with place/i })).toBeVisible();
-  await expect(story.getByAltText('Aerial view of central Melbourne in warm morning light')).toHaveAttribute(
-    'loading',
-    'lazy',
-  );
-  await expect(story.getByAltText('Sana Patel standing in a bright residential interior')).toHaveAttribute(
-    'loading',
-    'lazy',
-  );
-  await expect(story.getByText(/not a managed-property representation/i)).toBeVisible();
-  await expect(story.getByRole('link', { name: /Shan S \/ Unsplash/i })).toHaveAttribute(
-    'href',
-    'https://unsplash.com/photos/aerial-view-of-city-buildings-during-daytime-u4LMg1HXTTI',
-  );
-
-  const droneVideo = story.locator('[data-drone-video]');
-  await expect(droneVideo).toHaveAttribute('preload', 'none');
-  await expect(droneVideo).not.toHaveAttribute('autoplay', '');
-  await expect(droneVideo.locator('source')).toHaveCount(2);
-
-  const posterUrl = await droneVideo.getAttribute('poster');
-  expect(posterUrl).toMatch(/^\/_astro\/.+\.webp$/);
-  const posterResponse = await page.request.get(posterUrl!);
-  expect(posterResponse.ok()).toBeTruthy();
+  await expect(page.locator('main a[href="/property-management-visibility-check/"]')).toHaveCount(0);
+  await expect(page.locator('main a[href="/rental-position-check/"]')).toHaveCount(0);
+  await expect(page.locator('main video')).toHaveCount(0);
+  await expect(page.locator('#why-sana')).toBeVisible();
+  await expect(page.locator('#reviews')).toBeVisible();
 });
 
-test('optional Melbourne motion layer remains user-controlled and keyboard-dismissible', async ({ page }) => {
-  await page.route('**/melbourne-brighton-drone-pexels-38304339-*.mp4', (route) => route.abort('blockedbyclient'));
+test('supporting journeys remain reachable without competing in primary navigation', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const footer = page.locator('footer.site-footer');
 
-  const story = page.locator('.editorial-story');
-  const launch = story.getByRole('button', { name: /view Melbourne in motion/i });
-  const player = story.locator('[data-drone-player]');
-
-  await expect(launch).toBeVisible();
-  await expect(launch).toHaveAttribute('aria-expanded', 'false');
-  await expect(player).toBeHidden();
-
-  await launch.click();
-  await expect(player).toBeVisible();
-  await expect(story.getByRole('button', { name: /return to still image/i })).toBeFocused();
-
-  await page.keyboard.press('Escape');
-  await expect(player).toBeHidden();
-  await expect(launch).toBeVisible();
-  await expect(launch).toBeFocused();
-  await expect(launch).toHaveAttribute('aria-expanded', 'false');
+  await expect(footer.getByRole('link', { name: 'About Sana' })).toHaveAttribute('href', '/about/');
+  await expect(footer.getByRole('link', { name: 'Resources' })).toHaveAttribute('href', '/resources/');
+  await expect(footer.getByRole('link', { name: 'For renters' })).toHaveAttribute('href', '/for-renters/');
+  await expect(footer.getByRole('link', { name: 'Selling' })).toHaveAttribute('href', '/sale/');
 });
 
 test('staging robots policy blocks crawling', async ({ request }) => {
@@ -172,7 +148,7 @@ test('legacy rental-provider URL permanently redirects to the canonical journey'
   expect(response.headers()['location']).toBe('/rental-providers/');
 });
 
-test('mobile navigation keeps the full customer journey accessible', async ({ page }, testInfo) => {
+test('mobile navigation keeps the primary owner journey deliberately small', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.includes('mobile'), 'Mobile interaction test');
 
   await page.goto('/');
@@ -181,16 +157,17 @@ test('mobile navigation keeps the full customer journey accessible', async ({ pa
   await menu.locator('summary').click();
 
   for (const label of [
-    'Rental Providers',
-    'Rental Appraisal',
-    'Rental Position Check',
-    'Switch Property Managers',
-    'About Sana',
-    'Resources',
-    'For Renters',
-    'Selling',
-    'Contact',
+    'Services',
+    'Why Sana',
+    'Reviews',
+    'Switch Property Manager',
+    /Call Sana · 0416 977 990/i,
+    'Request a Rental Appraisal',
   ]) {
     await expect(menu.getByRole('link', { name: label })).toBeVisible();
   }
+
+  await expect(menu.getByRole('link', { name: 'Rental Position Check' })).toHaveCount(0);
+  await expect(menu.getByRole('link', { name: 'Resources' })).toHaveCount(0);
+  await expect(menu.getByRole('link', { name: 'Selling' })).toHaveCount(0);
 });
