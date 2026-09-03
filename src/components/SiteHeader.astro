@@ -42,6 +42,15 @@ const logoSrc = SITE.logo;
 </header>
 
 <style>
+  .site-header {
+    background: rgba(13, 14, 12, 0.965);
+    border-bottom: 1px solid rgba(215, 195, 154, 0.24);
+    backdrop-filter: blur(16px);
+  }
+  .site-header__inner {
+    min-height: 5.5rem;
+    border-bottom: 0;
+  }
   .brand {
     padding: 0.46rem 0.66rem;
     border-color: rgba(215, 195, 154, 0.4);
@@ -95,6 +104,9 @@ const logoSrc = SITE.logo;
     }
   }
   @media (max-width: 900px) {
+    .site-header__inner {
+      min-height: 5rem;
+    }
     .brand {
       padding: 0.42rem 0.58rem;
     }
