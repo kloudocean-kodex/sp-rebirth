@@ -7,15 +7,15 @@ import { SITE } from '@/config/site';
     <div class="trust-proof__intro">
       <div>
         <p class="eyebrow">Current Google reviews</p>
-        <h2 id="trust-proof-title">Trust is stronger when the source stays visible.</h2>
+        <h2 id="trust-proof-title">Read the current reviews.</h2>
       </div>
       <div class="trust-proof__context">
         <p>
-          Sana's current Google reviews are displayed through her connected Trustindex account. The rating, review
-          count, names and comments load from that source instead of being retyped as fixed website claims.
+          Reviews load from Sana Patel Real Estate's connected Google source through Trustindex, so the visible names,
+          dates, comments and rating stay source-driven.
         </p>
         <a href={SITE.reviews.googleProfileUrl} target="_blank" rel="noopener noreferrer nofollow">
-          Read the current reviews on Google <span aria-hidden="true">↗</span>
+          Read reviews on Google <span aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
@@ -28,7 +28,7 @@ import { SITE } from '@/config/site';
       aria-busy="true"
     >
       <div class="trust-proof__loading" aria-hidden="true">
-        <span>Live Google review stream</span>
+        <span>Live Google reviews</span>
         <strong>Connecting to the current source…</strong>
       </div>
       <noscript>
@@ -41,9 +41,7 @@ import { SITE } from '@/config/site';
       </noscript>
     </div>
 
-    <p class="trust-proof__note">
-      Review content is supplied by Google through Trustindex and can change when the connected source refreshes.
-    </p>
+    <p class="trust-proof__note">Review content is supplied by Google through Trustindex and can change as the source updates.</p>
   </div>
 </section>
 
