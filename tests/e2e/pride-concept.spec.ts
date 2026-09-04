@@ -29,7 +29,9 @@ test('PRIDE preview preserves Sana copy, conversion routes and noindex boundary'
 
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Is your property really being managed?');
-  await expect(page.getByText('Property management with strategy, accountability and personal attention.')).toBeVisible();
+  await expect(
+    page.getByText('Property management with strategy, accountability and personal attention.'),
+  ).toBeVisible();
   await expect(page.getByText('Your Property. My Priority.')).toBeVisible();
 
   const healthLinks = page.getByRole('link', { name: /rental health check/i });
@@ -52,7 +54,9 @@ test('PRIDE preview preserves Sana copy, conversion routes and noindex boundary'
   await expect(page.locator('[data-review-provider="Trustindex"]')).toHaveCount(1);
   await expect(page.locator('form')).toHaveCount(0);
 
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
   expect(overflow, 'preview must not create horizontal page scrolling').toBeLessThanOrEqual(1);
 });
 
