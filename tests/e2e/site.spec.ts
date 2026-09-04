@@ -30,40 +30,57 @@ for (const path of publicRoutes) {
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
-
-    // CI/staging builds must never become an accidental second indexed website.
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/i);
   });
 }
 
-test('homepage prioritises direct contact and three clear owner decisions', async ({ page }) => {
+test('homepage makes Sana, PRIDE and direct contact obvious immediately', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const hero = page.locator('.hero-refresh');
-  await expect(hero.getByRole('heading', { name: /clear property management\. directly with sana/i })).toBeVisible();
-  await expect(hero.getByRole('link', { name: /call sana · 0416 977 990/i })).toHaveAttribute(
+  const hero = page.locator('.luxe-hero');
+  await expect(hero.getByRole('heading', { name: /property management with pride/i })).toBeVisible();
+  await expect(hero.getByRole('link', { name: 'Call Sana', exact: true })).toHaveAttribute('href', 'tel:+61416977990');
+  await expect(hero.getByRole('link', { name: 'Email Sana', exact: true })).toHaveAttribute(
     'href',
-    'tel:+61416977990',
+    'mailto:sana@sanapatel.com.au',
   );
-  await expect(hero.getByRole('link', { name: /request a rental appraisal/i })).toHaveAttribute(
-    'href',
-    '/rental-appraisal/',
-  );
-
-  const services = page.locator('#services');
-  await expect(services.getByRole('heading', { name: /manage my property/i })).toBeVisible();
-  await expect(services.getByRole('heading', { name: /appraise or lease my property/i })).toBeVisible();
-  await expect(services.getByRole('heading', { name: /change property manager/i })).toBeVisible();
+  await expect(hero.getByText('Passionate', { exact: true })).toBeVisible();
+  await expect(hero.getByText('Results Driven', { exact: true })).toBeVisible();
+  await expect(hero.getByText('Integrity', { exact: true })).toBeVisible();
+  await expect(hero.getByText('Dedicated', { exact: true })).toBeVisible();
+  await expect(hero.getByText('Experienced', { exact: true })).toBeVisible();
 });
 
-test('homepage review proof keeps an accessible source link if the vendor widget is unavailable', async ({ page }) => {
+test('homepage explains the work without creating another navigation maze', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.getByRole('heading', { name: /your property\. my priority/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /the essentials\. clearly handled/i })).toBeVisible();
+  for (const item of [
+    'Leasing & renter selection',
+    'Rent reviews & tenancy planning',
+    'Routine inspections',
+    'Maintenance coordination',
+    'Rent, arrears & renewals',
+    'Direct owner communication',
+  ]) {
+    await expect(page.getByText(item, { exact: true })).toBeVisible();
+  }
+
+  await expect(page.locator('main a[href="/property-management-visibility-check/"]')).toHaveCount(0);
+  await expect(page.locator('main a[href="/rental-position-check/"]')).toHaveCount(0);
+  await expect(page.locator('main a[href="/rental-appraisal/"]')).toHaveCount(0);
+  await expect(page.locator('main form')).toHaveCount(0);
+});
+
+test('homepage review proof keeps Trustindex as the visible source if the widget is unavailable', async ({ page }) => {
   await page.route('https://cdn.trustindex.io/**', (route) => route.abort('blockedbyclient'));
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByRole('heading', { name: /read the current reviews/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /read reviews on google/i })).toHaveAttribute(
+  await expect(page.getByRole('heading', { name: /trust is better read at the source/i })).toBeVisible();
+  await expect(page.locator('.luxe-review-link')).toHaveAttribute(
     'href',
-    /query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM/,
+    'https://www.trustindex.io/reviews/www.sanapatel.com.au',
   );
   await expect(page.locator('[data-review-provider="Trustindex"]')).toHaveAttribute(
     'data-trustindex-widget-id',
@@ -73,41 +90,45 @@ test('homepage review proof keeps an accessible source link if the vendor widget
 
 test('confirmed 24x7 direct-access service promise remains visible', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByText('24×7 to Sana Patel', { exact: true })).toBeVisible();
+  await expect(page.getByText(/24×7 direct access to Sana Patel/i)).toBeVisible();
 
   await page.goto('/rental-providers/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
 });
 
-test('homepage hero keeps a static concept-media contract until approved photography arrives', async ({ page }) => {
+test('homepage hero stays static and founder-led', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const portrait = page.locator('.hero-refresh__portrait');
+  const portrait = page.locator('.luxe-hero__arch img');
   await expect(portrait).toBeVisible();
-  await expect(portrait).toHaveAttribute('src', '/media/founder-concept-placeholder.svg');
+  await expect(portrait).toHaveAttribute('alt', 'Sana Patel');
   await expect(portrait).toHaveAttribute('fetchpriority', 'high');
-  await expect(page.locator('.hero-refresh video')).toHaveCount(0);
-  await expect(page.getByText(/replace with approved sana photography before production/i)).toBeVisible();
+  await expect(portrait).toHaveAttribute('src', /Sana-headshot\.webp/);
+  await expect(page.locator('.luxe-hero video')).toHaveCount(0);
 });
 
-test('homepage removes optional diagnostic and motion detours from the primary experience', async ({ page }) => {
+test('homepage is deliberately one-page and contact-first', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.locator('main a[href="/property-management-visibility-check/"]')).toHaveCount(0);
-  await expect(page.locator('main a[href="/rental-position-check/"]')).toHaveCount(0);
-  await expect(page.locator('main video')).toHaveCount(0);
-  await expect(page.locator('#why-sana')).toBeVisible();
+  await expect(page.locator('.luxe-header')).toBeVisible();
+  await expect(page.locator('.luxe-pride')).toBeVisible();
+  await expect(page.locator('.luxe-service')).toBeVisible();
+  await expect(page.locator('.luxe-founder')).toBeVisible();
   await expect(page.locator('#reviews')).toBeVisible();
+  await expect(page.locator('.luxe-close')).toBeVisible();
+  await expect(page.locator('main video')).toHaveCount(0);
+  await expect(page.locator('main form')).toHaveCount(0);
+  await expect(page.locator('.mobile-nav')).toHaveCount(0);
 });
 
-test('supporting journeys remain reachable without competing in primary navigation', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const footer = page.locator('footer.site-footer');
+test('mobile landing page keeps direct contact available without opening a menu', async ({ page }, testInfo) => {
+  test.skip(!testInfo.project.name.includes('mobile'), 'Mobile interaction test');
 
-  await expect(footer.getByRole('link', { name: 'About Sana' })).toHaveAttribute('href', '/about/');
-  await expect(footer.getByRole('link', { name: 'Resources' })).toHaveAttribute('href', '/resources/');
-  await expect(footer.getByRole('link', { name: 'For renters' })).toHaveAttribute('href', '/for-renters/');
-  await expect(footer.getByRole('link', { name: 'Selling' })).toHaveAttribute('href', '/sale/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.luxe-header__call')).toBeVisible();
+  await expect(page.locator('.luxe-header__call')).toHaveAttribute('href', 'tel:+61416977990');
+  await expect(page.locator('.luxe-header summary')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: /property management with pride/i })).toBeVisible();
 });
 
 test('staging robots policy blocks crawling', async ({ request }) => {
@@ -149,28 +170,4 @@ test('legacy rental-provider URL permanently redirects to the canonical journey'
   const response = await request.get('/for-rental-providers/', { maxRedirects: 0 });
   expect(response.status()).toBe(301);
   expect(response.headers()['location']).toBe('/rental-providers/');
-});
-
-test('mobile navigation keeps the primary owner journey deliberately small', async ({ page }, testInfo) => {
-  test.skip(!testInfo.project.name.includes('mobile'), 'Mobile interaction test');
-
-  await page.goto('/');
-  const menu = page.locator('.mobile-nav');
-  await expect(menu).toBeVisible();
-  await menu.locator('summary').click();
-
-  for (const label of [
-    'Services',
-    'Why Sana',
-    'Reviews',
-    'Switch Property Manager',
-    /Call Sana · 0416 977 990/i,
-    'Request a Rental Appraisal',
-  ]) {
-    await expect(menu.getByRole('link', { name: label })).toBeVisible();
-  }
-
-  await expect(menu.getByRole('link', { name: 'Rental Position Check' })).toHaveCount(0);
-  await expect(menu.getByRole('link', { name: 'Resources' })).toHaveCount(0);
-  await expect(menu.getByRole('link', { name: 'Selling' })).toHaveCount(0);
 });
