@@ -23,26 +23,32 @@ const criticalRoutes = [
 for (const path of criticalRoutes) {
   test(`${path} has no automatically detectable WCAG A/AA violations`, async ({ page }) => {
     await page.goto(path, { waitUntil: 'domcontentloaded' });
-    // Axe must inspect the styled, responsive DOM.  `domcontentloaded` can fire
-    // before the local CSS assets have finished loading, which briefly exposes
-    // the desktop navigation at mobile dimensions and creates a false/flaky
-    // target-size violation.  Waiting for the browser load event and asserting
-    // the intended navigation mode gives the stylesheet a deterministic readiness
-    // contract without an arbitrary sleep.
+    // Axe must inspect the styled, responsive DOM. `domcontentloaded` can fire
+    // before the local CSS assets have finished loading, so wait for the browser
+    // load event and assert the intended shell before running the unchanged Axe scan.
     await page.waitForLoadState('load');
     await expect(page.locator('main#main-content')).toBeVisible();
     await expect(page.locator('h1')).toBeVisible();
 
-    const viewportWidth = page.viewportSize()?.width ?? 1280;
-    if (viewportWidth <= 900) {
-      await expect(page.locator('.site-nav--desktop')).toBeHidden();
-      await expect(page.locator('.mobile-nav')).toBeVisible();
+    if (path === '/') {
+      // The client-approved landing page deliberately removes the old navigation maze.
+      // Its responsive shell is the visible brand header plus an always-available call action.
+      await expect(page.locator('.luxe-header')).toBeVisible();
+      await expect(page.locator('.luxe-header__call')).toBeVisible();
+      await expect(page.locator('.site-nav--desktop')).toHaveCount(0);
+      await expect(page.locator('.mobile-nav')).toHaveCount(0);
     } else {
-      await expect(page.locator('.site-nav--desktop')).toBeVisible();
-      await expect(page.locator('.mobile-nav')).toBeHidden();
+      const viewportWidth = page.viewportSize()?.width ?? 1280;
+      if (viewportWidth <= 900) {
+        await expect(page.locator('.site-nav--desktop')).toBeHidden();
+        await expect(page.locator('.mobile-nav')).toBeVisible();
+      } else {
+        await expect(page.locator('.site-nav--desktop')).toBeVisible();
+        await expect(page.locator('.mobile-nav')).toBeHidden();
+      }
     }
 
-    // Do not wait for networkidle: the cinematic homepage intentionally keeps media/network
+    // Do not wait for networkidle: connected review/media surfaces can keep network
     // activity alive. Accessibility analysis needs a usable DOM, not an artificially idle network.
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
