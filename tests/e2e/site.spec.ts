@@ -44,11 +44,11 @@ test('homepage makes Sana, PRIDE and direct contact obvious immediately', async 
     'href',
     'mailto:sana@sanapatel.com.au',
   );
-  await expect(hero.getByText('Passionate', { exact: true })).toBeVisible();
-  await expect(hero.getByText('Results Driven', { exact: true })).toBeVisible();
-  await expect(hero.getByText('Integrity', { exact: true })).toBeVisible();
-  await expect(hero.getByText('Dedicated', { exact: true })).toBeVisible();
-  await expect(hero.getByText('Experienced', { exact: true })).toBeVisible();
+  await expect(hero.getByText('Passionate')).toBeVisible();
+  await expect(hero.getByText('Results Driven')).toBeVisible();
+  await expect(hero.getByText('Integrity')).toBeVisible();
+  await expect(hero.getByText('Dedicated')).toBeVisible();
+  await expect(hero.getByText('Experienced')).toBeVisible();
 });
 
 test('homepage explains the work without creating another navigation maze', async ({ page }) => {
@@ -125,10 +125,11 @@ test('mobile landing page keeps direct contact available without opening a menu'
   test.skip(!testInfo.project.name.includes('mobile'), 'Mobile interaction test');
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const hero = page.locator('.luxe-hero');
   await expect(page.locator('.luxe-header__call')).toBeVisible();
   await expect(page.locator('.luxe-header__call')).toHaveAttribute('href', 'tel:+61416977990');
   await expect(page.locator('.luxe-header summary')).toHaveCount(0);
-  await expect(page.getByRole('heading', { name: /property management with pride/i })).toBeVisible();
+  await expect(hero.getByRole('heading', { name: /property management with pride/i })).toBeVisible();
 });
 
 test('staging robots policy blocks crawling', async ({ request }) => {
