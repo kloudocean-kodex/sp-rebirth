@@ -82,9 +82,7 @@ describe('site configuration', () => {
   });
 
   it('publishes the reviewed resource hub and guides in the production crawl surface', () => {
-    for (const path of reviewedResourcePaths) {
-      expect(INDEXED_PATHS).toContain(path);
-    }
+    for (const path of reviewedResourcePaths) expect(INDEXED_PATHS).toContain(path);
   });
 
   it('never exposes internal runtime routes as indexable pages', () => {
@@ -107,44 +105,44 @@ describe('site configuration', () => {
     }
   });
 
-  it('keeps the homepage hero static while approved founder photography is pending', () => {
+  it('keeps the homepage hero static, founder-led and free of the old placeholder', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
-    const heroStart = source.indexOf('<section class="hero hero-refresh"');
-    const heroEnd = source.indexOf('<CredentialStrip', heroStart);
+    const heroStart = source.indexOf('<section class="luxe-hero"');
+    const heroEnd = source.indexOf('</section>', heroStart);
     const heroSource = source.slice(heroStart, heroEnd);
 
     expect(heroStart).toBeGreaterThan(-1);
     expect(heroEnd).toBeGreaterThan(heroStart);
     expect(heroSource).not.toMatch(/<video\b/i);
-    expect(heroSource).toContain('/media/founder-concept-placeholder.svg');
-    expect(heroSource).toContain('replace with approved Sana photography before production');
-    expect(heroSource).not.toContain('WhatsApp-Image-2025-09-30');
-    expect(heroSource).not.toContain('Sana-headshot.webp');
+    expect(heroSource).toContain('SITE.founder.image');
+    expect(heroSource).not.toContain('founder-concept-placeholder.svg');
   });
 
-  it('keeps the clarity-first homepage free of optional diagnostic and motion detours', () => {
+  it('keeps the homepage as one simple contact-first landing journey', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
 
-    expect(source).toContain('id="services"');
-    expect(source).toContain('id="why-sana"');
+    expect(source).toContain('Property management <span>with PRIDE.</span>');
+    expect(source).toContain('class="luxe-pride"');
+    expect(source).toContain('class="luxe-service"');
     expect(source).toContain('id="reviews"');
-    expect(source).toContain('Call Sana · {SITE.phone.display}');
+    expect(source).toContain(`href={\`tel:\${SITE.phone.e164}\`}`);
+    expect(source).toContain(`href={\`mailto:\${SITE.email}\`}`);
     expect(source).not.toContain('/property-management-visibility-check/');
     expect(source).not.toContain('/rental-position-check/');
+    expect(source).not.toContain('/rental-appraisal/');
+    expect(source).not.toMatch(/<form\b/i);
     expect(source).not.toMatch(/<video\b/i);
   });
 
   it('uses a source-driven Trustindex review widget without hard-coded aggregate claims', () => {
-    const component = readFileSync(new URL('../src/components/TrustProof.astro', import.meta.url), 'utf8');
     const homepage = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
 
     expect(SITE.reviews.provider).toBe('Trustindex');
     expect(SITE.reviews.trustindexWidgetId).toMatch(/^[a-f0-9]{24,64}$/);
-    expect(new URL(SITE.reviews.googleProfileUrl).hostname).toBe('www.google.com');
     expect(new URL(SITE.reviews.trustindexSummaryUrl).hostname).toBe('www.trustindex.io');
-    expect(component).toContain('https://cdn.trustindex.io/loader.js?');
-    expect(component).toContain('data-trustindex-widget-id');
-    expect(component).not.toMatch(/aggregateRating|reviewRating|ratingValue|reviewCount/);
-    expect(homepage).toContain('<TrustProof />');
+    expect(homepage).toContain('https://cdn.trustindex.io/loader.js?');
+    expect(homepage).toContain('data-trustindex-widget-id');
+    expect(homepage).toContain('Trustindex ↗');
+    expect(homepage).not.toMatch(/aggregateRating|reviewRating|ratingValue|reviewCount/);
   });
 });
