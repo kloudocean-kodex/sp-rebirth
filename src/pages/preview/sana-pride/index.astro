@@ -1,0 +1,499 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/config/site';
+import '@/styles/pride-preview.css';
+
+const title = 'Sana Patel PRIDE Landing Concept | Internal Preview';
+const description =
+  'Non-indexed presentation concept for Sana Patel Real Estate: founder-led accountability, owner diagnostics, PRIDE philosophy and genuine Trustindex proof.';
+
+const heroImage = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_1892310928.webp';
+const founderImage =
+  'https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.13.01-PM.jpeg';
+
+const ownerStates = [
+  {
+    number: '01',
+    eyebrow: 'Just checking',
+    title: 'Property Management Visibility Check',
+    body: 'Can you clearly see what is happening with your investment?',
+    label: 'Check my visibility',
+    href: '/property-management-visibility-check/',
+    icon: 'visibility',
+  },
+  {
+    number: '02',
+    eyebrow: 'Reviewing rent',
+    title: 'Rental Position Check',
+    body: 'Do you have enough current evidence to make your next rental decision confidently?',
+    label: 'Check my rental position',
+    href: '/rental-position-check/',
+    icon: 'position',
+  },
+  {
+    number: '03',
+    eyebrow: 'Ready for change',
+    title: 'Switch Property Managers',
+    body: 'Already decided the current arrangement is no longer right?',
+    label: 'See how switching works',
+    href: '/switch-property-managers/',
+    icon: 'switch',
+  },
+] as const;
+
+const pride = [
+  {
+    letter: 'P',
+    title: 'Proactive Property Care',
+    body: 'Maintaining appropriate oversight of the tenancy, responding to issues identified through inspections, communication and property records, and recommending appropriate next steps when required.',
+  },
+  {
+    letter: 'R',
+    title: 'Results Driven',
+    body: 'Clear and timely communication to help rental providers stay informed about their property and tenancy.',
+  },
+  {
+    letter: 'I',
+    title: 'Integrity in Every Decision',
+    body: 'Providing factual, transparent advice and maintaining professional standards throughout the management process.',
+  },
+  {
+    letter: 'D',
+    title: 'Diligent Property Management',
+    body: 'Careful attention to inspections, maintenance coordination, tenancy administration, documentation and relevant compliance processes within the scope of management.',
+  },
+  {
+    letter: 'E',
+    title: 'Experience That Matters',
+    body: 'Applying practical property-management experience and professional judgement to each situation while working within the rental provider’s instructions and applicable requirements.',
+  },
+] as const;
+
+const accountability = [
+  ['01', 'Know who is responsible', 'Founder-led accountability.'],
+  ['02', 'Know what is happening', 'Clear and timely communication.'],
+  ['03', 'Understand why it matters', 'Context and considered advice.'],
+  ['04', 'Know what happens next', 'A clear next step.'],
+] as const;
+
+const switchSteps = [
+  {
+    number: '01',
+    title: 'Talk',
+    body: 'Tell Sana what is not working now and what you would like to improve.',
+  },
+  {
+    number: '02',
+    title: 'Review',
+    body: 'Understand the management agreement, property status and what an orderly transition would require.',
+  },
+  {
+    number: '03',
+    title: 'Plan the handover',
+    body: 'If you decide to proceed, establish the transfer steps, information requirements and communication plan.',
+  },
+] as const;
+---
+
+<BaseLayout
+  {title}
+  {description}
+  canonicalPath="/preview/sana-pride/"
+  noindex={true}
+  schema={[]}
+  bodyClass="pride-preview"
+>
+  <header slot="header" class="pride-header" aria-label="Sana Patel Real Estate preview navigation">
+    <a class="pride-brand" href="#top" aria-label="Sana Patel Real Estate — back to top">
+      <img src={SITE.logo} alt="Sana Patel Real Estate" width="190" height="55" decoding="async" />
+    </a>
+    <nav class="pride-nav" aria-label="Preview sections">
+      <a href="#owner-journeys">Property Management</a>
+      <a href="/rental-providers/">Rental Providers</a>
+      <a href="#sana">About Sana</a>
+      <a href="/resources/">Resources</a>
+      <a href="#final-cta">Contact</a>
+    </nav>
+    <a class="pride-header__cta" href="/property-management-visibility-check/">Rental Health Check</a>
+  </header>
+
+  <section class="pride-hero" id="top" aria-labelledby="hero-title">
+    <div class="pride-hero__image" aria-hidden="true">
+      <img src={heroImage} alt="" width="1600" height="1200" fetchpriority="high" loading="eager" decoding="async" />
+    </div>
+    <div class="pride-hero__wash" aria-hidden="true"></div>
+    <div class="pride-hero__trace" aria-hidden="true">
+      <svg viewBox="0 0 320 220" role="presentation">
+        <path d="M18 186C74 158 72 76 145 78c55 2 66 63 110 44 28-12 34-38 47-82"></path>
+        <path d="M30 203c59-26 63-102 122-103 50 0 65 51 104 37 31-11 37-42 47-73"></path>
+      </svg>
+    </div>
+
+    <div class="pride-shell pride-hero__inner">
+      <div class="pride-hero__copy">
+        <p class="pride-kicker">Property Management · Melbourne</p>
+        <h1 id="hero-title">Is your property <em>really</em> being managed?</h1>
+        <p class="pride-hero__support">Property management with strategy, accountability and personal attention.</p>
+        <p class="pride-hero__promise">Your Property. My Priority.</p>
+        <div class="pride-actions" aria-label="Primary owner actions">
+          <a class="pride-button pride-button--gold" href="/property-management-visibility-check/">
+            Get a Rental Health Check
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h9M11 6l4 4-4 4"></path></svg>
+          </a>
+          <a class="pride-button pride-button--ghost" href="/switch-property-managers/">
+            Switch Property Managers
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h9M11 6l4 4-4 4"></path></svg>
+          </a>
+        </div>
+        <div class="pride-hero__proof" aria-label="Verified positioning cues">
+          <span>Licensed Estate Agent</span>
+          <span>Founder-led</span>
+          <span>Melbourne Property Management</span>
+        </div>
+      </div>
+
+      <div class="pride-hero__asset-note">
+        <span>01</span>
+        <p>The asset is the story. Management is the standard around it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-owner" id="owner-journeys" aria-labelledby="owner-title">
+    <div class="pride-shell">
+      <div class="pride-section-head pride-section-head--dark">
+        <div>
+          <p class="pride-kicker pride-kicker--dark">Start with your situation</p>
+          <h2 id="owner-title">Where are you with <em>your property?</em></h2>
+        </div>
+        <p>
+          Three owner states. Three different next steps. Start privately, move only when the evidence tells you to.
+        </p>
+      </div>
+
+      <div class="pride-owner__list">
+        {
+          ownerStates.map((state) => (
+            <a class="pride-owner__row" href={state.href}>
+              <div class="pride-owner__number">{state.number}</div>
+              <div class="pride-owner__icon" aria-hidden="true">
+                {state.icon === 'visibility' && (
+                  <svg viewBox="0 0 32 32">
+                    <path d="M3.5 16s4.3-7.2 12.5-7.2S28.5 16 28.5 16 24.2 23.2 16 23.2 3.5 16 3.5 16Z" />
+                    <circle cx="16" cy="16" r="3.6" />
+                  </svg>
+                )}
+                {state.icon === 'position' && (
+                  <svg viewBox="0 0 32 32">
+                    <path d="M6 25V15m7 10V9m7 16V12m6 13V6" />
+                    <path d="M5 7.5c6.2 2.7 11.5 1.5 15.5-3" />
+                  </svg>
+                )}
+                {state.icon === 'switch' && (
+                  <svg viewBox="0 0 32 32">
+                    <path d="M5 10h18" />
+                    <path d="m19 6 4 4-4 4" />
+                    <path d="M27 22H9" />
+                    <path d="m13 18-4 4 4 4" />
+                  </svg>
+                )}
+              </div>
+              <div class="pride-owner__copy">
+                <p>{state.eyebrow}</p>
+                <h3>{state.title}</h3>
+                <span>{state.body}</span>
+              </div>
+              <div class="pride-owner__link">
+                {state.label}
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M5 10h9M11 6l4 4-4 4" />
+                </svg>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-standard" id="pride" aria-labelledby="pride-title">
+    <div class="pride-shell pride-standard__grid">
+      <aside class="pride-standard__mast">
+        <p class="pride-kicker">The standard</p>
+        <h2 id="pride-title">Property Management with <em>PRIDE.</em></h2>
+        <p class="pride-standard__lead">PRIDE is the standard I bring to every property I manage.</p>
+        <div class="pride-word" aria-hidden="true">
+          <span>P</span><span>R</span><span>I</span><span>D</span><span>E</span>
+        </div>
+      </aside>
+
+      <div class="pride-standard__principles">
+        {
+          pride.map((item, index) => (
+            <article class="pride-principle" data-pride-letter={item.letter}>
+              <div class="pride-principle__index">{String(index + 1).padStart(2, '0')}</div>
+              <div class="pride-principle__letter">{item.letter}</div>
+              <div class="pride-principle__copy">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+            </article>
+          ))
+        }
+
+        <blockquote class="pride-standard__quote">
+          “Good property management isn’t about promising outcomes no one can guarantee. It’s about having the right
+          processes, communication and professional judgement in place when they matter most.”
+        </blockquote>
+
+        <p class="pride-content-note">
+          Content note for Sana review: the supplied screenshots do not show the exact three-word R heading. “Results
+          Driven” is retained from Sana’s earlier supplied PRIDE direction and has not been expanded with invented
+          wording.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-founder" id="sana" aria-labelledby="founder-title">
+    <div class="pride-shell pride-founder__grid">
+      <figure class="pride-founder__visual">
+        <div class="pride-founder__plate" aria-hidden="true"></div>
+        <img src={founderImage} alt="Sana Patel" width="1200" height="1600" loading="lazy" decoding="async" />
+        <figcaption>Sana Patel · Founder-led property management</figcaption>
+      </figure>
+
+      <div class="pride-founder__copy">
+        <p class="pride-kicker pride-kicker--dark">The personal philosophy</p>
+        <h2 id="founder-title">What PRIDE Means to Me.</h2>
+        <p class="pride-founder__opening">PRIDE is the standard I choose to bring to my work every day.</p>
+        <div class="pride-founder__body">
+          <p>
+            For me, property management is not simply about collecting rent or completing routine tasks. It is about
+            being prepared, communicating clearly, keeping accurate records, providing considered advice and giving each
+            property the professional attention it deserves.
+          </p>
+          <p>I also understand that not every situation in property management can be predicted or controlled.</p>
+          <p>
+            What I can control is how I respond, how clearly I communicate, how carefully I document and the
+            professional standard I bring to the decisions within my role.
+          </p>
+          <p>
+            PRIDE is not a promise of perfect outcomes. It is a commitment to professional standards, sound processes
+            and responsible property management.
+          </p>
+        </div>
+        <blockquote>“What I can control is how I respond.”</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-accountability" aria-labelledby="accountability-title">
+    <div class="pride-shell">
+      <div class="pride-accountability__intro">
+        <p class="pride-kicker">Visible accountability</p>
+        <h2 id="accountability-title">You should never have to guess what is happening with your property.</h2>
+        <p>Your property should never be a mystery.</p>
+      </div>
+      <div class="pride-accountability__line" aria-hidden="true"></div>
+      <div class="pride-accountability__grid">
+        {
+          accountability.map(([number, heading, body]) => (
+            <article>
+              <span>{number}</span>
+              <h3>{heading}</h3>
+              <p>{body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-switch" aria-labelledby="switch-title">
+    <div class="pride-shell">
+      <div class="pride-section-head pride-section-head--dark">
+        <div>
+          <p class="pride-kicker pride-kicker--dark">Changing managers</p>
+          <h2 id="switch-title">Changing property managers can be simpler than <em>staying frustrated.</em></h2>
+        </div>
+        <p>
+          The first step is not cancelling anything. It is understanding the current arrangement and what an orderly
+          transition would require.
+        </p>
+      </div>
+
+      <div class="pride-switch__steps">
+        {
+          switchSteps.map((step) => (
+            <article>
+              <span>{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="pride-switch__actions">
+        <a class="pride-button pride-button--ink" href="/switch-property-managers/">Switch Property Managers</a>
+        <a class="pride-text-link" href={`tel:${SITE.phone.e164}`}>
+          Talk to Sana · {SITE.phone.display}
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h9M11 6l4 4-4 4"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-proof" id="reviews" aria-labelledby="reviews-title">
+    <div class="pride-shell">
+      <div class="pride-proof__intro">
+        <div>
+          <p class="pride-kicker pride-kicker--dark">Real proof</p>
+          <h2 id="reviews-title">Trusted by Rental Providers &amp; Renters</h2>
+          <p class="pride-proof__sub">Real experiences. Real service.</p>
+        </div>
+        <div class="pride-proof__context">
+          <p>
+            Hear directly from rental providers and renters who have experienced the way Sana Patel Real Estate
+            approaches property management.
+          </p>
+          <a href={SITE.reviews.googleProfileUrl} target="_blank" rel="noopener noreferrer nofollow">
+            Google reviews · via Trustindex
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 14 6M8 6h6v6"></path></svg>
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="pride-trustindex"
+        data-review-provider="Trustindex"
+        data-trustindex-widget-id={SITE.reviews.trustindexWidgetId}
+        data-trustindex-state="waiting"
+        aria-busy="true"
+      >
+        <div class="pride-trustindex__loading" aria-hidden="true">
+          <span>Current source</span>
+          <strong>Connecting to genuine Google reviews…</strong>
+        </div>
+        <noscript>
+          <p>
+            Live reviews require JavaScript. <a href={SITE.reviews.googleProfileUrl}
+              >Read Sana’s current reviews on Google.</a
+            >
+          </p>
+        </noscript>
+      </div>
+      <p class="pride-proof__note">
+        Review wording, names, dates, rating and count remain source-driven and can change as Trustindex updates.
+      </p>
+    </div>
+  </section>
+
+  <section class="pride-final" id="final-cta" aria-labelledby="final-title">
+    <div class="pride-final__texture" aria-hidden="true"></div>
+    <div class="pride-shell pride-final__inner">
+      <p class="pride-kicker">The next step</p>
+      <h2 id="final-title">Ready to take a closer look at how your property is being managed?</h2>
+      <div class="pride-actions pride-actions--final">
+        <a class="pride-button pride-button--gold" href="/property-management-visibility-check/"
+          >Get a Rental Health Check</a
+        >
+        <a class="pride-button pride-button--ghost" href="/switch-property-managers/">Switch Property Managers</a>
+      </div>
+      <div class="pride-final__direct">
+        <span>Prefer direct?</span>
+        <a href={`tel:${SITE.phone.e164}`}>{SITE.phone.display}</a>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </div>
+    </div>
+  </section>
+
+  <footer slot="footer" class="pride-footer">
+    <div class="pride-shell pride-footer__top">
+      <div class="pride-footer__brand">
+        <img src={SITE.logo} alt="Sana Patel Real Estate" width="190" height="55" loading="lazy" decoding="async" />
+        <p>Property management with strategy, accountability and personal attention.</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        <a href="/rental-providers/">Property Management</a>
+        <a href="/rental-providers/">Rental Providers</a>
+        <a href="/rental-appraisal/">Rental Appraisal</a>
+        <a href="/switch-property-managers/">Switch Property Managers</a>
+        <a href="/for-renters/">Renters</a>
+        <a href="/sale/">Sales</a>
+        <a href="/resources/">Resources</a>
+        <a href={`mailto:${SITE.email}`}>Contact</a>
+      </nav>
+      <div class="pride-footer__contact">
+        <a href={`tel:${SITE.phone.e164}`}>{SITE.phone.display}</a>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <span>Licensed Estate Agent · Melbourne, Victoria</span>
+      </div>
+    </div>
+    <div class="pride-shell pride-footer__bottom">
+      <span>© {new Date().getFullYear()} {SITE.name}</span>
+      <a href="/privacy/">Privacy</a>
+      <a href={SITE.reviews.trustindexSummaryUrl} target="_blank" rel="noopener noreferrer">Trustindex</a>
+      <span>Internal concept · noindex</span>
+    </div>
+  </footer>
+
+  <script>
+    const hosts = document.querySelectorAll<HTMLElement>('[data-trustindex-widget-id]');
+
+    const loadTrustindex = (host: HTMLElement) => {
+      if (host.dataset.trustindexState !== 'waiting') return;
+      const widgetId = host.dataset.trustindexWidgetId;
+      if (!widgetId || !/^[a-f0-9]{24,64}$/.test(widgetId)) {
+        host.dataset.trustindexState = 'unavailable';
+        host.setAttribute('aria-busy', 'false');
+        return;
+      }
+
+      host.dataset.trustindexState = 'loading';
+      const loading = host.querySelector<HTMLElement>('.pride-trustindex__loading');
+      const markReady = (event: Event) => {
+        const detail = (event as CustomEvent<{ widget?: { widget?: Element } }>).detail;
+        const widget = detail?.widget?.widget;
+        if (!widget || !host.contains(widget)) return;
+        loading?.remove();
+        host.dataset.trustindexState = 'ready';
+        host.setAttribute('aria-busy', 'false');
+        window.removeEventListener('widget-ready', markReady);
+      };
+
+      window.addEventListener('widget-ready', markReady);
+      const script = document.createElement('script');
+      script.async = true;
+      script.defer = true;
+      script.src = `https://cdn.trustindex.io/loader.js?${widgetId}`;
+      script.referrerPolicy = 'origin';
+      script.setAttribute('fetchpriority', 'low');
+      script.addEventListener('error', () => {
+        host.dataset.trustindexState = 'unavailable';
+        host.setAttribute('aria-busy', 'false');
+        loading?.querySelector('strong')?.replaceChildren('Live reviews are temporarily unavailable.');
+        window.removeEventListener('widget-ready', markReady);
+      });
+      host.append(script);
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const host = entry.target as HTMLElement;
+            observer.unobserve(host);
+            loadTrustindex(host);
+          }
+        },
+        { rootMargin: '180px 0px' },
+      );
+      hosts.forEach((host) => observer.observe(host));
+    } else {
+      hosts.forEach(loadTrustindex);
+    }
+  </script>
+</BaseLayout>

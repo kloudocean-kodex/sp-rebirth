@@ -1,0 +1,1372 @@
+body.pride-preview {
+  --pr-ink: #111210;
+  --pr-ink-soft: #1a1b18;
+  --pr-bone: #f2eee6;
+  --pr-cream: #fbf8f2;
+  --pr-stone: #d8d1c5;
+  --pr-brass: #a58a57;
+  --pr-brass-light: #c8ac73;
+  --pr-brass-dark: #70572f;
+  --pr-line-dark: rgba(17, 18, 16, 0.18);
+  --pr-line-light: rgba(242, 238, 230, 0.18);
+  margin: 0;
+  overflow-x: clip;
+  background: var(--pr-bone);
+  color: var(--pr-ink);
+}
+
+body.pride-preview main {
+  overflow: clip;
+}
+
+body.pride-preview a:focus-visible {
+  outline: 3px solid #e0bd78;
+  outline-offset: 4px;
+}
+
+body.pride-preview .skip-link:focus {
+  z-index: 1000;
+}
+
+.pride-shell {
+  width: min(100% - 2.4rem, 86rem);
+  margin-inline: auto;
+}
+
+.pride-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 30;
+  min-height: 6.4rem;
+  padding-inline: max(1.2rem, calc((100vw - 92rem) / 2));
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(180deg, rgba(8, 9, 7, 0.72), rgba(8, 9, 7, 0));
+}
+
+.pride-brand {
+  min-height: 3rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pride-brand img {
+  width: clamp(9.5rem, 13vw, 12.2rem);
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.pride-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2.1vw, 2rem);
+}
+
+.pride-nav a {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pride-nav a:hover {
+  color: #fff;
+}
+
+.pride-header__cta {
+  min-height: 2.9rem;
+  padding: 0.8rem 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(200, 172, 115, 0.72);
+  border-radius: 999px;
+  background: rgba(17, 18, 16, 0.34);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pride-kicker {
+  margin: 0;
+  color: var(--pr-brass-light);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+.pride-kicker--dark {
+  color: var(--pr-brass-dark);
+}
+
+.pride-hero {
+  position: relative;
+  min-height: 48rem;
+  display: grid;
+  align-items: stretch;
+  overflow: hidden;
+  background: var(--pr-ink);
+  color: #fff;
+}
+
+.pride-hero__image {
+  position: absolute;
+  inset: 0;
+}
+
+.pride-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 52%;
+  filter: saturate(0.72) contrast(1.02) brightness(0.66);
+}
+
+.pride-hero__wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 9, 7, 0.97) 0%,
+      rgba(8, 9, 7, 0.91) 32%,
+      rgba(8, 9, 7, 0.55) 58%,
+      rgba(8, 9, 7, 0.18) 100%
+    ),
+    linear-gradient(180deg, rgba(8, 9, 7, 0.42), transparent 25%, transparent 74%, rgba(8, 9, 7, 0.68));
+}
+
+.pride-hero__trace {
+  position: absolute;
+  width: min(36vw, 34rem);
+  right: -4rem;
+  top: 10rem;
+  opacity: 0.42;
+}
+
+.pride-hero__trace svg {
+  width: 100%;
+  fill: none;
+  stroke: var(--pr-brass-light);
+  stroke-width: 0.7;
+}
+
+.pride-hero__inner {
+  position: relative;
+  z-index: 2;
+  min-height: 48rem;
+  padding-top: 10rem;
+  padding-bottom: 4rem;
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(18rem, 0.28fr);
+  gap: 4rem;
+  align-items: end;
+}
+
+.pride-hero__copy {
+  max-width: 49rem;
+}
+
+.pride-hero h1 {
+  max-width: 9.7ch;
+  margin: 1.1rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(4.3rem, 7.5vw, 8rem);
+  font-weight: 330;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.pride-hero h1 em {
+  color: var(--pr-brass-light);
+  font-weight: 330;
+}
+
+.pride-hero__support {
+  max-width: 36rem;
+  margin: 1.7rem 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
+  line-height: 1.55;
+}
+
+.pride-hero__promise {
+  margin: 0.8rem 0 0;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  font-weight: 420;
+}
+
+.pride-actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.72rem;
+}
+
+.pride-button {
+  min-height: 3.5rem;
+  padding: 0.95rem 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 780;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease;
+}
+
+.pride-button svg,
+.pride-text-link svg,
+.pride-owner__link svg,
+.pride-proof__context svg {
+  width: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.pride-button:hover {
+  transform: translateY(-3px);
+}
+
+.pride-button--gold {
+  border-color: var(--pr-brass-light);
+  background: var(--pr-brass-light);
+  color: #111210;
+}
+
+.pride-button--ghost {
+  border-color: rgba(255, 255, 255, 0.36);
+  background: rgba(17, 18, 16, 0.18);
+  color: #fff;
+}
+
+.pride-button--ink {
+  border-color: var(--pr-ink);
+  background: var(--pr-ink);
+  color: #fff;
+}
+
+.pride-hero__proof {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.4rem;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.69rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.pride-hero__proof span {
+  position: relative;
+}
+
+.pride-hero__proof span + span::before {
+  content: '';
+  position: absolute;
+  left: -0.72rem;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--pr-brass-light);
+}
+
+.pride-hero__asset-note {
+  max-width: 15rem;
+  padding: 1rem 0 0 1.2rem;
+  justify-self: end;
+  align-self: end;
+  border-left: 1px solid rgba(200, 172, 115, 0.66);
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.pride-hero__asset-note span {
+  color: var(--pr-brass-light);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+}
+
+.pride-hero__asset-note p {
+  margin: 0.55rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.pride-owner {
+  padding: clamp(6rem, 9vw, 9rem) 0;
+  background: var(--pr-cream);
+}
+
+.pride-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.48fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  align-items: end;
+}
+
+.pride-section-head h2 {
+  max-width: 12ch;
+  margin: 0.9rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 5.5vw, 6rem);
+  font-weight: 340;
+  letter-spacing: -0.05em;
+  line-height: 0.94;
+}
+
+.pride-section-head h2 em {
+  color: var(--pr-brass-dark);
+  font-weight: 340;
+}
+
+.pride-section-head > p {
+  max-width: 29rem;
+  margin: 0;
+  color: rgba(17, 18, 16, 0.64);
+  line-height: 1.7;
+}
+
+.pride-owner__list {
+  margin-top: clamp(3.5rem, 6vw, 5.5rem);
+  border-top: 1px solid var(--pr-line-dark);
+}
+
+.pride-owner__row {
+  min-height: 10.6rem;
+  padding: 1.5rem 0;
+  display: grid;
+  grid-template-columns: 4rem 5rem minmax(0, 1fr) minmax(12rem, 0.32fr);
+  gap: 1.5rem;
+  align-items: center;
+  border-bottom: 1px solid var(--pr-line-dark);
+  color: var(--pr-ink);
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease;
+}
+
+.pride-owner__row:hover {
+  transform: translateX(6px);
+  background: rgba(165, 138, 87, 0.045);
+}
+
+.pride-owner__number {
+  color: var(--pr-brass-dark);
+  font-size: 0.7rem;
+  font-weight: 760;
+  letter-spacing: 0.12em;
+}
+
+.pride-owner__icon {
+  width: 3.25rem;
+  height: 3.25rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(112, 87, 47, 0.4);
+  border-radius: 50%;
+}
+
+.pride-owner__icon svg {
+  width: 1.55rem;
+  fill: none;
+  stroke: var(--pr-brass-dark);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.2;
+}
+
+.pride-owner__copy p {
+  margin: 0;
+  color: var(--pr-brass-dark);
+  font-size: 0.65rem;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.pride-owner__copy h3 {
+  margin: 0.45rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.85rem);
+  font-weight: 390;
+  letter-spacing: -0.025em;
+}
+
+.pride-owner__copy span {
+  max-width: 42rem;
+  margin-top: 0.55rem;
+  display: block;
+  color: rgba(17, 18, 16, 0.64);
+  line-height: 1.55;
+}
+
+.pride-owner__link {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--pr-ink);
+  font-size: 0.7rem;
+  font-weight: 760;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.pride-standard {
+  padding: clamp(6rem, 9vw, 9rem) 0;
+  background: var(--pr-ink);
+  color: #fff;
+}
+
+.pride-standard__grid {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.36fr) minmax(0, 0.64fr);
+  gap: clamp(3rem, 7vw, 8rem);
+  align-items: start;
+}
+
+.pride-standard__mast {
+  position: sticky;
+  top: 2rem;
+}
+
+.pride-standard__mast h2 {
+  max-width: 8.5ch;
+  margin: 0.9rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 5.7vw, 6rem);
+  font-weight: 330;
+  letter-spacing: -0.055em;
+  line-height: 0.93;
+}
+
+.pride-standard__mast h2 em {
+  color: var(--pr-brass-light);
+  font-weight: 330;
+}
+
+.pride-standard__lead {
+  max-width: 25rem;
+  margin: 1.4rem 0 0;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.pride-word {
+  margin-top: 3.2rem;
+  display: flex;
+  gap: 0.42rem;
+}
+
+.pride-word span {
+  color: var(--pr-brass-light);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 340;
+  line-height: 1;
+}
+
+.pride-principle {
+  min-height: 15rem;
+  padding: 2rem 0;
+  display: grid;
+  grid-template-columns: 3.2rem 5.6rem minmax(0, 1fr);
+  gap: 1.6rem;
+  align-items: start;
+  border-top: 1px solid var(--pr-line-light);
+}
+
+.pride-principle:last-of-type {
+  border-bottom: 1px solid var(--pr-line-light);
+}
+
+.pride-principle__index {
+  padding-top: 0.45rem;
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 0.67rem;
+  letter-spacing: 0.1em;
+}
+
+.pride-principle__letter {
+  color: var(--pr-brass-light);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 6vw, 6.5rem);
+  font-weight: 330;
+  line-height: 0.82;
+}
+
+.pride-principle__copy h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.6vw, 2.65rem);
+  font-weight: 390;
+  letter-spacing: -0.025em;
+}
+
+.pride-principle__copy p {
+  max-width: 39rem;
+  margin: 0.8rem 0 0;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+.pride-standard__quote {
+  margin: 3.2rem 0 0;
+  padding: 0 0 0 1.5rem;
+  border-left: 1px solid var(--pr-brass-light);
+  color: var(--pr-bone);
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.65rem);
+  line-height: 1.2;
+}
+
+.pride-content-note {
+  margin: 1.2rem 0 0;
+  color: rgba(255, 255, 255, 0.43);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.pride-founder {
+  padding: clamp(6rem, 9vw, 9rem) 0;
+  background: var(--pr-bone);
+}
+
+.pride-founder__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(3rem, 7vw, 8rem);
+  align-items: center;
+}
+
+.pride-founder__visual {
+  position: relative;
+  min-height: 42rem;
+  margin: 0;
+  display: grid;
+  align-items: end;
+}
+
+.pride-founder__plate {
+  position: absolute;
+  width: 78%;
+  aspect-ratio: 0.88;
+  left: 7%;
+  top: 4%;
+  border-radius: 48% 48% 7% 7%;
+  background: var(--pr-ink);
+  transform: rotate(-4deg);
+}
+
+.pride-founder__visual::after {
+  content: '';
+  position: absolute;
+  width: 62%;
+  aspect-ratio: 1;
+  right: -2%;
+  bottom: 4%;
+  border: 1px solid rgba(112, 87, 47, 0.55);
+  border-radius: 50%;
+}
+
+.pride-founder__visual img {
+  position: relative;
+  z-index: 2;
+  width: 84%;
+  height: 39rem;
+  margin-left: auto;
+  object-fit: cover;
+  object-position: 50% 24%;
+  border-radius: 46% 46% 1rem 1rem;
+  box-shadow: 0 2.6rem 6rem rgba(17, 18, 16, 0.16);
+  filter: saturate(0.92) contrast(1.02);
+}
+
+.pride-founder__visual figcaption {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: 1.4rem;
+  padding: 0.8rem 1rem;
+  border-left: 2px solid var(--pr-brass);
+  background: rgba(242, 238, 230, 0.92);
+  color: var(--pr-ink);
+  font-size: 0.67rem;
+  font-weight: 760;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.pride-founder__copy h2 {
+  max-width: 11ch;
+  margin: 0.9rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 5.3vw, 5.8rem);
+  font-weight: 340;
+  letter-spacing: -0.05em;
+  line-height: 0.94;
+}
+
+.pride-founder__opening {
+  max-width: 33rem;
+  margin: 1.3rem 0 0;
+  color: var(--pr-brass-dark);
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.4vw, 2.05rem);
+  line-height: 1.3;
+}
+
+.pride-founder__body {
+  max-width: 41rem;
+  margin-top: 1.6rem;
+  columns: 2;
+  column-gap: 2.2rem;
+}
+
+.pride-founder__body p {
+  margin: 0 0 1.2rem;
+  break-inside: avoid;
+  color: rgba(17, 18, 16, 0.7);
+  line-height: 1.72;
+}
+
+.pride-founder__copy blockquote {
+  margin: 1.8rem 0 0;
+  padding-left: 1.2rem;
+  border-left: 1px solid var(--pr-brass);
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.8vw, 2.5rem);
+  line-height: 1.2;
+}
+
+.pride-accountability {
+  padding: clamp(6rem, 8vw, 8rem) 0;
+  background: var(--pr-ink-soft);
+  color: #fff;
+}
+
+.pride-accountability__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.48fr);
+  gap: 2rem 6rem;
+  align-items: end;
+}
+
+.pride-accountability__intro h2 {
+  grid-column: 1;
+  max-width: 14ch;
+  margin: 0.9rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 5.4rem);
+  font-weight: 330;
+  letter-spacing: -0.05em;
+  line-height: 0.96;
+}
+
+.pride-accountability__intro > p:last-child {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin: 0;
+  align-self: end;
+  color: var(--pr-brass-light);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.3vw, 2rem);
+}
+
+.pride-accountability__line {
+  height: 1px;
+  margin-top: 3.2rem;
+  background: linear-gradient(90deg, var(--pr-brass-light), rgba(200, 172, 115, 0.18));
+}
+
+.pride-accountability__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.pride-accountability__grid article {
+  min-height: 15.5rem;
+  padding: 1.7rem 1.4rem 1.7rem 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pride-accountability__grid article + article {
+  padding-left: 1.4rem;
+}
+
+.pride-accountability__grid span {
+  color: var(--pr-brass-light);
+  font-size: 0.68rem;
+  letter-spacing: 0.11em;
+}
+
+.pride-accountability__grid h3 {
+  max-width: 12ch;
+  margin: 4rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 2.2vw, 2.15rem);
+  font-weight: 390;
+  line-height: 1.15;
+}
+
+.pride-accountability__grid p {
+  margin: 0.65rem 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.pride-switch {
+  padding: clamp(6rem, 9vw, 9rem) 0;
+  background: var(--pr-cream);
+}
+
+.pride-switch__steps {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--pr-line-dark);
+  border-bottom: 1px solid var(--pr-line-dark);
+}
+
+.pride-switch__steps article {
+  min-height: 17rem;
+  padding: 1.7rem;
+}
+
+.pride-switch__steps article + article {
+  border-left: 1px solid var(--pr-line-dark);
+}
+
+.pride-switch__steps span {
+  color: var(--pr-brass-dark);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.pride-switch__steps h3 {
+  margin: 4.2rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.8vw, 2.75rem);
+  font-weight: 390;
+}
+
+.pride-switch__steps p {
+  max-width: 25rem;
+  margin: 0.7rem 0 0;
+  color: rgba(17, 18, 16, 0.64);
+  line-height: 1.62;
+}
+
+.pride-switch__actions {
+  margin-top: 2.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.8rem;
+}
+
+.pride-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--pr-ink);
+  font-size: 0.74rem;
+  font-weight: 760;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.pride-proof {
+  padding: clamp(6rem, 9vw, 9rem) 0;
+  background: linear-gradient(180deg, var(--pr-bone), #e7dfd1);
+}
+
+.pride-proof__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.48fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  align-items: end;
+}
+
+.pride-proof__intro h2 {
+  max-width: 12ch;
+  margin: 0.9rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.1rem, 5.2vw, 5.7rem);
+  font-weight: 340;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+
+.pride-proof__sub {
+  margin: 0.8rem 0 0;
+  color: var(--pr-brass-dark);
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.3vw, 2rem);
+}
+
+.pride-proof__context p {
+  margin: 0;
+  color: rgba(17, 18, 16, 0.64);
+  line-height: 1.7;
+}
+
+.pride-proof__context a {
+  margin-top: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--pr-ink);
+  font-size: 0.72rem;
+  font-weight: 760;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.pride-trustindex {
+  min-height: 18rem;
+  margin-top: 3.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--pr-line-dark);
+  border-bottom: 1px solid var(--pr-line-dark);
+}
+
+.pride-trustindex__loading {
+  min-height: 15rem;
+  display: grid;
+  place-content: center;
+  gap: 0.55rem;
+  text-align: center;
+}
+
+.pride-trustindex__loading span {
+  color: var(--pr-brass-dark);
+  font-size: 0.67rem;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.pride-trustindex__loading strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3vw, 3.2rem);
+  font-weight: 350;
+}
+
+.pride-proof__note {
+  margin: 0.9rem 0 0;
+  color: rgba(17, 18, 16, 0.48);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.pride-final {
+  position: relative;
+  padding: clamp(7rem, 11vw, 11rem) 0;
+  overflow: hidden;
+  background: var(--pr-ink);
+  color: #fff;
+}
+
+.pride-final__texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(200, 172, 115, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 172, 115, 0.18) 1px, transparent 1px);
+  background-size: 6.5rem 6.5rem;
+  mask-image: radial-gradient(circle at 80% 50%, #000 0%, transparent 55%);
+}
+
+.pride-final__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.pride-final h2 {
+  max-width: 11ch;
+  margin: 1rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 7vw, 7.6rem);
+  font-weight: 330;
+  letter-spacing: -0.055em;
+  line-height: 0.91;
+}
+
+.pride-actions--final {
+  margin-top: 2.5rem;
+}
+
+.pride-final__direct {
+  margin-top: 4rem;
+  padding-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.7rem;
+  border-top: 1px solid var(--pr-line-light);
+}
+
+.pride-final__direct span {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pride-final__direct a {
+  color: var(--pr-bone);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+.pride-footer {
+  padding: 4.2rem 0 1.6rem;
+  border-top: 1px solid var(--pr-line-dark);
+  background: var(--pr-bone);
+  color: var(--pr-ink);
+}
+
+.pride-footer__top {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 0.8fr;
+  gap: 3rem;
+}
+
+.pride-footer__brand img {
+  width: 11rem;
+  height: auto;
+}
+
+.pride-footer__brand p {
+  max-width: 20rem;
+  margin: 1rem 0 0;
+  color: rgba(17, 18, 16, 0.58);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.pride-footer nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem 1.2rem;
+  align-content: start;
+}
+
+.pride-footer nav a {
+  color: rgba(17, 18, 16, 0.72);
+  font-size: 0.75rem;
+}
+
+.pride-footer__contact {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.pride-footer__contact a {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+
+.pride-footer__contact span {
+  margin-top: 0.55rem;
+  color: rgba(17, 18, 16, 0.5);
+  font-size: 0.7rem;
+}
+
+.pride-footer__bottom {
+  margin-top: 3.4rem;
+  padding-top: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.4rem;
+  border-top: 1px solid var(--pr-line-dark);
+  color: rgba(17, 18, 16, 0.5);
+  font-size: 0.67rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pride-footer__bottom a {
+  color: var(--pr-brass-dark);
+}
+
+@media (max-width: 1080px) {
+  .pride-nav {
+    display: none;
+  }
+
+  .pride-header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .pride-hero__inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .pride-hero__asset-note {
+    justify-self: start;
+  }
+
+  .pride-standard__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pride-standard__mast {
+    position: static;
+  }
+
+  .pride-word {
+    margin-top: 2rem;
+  }
+
+  .pride-founder__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pride-founder__visual {
+    max-width: 38rem;
+    min-height: 36rem;
+  }
+
+  .pride-accountability__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pride-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pride-footer__contact {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .pride-shell {
+    width: min(100% - 1.4rem, 42rem);
+  }
+
+  .pride-header {
+    min-height: 5.25rem;
+    padding-inline: 0.7rem;
+  }
+
+  .pride-brand img {
+    width: 8.7rem;
+  }
+
+  .pride-header__cta {
+    min-height: 2.65rem;
+    padding: 0.68rem 0.78rem;
+    font-size: 0.61rem;
+  }
+
+  .pride-hero {
+    min-height: 43rem;
+  }
+
+  .pride-hero__image img {
+    object-position: 68% 50%;
+  }
+
+  .pride-hero__wash {
+    background:
+      linear-gradient(90deg, rgba(8, 9, 7, 0.96) 0%, rgba(8, 9, 7, 0.84) 68%, rgba(8, 9, 7, 0.52) 100%),
+      linear-gradient(180deg, rgba(8, 9, 7, 0.5), transparent 30%, rgba(8, 9, 7, 0.5));
+  }
+
+  .pride-hero__inner {
+    min-height: 43rem;
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+    align-content: end;
+  }
+
+  .pride-hero h1 {
+    max-width: 9.2ch;
+    font-size: clamp(3.7rem, 16vw, 5.5rem);
+  }
+
+  .pride-hero__support {
+    max-width: 27rem;
+    margin-top: 1.25rem;
+    font-size: 1rem;
+  }
+
+  .pride-hero__promise {
+    font-size: 1.4rem;
+  }
+
+  .pride-actions {
+    display: grid;
+  }
+
+  .pride-button {
+    width: 100%;
+    min-height: 3.45rem;
+  }
+
+  .pride-hero__proof {
+    gap: 0.6rem 1rem;
+  }
+
+  .pride-hero__asset-note {
+    display: none;
+  }
+
+  .pride-section-head {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .pride-section-head h2 {
+    font-size: clamp(3rem, 13vw, 4.6rem);
+  }
+
+  .pride-owner__list {
+    margin-top: 2.8rem;
+  }
+
+  .pride-owner__row {
+    min-height: 0;
+    padding: 1.6rem 0;
+    grid-template-columns: 3rem 3.4rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .pride-owner__icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .pride-owner__link {
+    grid-column: 3;
+    margin-top: 0.45rem;
+    justify-self: start;
+  }
+
+  .pride-owner__row:hover {
+    transform: none;
+  }
+
+  .pride-standard__grid {
+    gap: 3rem;
+  }
+
+  .pride-standard__mast h2 {
+    font-size: clamp(3.2rem, 14vw, 4.8rem);
+  }
+
+  .pride-principle {
+    min-height: 0;
+    padding: 1.9rem 0;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .pride-principle__index {
+    display: none;
+  }
+
+  .pride-principle__letter {
+    font-size: 3.4rem;
+  }
+
+  .pride-principle__copy h3 {
+    font-size: 1.8rem;
+  }
+
+  .pride-principle__copy p {
+    font-size: 0.94rem;
+  }
+
+  .pride-standard__quote {
+    margin-top: 2.5rem;
+    font-size: 1.75rem;
+  }
+
+  .pride-founder__visual {
+    min-height: 30rem;
+  }
+
+  .pride-founder__visual img {
+    width: 88%;
+    height: 28rem;
+  }
+
+  .pride-founder__body {
+    columns: 1;
+  }
+
+  .pride-founder__copy h2 {
+    font-size: clamp(3rem, 13vw, 4.6rem);
+  }
+
+  .pride-accountability__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .pride-accountability__intro h2 {
+    grid-column: 1;
+    font-size: clamp(3rem, 13vw, 4.6rem);
+  }
+
+  .pride-accountability__intro > p:last-child {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 0.3rem;
+  }
+
+  .pride-accountability__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pride-accountability__grid article {
+    min-height: 0;
+    padding: 1.5rem 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .pride-accountability__grid article + article {
+    padding-left: 0;
+  }
+
+  .pride-accountability__grid h3 {
+    margin-top: 1.5rem;
+  }
+
+  .pride-switch__steps {
+    grid-template-columns: 1fr;
+  }
+
+  .pride-switch__steps article {
+    min-height: 0;
+    padding: 1.6rem 0;
+  }
+
+  .pride-switch__steps article + article {
+    border-top: 1px solid var(--pr-line-dark);
+    border-left: 0;
+  }
+
+  .pride-switch__steps h3 {
+    margin-top: 1.5rem;
+  }
+
+  .pride-switch__actions {
+    display: grid;
+  }
+
+  .pride-text-link {
+    min-height: 3rem;
+  }
+
+  .pride-proof__intro {
+    grid-template-columns: 1fr;
+    gap: 1.7rem;
+  }
+
+  .pride-proof__intro h2 {
+    font-size: clamp(3rem, 13vw, 4.6rem);
+  }
+
+  .pride-trustindex {
+    min-height: 23rem;
+  }
+
+  .pride-final h2 {
+    font-size: clamp(3.8rem, 15vw, 5.7rem);
+  }
+
+  .pride-actions--final {
+    max-width: 32rem;
+  }
+
+  .pride-final__direct {
+    display: grid;
+    align-items: start;
+  }
+
+  .pride-footer__top {
+    grid-template-columns: 1fr;
+  }
+
+  .pride-footer nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pride-footer__contact {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .pride-header__cta {
+    padding-inline: 0.62rem;
+    font-size: 0.56rem;
+  }
+
+  .pride-brand img {
+    width: 7.9rem;
+  }
+
+  .pride-hero h1 {
+    font-size: clamp(3.25rem, 16vw, 4.8rem);
+  }
+
+  .pride-owner__row {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .pride-owner__icon {
+    display: none;
+  }
+
+  .pride-owner__link {
+    grid-column: 2;
+  }
+
+  .pride-footer nav {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pride-button,
+  .pride-owner__row {
+    transition: none;
+  }
+}
