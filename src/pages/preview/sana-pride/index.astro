@@ -1,0 +1,833 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/config/site';
+
+const title = 'Sana Patel PRIDE Landing Concept | Internal Preview';
+const description =
+  'Non-indexed presentation concept for Sana Patel Real Estate: founder-led accountability, owner diagnostics, PRIDE philosophy and genuine Trustindex proof.';
+
+const heroImage = 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/home-interior_1892310928.webp';
+const founderImage =
+  'https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.13.01-PM.jpeg';
+
+const ownerStates = [
+  {
+    number: '01',
+    eyebrow: 'Just checking',
+    title: 'Property Management Visibility Check',
+    body: 'Can you clearly see what is happening with your investment?',
+    label: 'Check my visibility',
+    href: '/property-management-visibility-check/',
+    icon: 'visibility',
+  },
+  {
+    number: '02',
+    eyebrow: 'Reviewing rent',
+    title: 'Rental Position Check',
+    body: 'Do you have enough current evidence to make your next rental decision confidently?',
+    label: 'Check my rental position',
+    href: '/rental-position-check/',
+    icon: 'position',
+  },
+  {
+    number: '03',
+    eyebrow: 'Ready for change',
+    title: 'Switch Property Managers',
+    body: 'Already decided the current arrangement is no longer right?',
+    label: 'See how switching works',
+    href: '/switch-property-managers/',
+    icon: 'switch',
+  },
+] as const;
+
+const pride = [
+  {
+    letter: 'P',
+    title: 'Proactive Property Care',
+    body:
+      'Maintaining appropriate oversight of the tenancy, responding to issues identified through inspections, communication and property records, and recommending appropriate next steps when required.',
+  },
+  {
+    letter: 'R',
+    title: 'Results Driven',
+    body:
+      'Clear and timely communication to help rental providers stay informed about their property and tenancy.',
+    pending: true,
+  },
+  {
+    letter: 'I',
+    title: 'Integrity in Every Decision',
+    body:
+      'Providing factual, transparent advice and maintaining professional standards throughout the management process.',
+  },
+  {
+    letter: 'D',
+    title: 'Diligent Property Management',
+    body:
+      'Careful attention to inspections, maintenance coordination, tenancy administration, documentation and relevant compliance processes within the scope of management.',
+  },
+  {
+    letter: 'E',
+    title: 'Experience That Matters',
+    body:
+      'Applying practical property-management experience and professional judgement to each situation while working within the rental provider’s instructions and applicable requirements.',
+  },
+] as const;
+
+const accountability = [
+  ['01', 'Know who is responsible', 'Founder-led accountability.'],
+  ['02', 'Know what is happening', 'Clear and timely communication.'],
+  ['03', 'Understand why it matters', 'Context and considered advice.'],
+  ['04', 'Know what happens next', 'A clear next step.'],
+] as const;
+
+const switchSteps = [
+  {
+    number: '01',
+    title: 'Talk',
+    body: 'Tell Sana what is not working now and what you would like to improve.',
+  },
+  {
+    number: '02',
+    title: 'Review',
+    body: 'Understand the management agreement, property status and what an orderly transition would require.',
+  },
+  {
+    number: '03',
+    title: 'Plan the handover',
+    body: 'If you decide to proceed, establish the transfer steps, information requirements and communication plan.',
+  },
+] as const;
+---
+
+<BaseLayout {title} {description} canonicalPath="/preview/sana-pride/" noindex={true} schema={[]} bodyClass="pride-preview">
+  <header slot="header" class="pride-header" aria-label="Sana Patel Real Estate preview navigation">
+    <a class="pride-brand" href="#top" aria-label="Sana Patel Real Estate — back to top">
+      <img src={SITE.logo} alt="Sana Patel Real Estate" width="190" height="55" decoding="async" />
+    </a>
+    <nav class="pride-nav" aria-label="Preview sections">
+      <a href="#owner-journeys">Property Management</a>
+      <a href="/rental-providers/">Rental Providers</a>
+      <a href="#sana">About Sana</a>
+      <a href="/resources/">Resources</a>
+      <a href="#final-cta">Contact</a>
+    </nav>
+    <a class="pride-header__cta" href="/property-management-visibility-check/">Rental Health Check</a>
+  </header>
+
+  <section class="pride-hero" id="top" aria-labelledby="hero-title">
+    <div class="pride-hero__image" aria-hidden="true">
+      <img
+        src={heroImage}
+        alt=""
+        width="1600"
+        height="1200"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+    <div class="pride-hero__wash" aria-hidden="true"></div>
+    <div class="pride-hero__trace" aria-hidden="true">
+      <svg viewBox="0 0 320 220" role="presentation">
+        <path d="M18 186C74 158 72 76 145 78c55 2 66 63 110 44 28-12 34-38 47-82" />
+        <path d="M30 203c59-26 63-102 122-103 50 0 65 51 104 37 31-11 37-42 47-73" />
+      </svg>
+    </div>
+
+    <div class="pride-shell pride-hero__inner">
+      <div class="pride-hero__copy">
+        <p class="pride-kicker">Property Management · Melbourne</p>
+        <h1 id="hero-title">Is your property <em>really</em> being managed?</h1>
+        <p class="pride-hero__support">Property management with strategy, accountability and personal attention.</p>
+        <p class="pride-hero__promise">Your Property. My Priority.</p>
+        <div class="pride-actions" aria-label="Primary owner actions">
+          <a class="pride-button pride-button--gold" href="/property-management-visibility-check/">
+            Get a Rental Health Check
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h9M11 6l4 4-4 4" /></svg>
+          </a>
+          <a class="pride-button pride-button--ghost" href="/switch-property-managers/">
+            Switch Property Managers
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h9M11 6l4 4-4 4" /></svg>
+          </a>
+        </div>
+        <div class="pride-hero__proof" aria-label="Verified positioning cues">
+          <span>Licensed Estate Agent</span>
+          <span>Founder-led</span>
+          <span>Melbourne Property Management</span>
+        </div>
+      </div>
+
+      <div class="pride-hero__asset-note">
+        <span>01</span>
+        <p>The asset is the story. Management is the standard around it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-owner" id="owner-journeys" aria-labelledby="owner-title">
+    <div class="pride-shell">
+      <div class="pride-section-head pride-section-head--dark">
+        <div>
+          <p class="pride-kicker pride-kicker--dark">Start with your situation</p>
+          <h2 id="owner-title">Where are you with <em>your property?</em></h2>
+        </div>
+        <p>
+          Three owner states. Three different next steps. Start privately, move only when the evidence tells you to.
+        </p>
+      </div>
+
+      <div class="pride-owner__list">
+        {
+          ownerStates.map((state) => (
+            <a class="pride-owner__row" href={state.href}>
+              <div class="pride-owner__number">{state.number}</div>
+              <div class="pride-owner__icon" aria-hidden="true">
+                {state.icon === 'visibility' && (
+                  <svg viewBox="0 0 32 32"><path d="M3.5 16s4.3-7.2 12.5-7.2S28.5 16 28.5 16 24.2 23.2 16 23.2 3.5 16 3.5 16Z" /><circle cx="16" cy="16" r="3.6" /></svg>
+                )}
+                {state.icon === 'position' && (
+                  <svg viewBox="0 0 32 32"><path d="M6 25V15m7 10V9m7 16V12m6 13V6" /><path d="M5 7.5c6.2 2.7 11.5 1.5 15.5-3" /></svg>
+                )}
+                {state.icon === 'switch' && (
+                  <svg viewBox="0 0 32 32"><path d="M5 10h18" /><path d="m19 6 4 4-4 4" /><path d="M27 22H9" /><path d="m13 18-4 4 4 4" /></svg>
+                )}
+              </div>
+              <div class="pride-owner__copy">
+                <p>{state.eyebrow}</p>
+                <h3>{state.title}</h3>
+                <span>{state.body}</span>
+              </div>
+              <div class="pride-owner__link">
+                {state.label}
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h9M11 6l4 4-4 4" /></svg>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-standard" id="pride" aria-labelledby="pride-title">
+    <div class="pride-shell pride-standard__grid">
+      <aside class="pride-standard__mast">
+        <p class="pride-kicker">The standard</p>
+        <h2 id="pride-title">Property Management with <em>PRIDE.</em></h2>
+        <p class="pride-standard__lead">PRIDE is the standard I bring to every property I manage.</p>
+        <div class="pride-word" aria-hidden="true">
+          <span>P</span><span>R</span><span>I</span><span>D</span><span>E</span>
+        </div>
+      </aside>
+
+      <div class="pride-standard__principles">
+        {
+          pride.map((item, index) => (
+            <article class="pride-principle" data-pride-letter={item.letter}>
+              <div class="pride-principle__index">{String(index + 1).padStart(2, '0')}</div>
+              <div class="pride-principle__letter">{item.letter}</div>
+              <div class="pride-principle__copy">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+            </article>
+          ))
+        }
+
+        <blockquote class="pride-standard__quote">
+          “Good property management isn’t about promising outcomes no one can guarantee. It’s about having the right
+          processes, communication and professional judgement in place when they matter most.”
+        </blockquote>
+
+        <p class="pride-content-note">
+          Content note for Sana review: the supplied screenshots do not show the exact three-word R heading. “Results
+          Driven” is retained from Sana’s earlier supplied PRIDE direction and has not been expanded with invented wording.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-founder" id="sana" aria-labelledby="founder-title">
+    <div class="pride-shell pride-founder__grid">
+      <figure class="pride-founder__visual">
+        <div class="pride-founder__plate" aria-hidden="true"></div>
+        <img
+          src={founderImage}
+          alt="Sana Patel"
+          width="1200"
+          height="1600"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Sana Patel · Founder-led property management</figcaption>
+      </figure>
+
+      <div class="pride-founder__copy">
+        <p class="pride-kicker pride-kicker--dark">The personal philosophy</p>
+        <h2 id="founder-title">What PRIDE Means to Me.</h2>
+        <p class="pride-founder__opening">PRIDE is the standard I choose to bring to my work every day.</p>
+        <div class="pride-founder__body">
+          <p>
+            For me, property management is not simply about collecting rent or completing routine tasks. It is about being
+            prepared, communicating clearly, keeping accurate records, providing considered advice and giving each property
+            the professional attention it deserves.
+          </p>
+          <p>I also understand that not every situation in property management can be predicted or controlled.</p>
+          <p>
+            What I can control is how I respond, how clearly I communicate, how carefully I document and the professional
+            standard I bring to the decisions within my role.
+          </p>
+          <p>
+            PRIDE is not a promise of perfect outcomes. It is a commitment to professional standards, sound processes and
+            responsible property management.
+          </p>
+        </div>
+        <blockquote>“What I can control is how I respond.”</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-accountability" aria-labelledby="accountability-title">
+    <div class="pride-shell">
+      <div class="pride-accountability__intro">
+        <p class="pride-kicker">Visible accountability</p>
+        <h2 id="accountability-title">You should never have to guess what is happening with your property.</h2>
+        <p>Your property should never be a mystery.</p>
+      </div>
+      <div class="pride-accountability__line" aria-hidden="true"></div>
+      <div class="pride-accountability__grid">
+        {
+          accountability.map(([number, heading, body]) => (
+            <article>
+              <span>{number}</span>
+              <h3>{heading}</h3>
+              <p>{body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-switch" aria-labelledby="switch-title">
+    <div class="pride-shell">
+      <div class="pride-section-head pride-section-head--dark">
+        <div>
+          <p class="pride-kicker pride-kicker--dark">Changing managers</p>
+          <h2 id="switch-title">Changing property managers can be simpler than <em>staying frustrated.</em></h2>
+        </div>
+        <p>
+          The first step is not cancelling anything. It is understanding the current arrangement and what an orderly
+          transition would require.
+        </p>
+      </div>
+
+      <div class="pride-switch__steps">
+        {
+          switchSteps.map((step) => (
+            <article>
+              <span>{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="pride-switch__actions">
+        <a class="pride-button pride-button--ink" href="/switch-property-managers/">Switch Property Managers</a>
+        <a class="pride-text-link" href={`tel:${SITE.phone.e164}`}>
+          Talk to Sana · {SITE.phone.display}
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h9M11 6l4 4-4 4" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="pride-proof" id="reviews" aria-labelledby="reviews-title">
+    <div class="pride-shell">
+      <div class="pride-proof__intro">
+        <div>
+          <p class="pride-kicker pride-kicker--dark">Real proof</p>
+          <h2 id="reviews-title">Trusted by Rental Providers &amp; Renters</h2>
+          <p class="pride-proof__sub">Real experiences. Real service.</p>
+        </div>
+        <div class="pride-proof__context">
+          <p>Hear directly from rental providers and renters who have experienced the way Sana Patel Real Estate approaches property management.</p>
+          <a href={SITE.reviews.googleProfileUrl} target="_blank" rel="noopener noreferrer nofollow">
+            Google reviews · via Trustindex
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 14 6M8 6h6v6" /></svg>
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="pride-trustindex"
+        data-review-provider="Trustindex"
+        data-trustindex-widget-id={SITE.reviews.trustindexWidgetId}
+        data-trustindex-state="waiting"
+        aria-busy="true"
+      >
+        <div class="pride-trustindex__loading" aria-hidden="true">
+          <span>Current source</span>
+          <strong>Connecting to genuine Google reviews…</strong>
+        </div>
+        <noscript>
+          <p>
+            Live reviews require JavaScript. <a href={SITE.reviews.googleProfileUrl}>Read Sana’s current reviews on Google.</a>
+          </p>
+        </noscript>
+      </div>
+      <p class="pride-proof__note">Review wording, names, dates, rating and count remain source-driven and can change as Trustindex updates.</p>
+    </div>
+  </section>
+
+  <section class="pride-final" id="final-cta" aria-labelledby="final-title">
+    <div class="pride-final__texture" aria-hidden="true"></div>
+    <div class="pride-shell pride-final__inner">
+      <p class="pride-kicker">The next step</p>
+      <h2 id="final-title">Ready to take a closer look at how your property is being managed?</h2>
+      <div class="pride-actions pride-actions--final">
+        <a class="pride-button pride-button--gold" href="/property-management-visibility-check/">Get a Rental Health Check</a>
+        <a class="pride-button pride-button--ghost" href="/switch-property-managers/">Switch Property Managers</a>
+      </div>
+      <div class="pride-final__direct">
+        <span>Prefer direct?</span>
+        <a href={`tel:${SITE.phone.e164}`}>{SITE.phone.display}</a>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </div>
+    </div>
+  </section>
+
+  <footer slot="footer" class="pride-footer">
+    <div class="pride-shell pride-footer__top">
+      <div class="pride-footer__brand">
+        <img src={SITE.logo} alt="Sana Patel Real Estate" width="190" height="55" loading="lazy" decoding="async" />
+        <p>Property management with strategy, accountability and personal attention.</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        <a href="/rental-providers/">Property Management</a>
+        <a href="/rental-providers/">Rental Providers</a>
+        <a href="/rental-appraisal/">Rental Appraisal</a>
+        <a href="/switch-property-managers/">Switch Property Managers</a>
+        <a href="/for-renters/">Renters</a>
+        <a href="/sale/">Sales</a>
+        <a href="/resources/">Resources</a>
+        <a href={`mailto:${SITE.email}`}>Contact</a>
+      </nav>
+      <div class="pride-footer__contact">
+        <a href={`tel:${SITE.phone.e164}`}>{SITE.phone.display}</a>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <span>Licensed Estate Agent · Melbourne, Victoria</span>
+      </div>
+    </div>
+    <div class="pride-shell pride-footer__bottom">
+      <span>© {new Date().getFullYear()} {SITE.name}</span>
+      <a href="/privacy/">Privacy</a>
+      <a href={SITE.reviews.trustindexSummaryUrl} target="_blank" rel="noopener noreferrer">Trustindex</a>
+      <span>Internal concept · noindex</span>
+    </div>
+  </footer>
+
+  <script>
+    const hosts = document.querySelectorAll<HTMLElement>('[data-trustindex-widget-id]');
+
+    const loadTrustindex = (host: HTMLElement) => {
+      if (host.dataset.trustindexState !== 'waiting') return;
+      const widgetId = host.dataset.trustindexWidgetId;
+      if (!widgetId || !/^[a-f0-9]{24,64}$/.test(widgetId)) {
+        host.dataset.trustindexState = 'unavailable';
+        host.setAttribute('aria-busy', 'false');
+        return;
+      }
+
+      host.dataset.trustindexState = 'loading';
+      const loading = host.querySelector<HTMLElement>('.pride-trustindex__loading');
+      const markReady = (event: Event) => {
+        const detail = (event as CustomEvent<{ widget?: { widget?: Element } }>).detail;
+        const widget = detail?.widget?.widget;
+        if (!widget || !host.contains(widget)) return;
+        loading?.remove();
+        host.dataset.trustindexState = 'ready';
+        host.setAttribute('aria-busy', 'false');
+        window.removeEventListener('widget-ready', markReady);
+      };
+
+      window.addEventListener('widget-ready', markReady);
+      const script = document.createElement('script');
+      script.async = true;
+      script.defer = true;
+      script.src = `https://cdn.trustindex.io/loader.js?${widgetId}`;
+      script.referrerPolicy = 'origin';
+      script.setAttribute('fetchpriority', 'low');
+      script.addEventListener('error', () => {
+        host.dataset.trustindexState = 'unavailable';
+        host.setAttribute('aria-busy', 'false');
+        loading?.querySelector('strong')?.replaceChildren('Live reviews are temporarily unavailable.');
+        window.removeEventListener('widget-ready', markReady);
+      });
+      host.append(script);
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const host = entry.target as HTMLElement;
+            observer.unobserve(host);
+            loadTrustindex(host);
+          }
+        },
+        { rootMargin: '180px 0px' },
+      );
+      hosts.forEach((host) => observer.observe(host));
+    } else {
+      hosts.forEach(loadTrustindex);
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  :global(body.pride-preview) {
+    --pr-ink: #111210;
+    --pr-ink-soft: #1a1b18;
+    --pr-bone: #f2eee6;
+    --pr-cream: #fbf8f2;
+    --pr-stone: #d8d1c5;
+    --pr-brass: #a58a57;
+    --pr-brass-light: #c8ac73;
+    --pr-brass-dark: #70572f;
+    --pr-line-dark: rgba(17, 18, 16, 0.18);
+    --pr-line-light: rgba(242, 238, 230, 0.18);
+    margin: 0;
+    background: var(--pr-bone);
+    color: var(--pr-ink);
+    overflow-x: clip;
+  }
+
+  :global(body.pride-preview main) { overflow: clip; }
+  :global(body.pride-preview a:focus-visible) { outline: 3px solid #e0bd78; outline-offset: 4px; }
+  :global(body.pride-preview .skip-link:focus) { z-index: 1000; }
+  .pride-shell { width: min(100% - 2.4rem, 86rem); margin-inline: auto; }
+
+  .pride-header {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 30;
+    min-height: 6.4rem;
+    padding-inline: max(1.2rem, calc((100vw - 92rem) / 2));
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 3.5rem);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    background: linear-gradient(180deg, rgba(8, 9, 7, 0.72), rgba(8, 9, 7, 0));
+  }
+  .pride-brand { min-height: 3rem; display: inline-flex; align-items: center; }
+  .pride-brand img { width: clamp(9.5rem, 13vw, 12.2rem); height: auto; filter: brightness(0) invert(1); }
+  .pride-nav { display: flex; align-items: center; justify-content: center; gap: clamp(1rem, 2.1vw, 2rem); }
+  .pride-nav a {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.69rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .pride-nav a:hover { color: #fff; }
+  .pride-header__cta {
+    min-height: 2.9rem;
+    padding: 0.8rem 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(200, 172, 115, 0.72);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(17, 18, 16, 0.34);
+  }
+
+  .pride-kicker {
+    margin: 0;
+    color: var(--pr-brass-light);
+    font-size: 0.68rem;
+    font-weight: 760;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+  }
+  .pride-kicker--dark { color: var(--pr-brass-dark); }
+
+  .pride-hero {
+    position: relative;
+    min-height: 48rem;
+    display: grid;
+    align-items: stretch;
+    overflow: hidden;
+    background: var(--pr-ink);
+    color: #fff;
+  }
+  .pride-hero__image { position: absolute; inset: 0; }
+  .pride-hero__image img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 52%; filter: saturate(0.72) contrast(1.02) brightness(0.66); }
+  .pride-hero__wash {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(8, 9, 7, 0.97) 0%, rgba(8, 9, 7, 0.91) 32%, rgba(8, 9, 7, 0.55) 58%, rgba(8, 9, 7, 0.18) 100%),
+      linear-gradient(180deg, rgba(8, 9, 7, 0.42), transparent 25%, transparent 74%, rgba(8, 9, 7, 0.68));
+  }
+  .pride-hero__trace { position: absolute; width: min(36vw, 34rem); right: -4rem; top: 10rem; opacity: 0.42; }
+  .pride-hero__trace svg { width: 100%; fill: none; stroke: var(--pr-brass-light); stroke-width: 0.7; }
+  .pride-hero__inner { position: relative; z-index: 2; min-height: 48rem; padding-top: 10rem; padding-bottom: 4rem; display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(18rem, 0.28fr); gap: 4rem; align-items: end; }
+  .pride-hero__copy { max-width: 49rem; }
+  .pride-hero h1 {
+    margin: 1.1rem 0 0;
+    max-width: 9.7ch;
+    font-family: var(--font-display);
+    font-size: clamp(4.3rem, 7.5vw, 8rem);
+    font-weight: 330;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+    text-wrap: balance;
+  }
+  .pride-hero h1 em { color: var(--pr-brass-light); font-weight: 330; }
+  .pride-hero__support { max-width: 36rem; margin: 1.7rem 0 0; color: rgba(255,255,255,.76); font-size: clamp(1.05rem, 1.5vw, 1.28rem); line-height: 1.55; }
+  .pride-hero__promise { margin: 0.8rem 0 0; color: #fff; font-family: var(--font-display); font-size: clamp(1.45rem, 2.2vw, 2rem); font-weight: 420; }
+  .pride-actions { display: flex; flex-wrap: wrap; gap: 0.72rem; margin-top: 2rem; }
+  .pride-button {
+    min-height: 3.5rem;
+    padding: 0.95rem 1.3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 780;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
+    transition: transform 220ms ease, background-color 220ms ease, border-color 220ms ease;
+  }
+  .pride-button svg, .pride-text-link svg, .pride-owner__link svg, .pride-proof__context svg { width: 1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+  .pride-button:hover { transform: translateY(-3px); }
+  .pride-button--gold { background: var(--pr-brass-light); color: #111210; border-color: var(--pr-brass-light); }
+  .pride-button--ghost { color: #fff; border-color: rgba(255,255,255,.36); background: rgba(17,18,16,.18); }
+  .pride-button--ink { color: #fff; background: var(--pr-ink); border-color: var(--pr-ink); }
+  .pride-hero__proof { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.65rem 1.4rem; color: rgba(255,255,255,.58); font-size: 0.69rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .pride-hero__proof span { position: relative; }
+  .pride-hero__proof span + span::before { content: ''; position: absolute; left: -0.72rem; top: 50%; width: 2px; height: 2px; border-radius: 50%; background: var(--pr-brass-light); }
+  .pride-hero__asset-note { justify-self: end; align-self: end; max-width: 15rem; padding: 1rem 0 0 1.2rem; border-left: 1px solid rgba(200,172,115,.66); color: rgba(255,255,255,.62); }
+  .pride-hero__asset-note span { color: var(--pr-brass-light); font-size: 0.68rem; letter-spacing: 0.12em; }
+  .pride-hero__asset-note p { margin: 0.55rem 0 0; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.35; }
+
+  .pride-owner { padding: clamp(6rem, 9vw, 9rem) 0; background: var(--pr-cream); }
+  .pride-section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.48fr); gap: clamp(2rem, 6vw, 7rem); align-items: end; }
+  .pride-section-head h2 { margin: 0.9rem 0 0; max-width: 12ch; font-family: var(--font-display); font-size: clamp(3.2rem, 5.5vw, 6rem); font-weight: 340; letter-spacing: -0.05em; line-height: 0.94; }
+  .pride-section-head h2 em { color: var(--pr-brass-dark); font-weight: 340; }
+  .pride-section-head > p { margin: 0; max-width: 29rem; color: rgba(17,18,16,.64); line-height: 1.7; }
+  .pride-owner__list { margin-top: clamp(3.5rem, 6vw, 5.5rem); border-top: 1px solid var(--pr-line-dark); }
+  .pride-owner__row {
+    min-height: 10.6rem;
+    padding: 1.5rem 0;
+    display: grid;
+    grid-template-columns: 4rem 5rem minmax(0, 1fr) minmax(12rem, 0.32fr);
+    gap: 1.5rem;
+    align-items: center;
+    border-bottom: 1px solid var(--pr-line-dark);
+    color: var(--pr-ink);
+    transition: transform 220ms ease, background-color 220ms ease;
+  }
+  .pride-owner__row:hover { transform: translateX(6px); background: rgba(165,138,87,.045); }
+  .pride-owner__number { color: var(--pr-brass-dark); font-size: 0.7rem; font-weight: 760; letter-spacing: 0.12em; }
+  .pride-owner__icon { width: 3.25rem; height: 3.25rem; display: grid; place-items: center; border: 1px solid rgba(112,87,47,.4); border-radius: 50%; }
+  .pride-owner__icon svg { width: 1.55rem; fill: none; stroke: var(--pr-brass-dark); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+  .pride-owner__copy p { margin: 0; color: var(--pr-brass-dark); font-size: 0.65rem; font-weight: 760; letter-spacing: 0.13em; text-transform: uppercase; }
+  .pride-owner__copy h3 { margin: 0.45rem 0 0; font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.85rem); font-weight: 390; letter-spacing: -0.025em; }
+  .pride-owner__copy span { display: block; max-width: 42rem; margin-top: 0.55rem; color: rgba(17,18,16,.64); line-height: 1.55; }
+  .pride-owner__link { justify-self: end; display: inline-flex; align-items: center; gap: 0.65rem; color: var(--pr-ink); font-size: 0.7rem; font-weight: 760; letter-spacing: 0.07em; text-transform: uppercase; }
+
+  .pride-standard { padding: clamp(6rem, 9vw, 9rem) 0; background: var(--pr-ink); color: #fff; }
+  .pride-standard__grid { display: grid; grid-template-columns: minmax(18rem, 0.36fr) minmax(0, 0.64fr); gap: clamp(3rem, 7vw, 8rem); align-items: start; }
+  .pride-standard__mast { position: sticky; top: 2rem; }
+  .pride-standard__mast h2 { margin: 0.9rem 0 0; max-width: 8.5ch; font-family: var(--font-display); font-size: clamp(3.4rem, 5.7vw, 6rem); font-weight: 330; letter-spacing: -0.055em; line-height: 0.93; }
+  .pride-standard__mast h2 em { color: var(--pr-brass-light); font-weight: 330; }
+  .pride-standard__lead { max-width: 25rem; margin: 1.4rem 0 0; color: rgba(255,255,255,.64); font-size: 1rem; line-height: 1.65; }
+  .pride-word { margin-top: 3.2rem; display: flex; gap: 0.42rem; }
+  .pride-word span { color: var(--pr-brass-light); font-family: var(--font-display); font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 340; line-height: 1; }
+  .pride-principle { min-height: 15rem; padding: 2rem 0; display: grid; grid-template-columns: 3.2rem 5.6rem minmax(0,1fr); gap: 1.6rem; align-items: start; border-top: 1px solid var(--pr-line-light); }
+  .pride-principle:last-of-type { border-bottom: 1px solid var(--pr-line-light); }
+  .pride-principle__index { padding-top: 0.45rem; color: rgba(255,255,255,.36); font-size: 0.67rem; letter-spacing: 0.1em; }
+  .pride-principle__letter { color: var(--pr-brass-light); font-family: var(--font-display); font-size: clamp(4rem, 6vw, 6.5rem); font-weight: 330; line-height: 0.82; }
+  .pride-principle__copy h3 { margin: 0; font-family: var(--font-display); font-size: clamp(1.7rem, 2.6vw, 2.65rem); font-weight: 390; letter-spacing: -0.025em; }
+  .pride-principle__copy p { max-width: 39rem; margin: 0.8rem 0 0; color: rgba(255,255,255,.64); font-size: 0.96rem; line-height: 1.7; }
+  .pride-standard__quote { margin: 3.2rem 0 0; padding: 0 0 0 1.5rem; border-left: 1px solid var(--pr-brass-light); color: var(--pr-bone); font-family: var(--font-display); font-size: clamp(1.7rem, 3vw, 2.65rem); line-height: 1.2; }
+  .pride-content-note { margin: 1.2rem 0 0; color: rgba(255,255,255,.43); font-size: 0.72rem; line-height: 1.55; }
+
+  .pride-founder { padding: clamp(6rem, 9vw, 9rem) 0; background: var(--pr-bone); }
+  .pride-founder__grid { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(3rem,7vw,8rem); align-items: center; }
+  .pride-founder__visual { position: relative; margin: 0; min-height: 42rem; display: grid; align-items: end; }
+  .pride-founder__plate { position: absolute; width: 78%; aspect-ratio: .88; left: 7%; top: 4%; border-radius: 48% 48% 7% 7%; background: var(--pr-ink); transform: rotate(-4deg); }
+  .pride-founder__visual::after { content: ''; position: absolute; width: 62%; aspect-ratio: 1; right: -2%; bottom: 4%; border: 1px solid rgba(112,87,47,.55); border-radius: 50%; }
+  .pride-founder__visual img { position: relative; z-index: 2; width: 84%; height: 39rem; margin-left: auto; object-fit: cover; object-position: 50% 24%; border-radius: 46% 46% 1rem 1rem; box-shadow: 0 2.6rem 6rem rgba(17,18,16,.16); filter: saturate(.92) contrast(1.02); }
+  .pride-founder__visual figcaption { position: absolute; z-index: 3; left: 0; bottom: 1.4rem; padding: 0.8rem 1rem; border-left: 2px solid var(--pr-brass); background: rgba(242,238,230,.92); color: var(--pr-ink); font-size: 0.67rem; font-weight: 760; letter-spacing: .07em; text-transform: uppercase; }
+  .pride-founder__copy h2 { margin: .9rem 0 0; max-width: 11ch; font-family: var(--font-display); font-size: clamp(3.2rem,5.3vw,5.8rem); font-weight: 340; letter-spacing: -.05em; line-height: .94; }
+  .pride-founder__opening { margin: 1.3rem 0 0; max-width: 33rem; color: var(--pr-brass-dark); font-family: var(--font-display); font-size: clamp(1.45rem,2.4vw,2.05rem); line-height: 1.3; }
+  .pride-founder__body { margin-top: 1.6rem; max-width: 41rem; columns: 2; column-gap: 2.2rem; }
+  .pride-founder__body p { margin: 0 0 1.2rem; break-inside: avoid; color: rgba(17,18,16,.7); line-height: 1.72; }
+  .pride-founder__copy blockquote { margin: 1.8rem 0 0; padding-left: 1.2rem; border-left: 1px solid var(--pr-brass); font-family: var(--font-display); font-size: clamp(1.7rem,2.8vw,2.5rem); line-height: 1.2; }
+
+  .pride-accountability { padding: clamp(6rem,8vw,8rem) 0; background: var(--pr-ink-soft); color: #fff; }
+  .pride-accountability__intro { display: grid; grid-template-columns: minmax(0,1fr) minmax(18rem,.48fr); gap: 2rem 6rem; align-items: end; }
+  .pride-accountability__intro h2 { grid-column: 1; margin: .9rem 0 0; max-width: 14ch; font-family: var(--font-display); font-size: clamp(3rem,5vw,5.4rem); font-weight: 330; letter-spacing: -.05em; line-height: .96; }
+  .pride-accountability__intro > p:last-child { grid-column: 2; grid-row: 1 / span 2; align-self: end; margin: 0; color: var(--pr-brass-light); font-family: var(--font-display); font-size: clamp(1.4rem,2.3vw,2rem); }
+  .pride-accountability__line { height: 1px; margin-top: 3.2rem; background: linear-gradient(90deg,var(--pr-brass-light),rgba(200,172,115,.18)); }
+  .pride-accountability__grid { display: grid; grid-template-columns: repeat(4,1fr); }
+  .pride-accountability__grid article { min-height: 15.5rem; padding: 1.7rem 1.4rem 1.7rem 0; border-right: 1px solid rgba(255,255,255,.1); }
+  .pride-accountability__grid article + article { padding-left: 1.4rem; }
+  .pride-accountability__grid span { color: var(--pr-brass-light); font-size: .68rem; letter-spacing: .11em; }
+  .pride-accountability__grid h3 { margin: 4rem 0 0; max-width: 12ch; font-family: var(--font-display); font-size: clamp(1.55rem,2.2vw,2.15rem); font-weight: 390; line-height: 1.15; }
+  .pride-accountability__grid p { margin: .65rem 0 0; color: rgba(255,255,255,.55); font-size: .88rem; line-height: 1.55; }
+
+  .pride-switch { padding: clamp(6rem,9vw,9rem) 0; background: var(--pr-cream); }
+  .pride-switch__steps { margin-top: 4rem; display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--pr-line-dark); border-bottom: 1px solid var(--pr-line-dark); }
+  .pride-switch__steps article { min-height: 17rem; padding: 1.7rem; }
+  .pride-switch__steps article + article { border-left: 1px solid var(--pr-line-dark); }
+  .pride-switch__steps span { color: var(--pr-brass-dark); font-size: .68rem; letter-spacing: .1em; }
+  .pride-switch__steps h3 { margin: 4.2rem 0 0; font-family: var(--font-display); font-size: clamp(1.8rem,2.8vw,2.75rem); font-weight: 390; }
+  .pride-switch__steps p { max-width: 25rem; margin: .7rem 0 0; color: rgba(17,18,16,.64); line-height: 1.62; }
+  .pride-switch__actions { margin-top: 2.3rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.8rem; }
+  .pride-text-link { display: inline-flex; align-items: center; gap: .6rem; color: var(--pr-ink); font-size: .74rem; font-weight: 760; letter-spacing: .07em; text-transform: uppercase; }
+
+  .pride-proof { padding: clamp(6rem,9vw,9rem) 0; background: linear-gradient(180deg,var(--pr-bone),#e7dfd1); }
+  .pride-proof__intro { display: grid; grid-template-columns: minmax(0,1fr) minmax(20rem,.48fr); gap: clamp(2rem,6vw,7rem); align-items: end; }
+  .pride-proof__intro h2 { margin: .9rem 0 0; max-width: 12ch; font-family: var(--font-display); font-size: clamp(3.1rem,5.2vw,5.7rem); font-weight: 340; letter-spacing: -.05em; line-height: .95; }
+  .pride-proof__sub { margin: .8rem 0 0; color: var(--pr-brass-dark); font-family: var(--font-display); font-size: clamp(1.45rem,2.3vw,2rem); }
+  .pride-proof__context p { margin: 0; color: rgba(17,18,16,.64); line-height: 1.7; }
+  .pride-proof__context a { margin-top: 1.2rem; display: inline-flex; align-items: center; gap: .65rem; color: var(--pr-ink); font-size: .72rem; font-weight: 760; letter-spacing: .07em; text-transform: uppercase; }
+  .pride-trustindex { min-height: 18rem; margin-top: 3.5rem; padding: 1.5rem 0; border-top: 1px solid var(--pr-line-dark); border-bottom: 1px solid var(--pr-line-dark); }
+  .pride-trustindex__loading { min-height: 15rem; display: grid; place-content: center; gap: .55rem; text-align: center; }
+  .pride-trustindex__loading span { color: var(--pr-brass-dark); font-size: .67rem; font-weight: 760; letter-spacing: .13em; text-transform: uppercase; }
+  .pride-trustindex__loading strong { font-family: var(--font-display); font-size: clamp(1.9rem,3vw,3.2rem); font-weight: 350; }
+  .pride-proof__note { margin: .9rem 0 0; color: rgba(17,18,16,.48); font-size: .72rem; line-height: 1.55; }
+
+  .pride-final { position: relative; padding: clamp(7rem,11vw,11rem) 0; overflow: hidden; background: var(--pr-ink); color: #fff; }
+  .pride-final__texture { position: absolute; inset: 0; opacity: .12; background-image: linear-gradient(rgba(200,172,115,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(200,172,115,.18) 1px,transparent 1px); background-size: 6.5rem 6.5rem; mask-image: radial-gradient(circle at 80% 50%,#000 0%,transparent 55%); }
+  .pride-final__inner { position: relative; z-index: 2; }
+  .pride-final h2 { margin: 1rem 0 0; max-width: 11ch; font-family: var(--font-display); font-size: clamp(4rem,7vw,7.6rem); font-weight: 330; letter-spacing: -.055em; line-height: .91; }
+  .pride-actions--final { margin-top: 2.5rem; }
+  .pride-final__direct { margin-top: 4rem; padding-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .8rem 1.7rem; align-items: center; border-top: 1px solid var(--pr-line-light); }
+  .pride-final__direct span { color: rgba(255,255,255,.48); font-size: .68rem; font-weight: 760; letter-spacing: .1em; text-transform: uppercase; }
+  .pride-final__direct a { color: var(--pr-bone); font-family: var(--font-display); font-size: clamp(1.2rem,2vw,1.7rem); }
+
+  .pride-footer { padding: 4.2rem 0 1.6rem; background: var(--pr-bone); color: var(--pr-ink); border-top: 1px solid var(--pr-line-dark); }
+  .pride-footer__top { display: grid; grid-template-columns: 1fr 1.2fr .8fr; gap: 3rem; }
+  .pride-footer__brand img { width: 11rem; height: auto; }
+  .pride-footer__brand p { max-width: 20rem; margin: 1rem 0 0; color: rgba(17,18,16,.58); font-size: .86rem; line-height: 1.55; }
+  .pride-footer nav { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .65rem 1.2rem; align-content: start; }
+  .pride-footer nav a { color: rgba(17,18,16,.72); font-size: .75rem; }
+  .pride-footer__contact { display: grid; gap: .55rem; align-content: start; }
+  .pride-footer__contact a { font-family: var(--font-display); font-size: 1.15rem; }
+  .pride-footer__contact span { margin-top: .55rem; color: rgba(17,18,16,.5); font-size: .7rem; }
+  .pride-footer__bottom { margin-top: 3.4rem; padding-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; border-top: 1px solid var(--pr-line-dark); color: rgba(17,18,16,.5); font-size: .67rem; letter-spacing: .05em; text-transform: uppercase; }
+  .pride-footer__bottom a { color: var(--pr-brass-dark); }
+
+  @media (max-width: 1080px) {
+    .pride-nav { display: none; }
+    .pride-header { grid-template-columns: 1fr auto; }
+    .pride-hero__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+    .pride-hero__asset-note { justify-self: start; }
+    .pride-standard__grid { grid-template-columns: 1fr; }
+    .pride-standard__mast { position: static; }
+    .pride-word { margin-top: 2rem; }
+    .pride-founder__grid { grid-template-columns: 1fr; }
+    .pride-founder__visual { min-height: 36rem; max-width: 38rem; }
+    .pride-accountability__grid { grid-template-columns: repeat(2,1fr); }
+    .pride-footer__top { grid-template-columns: 1fr 1fr; }
+    .pride-footer__contact { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 760px) {
+    .pride-shell { width: min(100% - 1.4rem, 42rem); }
+    .pride-header { min-height: 5.25rem; padding-inline: .7rem; }
+    .pride-brand img { width: 8.7rem; }
+    .pride-header__cta { min-height: 2.65rem; padding: .68rem .78rem; font-size: .61rem; }
+    .pride-hero { min-height: 43rem; }
+    .pride-hero__image img { object-position: 68% 50%; }
+    .pride-hero__wash { background: linear-gradient(90deg,rgba(8,9,7,.96) 0%,rgba(8,9,7,.84) 68%,rgba(8,9,7,.52) 100%),linear-gradient(180deg,rgba(8,9,7,.5),transparent 30%,rgba(8,9,7,.5)); }
+    .pride-hero__inner { min-height: 43rem; padding-top: 8rem; padding-bottom: 2rem; align-content: end; }
+    .pride-hero h1 { max-width: 9.2ch; font-size: clamp(3.7rem,16vw,5.5rem); }
+    .pride-hero__support { max-width: 27rem; margin-top: 1.25rem; font-size: 1rem; }
+    .pride-hero__promise { font-size: 1.4rem; }
+    .pride-actions { display: grid; }
+    .pride-button { width: 100%; min-height: 3.45rem; }
+    .pride-hero__proof { gap: .6rem 1rem; }
+    .pride-hero__asset-note { display: none; }
+
+    .pride-section-head { grid-template-columns: 1fr; gap: 1.4rem; }
+    .pride-section-head h2 { font-size: clamp(3rem,13vw,4.6rem); }
+    .pride-owner__list { margin-top: 2.8rem; }
+    .pride-owner__row { min-height: 0; padding: 1.6rem 0; grid-template-columns: 3rem 3.4rem minmax(0,1fr); gap: 1rem; align-items: start; }
+    .pride-owner__icon { width: 3rem; height: 3rem; }
+    .pride-owner__link { grid-column: 3; justify-self: start; margin-top: .45rem; }
+    .pride-owner__row:hover { transform: none; }
+
+    .pride-standard__grid { gap: 3rem; }
+    .pride-standard__mast h2 { font-size: clamp(3.2rem,14vw,4.8rem); }
+    .pride-principle { min-height: 0; padding: 1.9rem 0; grid-template-columns: 3rem minmax(0,1fr); gap: 1rem; }
+    .pride-principle__index { display: none; }
+    .pride-principle__letter { font-size: 3.4rem; }
+    .pride-principle__copy h3 { font-size: 1.8rem; }
+    .pride-principle__copy p { font-size: .94rem; }
+    .pride-standard__quote { margin-top: 2.5rem; font-size: 1.75rem; }
+
+    .pride-founder__visual { min-height: 30rem; }
+    .pride-founder__visual img { width: 88%; height: 28rem; }
+    .pride-founder__body { columns: 1; }
+    .pride-founder__copy h2 { font-size: clamp(3rem,13vw,4.6rem); }
+
+    .pride-accountability__intro { grid-template-columns: 1fr; }
+    .pride-accountability__intro h2 { grid-column: 1; font-size: clamp(3rem,13vw,4.6rem); }
+    .pride-accountability__intro > p:last-child { grid-column: 1; grid-row: auto; margin-top: .3rem; }
+    .pride-accountability__grid { grid-template-columns: 1fr; }
+    .pride-accountability__grid article { min-height: 0; padding: 1.5rem 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+    .pride-accountability__grid article + article { padding-left: 0; }
+    .pride-accountability__grid h3 { margin-top: 1.5rem; }
+
+    .pride-switch__steps { grid-template-columns: 1fr; }
+    .pride-switch__steps article { min-height: 0; padding: 1.6rem 0; }
+    .pride-switch__steps article + article { border-left: 0; border-top: 1px solid var(--pr-line-dark); }
+    .pride-switch__steps h3 { margin-top: 1.5rem; }
+    .pride-switch__actions { display: grid; }
+    .pride-text-link { min-height: 3rem; }
+
+    .pride-proof__intro { grid-template-columns: 1fr; gap: 1.7rem; }
+    .pride-proof__intro h2 { font-size: clamp(3rem,13vw,4.6rem); }
+    .pride-trustindex { min-height: 23rem; }
+
+    .pride-final h2 { font-size: clamp(3.8rem,15vw,5.7rem); }
+    .pride-actions--final { max-width: 32rem; }
+    .pride-final__direct { display: grid; align-items: start; }
+
+    .pride-footer__top { grid-template-columns: 1fr; }
+    .pride-footer nav { grid-template-columns: 1fr 1fr; }
+    .pride-footer__contact { grid-column: auto; }
+  }
+
+  @media (max-width: 360px) {
+    .pride-header__cta { font-size: .56rem; padding-inline: .62rem; }
+    .pride-brand img { width: 7.9rem; }
+    .pride-hero h1 { font-size: clamp(3.25rem,16vw,4.8rem); }
+    .pride-owner__row { grid-template-columns: 2.5rem minmax(0,1fr); }
+    .pride-owner__icon { display: none; }
+    .pride-owner__link { grid-column: 2; }
+    .pride-footer nav { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pride-button, .pride-owner__row { transition: none; }
+  }
+</style>
