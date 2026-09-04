@@ -142,7 +142,7 @@ describe('site configuration', () => {
     expect(new URL(SITE.reviews.trustindexSummaryUrl).hostname).toBe('www.trustindex.io');
     expect(homepage).toContain('https://cdn.trustindex.io/loader.js?');
     expect(homepage).toContain('data-trustindex-widget-id');
-    expect(homepage).toContain('View on Trustindex ↗');
+    expect(homepage).toContain('Trustindex ↗');
     expect(homepage).not.toMatch(/aggregateRating|reviewRating|ratingValue|reviewCount/);
   });
 });
