@@ -1,7 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const reviewRoutes = [
-  ['home', '/'],
   ['rental-providers', '/rental-providers/'],
   ['rental-appraisal', '/rental-appraisal/'],
   ['switch-property-managers', '/switch-property-managers/'],
@@ -25,6 +24,13 @@ const homeReviewSections = [
 
 const visualCaptureProjects = new Set(['desktop-chromium', 'mobile-chromium']);
 
+function skipNonVisualProject(projectName: string) {
+  test.skip(
+    !visualCaptureProjects.has(projectName),
+    'Human visual-review evidence is captured on representative Chromium desktop/mobile viewports; cross-engine correctness is covered by functional and accessibility suites.',
+  );
+}
+
 async function hydrateLazyMedia(page: Page) {
   await page.evaluate(async () => {
     await new Promise<void>((resolve) => {
@@ -46,12 +52,27 @@ async function hydrateLazyMedia(page: Page) {
   await page.waitForTimeout(250);
 }
 
+for (const [sectionName, selector] of homeReviewSections) {
+  test(`home ${sectionName} visual review capture`, async ({ page }, testInfo) => {
+    skipNonVisualProject(testInfo.project.name);
+
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('h1')).toBeVisible();
+
+    const section = page.locator(selector);
+    await expect(section).toBeVisible();
+    await section.scrollIntoViewIfNeeded();
+
+    await section.screenshot({
+      path: testInfo.outputPath(`home-${sectionName}-${testInfo.project.name}.png`),
+      animations: 'disabled',
+    });
+  });
+}
+
 for (const [name, path] of reviewRoutes) {
   test(`${name} visual review capture`, async ({ page }, testInfo) => {
-    test.skip(
-      !visualCaptureProjects.has(testInfo.project.name),
-      'Human visual-review evidence is captured on representative Chromium desktop/mobile viewports; cross-engine correctness is covered by functional and accessibility suites.',
-    );
+    skipNonVisualProject(testInfo.project.name);
 
     await page.goto(path, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toBeVisible();
@@ -59,22 +80,6 @@ for (const [name, path] of reviewRoutes) {
     // Exercise the full page before capture so below-the-fold lazy images are
     // requested, while avoiding networkidle on intentionally third-party review media.
     await hydrateLazyMedia(page);
-
-    if (name === 'home') {
-      // The final REBIRTH homepage is intentionally much longer than the earlier
-      // homepage. Capture every major section independently instead of relying on
-      // one expensive browser stitch. This preserves complete human visual-review
-      // coverage on desktop and mobile while making each evidence frame inspectable.
-      for (const [sectionName, selector] of homeReviewSections) {
-        const section = page.locator(selector);
-        await expect(section).toBeVisible();
-        await section.screenshot({
-          path: testInfo.outputPath(`home-${sectionName}-${testInfo.project.name}.png`),
-          animations: 'disabled',
-        });
-      }
-      return;
-    }
 
     await page.screenshot({
       path: testInfo.outputPath(`${name}-${testInfo.project.name}.png`),
