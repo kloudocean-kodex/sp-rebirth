@@ -107,28 +107,32 @@ describe('site configuration', () => {
     }
   });
 
-  it('keeps the homepage hero static while approved founder photography is pending', () => {
+  it('keeps the homepage hero static and evidence-safe without rejected or synthetic founder photography', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
-    const heroStart = source.indexOf('<section class="hero hero-refresh"');
-    const heroEnd = source.indexOf('<CredentialStrip', heroStart);
+    const heroStart = source.indexOf('<section class="rebirth-hero"');
+    const heroEnd = source.indexOf('<section class="rebirth-choice"', heroStart);
     const heroSource = source.slice(heroStart, heroEnd);
 
     expect(heroStart).toBeGreaterThan(-1);
     expect(heroEnd).toBeGreaterThan(heroStart);
     expect(heroSource).not.toMatch(/<video\b/i);
-    expect(heroSource).toContain('/media/founder-concept-placeholder.svg');
-    expect(heroSource).toContain('replace with approved Sana photography before production');
+    expect(heroSource).not.toMatch(/<img\b/i);
+    expect(heroSource).toContain('Sana Patel founder-led identity graphic');
+    expect(heroSource).not.toContain('founder-concept-placeholder.svg');
     expect(heroSource).not.toContain('WhatsApp-Image-2025-09-30');
     expect(heroSource).not.toContain('Sana-headshot.webp');
   });
 
-  it('keeps the clarity-first homepage free of optional diagnostic and motion detours', () => {
+  it('keeps the final homepage focused on direct contact, appraisal, management and switching', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
 
     expect(source).toContain('id="services"');
     expect(source).toContain('id="why-sana"');
     expect(source).toContain('id="reviews"');
+    expect(source).toContain('id="appraisal"');
     expect(source).toContain('Call Sana · {SITE.phone.display}');
+    expect(source).toContain('<LeadForm type="rental_appraisal"');
+    expect(source).toContain('/switch-property-managers/');
     expect(source).not.toContain('/property-management-visibility-check/');
     expect(source).not.toContain('/rental-position-check/');
     expect(source).not.toMatch(/<video\b/i);
