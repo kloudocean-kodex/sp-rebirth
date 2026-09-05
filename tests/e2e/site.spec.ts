@@ -87,7 +87,9 @@ test('homepage switching section makes accountability observable', async ({ page
   );
 });
 
-test('homepage review proof keeps accessible independent source links if the vendor widget is unavailable', async ({ page }) => {
+test('homepage review proof keeps accessible independent source links if the vendor widget is unavailable', async ({
+  page,
+}) => {
   await page.route('https://cdn.trustindex.io/**', (route) => route.abort('blockedbyclient'));
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
@@ -126,7 +128,9 @@ test('homepage hero keeps a static evidence-safe identity composition', async ({
   await expect(page.getByText(/concept composition|replace with approved sana photography/i)).toHaveCount(0);
 });
 
-test('homepage keeps diagnostic tools out of the primary experience and embeds the appraisal action', async ({ page }) => {
+test('homepage keeps diagnostic tools out of the primary experience and embeds the appraisal action', async ({
+  page,
+}) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   await expect(page.locator('main a[href="/property-management-visibility-check/"]')).toHaveCount(0);
@@ -141,11 +145,17 @@ test('homepage keeps diagnostic tools out of the primary experience and embeds t
 test('homepage FAQ exposes direct-call and switching answers without forcing navigation', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const callQuestion = page.getByText('Can I speak with Sana before filling in a form?', { exact: true });
+  const callQuestion = page
+    .locator('.rebirth-faq details')
+    .filter({ hasText: 'Can I speak with Sana before filling in a form?' })
+    .locator('summary');
   await callQuestion.click();
   await expect(page.getByText(/direct phone contact is a first-class part of the service/i)).toBeVisible();
 
-  const switchQuestion = page.getByText('Can Sana help if my property is already managed elsewhere?', { exact: true });
+  const switchQuestion = page
+    .locator('.rebirth-faq details')
+    .filter({ hasText: 'Can Sana help if my property is already managed elsewhere?' })
+    .locator('summary');
   await switchQuestion.click();
   await expect(page.getByText(/make the handover feel controlled rather than chaotic/i)).toBeVisible();
 });
