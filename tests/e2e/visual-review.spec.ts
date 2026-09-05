@@ -9,6 +9,20 @@ const reviewRoutes = [
   ['about', '/about/'],
 ] as const;
 
+const homeReviewSections = [
+  ['01-hero', '.rebirth-hero'],
+  ['02-owner-choices', '.rebirth-choice'],
+  ['03-accountability', '.rebirth-manifesto'],
+  ['04-founder', '.rebirth-founder'],
+  ['05-services', '.rebirth-services'],
+  ['06-switching', '.rebirth-switch'],
+  ['07-process', '.rebirth-process'],
+  ['08-proof-intro', '.rebirth-proof-intro'],
+  ['09-reviews', '#reviews'],
+  ['10-faq', '.rebirth-faq'],
+  ['11-appraisal', '.rebirth-appraisal'],
+] as const;
+
 const visualCaptureProjects = new Set(['desktop-chromium', 'mobile-chromium']);
 
 async function hydrateLazyMedia(page: Page) {
@@ -43,8 +57,24 @@ for (const [name, path] of reviewRoutes) {
     await expect(page.locator('h1')).toBeVisible();
 
     // Exercise the full page before capture so below-the-fold lazy images are
-    // requested, while avoiding networkidle on the intentionally media-active home hero.
+    // requested, while avoiding networkidle on intentionally third-party review media.
     await hydrateLazyMedia(page);
+
+    if (name === 'home') {
+      // The final REBIRTH homepage is intentionally much longer than the earlier
+      // homepage. Capture every major section independently instead of relying on
+      // one expensive browser stitch. This preserves complete human visual-review
+      // coverage on desktop and mobile while making each evidence frame inspectable.
+      for (const [sectionName, selector] of homeReviewSections) {
+        const section = page.locator(selector);
+        await expect(section).toBeVisible();
+        await section.screenshot({
+          path: testInfo.outputPath(`home-${sectionName}-${testInfo.project.name}.png`),
+          animations: 'disabled',
+        });
+      }
+      return;
+    }
 
     await page.screenshot({
       path: testInfo.outputPath(`${name}-${testInfo.project.name}.png`),
