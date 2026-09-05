@@ -31,6 +31,15 @@ function skipNonVisualProject(projectName: string) {
   );
 }
 
+async function expectBrandLogoReady(page: Page) {
+  const logo = page.locator('.brand__logo');
+  await expect(logo).toBeVisible();
+  await expect
+    .poll(() => logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0))
+    .toBe(true);
+  await page.evaluate(() => document.fonts.ready);
+}
+
 async function hydrateLazyMedia(page: Page) {
   await page.evaluate(async () => {
     await new Promise<void>((resolve) => {
@@ -58,6 +67,8 @@ for (const [sectionName, selector] of homeReviewSections) {
 
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toBeVisible();
+
+    if (sectionName === '01-hero') await expectBrandLogoReady(page);
 
     const section = page.locator(selector);
     await expect(section).toBeVisible();
