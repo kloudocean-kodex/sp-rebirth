@@ -40,6 +40,21 @@ async function expectBrandLogoReady(page: Page) {
   await page.evaluate(() => document.fonts.ready);
 }
 
+async function suppressOffscreenSkipLinkArtifact(page: Page) {
+  const skipLink = page.locator('.skip-link');
+  await expect(skipLink).not.toBeFocused();
+  const isAboveViewport = await skipLink.evaluate((element) => element.getBoundingClientRect().bottom <= 0);
+  expect(isAboveViewport).toBe(true);
+
+  // Element screenshots can composite fixed-position nodes that are physically
+  // above the viewport into a long scrolled section capture. Hide only after
+  // proving the accessibility link is unfocused and off-screen; a real visible
+  // skip-link regression therefore fails instead of being cosmetically masked.
+  await skipLink.evaluate((element: HTMLElement) => {
+    element.style.visibility = 'hidden';
+  });
+}
+
 async function hydrateLazyMedia(page: Page) {
   await page.evaluate(async () => {
     await new Promise<void>((resolve) => {
@@ -73,6 +88,7 @@ for (const [sectionName, selector] of homeReviewSections) {
     const section = page.locator(selector);
     await expect(section).toBeVisible();
     await section.scrollIntoViewIfNeeded();
+    await suppressOffscreenSkipLinkArtifact(page);
 
     await section.screenshot({
       path: testInfo.outputPath(`home-${sectionName}-${testInfo.project.name}.png`),
