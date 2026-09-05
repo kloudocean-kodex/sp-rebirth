@@ -30,7 +30,21 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - name: Install locked dependencies
+      # Temporary lock-refresh step for PR #19 only. The generated lock is
+      # captured as evidence and committed before this workflow returns to
+      # strict npm ci for the final release-gate run.
+      - name: Generate patched lockfile
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Upload generated lockfile
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: main-refreshed-package-lock-${{ github.run_number }}
+          path: package-lock.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Install generated locked dependencies
         run: npm ci --no-audit --no-fund
 
       - name: Dependency vulnerability audit
@@ -105,7 +119,10 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - name: Install locked dependencies
+      - name: Generate patched lockfile
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Install generated locked dependencies
         run: npm ci --no-audit --no-fund
 
       - name: Production build for browser runtime
