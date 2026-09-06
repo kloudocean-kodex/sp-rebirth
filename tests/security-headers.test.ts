@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { HTML_SECURITY_HEADERS } from '../src/config/http-security';
+import { applyDeploymentIndexingHeaders, HTML_SECURITY_HEADERS } from '../src/config/http-security';
 
 const staticHeaders = readFileSync(join(process.cwd(), 'public/_headers'), 'utf8');
 
@@ -22,5 +22,19 @@ describe('HTML security header contract', () => {
     expect(policy).toContain('https://lh3.googleusercontent.com');
     expect(policy).toContain('https://fonts.googleapis.com');
     expect(policy).not.toContain('https://*.trustindex.io');
+  });
+
+  it('adds noindex only for the isolated staging runtime', () => {
+    const stagingHeaders = new Headers();
+    applyDeploymentIndexingHeaders(stagingHeaders, 'staging');
+    expect(stagingHeaders.get('X-Robots-Tag')).toBe('noindex, nofollow');
+
+    const productionHeaders = new Headers();
+    applyDeploymentIndexingHeaders(productionHeaders, 'production');
+    expect(productionHeaders.has('X-Robots-Tag')).toBe(false);
+
+    const unknownHeaders = new Headers();
+    applyDeploymentIndexingHeaders(unknownHeaders);
+    expect(unknownHeaders.has('X-Robots-Tag')).toBe(false);
   });
 });

@@ -14,3 +14,9 @@ export function applyHtmlSecurityHeaders(headers: Headers): void {
     headers.set(name, value);
   }
 }
+
+export function applyDeploymentIndexingHeaders(headers: Headers, deployEnv?: string): void {
+  if (deployEnv === 'staging') {
+    headers.set('X-Robots-Tag', 'noindex, nofollow');
+  }
+}

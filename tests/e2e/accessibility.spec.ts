@@ -23,13 +23,21 @@ const criticalRoutes = [
 for (const path of criticalRoutes) {
   test(`${path} has no automatically detectable WCAG A/AA violations`, async ({ page }) => {
     await page.goto(path, { waitUntil: 'domcontentloaded' });
-    // Axe must inspect the styled, responsive DOM.  `domcontentloaded` can fire
-    // before the local CSS assets have finished loading, which briefly exposes
-    // the desktop navigation at mobile dimensions and creates a false/flaky
-    // target-size violation.  Waiting for the browser load event and asserting
-    // the intended navigation mode gives the stylesheet a deterministic readiness
-    // contract without an arbitrary sleep.
-    await page.waitForLoadState('load');
+
+    // Axe must inspect the styled, responsive DOM. `domcontentloaded` can fire
+    // before the local Astro stylesheets are ready, which briefly exposes the
+    // desktop navigation at mobile dimensions and creates a false target-size
+    // violation. Wait explicitly for the local CSS contract instead of the
+    // browser-wide `load` event: legacy/third-party images are not prerequisites
+    // for accessibility analysis and must not be allowed to block the WCAG gate.
+    await expect
+      .poll(() =>
+        page
+          .locator('link[rel="stylesheet"][href*="/_astro/"]')
+          .evaluateAll((links) => links.length > 0 && links.every((link) => Boolean((link as HTMLLinkElement).sheet))),
+      )
+      .toBe(true);
+
     await expect(page.locator('main#main-content')).toBeVisible();
     await expect(page.locator('h1')).toBeVisible();
 
@@ -42,8 +50,9 @@ for (const path of criticalRoutes) {
       await expect(page.locator('.mobile-nav')).toBeHidden();
     }
 
-    // Do not wait for networkidle: the cinematic homepage intentionally keeps media/network
-    // activity alive. Accessibility analysis needs a usable DOM, not an artificially idle network.
+    // Do not wait for networkidle: the site intentionally contains external media
+    // and review integrations. Accessibility analysis needs a usable styled DOM,
+    // not an artificially idle network.
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();

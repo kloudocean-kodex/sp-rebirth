@@ -1,11 +1,11 @@
 import { handle } from '@astrojs/cloudflare/handler';
-import { applyHtmlSecurityHeaders } from './config/http-security';
+import { applyDeploymentIndexingHeaders, applyHtmlSecurityHeaders } from './config/http-security';
 import { consumeLeadQueueMessage, type QueueMessageLike } from './lib/lead-queue-consumer';
 import type { LeadDeliveryBindings } from './lib/lead-delivery';
 
 type AstroWorkerEnv = Parameters<typeof handle>[1];
 type AstroExecutionContext = Parameters<typeof handle>[2];
-type WorkerEnv = AstroWorkerEnv & LeadDeliveryBindings;
+type WorkerEnv = AstroWorkerEnv & LeadDeliveryBindings & { PUBLIC_DEPLOY_ENV?: string };
 
 interface LeadQueueBatch {
   readonly queue: string;
@@ -17,6 +17,7 @@ export default {
     const response = await handle(request, env, ctx);
     const headers = new Headers(response.headers);
     applyHtmlSecurityHeaders(headers);
+    applyDeploymentIndexingHeaders(headers, env.PUBLIC_DEPLOY_ENV);
     return new Response(response.body, {
       status: response.status,
       statusText: response.statusText,
