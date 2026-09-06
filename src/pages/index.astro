@@ -71,9 +71,6 @@ const schema = [
         <a class="sana-button sana-button--outline" href="/switch-property-managers/">Change Property Manager</a>
       </div>
     </div>
-    <a class="sana-hero__scroll" href="#pride" aria-label="Continue to Property Management with PRIDE">
-      <span>PRIDE</span><i aria-hidden="true"></i>
-    </a>
   </section>
 
   <section class="sana-pride" id="pride" aria-labelledby="pride-title">
@@ -86,8 +83,8 @@ const schema = [
 
       <div class="sana-pride__cards" aria-label="Sana Patel PRIDE service standard">
         {
-          pride.map((item, index) => (
-            <article class="sana-pride-card" style={`--pride-index:${index}`}>
+          pride.map((item) => (
+            <article class="sana-pride-card">
               <span class="sana-pride-card__letter" aria-hidden="true">{item.letter}</span>
               <h3>{item.title}</h3>
             </article>
@@ -123,7 +120,9 @@ const schema = [
 
       <div class="sana-standard">
         <p class="sana-standard__label">The Standard behind the service</p>
-        <p class="sana-standard__line">Different properties. Different situations. One consistent standard: <strong>PRIDE</strong></p>
+        <p class="sana-standard__line">
+          Different properties. Different situations. One consistent standard: <strong>PRIDE</strong>
+        </p>
         <p class="sana-signature sana-signature--dark">Your Property. My Priority.</p>
       </div>
     </div>
