@@ -29,6 +29,26 @@ describe('Cloudflare deployment contract', () => {
     expect(productionBuild).toContain("PUBLIC_SITE_URL: 'https://www.sanapatel.com.au'");
   });
 
+  it('injects staging noindex before static-asset parsing and always restores production-safe source headers', () => {
+    const stagingBuild = readFileSync(join(root, 'scripts', 'build-staging.mjs'), 'utf8');
+    const sourceHeaders = readFileSync(join(root, 'public', '_headers'), 'utf8');
+
+    expect(sourceHeaders.startsWith('/*\n  X-Robots-Tag: noindex, nofollow\n')).toBe(false);
+    expect(stagingBuild).toContain("const headersUrl = new URL('../public/_headers', import.meta.url)");
+    expect(stagingBuild).toContain("const stagingNoindexRule = '  X-Robots-Tag: noindex, nofollow\\n'");
+    expect(stagingBuild).toContain("writeFileSync(headersUrl, stagingHeaders, 'utf8')");
+    expect(stagingBuild).toContain('finally {');
+    expect(stagingBuild).toContain("writeFileSync(headersUrl, sourceHeaders, 'utf8')");
+
+    const injectIndex = stagingBuild.indexOf("writeFileSync(headersUrl, stagingHeaders, 'utf8')");
+    const buildIndex = stagingBuild.indexOf("spawnSync(npmCommand, ['run', 'build']");
+    const restoreIndex = stagingBuild.indexOf("writeFileSync(headersUrl, sourceHeaders, 'utf8')");
+
+    expect(injectIndex).toBeGreaterThan(-1);
+    expect(buildIndex).toBeGreaterThan(injectIndex);
+    expect(restoreIndex).toBeGreaterThan(buildIndex);
+  });
+
   it('disables automatic resource provisioning in the preview upload script', () => {
     expect(packageJson).toMatch(
       /"deploy:preview"\s*:\s*"[^"]*wrangler versions upload[^"]*--experimental-provision=false[^"]*--experimental-auto-create=false[^"]*"/,
