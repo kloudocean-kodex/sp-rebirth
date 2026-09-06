@@ -31,12 +31,12 @@ function skipNonVisualProject(projectName: string) {
   );
 }
 
-async function expectBrandLogoReady(page: Page) {
-  const logo = page.locator('.brand__logo');
-  await expect(logo).toBeVisible();
-  await expect
-    .poll(() => logo.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0))
-    .toBe(true);
+async function expectBrandReady(page: Page) {
+  const brand = page.getByRole('link', { name: 'Sana Patel Real Estate home' });
+  await expect(brand).toBeVisible();
+  await expect(brand.locator('.brand__monogram')).toHaveText('SP');
+  await expect(brand.locator('.brand__wordmark strong')).toHaveText('Sana Patel');
+  await expect(brand.locator('.brand__wordmark > span')).toHaveText('Real Estate');
   await page.evaluate(() => document.fonts.ready);
 }
 
@@ -83,7 +83,7 @@ for (const [sectionName, selector] of homeReviewSections) {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toBeVisible();
 
-    if (sectionName === '01-hero') await expectBrandLogoReady(page);
+    if (sectionName === '01-hero') await expectBrandReady(page);
 
     const section = page.locator(selector);
     await expect(section).toBeVisible();
