@@ -34,9 +34,7 @@ for (const path of criticalRoutes) {
       .poll(() =>
         page
           .locator('link[rel="stylesheet"][href*="/_astro/"]')
-          .evaluateAll(
-            (links) => links.length > 0 && links.every((link) => Boolean((link as HTMLLinkElement).sheet)),
-          ),
+          .evaluateAll((links) => links.length > 0 && links.every((link) => Boolean((link as HTMLLinkElement).sheet))),
       )
       .toBe(true);
 
