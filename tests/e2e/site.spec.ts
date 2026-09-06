@@ -60,10 +60,7 @@ test('homepage above the fold follows Sana final brief without extra sales clutt
   const cinematicMedia = hero.locator('.sana-hero__video');
   await expect(cinematicMedia).toHaveCount(1);
   await expect(cinematicMedia).toHaveAttribute('preload', 'none');
-  await expect(cinematicMedia).toHaveAttribute(
-    'data-src',
-    '/media/melbourne-brighton-drone-pexels-38304339-540p.mp4',
-  );
+  await expect(cinematicMedia).toHaveAttribute('data-src', '/media/melbourne-brighton-drone-pexels-38304339-540p.mp4');
   await expect(cinematicMedia).toHaveAttribute(
     'data-src-low',
     '/media/melbourne-brighton-drone-pexels-38304339-360p.mp4',
@@ -80,7 +77,10 @@ test('homepage cinematic media preserves the static reduced-motion path', async 
   await expect(media).toHaveCSS('display', 'none');
   await expect(video).toHaveAttribute('preload', 'none');
   expect(
-    await video.evaluate((node) => ({ src: node.getAttribute('src'), currentSrc: (node as HTMLVideoElement).currentSrc })),
+    await video.evaluate((node) => ({
+      src: node.getAttribute('src'),
+      currentSrc: (node as HTMLVideoElement).currentSrc,
+    })),
   ).toEqual({ src: null, currentSrc: '' });
 });
 
