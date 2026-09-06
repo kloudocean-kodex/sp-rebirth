@@ -119,7 +119,7 @@ describe('site configuration', () => {
     expect(heroSource).toContain('preload="none"');
     expect(heroSource).toContain('data-src="/media/melbourne-brighton-drone-pexels-38304339-540p.mp4"');
     expect(heroSource).toContain('data-src-low="/media/melbourne-brighton-drone-pexels-38304339-360p.mp4"');
-    expect(heroSource).toContain('prefers-reduced-motion: no-preference');
+    expect(source).toContain('prefers-reduced-motion: no-preference');
     expect(heroSource).toContain('Melbourne Property Management · For Rental Providers.');
     expect(heroSource).toContain('Is your property really being managed?');
     expect(heroSource).toContain('Property management with strategy, accountability and personal attention.');
