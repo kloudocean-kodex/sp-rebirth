@@ -36,11 +36,12 @@ for (const path of publicRoutes) {
   });
 }
 
-test('homepage leads with Sana, direct contact and three clear owner decisions', async ({ page }) => {
+test('homepage leads with Sana handwritten proposition, PRIDE and direct contact', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   const hero = page.locator('.rebirth-hero');
-  await expect(hero.getByRole('heading', { name: /your property should never feel like a mystery/i })).toBeVisible();
+  await expect(hero.getByRole('heading', { name: /is your property really being managed/i })).toBeVisible();
+  await expect(hero.getByText('Your Property. My Priority.', { exact: true })).toBeVisible();
   await expect(hero.getByRole('link', { name: /call sana · 0416 977 990/i })).toHaveAttribute(
     'href',
     'tel:+61416977990',
@@ -49,17 +50,53 @@ test('homepage leads with Sana, direct contact and three clear owner decisions',
   await expect(hero.getByText('Managing Director', { exact: true })).toBeVisible();
   await expect(hero.getByText('Licensed Estate Agent', { exact: true })).toBeVisible();
   await expect(hero.getByText('24×7 direct access', { exact: true })).toBeVisible();
+  await expect(hero.locator('.rebirth-pride-mark')).toBeVisible();
 
-  const services = page.locator('#services');
-  await expect(services.getByRole('heading', { name: /i need a property manager/i })).toBeVisible();
-  await expect(services.getByRole('heading', { name: /i need a rental appraisal/i })).toBeVisible();
-  await expect(services.getByRole('heading', { name: /i want to change managers/i })).toBeVisible();
+  const pride = page.locator('#pride');
+  await expect(pride.getByRole('heading', { name: /property management with pride/i })).toBeVisible();
+  for (const heading of [
+    'Proactive Property Care',
+    'Results Driven',
+    'Integrity in Every Decision',
+    'Diligent Property Management',
+    'Experience That Matters',
+  ]) {
+    await expect(pride.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+  }
+});
+
+test('homepage preserves Sana original logo without depending on logo image load completion', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const brand = page.getByRole('link', { name: 'Sana Patel Real Estate home' });
+  const logo = brand.locator('.brand__logo');
+  await expect(brand).toBeVisible();
+  await expect(logo).toHaveAttribute('alt', 'Sana Patel Real Estate');
+  await expect(logo).toHaveAttribute('src', /Sana-Patel-Logo\.webp$/);
+});
+
+test('homepage carries Sana owner-diagnostic questions inline instead of forcing another journey', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.getByRole('heading', { name: /five questions worth asking about your property/i })).toBeVisible();
+  for (const fragment of [
+    /when was the rent last reviewed/i,
+    /routine inspections protecting the property/i,
+    /maintenance issues being dealt with/i,
+    /useful answer and a clear next step/i,
+    /what decision is coming next/i,
+  ]) {
+    await expect(page.getByText(fragment).first()).toBeVisible();
+  }
+
+  await expect(page.locator('main a[href="/property-management-visibility-check/"]')).toHaveCount(0);
+  await expect(page.locator('main a[href="/rental-position-check/"]')).toHaveCount(0);
 });
 
 test('homepage includes full-service management detail without unsupported performance claims', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByRole('heading', { name: /the everyday details\. made visible/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /the everyday details\. managed as one property story/i })).toBeVisible();
   for (const heading of [
     'Leasing & renter selection',
     'Routine inspections',
@@ -75,16 +112,19 @@ test('homepage includes full-service management detail without unsupported perfo
   expect(body).not.toMatch(/melbourne'?s best|guaranteed returns|maximise your returns|100% stress[- ]free/i);
 });
 
-test('homepage switching section makes accountability observable', async ({ page }) => {
+test('homepage switching section is understandable without leaving the landing page', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByRole('heading', { name: /a switch should feel controlled, not chaotic/i })).toBeVisible();
-  await expect(page.getByText('One clear point of accountability', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('Visible follow-through', { exact: true }).first()).toBeVisible();
-  await expect(page.getByRole('link', { name: /see the switching approach/i })).toHaveAttribute(
+  const switching = page.locator('#switching');
+  await expect(switching.getByRole('heading', { name: /changing managers can be simpler than staying frustrated/i })).toBeVisible();
+  await expect(switching.getByRole('heading', { name: 'Talk', exact: true })).toBeVisible();
+  await expect(switching.getByRole('heading', { name: 'Review', exact: true })).toBeVisible();
+  await expect(switching.getByRole('heading', { name: /move only if it makes sense/i })).toBeVisible();
+  await expect(switching.getByRole('link', { name: /talk to sana about switching/i })).toHaveAttribute(
     'href',
-    '/switch-property-managers/',
+    'tel:+61416977990',
   );
+  await expect(page.locator('main a[href="/switch-property-managers/"]')).toHaveCount(0);
 });
 
 test('homepage review proof keeps accessible independent source links if the vendor widget is unavailable', async ({
@@ -117,29 +157,30 @@ test('confirmed 24x7 direct-access service promise remains visible', async ({ pa
   await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
 });
 
-test('homepage hero keeps a static evidence-safe identity composition', async ({ page }) => {
+test('homepage hero keeps a static evidence-safe PRIDE composition', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   const hero = page.locator('.rebirth-hero');
-  await expect(hero.locator('.rebirth-identity')).toBeVisible();
-  await expect(hero.locator('.rebirth-identity__arch')).toBeVisible();
+  await expect(hero.locator('.rebirth-pride-mark')).toBeVisible();
+  await expect(hero.locator('.rebirth-pride-mark__letters')).toBeVisible();
   await expect(hero.locator('video')).toHaveCount(0);
   await expect(hero.locator('img')).toHaveCount(0);
   await expect(page.getByText(/concept composition|replace with approved sana photography/i)).toHaveCount(0);
 });
 
-test('homepage keeps diagnostic tools out of the primary experience and embeds the appraisal action', async ({
-  page,
-}) => {
+test('homepage is one primary experience with embedded appraisal action', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.locator('main a[href="/property-management-visibility-check/"]')).toHaveCount(0);
-  await expect(page.locator('main a[href="/rental-position-check/"]')).toHaveCount(0);
   await expect(page.locator('main video')).toHaveCount(0);
+  await expect(page.locator('#pride')).toBeVisible();
+  await expect(page.locator('#services')).toBeVisible();
   await expect(page.locator('#why-sana')).toBeVisible();
+  await expect(page.locator('#switching')).toBeVisible();
   await expect(page.locator('#reviews')).toBeVisible();
   await expect(page.locator('#appraisal')).toBeVisible();
   await expect(page.locator('#appraisal form')).toBeVisible();
+  await expect(page.locator('main a[href="/switch-property-managers/"]')).toHaveCount(0);
+  await expect(page.locator('main a[href="/rental-appraisal/"]')).toHaveCount(0);
 });
 
 test('homepage FAQ exposes direct-call and switching answers without forcing navigation', async ({ page }) => {
@@ -150,17 +191,18 @@ test('homepage FAQ exposes direct-call and switching answers without forcing nav
     .filter({ hasText: 'Can I speak with Sana before filling in a form?' })
     .locator('summary');
   await callQuestion.click();
-  await expect(page.getByText(/direct phone contact is a first-class part of the service/i)).toBeVisible();
+  await expect(page.getByText(/direct phone access is a first-class part of the service/i)).toBeVisible();
 
   const switchQuestion = page
     .locator('.rebirth-faq details')
     .filter({ hasText: 'Can Sana help if my property is already managed elsewhere?' })
     .locator('summary');
   await switchQuestion.click();
-  await expect(page.getByText(/make the handover feel controlled rather than chaotic/i)).toBeVisible();
+  await expect(page.getByText(/what an orderly handover would require/i)).toBeVisible();
+  await expect(page.getByText(/do not need to cancel anything before that conversation/i)).toBeVisible();
 });
 
-test('supporting journeys remain reachable without competing in primary navigation', async ({ page }) => {
+test('supporting journeys remain reachable from the footer without competing in primary navigation', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const footer = page.locator('footer.site-footer');
 
@@ -211,25 +253,32 @@ test('legacy rental-provider URL permanently redirects to the canonical journey'
   expect(response.headers()['location']).toBe('/rental-providers/');
 });
 
-test('mobile navigation keeps the primary owner journey deliberately small', async ({ page }, testInfo) => {
+test('mobile navigation keeps Sana primary landing experience deliberately small', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.includes('mobile'), 'Mobile interaction test');
 
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   const menu = page.locator('.mobile-nav');
   await expect(menu).toBeVisible();
   await menu.locator('summary').click();
 
-  for (const label of [
-    'Services',
-    'Why Sana',
-    'Reviews',
-    'Switch Property Manager',
-    /Call Sana · 0416 977 990/i,
-    'Request a Rental Appraisal',
-  ]) {
+  const expectedLinks = [
+    ['PRIDE', '/#pride'],
+    ['Why Sana', '/#why-sana'],
+    ['Services', '/#services'],
+    ['Reviews', '/#reviews'],
+    ['Switch Property Manager', '/#switching'],
+    ['Request a Rental Appraisal', '/#appraisal'],
+  ] as const;
+
+  for (const [label, href] of expectedLinks) {
     await expect(menu.getByRole('link', { name: label })).toBeVisible();
+    await expect(menu.getByRole('link', { name: label })).toHaveAttribute('href', href);
   }
 
+  await expect(menu.getByRole('link', { name: /Call Sana · 0416 977 990/i })).toHaveAttribute(
+    'href',
+    'tel:+61416977990',
+  );
   await expect(menu.getByRole('link', { name: 'Rental Position Check' })).toHaveCount(0);
   await expect(menu.getByRole('link', { name: 'Resources' })).toHaveCount(0);
   await expect(menu.getByRole('link', { name: 'Selling' })).toHaveCount(0);
