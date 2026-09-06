@@ -27,11 +27,7 @@ if (!headers.startsWith(globalRule)) {
 }
 
 if (!headers.includes('X-Robots-Tag: noindex, nofollow')) {
-  writeFileSync(
-    headersUrl,
-    headers.replace(globalRule, `${globalRule}  X-Robots-Tag: noindex, nofollow\n`),
-    'utf8',
-  );
+  writeFileSync(headersUrl, headers.replace(globalRule, `${globalRule}  X-Robots-Tag: noindex, nofollow\n`), 'utf8');
 }
 
 console.log('[SP_REBIRTH] Staging X-Robots-Tag noindex header injected into generated artifact.');
