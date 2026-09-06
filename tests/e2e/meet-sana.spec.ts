@@ -14,7 +14,9 @@ test('Meet Sana page follows Sana final supplied introduction with review-safe e
   await expect(portrait).toHaveAttribute('src', '/media/founder-concept-placeholder.svg');
   await expect(portrait).toHaveAttribute('alt', 'Editorial founder illustration');
   await expect
-    .poll(() => portrait.evaluate((image: HTMLImageElement) => ({ complete: image.complete, width: image.naturalWidth })))
+    .poll(() =>
+      portrait.evaluate((image: HTMLImageElement) => ({ complete: image.complete, width: image.naturalWidth })),
+    )
     .toMatchObject({ complete: true });
   expect(await portrait.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
 
