@@ -32,6 +32,7 @@ test('Meet Sana page follows Sana final supplied introduction with review-safe e
   const detailArtwork = detail.locator('img');
   await expect(detailArtwork).toHaveAttribute('src', '/media/property-management-detail-placeholder.svg');
   await expect(detailArtwork).toHaveAttribute('alt', 'Editorial property-management illustration');
+  await detailArtwork.scrollIntoViewIfNeeded();
   await expect
     .poll(() =>
       detailArtwork.evaluate((image: HTMLImageElement) => ({ complete: image.complete, width: image.naturalWidth })),
