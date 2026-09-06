@@ -48,12 +48,17 @@ export async function startBrowserTestServer({
   const wranglerCli = fileURLToPath(
     new URL("../node_modules/wrangler/bin/wrangler.js", import.meta.url),
   );
+
+  // Astro's current Cloudflare adapter uses the unified Wrangler entrypoint
+  // declared in wrangler.jsonc and redirects it to the generated build config
+  // after `astro build`. Do not override that contract with a legacy positional
+  // dist/server/entry.mjs argument; doing so prevents Wrangler 4.x from making
+  // the minimal main-branch Worker ready for browser QA.
   const wrangler = spawn(
     process.execPath,
     [
       wranglerCli,
       "dev",
-      "dist/server/entry.mjs",
       "--port",
       String(workerPort),
       "--local-protocol=http",
@@ -66,6 +71,10 @@ export async function startBrowserTestServer({
       stdio: "inherit",
     },
   );
+
+  wrangler.once("error", (error) => {
+    console.error(`Browser QA Wrangler failed to start: ${error.message}`);
+  });
 
   const proxy = createServer((incoming, outgoing) => {
     const requestHeaders = Object.fromEntries(
