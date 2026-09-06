@@ -107,7 +107,7 @@ describe('site configuration', () => {
     }
   });
 
-  it('keeps the final homepage hero static and limited to Sana requested above-fold content', () => {
+  it('keeps the final homepage hero static-first while allowing deferred cinematic enhancement', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
     const heroStart = source.indexOf('<section class="sana-hero"');
     const heroEnd = source.indexOf('<section class="sana-pride"', heroStart);
@@ -115,7 +115,11 @@ describe('site configuration', () => {
 
     expect(heroStart).toBeGreaterThan(-1);
     expect(heroEnd).toBeGreaterThan(heroStart);
-    expect(heroSource).not.toMatch(/<video\b/i);
+    expect(heroSource).toMatch(/<video\b/i);
+    expect(heroSource).toContain('preload="none"');
+    expect(heroSource).toContain('data-src="/media/melbourne-brighton-drone-pexels-38304339-540p.mp4"');
+    expect(heroSource).toContain('data-src-low="/media/melbourne-brighton-drone-pexels-38304339-360p.mp4"');
+    expect(source).toContain('prefers-reduced-motion: no-preference');
     expect(heroSource).toContain('Melbourne Property Management · For Rental Providers.');
     expect(heroSource).toContain('Is your property really being managed?');
     expect(heroSource).toContain('Property management with strategy, accountability and personal attention.');
@@ -168,7 +172,7 @@ describe('site configuration', () => {
     expect(source).not.toContain('rebirth-process');
     expect(source).not.toContain('rebirth-faq');
     expect(source).not.toContain('rebirth-appraisal');
-    expect(source).not.toMatch(/<video\b/i);
+    expect(source.match(/<video\b/gi)).toHaveLength(1);
   });
 
   it('uses a source-driven Trustindex review widget without hard-coded aggregate claims', () => {

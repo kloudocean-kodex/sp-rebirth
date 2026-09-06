@@ -4,6 +4,7 @@ import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import TrustProof from '@/components/TrustProof.astro';
 import { SITE } from '@/config/site';
+import '@/styles/home-cinematic.css';
 
 const title = 'Property Management Melbourne | Sana Patel Real Estate';
 const description =
@@ -57,8 +58,18 @@ const schema = [
   <SiteHeader slot="header" />
 
   <section class="sana-hero" id="top" aria-labelledby="hero-title">
-    <div class="sana-hero__ornament sana-hero__ornament--one" aria-hidden="true"></div>
-    <div class="sana-hero__ornament sana-hero__ornament--two" aria-hidden="true"></div>
+    <div class="sana-hero__media" aria-hidden="true">
+      <video
+        class="sana-hero__video"
+        muted
+        playsinline
+        loop
+        preload="none"
+        tabindex="-1"
+        data-sana-hero-video
+        data-src="/media/melbourne-brighton-drone-pexels-38304339-540p.mp4"
+        data-src-low="/media/melbourne-brighton-drone-pexels-38304339-360p.mp4"></video>
+    </div>
     <div class="container-wide sana-hero__inner">
       <p class="sana-overline">Melbourne Property Management · For Rental Providers.</p>
       <h1 id="hero-title">Is your property really being managed?</h1>
@@ -149,3 +160,42 @@ const schema = [
 
   <SiteFooter slot="footer" />
 </BaseLayout>
+
+<script is:inline>
+  (() => {
+    const video = document.querySelector('[data-sana-hero-video]');
+    if (!(video instanceof HTMLVideoElement)) return;
+
+    const motionAllowed = window.matchMedia('(min-width: 900px) and (prefers-reduced-motion: no-preference)');
+    if (!motionAllowed.matches) return;
+
+    const source = window.innerWidth >= 1280 ? video.dataset.src : video.dataset.srcLow;
+    if (!source) return;
+
+    const loadVideo = () => {
+      video.src = source;
+      video.addEventListener(
+        'canplay',
+        () => {
+          video.closest('.sana-hero__media')?.classList.add('is-ready');
+          void video.play().catch(() => undefined);
+        },
+        { once: true },
+      );
+      video.load();
+    };
+
+    video.addEventListener('timeupdate', () => {
+      if (video.currentTime >= 9.5) {
+        video.currentTime = 0;
+        void video.play().catch(() => undefined);
+      }
+    });
+
+    if (document.readyState === 'complete') {
+      loadVideo();
+    } else {
+      window.addEventListener('load', loadVideo, { once: true });
+    }
+  })();
+</script>

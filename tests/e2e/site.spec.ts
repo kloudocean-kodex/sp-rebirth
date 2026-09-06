@@ -57,8 +57,31 @@ test('homepage above the fold follows Sana final brief without extra sales clutt
     '/switch-property-managers/',
   );
 
-  await expect(hero.locator('video')).toHaveCount(0);
+  const cinematicMedia = hero.locator('.sana-hero__video');
+  await expect(cinematicMedia).toHaveCount(1);
+  await expect(cinematicMedia).toHaveAttribute('preload', 'none');
+  await expect(cinematicMedia).toHaveAttribute('data-src', '/media/melbourne-brighton-drone-pexels-38304339-540p.mp4');
+  await expect(cinematicMedia).toHaveAttribute(
+    'data-src-low',
+    '/media/melbourne-brighton-drone-pexels-38304339-360p.mp4',
+  );
   await expect(hero.getByText(/managing director|licensed estate agent|24×7 direct access/i)).toHaveCount(0);
+});
+
+test('homepage cinematic media preserves the static reduced-motion path', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/', { waitUntil: 'load' });
+
+  const media = page.locator('.sana-hero__media');
+  const video = page.locator('.sana-hero__video');
+  await expect(media).toHaveCSS('display', 'none');
+  await expect(video).toHaveAttribute('preload', 'none');
+  expect(
+    await video.evaluate((node) => ({
+      src: node.getAttribute('src'),
+      currentSrc: (node as HTMLVideoElement).currentSrc,
+    })),
+  ).toEqual({ src: null, currentSrc: '' });
 });
 
 test('homepage preserves Sana original local logo', async ({ page }) => {
@@ -164,7 +187,8 @@ test('homepage follows the disciplined three-part client structure', async ({ pa
   await expect(page.locator('.rebirth-process')).toHaveCount(0);
   await expect(page.locator('.rebirth-faq')).toHaveCount(0);
   await expect(page.locator('.rebirth-appraisal')).toHaveCount(0);
-  await expect(page.locator('main video')).toHaveCount(0);
+  await expect(page.locator('main video')).toHaveCount(1);
+  await expect(page.locator('main video:not(.sana-hero__video)')).toHaveCount(0);
 
   const body = await page.locator('body').innerText();
   expect(body).not.toMatch(/melbourne'?s best|guaranteed returns|maximise your returns|100% stress[- ]free/i);
