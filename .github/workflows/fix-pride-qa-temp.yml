@@ -18,6 +18,15 @@ jobs:
         with:
           ref: feat/sana-final-feedback-pride-20260906
 
+      - name: Use pinned Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
       - name: Apply remaining root-cause QA corrections
         shell: bash
         run: |
@@ -73,7 +82,7 @@ jobs:
           e2e.write_text(text)
           PY
 
-          npx prettier --write src/styles/home-pride-final.css tests/site.test.ts tests/e2e/site.spec.ts
+          npm exec prettier -- --write src/styles/home-pride-final.css tests/site.test.ts tests/e2e/site.spec.ts
           git diff --check
 
       - name: Commit QA corrections
