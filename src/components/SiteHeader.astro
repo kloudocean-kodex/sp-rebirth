@@ -63,21 +63,19 @@ import { SITE } from '@/config/site';
     display: inline-flex;
     align-items: center;
     min-height: 3.45rem;
-    padding: 0.34rem 0.62rem;
-    border: 1px solid rgba(215, 195, 154, 0.34);
-    border-radius: var(--radius-sm);
-    background: #fffdf8;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+    padding: 0.22rem 0;
+    border: 0;
+    background: transparent;
   }
-  .brand--original:hover {
-    border-color: rgba(215, 195, 154, 0.9);
-    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.22);
+  .brand--original:hover .brand__logo {
+    opacity: 0.82;
   }
   .brand__logo {
     width: auto;
-    height: 2.6rem;
-    max-width: 11.25rem;
+    height: 2.75rem;
+    max-width: 11.75rem;
     object-fit: contain;
+    transition: opacity 160ms ease;
   }
   .site-nav > a:not(.button) {
     min-height: 2.75rem;
@@ -126,11 +124,17 @@ import { SITE } from '@/config/site';
     }
     .brand--original {
       min-height: 3.1rem;
-      padding: 0.3rem 0.48rem;
+      padding: 0.18rem 0;
     }
     .brand__logo {
-      height: 2.25rem;
-      max-width: 9.5rem;
+      height: 2.5rem;
+      max-width: 10.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand__logo {
+      transition: none;
     }
   }
 </style>
