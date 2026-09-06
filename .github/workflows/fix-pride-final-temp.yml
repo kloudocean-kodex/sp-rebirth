@@ -1,0 +1,88 @@
+name: TEMP final Sana PRIDE repair
+
+on:
+  push:
+    branches:
+      - feat/sana-final-feedback-pride-20260906
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: feat/sana-final-feedback-pride-20260906
+          fetch-depth: 0
+
+      - name: Vendor Sana original wordmark from authoritative site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/media
+          curl --fail --location --silent --show-error --max-time 30 \
+            'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-Patel-Logo.webp' \
+            --output public/media/Sana-Patel-Logo.webp
+          test "$(wc -c < public/media/Sana-Patel-Logo.webp)" -gt 1000
+          magic="$(xxd -p -l 12 public/media/Sana-Patel-Logo.webp)"
+          case "$magic" in
+            52494646*57454250) ;;
+            *) echo "Fetched logo is not a RIFF/WEBP asset" >&2; exit 1 ;;
+          esac
+
+      - name: Apply exact client-fidelity repairs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          header = Path('src/components/SiteHeader.astro')
+          text = header.read_text()
+          old = '        src={SITE.logo}\n'
+          new = '        src="/media/Sana-Patel-Logo.webp"\n'
+          if old not in text:
+              raise SystemExit('Expected external header logo source not found')
+          header.write_text(text.replace(old, new, 1))
+
+          css = Path('src/styles/home-pride-final.css')
+          text = css.read_text()
+          old = '.home-rebirth .rebirth-founder__pride {\n  color: #fffdf8;'
+          new = '.home-rebirth .rebirth-founder__pride {\n  color: #171713;'
+          if old not in text:
+              raise SystemExit('Expected founder PRIDE colour rule not found')
+          css.write_text(text.replace(old, new, 1))
+
+          spec = Path('tests/e2e/site.spec.ts')
+          text = spec.read_text()
+          stale = "  await expect(page.getByRole('heading', { name: /trust should not depend on a polished promise/i })).toBeVisible();\n"
+          if stale not in text:
+              raise SystemExit('Expected stale review heading assertion not found')
+          spec.write_text(text.replace(stale, '', 1))
+          PY
+
+      - name: Format text changes
+        run: npx prettier --write src/components/SiteHeader.astro src/styles/home-pride-final.css tests/e2e/site.spec.ts
+
+      - name: Verify exact repair scope and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          changed="$(git status --short | awk '{print $2}')"
+          printf '%s\n' "$changed"
+          unexpected="$(printf '%s\n' "$changed" | grep -Ev '^(public/media/Sana-Patel-Logo\.webp|src/components/SiteHeader\.astro|src/styles/home-pride-final\.css|tests/e2e/site\.spec\.ts)$' || true)"
+          if [ -n "$unexpected" ]; then
+            echo "Unexpected repair changes:" >&2
+            printf '%s\n' "$unexpected" >&2
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/media/Sana-Patel-Logo.webp src/components/SiteHeader.astro src/styles/home-pride-final.css tests/e2e/site.spec.ts
+          git commit -m "fix: preserve Sana logo locally and close PRIDE QA gaps"
+          git push origin HEAD:feat/sana-final-feedback-pride-20260906
