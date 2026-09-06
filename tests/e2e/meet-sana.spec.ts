@@ -16,7 +16,7 @@ test('Meet Sana page follows Sana final supplied introduction and photography', 
     origin.getByRole('heading', { name: 'From Receptionist to Licensed Estate Agent', exact: true }),
   ).toBeVisible();
   await expect(origin.getByText(/I started my real estate career as a receptionist/i)).toBeVisible();
-  await expect(origin.getByText(/working directly with rental providers, renters, contractors/i)).toBeVisible();
+  await expect(origin.getByText(/day-to-day management of investment properties/i)).toBeVisible();
   await expect(origin.getByText('The details matter.', { exact: true })).toBeVisible();
 
   const detail = page.locator('.meet-detail');
