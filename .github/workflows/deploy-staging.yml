@@ -23,6 +23,7 @@ jobs:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
+      STAGING_URL: https://sp-rebirth-staging.rajputrupali138.workers.dev
 
     steps:
       - name: Checkout
@@ -48,3 +49,67 @@ jobs:
 
       - name: Deploy staging Worker
         run: npm run deploy:staging
+
+      - name: Verify live staging contract
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          headers="$(mktemp)"
+          body="$(mktemp)"
+          robots="$(mktemp)"
+          about="$(mktemp)"
+
+          curl --fail --silent --show-error --location \
+            --connect-timeout 10 --max-time 30 \
+            --dump-header "$headers" --output "$body" \
+            "$STAGING_URL/"
+
+          tr -d '\r' < "$headers" > "${headers}.clean"
+
+          grep -Eiq '^x-robots-tag:.*noindex.*nofollow' "${headers}.clean"
+          grep -Eiq '^content-security-policy:' "${headers}.clean"
+          grep -Eiq '^strict-transport-security:[[:space:]]*max-age=31536000' "${headers}.clean"
+          grep -Eiq '^x-content-type-options:[[:space:]]*nosniff' "${headers}.clean"
+          grep -Eiq '^x-frame-options:[[:space:]]*DENY' "${headers}.clean"
+          grep -Eiq '^referrer-policy:[[:space:]]*strict-origin-when-cross-origin' "${headers}.clean"
+          grep -Eiq '^permissions-policy:' "${headers}.clean"
+
+          grep -Fq 'Is your property really being managed?' "$body"
+          grep -Fq 'Your Property. My Priority.' "$body"
+          grep -Fq 'Responsive Communication' "$body"
+          grep -Fq '/media/melbourne-brighton-drone-pexels-38304339-540p.mp4' "$body"
+
+          curl --fail --silent --show-error --location \
+            --connect-timeout 10 --max-time 30 \
+            --output "$robots" "$STAGING_URL/robots.txt"
+          grep -Fq 'Disallow: /' "$robots"
+
+          curl --fail --silent --show-error --location \
+            --connect-timeout 10 --max-time 30 \
+            --output "$about" "$STAGING_URL/about/"
+          grep -Fq 'Meet Sana Patel' "$about"
+
+          curl --fail --silent --show-error \
+            --connect-timeout 10 --max-time 30 \
+            --range 0-0 --output /dev/null \
+            "$STAGING_URL/media/melbourne-brighton-drone-pexels-38304339-540p.mp4"
+
+          sitemap_status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' \
+            --connect-timeout 10 --max-time 30 "$STAGING_URL/sitemap.xml")"
+          if [ "$sitemap_status" != "404" ]; then
+            echo "Expected staging sitemap to return 404, got $sitemap_status"
+            exit 1
+          fi
+
+          {
+            echo '### Verified staging deployment'
+            echo
+            echo "- Git SHA: \`$GITHUB_SHA\`"
+            echo "- URL: $STAGING_URL/"
+            echo '- Homepage: HTTP success + Sana hero/PRIDE contracts present'
+            echo '- Search isolation: X-Robots-Tag noindex/nofollow + robots Disallow + sitemap 404'
+            echo '- Security: CSP, HSTS, nosniff, frame denial, referrer and permissions policies present'
+            echo '- Meet Sana: route responds and expected founder heading is present'
+            echo '- Cinematic media: staged MP4 is reachable'
+          } >> "$GITHUB_STEP_SUMMARY"
