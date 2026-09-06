@@ -1,4 +1,8 @@
-export const LEAD_FORM_TYPES = ['rental_appraisal', 'switch_manager', 'general'] as const;
+export const LEAD_FORM_TYPES = [
+  "rental_appraisal",
+  "switch_manager",
+  "general",
+] as const;
 export type LeadFormType = (typeof LEAD_FORM_TYPES)[number];
 
 export const LEAD_LIMITS = {
@@ -41,17 +45,29 @@ export interface LeadPayload {
   attribution: LeadAttribution;
 }
 
-export function cleanText(value: FormDataEntryValue | null, max: number): string {
-  return typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').slice(0, max) : '';
+export function cleanText(
+  value: FormDataEntryValue | null,
+  max: number,
+): string {
+  return typeof value === "string"
+    ? value.trim().replace(/\s+/g, " ").slice(0, max)
+    : "";
 }
 
-export function normalizeFormType(value: FormDataEntryValue | null): LeadFormType {
+export function normalizeFormType(
+  value: FormDataEntryValue | null,
+): LeadFormType {
   const candidate = cleanText(value, 80);
-  return (LEAD_FORM_TYPES as readonly string[]).includes(candidate) ? (candidate as LeadFormType) : 'general';
+  return (LEAD_FORM_TYPES as readonly string[]).includes(candidate)
+    ? (candidate as LeadFormType)
+    : "general";
 }
 
 export function emailLooksValid(value: string): boolean {
-  return value.length <= LEAD_LIMITS.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  return (
+    value.length <= LEAD_LIMITS.email &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+  );
 }
 
 export function createLeadPayload(
@@ -61,42 +77,46 @@ export function createLeadPayload(
   return {
     id: options.id,
     submittedAt: options.submittedAt,
-    formType: normalizeFormType(form.get('form_type')),
-    fullName: cleanText(form.get('full_name'), LEAD_LIMITS.name),
-    email: cleanText(form.get('email'), LEAD_LIMITS.email).toLowerCase(),
-    phone: cleanText(form.get('phone'), LEAD_LIMITS.phone),
-    propertyAddress: cleanText(form.get('property_address'), LEAD_LIMITS.address),
-    suburb: cleanText(form.get('suburb'), LEAD_LIMITS.suburb),
-    currentManager: cleanText(form.get('current_manager'), LEAD_LIMITS.short),
-    situation: cleanText(form.get('situation'), LEAD_LIMITS.short),
-    timeframe: cleanText(form.get('timeframe'), LEAD_LIMITS.short),
-    message: cleanText(form.get('message'), LEAD_LIMITS.message),
-    consent: form.get('consent') === 'yes',
+    formType: normalizeFormType(form.get("form_type")),
+    fullName: cleanText(form.get("full_name"), LEAD_LIMITS.name),
+    email: cleanText(form.get("email"), LEAD_LIMITS.email).toLowerCase(),
+    phone: cleanText(form.get("phone"), LEAD_LIMITS.phone),
+    propertyAddress: cleanText(
+      form.get("property_address"),
+      LEAD_LIMITS.address,
+    ),
+    suburb: cleanText(form.get("suburb"), LEAD_LIMITS.suburb),
+    currentManager: cleanText(form.get("current_manager"), LEAD_LIMITS.short),
+    situation: cleanText(form.get("situation"), LEAD_LIMITS.short),
+    timeframe: cleanText(form.get("timeframe"), LEAD_LIMITS.short),
+    message: cleanText(form.get("message"), LEAD_LIMITS.message),
+    consent: form.get("consent") === "yes",
     attribution: {
-      landingPage: cleanText(form.get('landing_page'), LEAD_LIMITS.url),
-      referrer: cleanText(form.get('referrer'), LEAD_LIMITS.url),
-      utmSource: cleanText(form.get('utm_source'), LEAD_LIMITS.short),
-      utmMedium: cleanText(form.get('utm_medium'), LEAD_LIMITS.short),
-      utmCampaign: cleanText(form.get('utm_campaign'), LEAD_LIMITS.short),
-      utmContent: cleanText(form.get('utm_content'), LEAD_LIMITS.short),
-      utmTerm: cleanText(form.get('utm_term'), LEAD_LIMITS.short),
+      landingPage: cleanText(form.get("landing_page"), LEAD_LIMITS.url),
+      referrer: cleanText(form.get("referrer"), LEAD_LIMITS.url),
+      utmSource: cleanText(form.get("utm_source"), LEAD_LIMITS.short),
+      utmMedium: cleanText(form.get("utm_medium"), LEAD_LIMITS.short),
+      utmCampaign: cleanText(form.get("utm_campaign"), LEAD_LIMITS.short),
+      utmContent: cleanText(form.get("utm_content"), LEAD_LIMITS.short),
+      utmTerm: cleanText(form.get("utm_term"), LEAD_LIMITS.short),
     },
   };
 }
 
 export function validateLead(lead: LeadPayload): string[] {
   const errors: string[] = [];
-  if (lead.fullName.length < 2) errors.push('full_name');
-  if (!emailLooksValid(lead.email)) errors.push('email');
-  if (lead.phone.length < 6) errors.push('phone');
-  if (!lead.consent) errors.push('consent');
+  if (lead.fullName.length < 2) errors.push("full_name");
+  if (!emailLooksValid(lead.email)) errors.push("email");
+  if (lead.phone.length < 6) errors.push("phone");
+  if (!lead.consent) errors.push("consent");
 
   if (
-    (lead.formType === 'rental_appraisal' || lead.formType === 'switch_manager') &&
+    (lead.formType === "rental_appraisal" ||
+      lead.formType === "switch_manager") &&
     !lead.propertyAddress &&
     !lead.suburb
   ) {
-    errors.push('property_location');
+    errors.push("property_location");
   }
 
   return errors;

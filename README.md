@@ -7,6 +7,7 @@ Engineering foundation for a new Astro + Sanity + Cloudflare Workers project.
 This repository is temporarily public. Until it is made private, it must contain only public-safe technical scaffolding.
 
 Do **not** commit:
+
 - client audit evidence or unpublished strategy
 - customer or lead data
 - WordPress exports or database content

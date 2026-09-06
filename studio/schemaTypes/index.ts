@@ -10,8 +10,15 @@ import {
   richTextSection,
   seo,
   serviceGridSection,
-} from './objects'
-import {faq, page, resourceArticle, reviewReference, siteSettings, suburbPage} from './documents'
+} from "./objects";
+import {
+  faq,
+  page,
+  resourceArticle,
+  reviewReference,
+  siteSettings,
+  suburbPage,
+} from "./documents";
 
 export const schemaTypes = [
   seo,
@@ -31,4 +38,4 @@ export const schemaTypes = [
   reviewReference,
   resourceArticle,
   suburbPage,
-]
+];
