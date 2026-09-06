@@ -6,8 +6,9 @@ on:
   pull_request:
     branches: [main, development]
 
-# Temporary PR #19 formatting repair. Restored to contents: read after the
-# deterministic Prettier result is committed to this isolated branch.
+# Temporary PR #19 dependency/format normalization only. Restored to
+# contents: read and strict npm ci immediately after the deterministic
+# package-lock/Prettier result is committed to this isolated branch.
 permissions:
   contents: write
 
@@ -22,7 +23,7 @@ jobs:
     timeout-minutes: 25
 
     steps:
-      - name: Checkout PR head for temporary formatting repair
+      - name: Checkout PR head for temporary normalization
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ github.head_ref || github.ref_name }}
@@ -34,24 +35,27 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - name: Install locked dependencies
+      - name: Refresh deterministic lockfile
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Install normalized locked dependencies
         run: npm ci --no-audit --no-fund
 
       - name: Apply repository Prettier contract
         run: npm run format
 
-      - name: Commit deterministic formatting to PR branch
+      - name: Commit normalized lock and formatting to PR branch
         if: github.event_name == 'pull_request'
         shell: bash
         run: |
           if git diff --quiet; then
-            echo "Repository already matches the Prettier contract."
+            echo "Lockfile and formatting already match the declared package graph and Prettier contract."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "chore: normalize main foundation formatting"
+          git commit -m "chore: normalize Studio dependency lock"
           git push origin HEAD:${{ github.head_ref }}
 
       - name: Dependency vulnerability audit
@@ -126,7 +130,10 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - name: Install locked dependencies
+      - name: Refresh deterministic lockfile
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Install normalized locked dependencies
         run: npm ci --no-audit --no-fund
 
       - name: Production build for browser runtime
