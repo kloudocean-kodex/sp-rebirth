@@ -2,15 +2,14 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
-import InnerHero from '@/components/InnerHero.astro';
-import CredentialStrip from '@/components/CredentialStrip.astro';
 import { SITE } from '@/config/site';
 
-const title = 'About Sana Patel | Melbourne Property Manager & Estate Agent';
+const title = 'Meet Sana Patel | Licensed Estate Agent & Property Manager';
 const description =
-  'Meet Sana Patel and the service philosophy behind Sana Patel Real Estate: direct accountability, 24×7 direct access, clear communication and personal property management in Melbourne.';
+  'Meet Sana Patel, Licensed Estate Agent with 10+ years in property management, and the personal service standard behind Sana Patel Real Estate.';
 const businessId = new URL('/#business', SITE.url).toString();
 const founderId = new URL('/about/#sana-patel', SITE.url).toString();
+const founderImage = new URL('/media/sana-patel-meet-portrait.webp', SITE.url).toString();
 
 const schema = {
   '@context': 'https://schema.org',
@@ -19,7 +18,7 @@ const schema = {
   name: SITE.founder.name,
   jobTitle: 'Managing Director / Licensed Estate Agent',
   url: SITE.founder.profileUrl,
-  image: SITE.founder.image,
+  image: founderImage,
   sameAs: [...SITE.profiles.founder],
   worksFor: {
     '@type': 'RealEstateAgent',
@@ -29,134 +28,97 @@ const schema = {
     sameAs: [...SITE.profiles.business],
   },
 };
-
-const credentials = [
-  { label: 'Business', value: 'Sana Patel Real Estate' },
-  { label: 'Leadership', value: 'Managing Director / OIEC' },
-  { label: 'Professional standing', value: 'Licensed Estate Agent' },
-  { label: 'Direct access', value: '24×7 to Sana Patel' },
-];
 ---
 
-<BaseLayout {title} {description} canonicalPath="/about/" {schema}>
+<BaseLayout {title} {description} canonicalPath="/about/" {schema} bodyClass="meet-sana-final">
   <SiteHeader slot="header" />
-  <InnerHero
-    eyebrow="About Sana"
-    title="Service standards shaped long before real estate."
-    lead="A career across customer service, hospitality, aviation and residential property management shaped Sana's belief that communication, ownership and follow-through are not extras—they are the service."
-    primaryLabel="Talk to Sana"
-    primaryHref={`tel:${SITE.phone.e164}`}
-    secondaryLabel="For rental providers"
-    secondaryHref="/rental-providers/"
-    image="https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.13.01-PM.jpeg"
-    imagePosition="center 24%"
-    imageWidth={1200}
-    imageHeight={1600}
-  />
 
-  <CredentialStrip items={credentials} />
-
-  <section class="section">
-    <div class="container statement">
-      <div>
-        <p class="eyebrow">The founder-led model</p>
-        <h2>Know who is accountable.</h2>
-      </div>
-      <div class="statement__body">
-        <p>
-          Sana built her real-estate business around the part of property management clients feel most strongly: whether
-          somebody is genuinely paying attention.
+  <section class="meet-hero" aria-labelledby="meet-sana-title">
+    <div class="meet-hero__ornament" aria-hidden="true"></div>
+    <div class="container-wide meet-hero__grid">
+      <div class="meet-hero__copy">
+        <h1 id="meet-sana-title">Meet Sana Patel</h1>
+        <p class="meet-hero__credential">
+          Licensed Estate Agent <span aria-hidden="true">|</span> 10+ Years in Property Management
         </p>
-        <p>
-          Her experience spans service-focused roles and residential property management. That background now informs a
-          more personal model for Melbourne rental providers—one where communication is direct, access to Sana is
-          available 24×7, and the property is managed with context rather than anonymity.
+        <p class="meet-hero__lead">
+          I built Sana Patel Real Estate around the way I believe property management should be approached - with clear
+          communication, careful attention to detail and a professional considered approach.
         </p>
       </div>
-    </div>
-  </section>
 
-  <section class="section section--tight founder-grid-wrap">
-    <div class="container-wide founder-grid">
-      <figure>
+      <figure class="meet-hero__portrait">
         <img
-          src="https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp"
-          alt="Sana Patel, Managing Director of Sana Patel Real Estate"
-          width="614"
-          height="704"
-          loading="lazy"
+          src="/media/sana-patel-meet-portrait.webp"
+          alt="Sana Patel standing outdoors"
+          width="900"
+          height="900"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
         />
       </figure>
-      <div class="founder-copy">
-        <p class="eyebrow">How Sana works</p>
-        <h2>Quietly thorough. Personally involved.</h2>
-        <p class="founder-copy__lead">
-          The aim is not to make property management feel busy. It is to make the important things visible, understood
-          and followed through.
-        </p>
-        <div class="principles">
-          <article>
-            <h3>Accountability</h3><p>
-              A clear point of responsibility rather than uncertainty about who owns the next step.
-            </p>
-          </article>
-          <article>
-            <h3>24×7 direct access</h3><p>
-              A direct path to Sana when something needs attention. Access can be immediate even when the final repair,
-              trade attendance or process naturally takes longer.
-            </p>
-          </article>
-          <article>
-            <h3>Care with judgement</h3><p>
-              Looking after the property while making practical decisions around tenancy, maintenance and rental
-              performance.
-            </p>
-          </article>
+    </div>
+  </section>
+
+  <section class="meet-origin" aria-labelledby="meet-origin-title">
+    <div class="container-wide meet-origin__grid">
+      <div class="meet-origin__number" aria-hidden="true">01</div>
+      <div class="meet-origin__copy">
+        <h2 id="meet-origin-title">From Receptionist to Licensed Estate Agent</h2>
+        <div class="meet-origin__body">
+          <p>I started my real estate career as a receptionist and built my experience from the ground up.</p>
+          <p>
+            Over the years, I progressed through property management, working directly with rental providers, renters,
+            contractors and the day-to-day management of investment properties.
+          </p>
         </div>
       </div>
+      <aside class="meet-origin__statement">The details matter.</aside>
     </div>
   </section>
 
-  <section class="section service-origin">
-    <div class="container-wide service-origin__grid">
-      <div class="service-origin__intro">
-        <p class="eyebrow">Where the standard comes from</p>
-        <h2>Different industries. The same expectation of service.</h2>
-      </div>
-      <div class="service-origin__items">
-        <article>
-          <span>01</span><h3>Hospitality</h3><p>
-            Notice what people need, communicate clearly and make the experience feel considered.
-          </p>
-        </article>
-        <article>
-          <span>02</span><h3>Aviation</h3><p>
-            Stay calm, follow process and understand that small details matter when people are relying on you.
-          </p>
-        </article>
-        <article>
-          <span>03</span><h3>Property management</h3><p>
-            Apply that service discipline to an owner's asset, renter experience and the decisions that connect both.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
+  <section class="meet-detail" aria-labelledby="meet-detail-title">
+    <div class="container-wide meet-detail__grid">
+      <figure class="meet-detail__image">
+        <img
+          src="/media/sana-patel-meet-desk.webp"
+          alt="Sana Patel working at a property-management desk"
+          width="1000"
+          height="1000"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
 
-  <section class="section">
-    <div class="container cta-panel">
-      <div>
-        <p class="eyebrow">See if the fit is right</p>
-        <h2>The first conversation should be useful.</h2>
+      <div class="meet-detail__copy">
+        <h2 id="meet-detail-title">Why Sana Patel Real Estate</h2>
+        <p>I created Sana Patel Real Estate to offer a more personal and hands-on approach to property management.</p>
         <p>
-          Tell Sana where your property is, what is happening now and what you would like to improve. There is no need
-          to commit before understanding the approach.
+          Rental providers should know who is overseeing the management of their property, who they are speaking with
+          and how matters are being followed through.
         </p>
       </div>
-      <div class="cta-panel__actions">
-        <a class="button button--solid" href="/rental-appraisal/">Rental appraisal</a>
-        <a class="button" href="/switch-property-managers/">Switch managers</a>
-      </div>
+    </div>
+  </section>
+
+  <section class="meet-standard" aria-labelledby="meet-standard-title">
+    <div class="container meet-standard__inner">
+      <h2 id="meet-standard-title">When Your Name Is on the Business, the Standard is personal.</h2>
+      <p>
+        For me, that means clear communication, careful documentation, considered advice and professional attention to
+        the management process.
+      </p>
+      <p class="meet-standard__signature">Your Property. My Priority.</p>
+    </div>
+  </section>
+
+  <section class="meet-actions" aria-label="Meet Sana Patel next steps">
+    <div class="container-wide meet-actions__buttons">
+      <a class="meet-button meet-button--gold" href="/property-management-visibility-check/"
+        >Get a Rental Health Check</a
+      >
+      <a class="meet-button meet-button--outline" href="/switch-property-managers/">Change Your Property Manager</a>
     </div>
   </section>
 
@@ -164,102 +126,358 @@ const credentials = [
 </BaseLayout>
 
 <style>
-  .founder-grid-wrap {
-    background: var(--white);
+  :global(.meet-sana-final) {
+    --meet-ink: #0d0e0c;
+    --meet-ivory: #fffdf8;
+    --meet-paper: #f5efe4;
+    --meet-gold: #b89a60;
+    --meet-gold-soft: #d7c39a;
+    background: var(--meet-paper);
   }
-  .founder-grid {
+
+  .meet-hero {
+    position: relative;
+    overflow: clip;
+    min-height: 100svh;
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: var(--space-5);
+    align-items: center;
+    padding: clamp(8rem, 12vw, 11rem) 0 clamp(5rem, 8vw, 7rem);
+    background:
+      radial-gradient(circle at 78% 28%, rgba(184, 154, 96, 0.14), transparent 28rem),
+      radial-gradient(circle at 9% 92%, rgba(215, 195, 154, 0.06), transparent 24rem), var(--meet-ink);
+    color: var(--meet-ivory);
+  }
+
+  .meet-hero::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(215, 195, 154, 0.7), transparent);
+  }
+
+  .meet-hero__ornament {
+    position: absolute;
+    width: 32rem;
+    height: 32rem;
+    right: -12rem;
+    top: 12%;
+    border: 1px solid rgba(215, 195, 154, 0.16);
+    border-radius: 50%;
+  }
+
+  .meet-hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(22rem, 0.72fr);
+    gap: clamp(3rem, 8vw, 8rem);
     align-items: center;
   }
-  figure {
+
+  .meet-hero h1 {
+    max-width: 8ch;
+    font-family: var(--font-sans);
+    font-size: clamp(4.4rem, 9.5vw, 9.4rem);
+    font-weight: 680;
+    letter-spacing: -0.065em;
+    line-height: 0.84;
+  }
+
+  .meet-hero__credential {
+    max-width: 35rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.7rem;
+    margin-top: clamp(2rem, 4vw, 3.2rem);
+    color: var(--meet-gold-soft);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.2vw, 2rem);
+    font-style: italic;
+    line-height: 1.16;
+  }
+
+  .meet-hero__lead {
+    max-width: 42rem;
+    margin-top: 1.8rem;
+    color: rgba(255, 253, 248, 0.74);
+    font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+    line-height: 1.7;
+  }
+
+  .meet-hero__portrait {
+    position: relative;
     margin: 0;
   }
-  figure img {
+
+  .meet-hero__portrait::before {
+    content: '';
+    position: absolute;
+    inset: -1.2rem 1.2rem 1.2rem -1.2rem;
+    border: 1px solid rgba(215, 195, 154, 0.28);
+    border-radius: 1.25rem;
+    pointer-events: none;
+  }
+
+  .meet-hero__portrait img {
     width: 100%;
-    max-height: 50rem;
-    aspect-ratio: 614/704;
+    aspect-ratio: 1;
     object-fit: cover;
-    object-position: center top;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lift);
+    border-radius: 1rem;
+    box-shadow: 0 2.4rem 6rem rgba(0, 0, 0, 0.36);
   }
-  .founder-copy h2 {
-    margin-top: var(--space-2);
-    font-size: var(--h2);
-    max-width: 11ch;
+
+  .meet-origin {
+    padding: clamp(6rem, 10vw, 10rem) 0;
+    background: var(--meet-ivory);
+    color: var(--meet-ink);
   }
-  .founder-copy__lead {
-    margin-top: var(--space-3);
-    max-width: 34rem;
-    color: var(--ink-soft);
-    font-size: var(--body-lg);
-  }
-  .principles {
-    margin-top: var(--space-4);
-    border-top: 1px solid var(--line);
-  }
-  .principles article {
+
+  .meet-origin__grid {
     display: grid;
-    grid-template-columns: 0.45fr 1fr;
-    gap: var(--space-2);
-    padding: 1.4rem 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .principles h3 {
-    font-size: 1.5rem;
-  }
-  .principles p {
-    color: var(--ink-soft);
-  }
-  .service-origin {
-    background: var(--paper-deep);
-  }
-  .service-origin__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
-    gap: var(--space-5);
-  }
-  .service-origin__intro h2 {
-    margin-top: var(--space-2);
-    max-width: 12ch;
-    font-size: var(--h2);
-  }
-  .service-origin__items {
-    border-top: 1px solid var(--line-strong);
-  }
-  .service-origin__items article {
-    display: grid;
-    grid-template-columns: 3rem minmax(0, 0.55fr) minmax(0, 1fr);
-    gap: var(--space-2);
-    padding: 1.45rem 0;
-    border-bottom: 1px solid var(--line);
+    grid-template-columns: 5rem minmax(0, 1.15fr) minmax(16rem, 0.55fr);
+    gap: clamp(2rem, 5vw, 5rem);
     align-items: start;
   }
-  .service-origin__items span {
-    color: var(--accent);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
+
+  .meet-origin__number {
+    color: #6d532c;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-style: italic;
   }
-  .service-origin__items h3 {
-    font-size: clamp(1.35rem, 2vw, 1.8rem);
+
+  .meet-origin h2,
+  .meet-detail h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(3rem, 5.5vw, 6rem);
+    font-weight: 660;
+    letter-spacing: -0.055em;
+    line-height: 0.92;
   }
-  .service-origin__items p {
-    color: var(--ink-soft);
+
+  .meet-origin h2 {
+    max-width: 12ch;
   }
-  @media (max-width: 820px) {
-    .founder-grid,
-    .principles article,
-    .service-origin__grid {
+
+  .meet-origin__body {
+    max-width: 46rem;
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+    color: #45443e;
+    font-size: clamp(1.04rem, 1.35vw, 1.2rem);
+    line-height: 1.7;
+  }
+
+  .meet-origin__statement {
+    align-self: end;
+    padding: 2rem 0 0;
+    border-top: 1px solid rgba(109, 83, 44, 0.28);
+    color: #6d532c;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 4.4rem);
+    font-style: italic;
+    line-height: 0.95;
+  }
+
+  .meet-detail {
+    padding: clamp(5.5rem, 9vw, 9rem) 0;
+    background: var(--meet-paper);
+  }
+
+  .meet-detail__grid {
+    display: grid;
+    grid-template-columns: minmax(20rem, 0.82fr) minmax(0, 1fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    align-items: center;
+  }
+
+  .meet-detail__image {
+    margin: 0;
+  }
+
+  .meet-detail__image img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 2rem 5rem rgba(23, 23, 19, 0.13);
+  }
+
+  .meet-detail h2 {
+    max-width: 10ch;
+  }
+
+  .meet-detail__copy > p {
+    max-width: 42rem;
+    margin-top: 1.25rem;
+    color: #45443e;
+    font-size: clamp(1.04rem, 1.3vw, 1.18rem);
+    line-height: 1.72;
+  }
+
+  .meet-standard {
+    position: relative;
+    overflow: clip;
+    padding: clamp(6rem, 10vw, 9rem) 0;
+    background: radial-gradient(circle at 86% 24%, rgba(184, 154, 96, 0.15), transparent 27rem), var(--meet-ink);
+    color: var(--meet-ivory);
+  }
+
+  .meet-standard__inner {
+    text-align: center;
+  }
+
+  .meet-standard h2 {
+    max-width: 15ch;
+    margin: 0 auto;
+    font-family: var(--font-sans);
+    font-size: clamp(3.2rem, 6vw, 6.4rem);
+    font-weight: 650;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+  }
+
+  .meet-standard__inner > p:not(.meet-standard__signature) {
+    max-width: 43rem;
+    margin: 2rem auto 0;
+    color: rgba(255, 253, 248, 0.72);
+    font-size: clamp(1.05rem, 1.4vw, 1.22rem);
+    line-height: 1.7;
+  }
+
+  .meet-standard__signature {
+    margin-top: 2.3rem;
+    color: var(--meet-gold-soft);
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-style: italic;
+    line-height: 1;
+  }
+
+  .meet-actions {
+    padding: clamp(3.4rem, 6vw, 5rem) 0;
+    background: var(--meet-ivory);
+  }
+
+  .meet-actions__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+  }
+
+  .meet-button {
+    min-height: 3.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.82rem 1.2rem;
+    border: 1px solid #6d532c;
+    border-radius: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 760;
+    letter-spacing: 0.055em;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .meet-button--gold {
+    background: #b89a60;
+    border-color: #b89a60;
+    color: #11120f;
+  }
+
+  .meet-button--outline {
+    background: transparent;
+    color: #171713;
+  }
+
+  @media (hover: hover) {
+    .meet-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .meet-button--gold:hover {
+      background: #d7c39a;
+      border-color: #d7c39a;
+    }
+
+    .meet-button--outline:hover {
+      background: #171713;
+      border-color: #171713;
+      color: #fffdf8;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .meet-hero {
+      min-height: auto;
+      padding-top: 7.5rem;
+    }
+
+    .meet-hero__grid,
+    .meet-origin__grid,
+    .meet-detail__grid {
       grid-template-columns: 1fr;
     }
-    .service-origin__items article {
-      grid-template-columns: 2.5rem 1fr;
+
+    .meet-hero__portrait,
+    .meet-detail__image {
+      width: min(100%, 38rem);
+      margin-inline: auto;
     }
-    .service-origin__items p {
-      grid-column: 2;
+
+    .meet-origin__number {
+      display: none;
+    }
+
+    .meet-origin__statement {
+      max-width: 12ch;
+      margin-top: 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .meet-hero h1 {
+      font-size: clamp(3.9rem, 18vw, 6rem);
+    }
+
+    .meet-hero__credential {
+      display: block;
+      max-width: 18rem;
+    }
+
+    .meet-hero__credential span {
+      display: none;
+    }
+
+    .meet-hero__portrait::before {
+      inset: -0.7rem 0.7rem 0.7rem -0.7rem;
+    }
+
+    .meet-origin h2,
+    .meet-detail h2,
+    .meet-standard h2 {
+      font-size: clamp(2.65rem, 13vw, 4.2rem);
+    }
+
+    .meet-actions__buttons {
+      display: grid;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .meet-button {
+      transition: none;
     }
   }
 </style>

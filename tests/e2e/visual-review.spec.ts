@@ -9,17 +9,10 @@ const reviewRoutes = [
 ] as const;
 
 const homeReviewSections = [
-  ['01-hero', '.rebirth-hero'],
-  ['02-owner-choices', '.rebirth-choice'],
-  ['03-accountability', '.rebirth-manifesto'],
-  ['04-founder', '.rebirth-founder'],
-  ['05-services', '.rebirth-services'],
-  ['06-switching', '.rebirth-switch'],
-  ['07-process', '.rebirth-process'],
-  ['08-proof-intro', '.rebirth-proof-intro'],
-  ['09-reviews', '#reviews'],
-  ['10-faq', '.rebirth-faq'],
-  ['11-appraisal', '.rebirth-appraisal'],
+  ['01-hero', '.sana-hero'],
+  ['02-pride', '.sana-pride'],
+  ['03-reviews', '.trust-proof'],
+  ['04-final-action', '.sana-final-cta'],
 ] as const;
 
 const visualCaptureProjects = new Set(['desktop-chromium', 'mobile-chromium']);
@@ -33,10 +26,10 @@ function skipNonVisualProject(projectName: string) {
 
 async function expectBrandReady(page: Page) {
   const brand = page.getByRole('link', { name: 'Sana Patel Real Estate home' });
+  const logo = brand.locator('.brand__logo');
   await expect(brand).toBeVisible();
-  await expect(brand.locator('.brand__monogram')).toHaveText('SP');
-  await expect(brand.locator('.brand__wordmark strong')).toHaveText('Sana Patel');
-  await expect(brand.locator('.brand__wordmark > span')).toHaveText('Real Estate');
+  await expect(logo).toHaveAttribute('alt', 'Sana Patel Real Estate');
+  await expect(logo).toHaveAttribute('src', /\/media\/sana-patel-logo\.webp$/);
   await page.evaluate(() => document.fonts.ready);
 }
 
@@ -46,10 +39,6 @@ async function suppressOffscreenSkipLinkArtifact(page: Page) {
   const isAboveViewport = await skipLink.evaluate((element) => element.getBoundingClientRect().bottom <= 0);
   expect(isAboveViewport).toBe(true);
 
-  // Element screenshots can composite fixed-position nodes that are physically
-  // above the viewport into a long scrolled section capture. Hide only after
-  // proving the accessibility link is unfocused and off-screen; a real visible
-  // skip-link regression therefore fails instead of being cosmetically masked.
   await skipLink.evaluate((element: HTMLElement) => {
     element.style.visibility = 'hidden';
   });
@@ -104,8 +93,6 @@ for (const [name, path] of reviewRoutes) {
     await page.goto(path, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toBeVisible();
 
-    // Exercise the full page before capture so below-the-fold lazy images are
-    // requested, while avoiding networkidle on intentionally third-party review media.
     await hydrateLazyMedia(page);
 
     await page.screenshot({

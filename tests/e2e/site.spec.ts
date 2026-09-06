@@ -36,72 +36,97 @@ for (const path of publicRoutes) {
   });
 }
 
-test('homepage leads with Sana, direct contact and three clear owner decisions', async ({ page }) => {
+test('homepage above the fold follows Sana final brief without extra sales clutter', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  const hero = page.locator('.rebirth-hero');
-  await expect(hero.getByRole('heading', { name: /your property should never feel like a mystery/i })).toBeVisible();
-  await expect(hero.getByRole('link', { name: /call sana · 0416 977 990/i })).toHaveAttribute(
+  const hero = page.locator('.sana-hero');
+  await expect(hero.getByText('Melbourne Property Management · For Rental Providers.', { exact: true })).toBeVisible();
+  await expect(
+    hero.getByRole('heading', { name: 'Is your property really being managed?', exact: true }),
+  ).toBeVisible();
+  await expect(
+    hero.getByText('Property management with strategy, accountability and personal attention.', { exact: true }),
+  ).toBeVisible();
+  await expect(hero.getByText('Your Property. My Priority.', { exact: true })).toBeVisible();
+  await expect(hero.getByRole('link', { name: 'Get a Rental Health Check', exact: true })).toHaveAttribute(
     'href',
-    'tel:+61416977990',
+    '/property-management-visibility-check/',
   );
-  await expect(hero.getByRole('link', { name: /request a rental appraisal/i })).toHaveAttribute('href', '#appraisal');
-  await expect(hero.getByText('Managing Director', { exact: true })).toBeVisible();
-  await expect(hero.getByText('Licensed Estate Agent', { exact: true })).toBeVisible();
-  await expect(hero.getByText('24×7 direct access', { exact: true })).toBeVisible();
-
-  const services = page.locator('#services');
-  await expect(services.getByRole('heading', { name: /i need a property manager/i })).toBeVisible();
-  await expect(services.getByRole('heading', { name: /i need a rental appraisal/i })).toBeVisible();
-  await expect(services.getByRole('heading', { name: /i want to change managers/i })).toBeVisible();
-});
-
-test('homepage includes full-service management detail without unsupported performance claims', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-
-  await expect(page.getByRole('heading', { name: /the everyday details\. made visible/i })).toBeVisible();
-  for (const heading of [
-    'Leasing & renter selection',
-    'Routine inspections',
-    'Rent & arrears',
-    'Maintenance coordination',
-    'Compliance coordination',
-    'Renewals & tenancy communication',
-  ]) {
-    await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
-  }
-
-  const body = await page.locator('body').innerText();
-  expect(body).not.toMatch(/melbourne'?s best|guaranteed returns|maximise your returns|100% stress[- ]free/i);
-});
-
-test('homepage switching section makes accountability observable', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-
-  await expect(page.getByRole('heading', { name: /a switch should feel controlled, not chaotic/i })).toBeVisible();
-  await expect(page.getByText('One clear point of accountability', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('Visible follow-through', { exact: true }).first()).toBeVisible();
-  await expect(page.getByRole('link', { name: /see the switching approach/i })).toHaveAttribute(
+  await expect(hero.getByRole('link', { name: 'Change Property Manager', exact: true })).toHaveAttribute(
     'href',
     '/switch-property-managers/',
   );
+
+  await expect(hero.locator('video')).toHaveCount(0);
+  await expect(hero.getByText(/managing director|licensed estate agent|24×7 direct access/i)).toHaveCount(0);
 });
 
-test('homepage review proof keeps accessible independent source links if the vendor widget is unavailable', async ({
-  page,
-}) => {
+test('homepage preserves Sana original local logo', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const brand = page.getByRole('link', { name: 'Sana Patel Real Estate home' });
+  const logo = brand.locator('.brand__logo');
+  await expect(brand).toBeVisible();
+  await expect(logo).toHaveAttribute('alt', 'Sana Patel Real Estate');
+  await expect(logo).toHaveAttribute('src', /\/media\/sana-patel-logo\.webp$/);
+});
+
+test('homepage presents Sana current PRIDE wording in the framework-led treatment', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const pride = page.locator('#pride');
+  await expect(pride.getByRole('heading', { name: /property management with pride/i })).toBeVisible();
+  await expect(
+    pride.getByText('A clear standard for how I approach the management of every property.', { exact: true }),
+  ).toBeVisible();
+  await expect(
+    pride.getByText('PRIDE is the standard I choose to bring to my work every day.', { exact: true }),
+  ).toBeVisible();
+
+  for (const heading of [
+    'Proactive Property Care',
+    'Responsive Communication',
+    'Integrity in Every Decision',
+    'Diligent Property Management',
+    'Experience That Matters',
+  ]) {
+    await expect(pride.getByRole('heading', { name: heading, exact: true })).toBeVisible();
+  }
+
+  await expect(pride.locator('.sana-pride-card')).toHaveCount(5);
+});
+
+test('homepage keeps Sana PRIDE philosophy and consistent-standard message intact', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const philosophy = page.locator('.sana-philosophy');
+  await expect(philosophy.getByText('What PRIDE means to me', { exact: true })).toBeVisible();
+  await expect(philosophy.getByText(/property management is not simply about collecting rent/i)).toBeVisible();
+  await expect(
+    philosophy.getByText(/not every situation in property management can be predicted or controlled/i),
+  ).toBeVisible();
+  await expect(philosophy.getByText('What I can control is how I respond.', { exact: true })).toBeVisible();
+
+  const standard = page.locator('.sana-standard');
+  await expect(standard.getByText('The Standard behind the service', { exact: true })).toBeVisible();
+  await expect(
+    standard.getByText(/different properties\. different situations\. one consistent standard:/i),
+  ).toBeVisible();
+  await expect(standard.getByText('Your Property. My Priority.', { exact: true })).toBeVisible();
+});
+
+test('homepage review proof stays source-driven and accessible if Trustindex is unavailable', async ({ page }) => {
   await page.route('https://cdn.trustindex.io/**', (route) => route.abort('blockedbyclient'));
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByRole('heading', { name: /trust should not depend on a polished promise/i })).toBeVisible();
-  await expect(page.getByRole('heading', { name: /read the current reviews/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /current google reviews open source/i })).toHaveAttribute(
+  await expect(page.getByRole('heading', { name: /trusted by rental providers & renters/i })).toBeVisible();
+  await expect(page.getByText('Real experiences. Real service.', { exact: true })).toBeVisible();
+  await expect(
+    page.getByText(/hear directly from rental providers and renters who have shared their experience/i),
+  ).toBeVisible();
+  await expect(page.getByRole('link', { name: /read reviews on google/i })).toHaveAttribute(
     'href',
     /query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM/,
-  );
-  await expect(page.getByRole('link', { name: /current agency activity realestate\.com\.au/i })).toHaveAttribute(
-    'href',
-    'https://www.realestate.com.au/agency/sana-patel-real-estate-KRFFJV',
   );
   await expect(page.locator('[data-review-provider="Trustindex"]')).toHaveAttribute(
     'data-trustindex-widget-id',
@@ -109,58 +134,50 @@ test('homepage review proof keeps accessible independent source links if the ven
   );
 });
 
-test('confirmed 24x7 direct-access service promise remains visible', async ({ page }) => {
+test('homepage closes with Sana requested final action pair', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
 
+  const cta = page.locator('.sana-final-cta');
+  await expect(
+    cta.getByRole('heading', { name: /ready to take a closer look at how your property is being managed/i }),
+  ).toBeVisible();
+  await expect(cta.getByRole('link', { name: 'Get a Rental Health Check', exact: true })).toHaveAttribute(
+    'href',
+    '/property-management-visibility-check/',
+  );
+  await expect(cta.getByRole('link', { name: 'Change Property Manager', exact: true })).toHaveAttribute(
+    'href',
+    '/switch-property-managers/',
+  );
+  await expect(cta.getByText('Your Property. My Priority.', { exact: true })).toBeVisible();
+});
+
+test('homepage follows the disciplined three-part client structure', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.locator('.sana-hero')).toBeVisible();
+  await expect(page.locator('#pride')).toBeVisible();
+  await expect(page.locator('#reviews')).toBeVisible();
+  await expect(page.locator('.rebirth-diagnostic')).toHaveCount(0);
+  await expect(page.locator('.rebirth-services')).toHaveCount(0);
+  await expect(page.locator('.rebirth-switch')).toHaveCount(0);
+  await expect(page.locator('.rebirth-process')).toHaveCount(0);
+  await expect(page.locator('.rebirth-faq')).toHaveCount(0);
+  await expect(page.locator('.rebirth-appraisal')).toHaveCount(0);
+  await expect(page.locator('main video')).toHaveCount(0);
+
+  const body = await page.locator('body').innerText();
+  expect(body).not.toMatch(/melbourne'?s best|guaranteed returns|maximise your returns|100% stress[- ]free/i);
+});
+
+test('confirmed 24x7 direct-access service promise remains on the detailed rental-provider journey', async ({
+  page,
+}) => {
   await page.goto('/rental-providers/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
 });
 
-test('homepage hero keeps a static evidence-safe identity composition', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-
-  const hero = page.locator('.rebirth-hero');
-  await expect(hero.locator('.rebirth-identity')).toBeVisible();
-  await expect(hero.locator('.rebirth-identity__arch')).toBeVisible();
-  await expect(hero.locator('video')).toHaveCount(0);
-  await expect(hero.locator('img')).toHaveCount(0);
-  await expect(page.getByText(/concept composition|replace with approved sana photography/i)).toHaveCount(0);
-});
-
-test('homepage keeps diagnostic tools out of the primary experience and embeds the appraisal action', async ({
-  page,
-}) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-
-  await expect(page.locator('main a[href="/property-management-visibility-check/"]')).toHaveCount(0);
-  await expect(page.locator('main a[href="/rental-position-check/"]')).toHaveCount(0);
-  await expect(page.locator('main video')).toHaveCount(0);
-  await expect(page.locator('#why-sana')).toBeVisible();
-  await expect(page.locator('#reviews')).toBeVisible();
-  await expect(page.locator('#appraisal')).toBeVisible();
-  await expect(page.locator('#appraisal form')).toBeVisible();
-});
-
-test('homepage FAQ exposes direct-call and switching answers without forcing navigation', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-
-  const callQuestion = page
-    .locator('.rebirth-faq details')
-    .filter({ hasText: 'Can I speak with Sana before filling in a form?' })
-    .locator('summary');
-  await callQuestion.click();
-  await expect(page.getByText(/direct phone contact is a first-class part of the service/i)).toBeVisible();
-
-  const switchQuestion = page
-    .locator('.rebirth-faq details')
-    .filter({ hasText: 'Can Sana help if my property is already managed elsewhere?' })
-    .locator('summary');
-  await switchQuestion.click();
-  await expect(page.getByText(/make the handover feel controlled rather than chaotic/i)).toBeVisible();
-});
-
-test('supporting journeys remain reachable without competing in primary navigation', async ({ page }) => {
+test('supporting journeys remain reachable from the footer', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const footer = page.locator('footer.site-footer');
 
@@ -211,26 +228,31 @@ test('legacy rental-provider URL permanently redirects to the canonical journey'
   expect(response.headers()['location']).toBe('/rental-providers/');
 });
 
-test('mobile navigation keeps the primary owner journey deliberately small', async ({ page }, testInfo) => {
+test('mobile navigation follows Sana final requested hierarchy', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.includes('mobile'), 'Mobile interaction test');
 
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   const menu = page.locator('.mobile-nav');
   await expect(menu).toBeVisible();
   await menu.locator('summary').click();
 
-  for (const label of [
-    'Services',
-    'Why Sana',
-    'Reviews',
-    'Switch Property Manager',
-    /Call Sana · 0416 977 990/i,
-    'Request a Rental Appraisal',
-  ]) {
-    await expect(menu.getByRole('link', { name: label })).toBeVisible();
+  const expectedLinks = [
+    ['Home', '/'],
+    ['Meet Sana Patel', '/about/'],
+    ['Property Management', '/rental-providers/'],
+    ['Change Property Manager', '/switch-property-managers/'],
+    ['Resources', '/resources/'],
+    ['Contact', '/contact/'],
+    ['Get a Rental Health Check', '/property-management-visibility-check/'],
+  ] as const;
+
+  for (const [label, href] of expectedLinks) {
+    await expect(menu.getByRole('link', { name: label, exact: true })).toBeVisible();
+    await expect(menu.getByRole('link', { name: label, exact: true })).toHaveAttribute('href', href);
   }
 
-  await expect(menu.getByRole('link', { name: 'Rental Position Check' })).toHaveCount(0);
-  await expect(menu.getByRole('link', { name: 'Resources' })).toHaveCount(0);
-  await expect(menu.getByRole('link', { name: 'Selling' })).toHaveCount(0);
+  await expect(menu.getByRole('link', { name: /Call Sana · 0416 977 990/i })).toHaveAttribute(
+    'href',
+    'tel:+61416977990',
+  );
 });

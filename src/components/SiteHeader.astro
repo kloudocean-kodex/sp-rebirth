@@ -1,29 +1,50 @@
 ---
 import { SITE } from '@/config/site';
-
-const ctaHref = '/rental-appraisal/';
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="brand brand--rebirth" href="/" aria-label="Sana Patel Real Estate home">
-      <span class="brand__monogram" aria-hidden="true">SP</span>
-      <span class="brand__wordmark" aria-hidden="true">
-        <strong>Sana Patel</strong>
-        <span>Real Estate</span>
-      </span>
+    <a class="brand brand--original" href="/" aria-label="Sana Patel Real Estate home">
+      <img
+        class="brand__logo"
+        src={SITE.logoAsset}
+        alt="Sana Patel Real Estate"
+        width="190"
+        height="55"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
     </a>
 
     <div class="header-actions">
-      <nav class="site-nav site-nav--desktop" aria-label="Primary navigation">
-        <a href="/#services">Services</a>
-        <a href="/#why-sana">Why Sana</a>
-        <a href="/#reviews">Reviews</a>
-        <a class="header-call" href={`tel:${SITE.phone.e164}`}>
-          <span>Call Sana</span>
-          <strong>{SITE.phone.display}</strong>
-        </a>
-        <a class="button button--light" href={ctaHref}>Rental Appraisal</a>
+      <nav class="site-nav site-nav--desktop final-nav" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/about/">Meet Sana Patel</a>
+
+        <details class="nav-dropdown">
+          <summary>Property Management <span aria-hidden="true">⌄</span></summary>
+          <div class="nav-dropdown__menu">
+            <a href="/rental-providers/">Property Management</a>
+            <a href="/rental-appraisal/">Rental Appraisal</a>
+            <a href="/for-renters/">For Renters</a>
+          </div>
+        </details>
+
+        <a href="/switch-property-managers/">Change Property Manager</a>
+
+        <details class="nav-dropdown">
+          <summary>Resources <span aria-hidden="true">⌄</span></summary>
+          <div class="nav-dropdown__menu nav-dropdown__menu--right">
+            <a href="/resources/">Resource Hub</a>
+            <a href="/resources/victoria-rental-minimum-standards/">Minimum Standards</a>
+            <a href="/resources/routine-inspections-victoria/">Routine Inspections</a>
+            <a href="/resources/changing-property-managers-victoria/">Changing Property Managers</a>
+          </div>
+        </details>
+
+        <a href="/contact/">Contact</a>
+        <a class="final-nav__cta" href="/property-management-visibility-check/">Get a Rental Health Check</a>
       </nav>
 
       <details class="mobile-nav">
@@ -32,12 +53,14 @@ const ctaHref = '/rental-appraisal/';
           <span class="mobile-nav__icon" aria-hidden="true"><i></i><i></i></span>
         </summary>
         <nav class="mobile-nav__panel" aria-label="Mobile navigation">
-          <a href="/#services">Services</a>
-          <a href="/#why-sana">Why Sana</a>
-          <a href="/#reviews">Reviews</a>
-          <a href="/switch-property-managers/">Switch Property Manager</a>
+          <a href="/">Home</a>
+          <a href="/about/">Meet Sana Patel</a>
+          <a href="/rental-providers/">Property Management</a>
+          <a href="/switch-property-managers/">Change Property Manager</a>
+          <a href="/resources/">Resources</a>
+          <a href="/contact/">Contact</a>
           <a class="mobile-nav__call" href={`tel:${SITE.phone.e164}`}>Call Sana · {SITE.phone.display}</a>
-          <a class="mobile-nav__primary" href={ctaHref}>Request a Rental Appraisal</a>
+          <a class="mobile-nav__primary" href="/property-management-visibility-check/">Get a Rental Health Check</a>
         </nav>
       </details>
     </div>
@@ -47,99 +70,167 @@ const ctaHref = '/rental-appraisal/';
 <style>
   .site-header {
     background: rgba(13, 14, 12, 0.965);
-    border-bottom: 1px solid rgba(215, 195, 154, 0.24);
-    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(215, 195, 154, 0.2);
+    backdrop-filter: blur(18px);
   }
+
   .site-header__inner {
-    min-height: 5.5rem;
+    width: min(100% - 2rem, 96rem);
+    min-height: 5.4rem;
+    border-bottom: 0;
+    gap: 1.4rem;
+  }
+
+  .brand--original {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3.35rem;
+    padding: 0.18rem 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .brand--original:hover {
+    transform: none;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .brand--original:hover .brand__logo {
+    opacity: 0.84;
+  }
+
+  .brand__logo {
+    width: auto;
+    height: 2.65rem;
+    max-width: 11rem;
+    object-fit: contain;
+    transition: opacity 160ms ease;
+  }
+
+  .final-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.7rem, 1.1vw, 1.25rem);
+  }
+
+  .final-nav > a,
+  .nav-dropdown > summary {
+    min-height: 2.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.26rem;
+    padding: 0.3rem 0;
+    border: 0;
+    color: rgba(255, 253, 248, 0.86);
+    font-size: clamp(0.62rem, 0.64vw, 0.72rem);
+    font-weight: 680;
+    letter-spacing: 0.045em;
+    line-height: 1.15;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .final-nav > a:not(.final-nav__cta),
+  .nav-dropdown > summary {
+    position: relative;
+  }
+
+  .final-nav > a:not(.final-nav__cta)::after,
+  .nav-dropdown > summary::after {
+    content: '';
+    position: absolute;
+    inset: auto 100% 0 0;
+    height: 1px;
+    background: var(--gold-soft);
+    transition: right 180ms ease;
+  }
+
+  .final-nav > a:not(.final-nav__cta):hover::after,
+  .final-nav > a:not(.final-nav__cta):focus-visible::after,
+  .nav-dropdown > summary:hover::after,
+  .nav-dropdown > summary:focus-visible::after,
+  .nav-dropdown[open] > summary::after {
+    right: 0;
+  }
+
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown > summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .nav-dropdown > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-dropdown > summary span {
+    color: var(--gold-soft);
+    font-size: 0.9rem;
+    transform: translateY(-0.04rem);
+  }
+
+  .nav-dropdown__menu {
+    position: absolute;
+    top: calc(100% + 0.72rem);
+    left: -1rem;
+    z-index: 40;
+    min-width: 15.5rem;
+    display: grid;
+    padding: 0.55rem;
+    border: 1px solid rgba(215, 195, 154, 0.24);
+    border-radius: 0.7rem;
+    background: rgba(13, 14, 12, 0.99);
+    box-shadow: 0 1.4rem 3.5rem rgba(0, 0, 0, 0.32);
+  }
+
+  .nav-dropdown__menu--right {
+    left: auto;
+    right: -1rem;
+  }
+
+  .nav-dropdown__menu a {
+    padding: 0.72rem 0.78rem;
+    border-bottom: 1px solid rgba(215, 195, 154, 0.12);
+    color: rgba(255, 253, 248, 0.82);
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.035em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-dropdown__menu a:last-child {
     border-bottom: 0;
   }
-  .brand {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.68rem;
-    padding: 0.42rem 0.7rem 0.42rem 0.48rem;
-    border: 1px solid rgba(215, 195, 154, 0.48);
-    border-radius: var(--radius-sm);
-    background: rgba(8, 9, 7, 0.96);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
-  }
-  .brand:hover {
-    border-color: rgba(215, 195, 154, 0.86);
-    background: rgba(18, 19, 16, 0.99);
-    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.2);
-  }
-  .brand__monogram {
-    width: 2.55rem;
-    height: 2.55rem;
-    display: grid;
-    place-items: center;
-    flex: 0 0 auto;
-    margin: 0;
-    border: 1px solid rgba(215, 195, 154, 0.52);
-    border-radius: 999px;
+
+  .nav-dropdown__menu a:hover,
+  .nav-dropdown__menu a:focus-visible {
     color: var(--gold-soft);
-    font-family: var(--font-display);
-    font-size: 1.24rem;
-    font-weight: 430;
-    letter-spacing: -0.035em;
-    line-height: 1;
-    text-transform: none;
-    opacity: 1;
+    background: rgba(184, 154, 96, 0.06);
   }
-  .brand__wordmark {
-    display: grid;
-    gap: 0.16rem;
-    margin: 0;
-    color: var(--white);
-    line-height: 1;
-    text-transform: none;
-    opacity: 1;
+
+  .final-nav__cta {
+    min-height: 2.85rem !important;
+    padding: 0.62rem 0.82rem !important;
+    border: 1px solid #b89a60 !important;
+    border-radius: 0.32rem;
+    background: #b89a60;
+    color: #11120f !important;
+    font-weight: 760 !important;
   }
-  .brand__wordmark strong {
-    color: var(--white);
-    font-family: var(--font-display);
-    font-size: 1.04rem;
-    font-weight: 440;
-    letter-spacing: 0;
-    line-height: 1;
+
+  .final-nav__cta:hover,
+  .final-nav__cta:focus-visible {
+    background: #d7c39a;
+    border-color: #d7c39a !important;
   }
-  .brand__wordmark > span {
-    margin: 0;
-    color: rgba(255, 253, 248, 0.72);
-    font-size: 0.52rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    line-height: 1;
-    text-transform: uppercase;
-    opacity: 1;
-  }
-  .site-nav > a:not(.button) {
-    min-height: 2.75rem;
-    display: inline-flex;
-    align-items: center;
-  }
-  .header-call {
-    display: grid !important;
-    align-content: center;
-    gap: 0.08rem;
-    padding-inline: 0.25rem;
-    text-transform: none !important;
-  }
-  .header-call span {
-    color: var(--gold-soft);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .header-call strong {
-    color: var(--white);
-    font-size: 0.78rem;
-    font-weight: 650;
-    letter-spacing: 0.01em;
-  }
+
   .mobile-nav__call,
   .mobile-nav__primary {
     margin: 0.35rem 0.35rem 0;
@@ -147,34 +238,42 @@ const ctaHref = '/rental-appraisal/';
     border-radius: var(--radius-sm);
     text-align: center;
   }
+
   .mobile-nav__primary {
-    background: var(--gold-deep);
-    color: var(--white) !important;
+    background: var(--gold);
+    color: var(--ink) !important;
   }
-  @media (max-width: 1080px) {
-    .header-call strong {
+
+  @media (max-width: 1180px) {
+    .site-nav--desktop {
       display: none;
     }
+
+    .mobile-nav {
+      display: block;
+    }
   }
+
   @media (max-width: 900px) {
     .site-header__inner {
-      min-height: 5rem;
+      min-height: 4.9rem;
     }
-    .brand {
-      gap: 0.56rem;
-      padding: 0.36rem 0.56rem 0.36rem 0.4rem;
+
+    .brand--original {
+      min-height: 3rem;
     }
-    .brand__monogram {
-      width: 2.25rem;
-      height: 2.25rem;
-      font-size: 1.08rem;
+
+    .brand__logo {
+      height: 2.4rem;
+      max-width: 10rem;
     }
-    .brand__wordmark strong {
-      font-size: 0.94rem;
-    }
-    .brand__wordmark > span {
-      font-size: 0.48rem;
-      letter-spacing: 0.16em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand__logo,
+    .final-nav > a:not(.final-nav__cta)::after,
+    .nav-dropdown > summary::after {
+      transition: none;
     }
   }
 </style>

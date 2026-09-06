@@ -107,34 +107,67 @@ describe('site configuration', () => {
     }
   });
 
-  it('keeps the homepage hero static and evidence-safe without rejected or synthetic founder photography', () => {
+  it('keeps the final homepage hero static and limited to Sana requested above-fold content', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
-    const heroStart = source.indexOf('<section class="rebirth-hero"');
-    const heroEnd = source.indexOf('<section class="rebirth-choice"', heroStart);
+    const heroStart = source.indexOf('<section class="sana-hero"');
+    const heroEnd = source.indexOf('<section class="sana-pride"', heroStart);
     const heroSource = source.slice(heroStart, heroEnd);
 
     expect(heroStart).toBeGreaterThan(-1);
     expect(heroEnd).toBeGreaterThan(heroStart);
     expect(heroSource).not.toMatch(/<video\b/i);
-    expect(heroSource).not.toMatch(/<img\b/i);
-    expect(heroSource).toContain('Sana Patel founder-led identity graphic');
+    expect(heroSource).toContain('Melbourne Property Management · For Rental Providers.');
+    expect(heroSource).toContain('Is your property really being managed?');
+    expect(heroSource).toContain('Property management with strategy, accountability and personal attention.');
+    expect(heroSource).toContain('Your Property. My Priority.');
+    expect(heroSource).toContain('Get a Rental Health Check');
+    expect(heroSource).toContain('Change Property Manager');
+    expect(heroSource).not.toContain('24×7 direct access');
     expect(heroSource).not.toContain('founder-concept-placeholder.svg');
     expect(heroSource).not.toContain('WhatsApp-Image-2025-09-30');
     expect(heroSource).not.toContain('Sana-headshot.webp');
   });
 
-  it('keeps the final homepage focused on direct contact, appraisal, management and switching', () => {
+  it('preserves Sana original wordmark and final requested primary navigation', () => {
+    const header = readFileSync(new URL('../src/components/SiteHeader.astro', import.meta.url), 'utf8');
+
+    expect(header).toContain('src={SITE.logoAsset}');
+    expect(SITE.logoAsset).toBe('/media/sana-patel-logo.webp');
+    expect(header).toContain('alt="Sana Patel Real Estate"');
+    expect(header).toContain('href="/"');
+    expect(header).toContain('href="/about/"');
+    expect(header).toContain('Property Management');
+    expect(header).toContain('href="/switch-property-managers/"');
+    expect(header).toContain('Resources');
+    expect(header).toContain('href="/contact/"');
+    expect(header).toContain('href="/property-management-visibility-check/"');
+    expect(header).toContain('Get a Rental Health Check');
+    expect(header).not.toContain('brand__monogram');
+    expect(header).not.toContain('brand__wordmark');
+  });
+
+  it('keeps the final homepage focused on Sana three-part PRIDE brief', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
 
-    expect(source).toContain('id="services"');
-    expect(source).toContain('id="why-sana"');
+    expect(source).toContain('bodyClass="home-final"');
+    expect(source).toContain('id="pride"');
+    expect(source).toContain('Proactive Property Care');
+    expect(source).toContain('Responsive Communication');
+    expect(source).toContain('Integrity in Every Decision');
+    expect(source).toContain('Diligent Property Management');
+    expect(source).toContain('Experience That Matters');
+    expect(source).toContain('PRIDE is the standard I choose to bring to my work every day.');
+    expect(source).toContain('What PRIDE means to me');
+    expect(source).toContain('Different properties. Different situations. One consistent standard:');
     expect(source).toContain('id="reviews"');
-    expect(source).toContain('id="appraisal"');
-    expect(source).toContain('Call Sana · {SITE.phone.display}');
-    expect(source).toContain('<LeadForm type="rental_appraisal"');
-    expect(source).toContain('/switch-property-managers/');
-    expect(source).not.toContain('/property-management-visibility-check/');
-    expect(source).not.toContain('/rental-position-check/');
+    expect(source).toContain('<TrustProof />');
+    expect(source).toContain('Ready to take a closer look at how your property is being managed?');
+    expect(source).not.toContain('rebirth-diagnostic');
+    expect(source).not.toContain('rebirth-services');
+    expect(source).not.toContain('rebirth-switch');
+    expect(source).not.toContain('rebirth-process');
+    expect(source).not.toContain('rebirth-faq');
+    expect(source).not.toContain('rebirth-appraisal');
     expect(source).not.toMatch(/<video\b/i);
   });
 
@@ -146,6 +179,8 @@ describe('site configuration', () => {
     expect(SITE.reviews.trustindexWidgetId).toMatch(/^[a-f0-9]{24,64}$/);
     expect(new URL(SITE.reviews.googleProfileUrl).hostname).toBe('www.google.com');
     expect(new URL(SITE.reviews.trustindexSummaryUrl).hostname).toBe('www.trustindex.io');
+    expect(component).toContain('Trusted by rental providers &amp; renters');
+    expect(component).toContain('Real experiences. Real service.');
     expect(component).toContain('https://cdn.trustindex.io/loader.js?');
     expect(component).toContain('data-trustindex-widget-id');
     expect(component).not.toMatch(/aggregateRating|reviewRating|ratingValue|reviewCount/);
