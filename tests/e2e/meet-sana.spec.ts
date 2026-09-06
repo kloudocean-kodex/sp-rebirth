@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('Meet Sana page follows Sana final supplied introduction and framed photography', async ({ page }) => {
+test('Meet Sana page follows Sana final supplied introduction with review-safe editorial artwork', async ({ page }) => {
   await page.goto('/about/', { waitUntil: 'domcontentloaded' });
 
   const hero = page.locator('.meet-hero');
@@ -11,10 +11,12 @@ test('Meet Sana page follows Sana final supplied introduction and framed photogr
   ).toBeVisible();
 
   const portrait = hero.locator('img');
-  await expect(portrait).toHaveAttribute('src', '/media/sana-patel-meet-portrait.jpg');
+  await expect(portrait).toHaveAttribute('src', '/media/founder-concept-placeholder.svg');
+  await expect(portrait).toHaveAttribute('alt', 'Editorial founder illustration');
   await expect
     .poll(() => portrait.evaluate((image: HTMLImageElement) => ({ complete: image.complete, width: image.naturalWidth })))
-    .toEqual({ complete: true, width: 1264 });
+    .toMatchObject({ complete: true });
+  expect(await portrait.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
 
   const origin = page.locator('.meet-origin');
   await expect(
@@ -25,11 +27,15 @@ test('Meet Sana page follows Sana final supplied introduction and framed photogr
   await expect(origin.getByText('The details matter.', { exact: true })).toBeVisible();
 
   const detail = page.locator('.meet-detail');
-  const desk = detail.locator('img');
-  await expect(desk).toHaveAttribute('src', '/media/sana-patel-meet-desk.jpg');
+  const detailArtwork = detail.locator('img');
+  await expect(detailArtwork).toHaveAttribute('src', '/media/property-management-detail-placeholder.svg');
+  await expect(detailArtwork).toHaveAttribute('alt', 'Editorial property-management illustration');
   await expect
-    .poll(() => desk.evaluate((image: HTMLImageElement) => ({ complete: image.complete, width: image.naturalWidth })))
-    .toEqual({ complete: true, width: 1264 });
+    .poll(() =>
+      detailArtwork.evaluate((image: HTMLImageElement) => ({ complete: image.complete, width: image.naturalWidth })),
+    )
+    .toMatchObject({ complete: true });
+  expect(await detailArtwork.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
   await expect(detail.getByRole('heading', { name: 'Why Sana Patel Real Estate', exact: true })).toBeVisible();
   await expect(detail.getByText(/offer a more personal and hands-on approach to property management/i)).toBeVisible();
   await expect(detail.getByText(/who is overseeing the management of their property/i)).toBeVisible();
