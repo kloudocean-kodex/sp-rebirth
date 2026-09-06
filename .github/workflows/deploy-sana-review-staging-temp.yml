@@ -1,0 +1,245 @@
+name: TEMP Sana review staging deployment
+
+on:
+  push:
+    branches:
+      - development
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sp-rebirth-sana-review-staging-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Verify resources and deploy exact Sana review candidate
+    if: github.ref == 'refs/heads/development'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: staging
+      url: https://sp-rebirth-staging.rajputrupali138.workers.dev/
+    env:
+      REVIEW_SHA: 646a299df7569dc8ccbc35bf05f984a8befbd240
+      STAGING_URL: https://sp-rebirth-staging.rajputrupali138.workers.dev
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.PUBLIC_TURNSTILE_SITE_KEY }}
+
+    steps:
+      - name: Checkout exact green development candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ env.REVIEW_SHA }}
+
+      - name: Verify exact candidate checkout
+        shell: bash
+        run: |
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$REVIEW_SHA"
+          echo "Exact staging candidate verified: $actual"
+
+      - name: Use pinned Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Require protected staging configuration
+        shell: bash
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$PUBLIC_TURNSTILE_SITE_KEY" ]; then
+            echo "Required Cloudflare staging credentials or Turnstile site key are missing."
+            exit 1
+          fi
+          echo "Protected staging configuration references are populated."
+
+      - name: Discover existing Cloudflare staging resources with GET only
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+
+          token = os.environ['CLOUDFLARE_API_TOKEN']
+          account = os.environ['CLOUDFLARE_ACCOUNT_ID']
+          base = 'https://api.cloudflare.com/client/v4'
+
+          def get(path, params=None):
+              url = base + path
+              if params:
+                  url += '?' + urllib.parse.urlencode(params)
+              request = urllib.request.Request(
+                  url,
+                  method='GET',
+                  headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'},
+              )
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  payload = json.loads(response.read().decode('utf-8'))
+              if not payload.get('success'):
+                  raise SystemExit(f'Cloudflare GET failed for {path}')
+              return payload.get('result')
+
+          verify = get('/user/tokens/verify') or {}
+          if verify.get('status') != 'active':
+              raise SystemExit('Cloudflare API token is not active')
+
+          workers = get(f'/accounts/{account}/workers/scripts', {'per_page': 100}) or []
+          worker_names = {item.get('id') or item.get('name') for item in workers if isinstance(item, dict)}
+          if 'sp-rebirth-staging' not in worker_names:
+              raise SystemExit('Expected existing Worker sp-rebirth-staging was not found')
+
+          queues_result = get(f'/accounts/{account}/queues', {'per_page': 100}) or []
+          if isinstance(queues_result, dict):
+              queues_result = queues_result.get('queues') or queues_result.get('result') or []
+          queue_names = {
+              item.get('queue_name') or item.get('name')
+              for item in queues_result
+              if isinstance(item, dict)
+          }
+          required = {'sp-rebirth-staging-leads', 'sp-rebirth-staging-leads-dlq'}
+          missing = required - queue_names
+          if missing:
+              raise SystemExit('Missing expected existing staging queue resources: ' + ', '.join(sorted(missing)))
+
+          print('Cloudflare token active.')
+          print('Existing staging Worker verified: sp-rebirth-staging')
+          print('Existing staging Queue verified: sp-rebirth-staging-leads')
+          print('Existing staging DLQ verified: sp-rebirth-staging-leads-dlq')
+          print('No mutating Cloudflare request was made during inventory.')
+          PY
+
+      - name: Build and deploy exact candidate to isolated staging Worker
+        run: npm run deploy:staging
+
+      - name: Verify live homepage and Meet Sana content
+        shell: bash
+        run: |
+          home="$(curl --fail --silent --show-error "$STAGING_URL/")"
+          printf '%s' "$home" | grep -Fq "Is your property really being managed?"
+          printf '%s' "$home" | grep -Fq "Property Management with"
+          printf '%s' "$home" | grep -Fq "Responsive Communication"
+          printf '%s' "$home" | grep -Fq "Your Property. My Priority."
+
+          about="$(curl --fail --silent --show-error "$STAGING_URL/about/")"
+          printf '%s' "$about" | grep -Fq "Meet Sana Patel"
+          printf '%s' "$about" | grep -Fq "10+ Years in Property Management"
+          printf '%s' "$about" | grep -Fq "From Receptionist to Licensed Estate Agent"
+          printf '%s' "$about" | grep -Fq "Why Sana Patel Real Estate"
+          printf '%s' "$about" | grep -Fq "Editorial founder illustration"
+          printf '%s' "$about" | grep -Fq "Editorial property-management illustration"
+
+          curl --fail --silent --show-error --output /dev/null "$STAGING_URL/media/founder-concept-placeholder.svg"
+          curl --fail --silent --show-error --output /dev/null "$STAGING_URL/media/property-management-detail-placeholder.svg"
+          curl --fail --silent --show-error --output /dev/null "$STAGING_URL/property-management-visibility-check/"
+          curl --fail --silent --show-error --output /dev/null "$STAGING_URL/switch-property-managers/"
+          echo "Current homepage, Meet Sana artwork and primary review journeys verified live."
+
+      - name: Verify staging indexing and security headers
+        shell: bash
+        run: |
+          robots="$(curl --fail --silent --show-error "$STAGING_URL/robots.txt")"
+          printf '%s' "$robots" | grep -Eiq "disallow:[[:space:]]*/"
+
+          headers="$(curl --fail --silent --show-error --head "$STAGING_URL/" | tr -d '\r')"
+          printf '%s\n' "$headers" | grep -Eiq '^x-robots-tag:.*noindex'
+          printf '%s\n' "$headers" | grep -Eiq '^content-security-policy:'
+          printf '%s\n' "$headers" | grep -Eiq '^x-content-type-options:[[:space:]]*nosniff'
+          printf '%s\n' "$headers" | grep -Eiq '^x-frame-options:[[:space:]]*DENY'
+          printf '%s\n' "$headers" | grep -Eiq '^referrer-policy:[[:space:]]*strict-origin-when-cross-origin'
+          echo "Staging noindex and HTML security-header contract verified."
+
+      - name: Install Chromium for live staging QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Run live desktop and mobile review smoke
+        shell: bash
+        run: |
+          cat > staging-review-smoke.mjs <<'JS'
+          import { chromium, devices } from '@playwright/test';
+          import { mkdirSync } from 'node:fs';
+
+          const baseURL = process.env.STAGING_URL;
+          const evidence = 'staging-evidence';
+          mkdirSync(evidence, { recursive: true });
+
+          const assert = (condition, message) => {
+            if (!condition) throw new Error(message);
+          };
+
+          const verifyNoOverflow = async (page, label) => {
+            const overflow = await page.evaluate(
+              () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+            );
+            assert(overflow <= 1, `${label} has ${overflow}px horizontal overflow`);
+          };
+
+          const verifyImage = async (locator, label) => {
+            await locator.scrollIntoViewIfNeeded();
+            await locator.waitFor({ state: 'visible' });
+            await locator.evaluate((image) => image.decode?.().catch(() => undefined));
+            const state = await locator.evaluate((image) => ({ complete: image.complete, width: image.naturalWidth }));
+            assert(state.complete && state.width > 0, `${label} did not decode`);
+          };
+
+          const browser = await chromium.launch();
+          try {
+            const desktop = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+            const home = await desktop.newPage();
+            await home.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded' });
+            await home.getByRole('heading', { name: 'Is your property really being managed?', exact: true }).waitFor();
+            await home.getByText('Responsive Communication', { exact: true }).waitFor();
+            await verifyImage(home.locator('.brand__logo'), 'desktop Sana logo');
+            await verifyNoOverflow(home, 'desktop homepage');
+            await home.screenshot({ path: `${evidence}/home-desktop.png`, fullPage: true });
+
+            const about = await desktop.newPage();
+            await about.goto(`${baseURL}/about/`, { waitUntil: 'domcontentloaded' });
+            await about.getByRole('heading', { name: 'Meet Sana Patel', exact: true }).waitFor();
+            await verifyImage(about.locator('.meet-hero__portrait img'), 'Meet Sana founder artwork');
+            await verifyImage(about.locator('.meet-detail__image img'), 'Meet Sana property artwork');
+            await verifyNoOverflow(about, 'desktop Meet Sana');
+            await about.screenshot({ path: `${evidence}/about-desktop.png`, fullPage: true });
+            await desktop.close();
+
+            const mobile = await browser.newContext({ ...devices['iPhone 15'] });
+            const mobileHome = await mobile.newPage();
+            await mobileHome.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded' });
+            await mobileHome.getByRole('heading', { name: 'Is your property really being managed?', exact: true }).waitFor();
+            await mobileHome.locator('.mobile-nav > summary').click();
+            await mobileHome.getByRole('navigation', { name: 'Mobile navigation' }).getByRole('link', { name: 'Meet Sana Patel' }).waitFor();
+            await verifyNoOverflow(mobileHome, 'mobile homepage');
+            await mobileHome.screenshot({ path: `${evidence}/home-mobile.png`, fullPage: true });
+
+            const mobileAbout = await mobile.newPage();
+            await mobileAbout.goto(`${baseURL}/about/`, { waitUntil: 'domcontentloaded' });
+            await mobileAbout.getByRole('heading', { name: 'Meet Sana Patel', exact: true }).waitFor();
+            await verifyImage(mobileAbout.locator('.meet-hero__portrait img'), 'mobile founder artwork');
+            await verifyImage(mobileAbout.locator('.meet-detail__image img'), 'mobile property artwork');
+            await verifyNoOverflow(mobileAbout, 'mobile Meet Sana');
+            await mobileAbout.screenshot({ path: `${evidence}/about-mobile.png`, fullPage: true });
+            await mobile.close();
+          } finally {
+            await browser.close();
+          }
+          JS
+          node staging-review-smoke.mjs
+          rm staging-review-smoke.mjs
+          echo "Live staging desktop/mobile render and navigation smoke passed."
+
+      - name: Upload live staging review evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: sp-rebirth-sana-review-staging-${{ github.run_number }}
+          path: staging-evidence
+          if-no-files-found: ignore
+          retention-days: 7
