@@ -15,7 +15,8 @@ export const SITE = {
   founder: {
     name: 'Sana Patel',
     profileUrl: 'https://www.sanapatel.com.au/about/',
-    image: 'https://www.sanapatel.com.au/media/sana-patel-meet-portrait.webp',
+    // Populate only when approved founder photography is available as a verified local asset.
+    image: null,
   },
   profiles: {
     business: [
