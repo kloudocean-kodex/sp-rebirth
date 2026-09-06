@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" role="img" aria-labelledby="title desc">
+  <title id="title">Property management editorial illustration</title>
+  <desc id="desc">Abstract black, ivory and champagne-gold desk and property-management composition used for layout review.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#eee4d2"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d7c39a"/>
+      <stop offset="0.55" stop-color="#b89a60"/>
+      <stop offset="1" stop-color="#6d532c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="#11120f"/>
+  <path d="M0 1160C195 1020 350 1105 480 1210c134 108 304 153 720 15v275H0z" fill="url(#paper)"/>
+  <path d="M0 260C190 118 396 102 564 210c176 113 324 140 636 40V0H0z" fill="#fffdf8"/>
+  <path d="M838 88c104 73 216 89 362 41" fill="none" stroke="#b89a60" stroke-width="3" opacity=".74"/>
+  <path d="M855 123c104 73 214 88 345 47" fill="none" stroke="#d7c39a" stroke-width="2" opacity=".68"/>
+  <rect x="220" y="360" width="760" height="660" rx="42" fill="#171713" stroke="#d7c39a" stroke-width="4"/>
+  <rect x="292" y="438" width="616" height="358" rx="20" fill="url(#paper)"/>
+  <rect x="355" y="500" width="490" height="42" rx="12" fill="#171713" opacity=".9"/>
+  <rect x="355" y="578" width="342" height="26" rx="10" fill="#6d532c" opacity=".8"/>
+  <rect x="355" y="634" width="420" height="22" rx="9" fill="#b89a60" opacity=".72"/>
+  <rect x="355" y="686" width="298" height="22" rx="9" fill="#b89a60" opacity=".48"/>
+  <path d="M548 797v88M652 797v88" stroke="#d7c39a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M470 891h260" stroke="#d7c39a" stroke-width="8" stroke-linecap="round"/>
+  <rect x="282" y="1042" width="636" height="34" rx="17" fill="url(#gold)"/>
+  <path d="M344 1113h516l-57 128H401z" fill="#171713" stroke="#b89a60" stroke-width="3"/>
+  <circle cx="904" cy="1186" r="146" fill="url(#gold)" opacity=".88"/>
+  <path d="M846 1184l38 38 80-88" fill="none" stroke="#11120f" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M148 1282h254" stroke="#6d532c" stroke-width="3"/>
+  <circle cx="128" cy="1282" r="9" fill="#b89a60"/>
+</svg>
