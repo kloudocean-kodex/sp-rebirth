@@ -9,16 +9,10 @@ const reviewRoutes = [
 ] as const;
 
 const homeReviewSections = [
-  ['01-hero', '.rebirth-hero'],
-  ['02-pride', '.rebirth-pride'],
-  ['03-owner-check', '.rebirth-diagnostic'],
-  ['04-services', '.rebirth-services'],
-  ['05-founder', '.rebirth-founder'],
-  ['06-switching', '.rebirth-switch'],
-  ['07-process', '.rebirth-process'],
-  ['08-reviews', '#reviews'],
-  ['09-faq', '.rebirth-faq'],
-  ['10-appraisal', '.rebirth-appraisal'],
+  ['01-hero', '.sana-hero'],
+  ['02-pride', '.sana-pride'],
+  ['03-reviews', '.trust-proof'],
+  ['04-final-action', '.sana-final-cta'],
 ] as const;
 
 const visualCaptureProjects = new Set(['desktop-chromium', 'mobile-chromium']);
@@ -45,10 +39,6 @@ async function suppressOffscreenSkipLinkArtifact(page: Page) {
   const isAboveViewport = await skipLink.evaluate((element) => element.getBoundingClientRect().bottom <= 0);
   expect(isAboveViewport).toBe(true);
 
-  // Element screenshots can composite fixed-position nodes that are physically
-  // above the viewport into a long scrolled section capture. Hide only after
-  // proving the accessibility link is unfocused and off-screen; a real visible
-  // skip-link regression therefore fails instead of being cosmetically masked.
   await skipLink.evaluate((element: HTMLElement) => {
     element.style.visibility = 'hidden';
   });
@@ -103,8 +93,6 @@ for (const [name, path] of reviewRoutes) {
     await page.goto(path, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('h1')).toBeVisible();
 
-    // Exercise the full page before capture so below-the-fold lazy images are
-    // requested, while avoiding networkidle on intentionally third-party review media.
     await hydrateLazyMedia(page);
 
     await page.screenshot({
