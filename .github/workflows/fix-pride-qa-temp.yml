@@ -1,0 +1,86 @@
+name: TEMP fix PRIDE QA contracts
+
+on:
+  push:
+    branches: [feat/sana-final-feedback-pride-20260906]
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: feat/sana-final-feedback-pride-20260906
+
+      - name: Apply root-cause QA corrections
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          css = Path('src/styles/home-pride-final.css')
+          text = css.read_text()
+          old = ".home-rebirth .rebirth-founder__pride {\n  color: #fffdf8;"
+          new = ".home-rebirth .rebirth-founder__pride {\n  color: #171713;"
+          if old not in text:
+              raise SystemExit('Expected founder PRIDE contrast rule not found')
+          css.write_text(text.replace(old, new, 1))
+
+          unit = Path('tests/site.test.ts')
+          text = unit.read_text()
+          old = "expect(header).toContain('src={SITE.logo}');"
+          new = "expect(header).toContain('src={SITE.logoAsset}');\n    expect(SITE.logoAsset).toBe('/media/sana-patel-logo.webp');"
+          if old not in text:
+              raise SystemExit('Expected header logo unit assertion not found')
+          unit.write_text(text.replace(old, new, 1))
+
+          e2e = Path('tests/e2e/site.spec.ts')
+          text = e2e.read_text()
+          old = "await expect(logo).toHaveAttribute('src', /Sana-Patel-Logo\\.webp$/);"
+          new = "await expect(logo).toHaveAttribute('src', /\\/media\\/sana-patel-logo\\.webp$/);"
+          if old not in text:
+              raise SystemExit('Expected logo browser assertion not found')
+          text = text.replace(old, new, 1)
+
+          old_block = """  await expect(page.getByRole('heading', { name: /trust should not depend on a polished promise/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /read the current reviews/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /current google reviews open source/i })).toHaveAttribute(
+    'href',
+    /query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM/,
+  );
+  await expect(page.getByRole('link', { name: /current agency activity realestate\\.com\\.au/i })).toHaveAttribute(
+    'href',
+    'https://www.realestate.com.au/agency/sana-patel-real-estate-KRFFJV',
+  );
+"""
+          new_block = """  await expect(page.getByRole('heading', { name: /read the current reviews/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /read reviews on google/i })).toHaveAttribute(
+    'href',
+    /query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM/,
+  );
+"""
+          if old_block not in text:
+              raise SystemExit('Expected stale review-proof browser assertions not found')
+          e2e.write_text(text.replace(old_block, new_block, 1))
+          PY
+
+          npx prettier --write src/styles/home-pride-final.css tests/site.test.ts tests/e2e/site.spec.ts
+          git diff --check
+
+      - name: Commit QA corrections
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/styles/home-pride-final.css tests/site.test.ts tests/e2e/site.spec.ts
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix: resolve PRIDE accessibility and stale QA contracts'
+          git push origin HEAD:feat/sana-final-feedback-pride-20260906
