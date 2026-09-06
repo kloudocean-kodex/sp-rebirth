@@ -15,7 +15,7 @@ export const SITE = {
   founder: {
     name: 'Sana Patel',
     profileUrl: 'https://www.sanapatel.com.au/about/',
-    image: 'https://www.sanapatel.com.au/wp-content/uploads/2025/07/Sana-headshot.webp',
+    image: 'https://www.sanapatel.com.au/media/sana-patel-meet-portrait.webp',
   },
   profiles: {
     business: [
