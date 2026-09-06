@@ -96,7 +96,9 @@ test('homepage carries Sana owner-diagnostic questions inline instead of forcing
 test('homepage includes full-service management detail without unsupported performance claims', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByRole('heading', { name: /the everyday details\. managed as one property story/i })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: /the everyday details\. managed as one property story/i }),
+  ).toBeVisible();
   for (const heading of [
     'Leasing & renter selection',
     'Routine inspections',
@@ -116,7 +118,9 @@ test('homepage switching section is understandable without leaving the landing p
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   const switching = page.locator('#switching');
-  await expect(switching.getByRole('heading', { name: /changing managers can be simpler than staying frustrated/i })).toBeVisible();
+  await expect(
+    switching.getByRole('heading', { name: /changing managers can be simpler than staying frustrated/i }),
+  ).toBeVisible();
   await expect(switching.getByRole('heading', { name: 'Talk', exact: true })).toBeVisible();
   await expect(switching.getByRole('heading', { name: 'Review', exact: true })).toBeVisible();
   await expect(switching.getByRole('heading', { name: /move only if it makes sense/i })).toBeVisible();
@@ -202,7 +206,9 @@ test('homepage FAQ exposes direct-call and switching answers without forcing nav
   await expect(page.getByText(/do not need to cancel anything before that conversation/i)).toBeVisible();
 });
 
-test('supporting journeys remain reachable from the footer without competing in primary navigation', async ({ page }) => {
+test('supporting journeys remain reachable from the footer without competing in primary navigation', async ({
+  page,
+}) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const footer = page.locator('footer.site-footer');
 
