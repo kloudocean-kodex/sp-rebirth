@@ -28,7 +28,13 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(7, 8, 7, 0.88) 0%, rgba(7, 8, 7, 0.7) 38%, rgba(7, 8, 7, 0.28) 72%, rgba(7, 8, 7, 0.5) 100%),
+    linear-gradient(
+      90deg,
+      rgba(7, 8, 7, 0.88) 0%,
+      rgba(7, 8, 7, 0.7) 38%,
+      rgba(7, 8, 7, 0.28) 72%,
+      rgba(7, 8, 7, 0.5) 100%
+    ),
     linear-gradient(180deg, rgba(7, 8, 7, 0.34) 0%, rgba(7, 8, 7, 0.05) 45%, rgba(7, 8, 7, 0.72) 100%),
     radial-gradient(circle at 78% 48%, rgba(184, 154, 96, 0.08), transparent 34rem);
 }
