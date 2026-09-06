@@ -1,15 +1,15 @@
 export const SITE = {
-  name: 'Sana Patel Real Estate',
-  url: 'https://www.sanapatel.com.au/',
+  name: "Sana Patel Real Estate",
+  url: "https://www.sanapatel.com.au/",
   phone: {
-    display: '0416 977 990',
-    e164: '+61416977990',
-    schema: '+61 416 977 990',
+    display: "0416 977 990",
+    e164: "+61416977990",
+    schema: "+61 416 977 990",
   },
-  email: 'sana@sanapatel.com.au',
-  areaServed: 'Melbourne, Victoria, Australia',
+  email: "sana@sanapatel.com.au",
+  areaServed: "Melbourne, Victoria, Australia",
   defaultOgImage:
-    'https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg',
+    "https://www.sanapatel.com.au/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-30-at-1.02.56-PM.jpeg",
 } as const;
 
 /**
@@ -17,15 +17,15 @@ export const SITE = {
  * not an automatic consequence of creating a route.
  */
 export const INDEXED_PATHS = [
-  '/',
-  '/about/',
-  '/lease/',
-  '/for-renters/',
-  '/sale/',
-  '/contact/',
-  '/rental-providers/',
-  '/rental-appraisal/',
-  '/switch-property-managers/',
+  "/",
+  "/about/",
+  "/lease/",
+  "/for-renters/",
+  "/sale/",
+  "/contact/",
+  "/rental-providers/",
+  "/rental-appraisal/",
+  "/switch-property-managers/",
 ] as const;
 
-export const INTERNAL_PATH_PREFIXES = ['/api/', '/preview/'] as const;
+export const INTERNAL_PATH_PREFIXES = ["/api/", "/preview/"] as const;

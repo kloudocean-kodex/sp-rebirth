@@ -1,4 +1,4 @@
-declare module 'cloudflare:workers' {
+declare module "cloudflare:workers" {
   interface SPRebirthWorkerEnv {
     TURNSTILE_SECRET_KEY?: string;
     LEAD_DELIVERY_WEBHOOK_URL?: string;
