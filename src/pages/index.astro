@@ -9,76 +9,79 @@ import '@/styles/home-rebirth.css';
 
 const title = 'Property Management Melbourne | Sana Patel Real Estate';
 const description =
-  'Founder-led Melbourne property management with direct access to Sana Patel, visible accountability, clear decisions and a practical first step for rental providers.';
+  'Founder-led Melbourne property management with direct access to Sana Patel, the PRIDE service standard, visible accountability and a clear next step for rental providers.';
 
 const businessId = new URL('/#business', SITE.url).toString();
 const founderId = new URL('/about/#sana-patel', SITE.url).toString();
 const websiteId = new URL('/#website', SITE.url).toString();
 
-const ownerJourneys = [
+const pride = [
   {
-    number: '01',
-    title: 'I need a property manager',
-    body: 'Start with the property, the current situation and the kind of oversight you want. Sana can explain how the management relationship would work before you commit.',
-    href: '/rental-providers/',
-    link: 'Explore management',
+    letter: 'P',
+    title: 'Proactive Property Care',
+    body: 'Stay ahead of the issues that can be seen through inspections, communication and property records, then make the next step clear.',
   },
   {
-    number: '02',
-    title: 'I need a rental appraisal',
-    body: 'Get a clearer view of rental positioning, property context and the next practical move without turning the conversation into a sales script.',
-    href: '#appraisal',
-    link: 'Request an appraisal',
+    letter: 'R',
+    title: 'Results Driven',
+    body: 'Keep the owner’s priorities and the practical outcome of each decision visible without promising results no agent can guarantee.',
   },
   {
-    number: '03',
-    title: 'I want to change managers',
-    body: 'If you are chasing updates, unsure who owns the next step or simply want a clearer service model, start with a controlled comparison and handover conversation.',
-    href: '/switch-property-managers/',
-    link: 'Understand switching',
+    letter: 'I',
+    title: 'Integrity in Every Decision',
+    body: 'Give factual, transparent advice and explain the reasoning behind important property-management decisions.',
   },
-];
+  {
+    letter: 'D',
+    title: 'Diligent Property Management',
+    body: 'Pay close attention to inspections, maintenance, tenancy administration, records and the follow-through that protects good management.',
+  },
+  {
+    letter: 'E',
+    title: 'Experience That Matters',
+    body: 'Apply practical property-management judgement to the situation in front of you while keeping the rental provider informed and involved.',
+  },
+] as const;
+
+const ownerChecks = [
+  'When was the rent last reviewed against current evidence?',
+  'Are routine inspections protecting the property—or simply ticking a box?',
+  'Are maintenance issues being dealt with before they become larger problems?',
+  'When you ask a question, do you get a useful answer and a clear next step?',
+  'Do you know what decision is coming next for the tenancy and your property?',
+] as const;
 
 const serviceItems = [
-  [
-    'Leasing & renter selection',
-    'Marketing, enquiry handling, applications and tenancy setup considered as one connected leasing process.',
-  ],
-  [
-    'Routine inspections',
-    'Property condition, renter communication and follow-through kept visible rather than treated as a box-ticking event.',
-  ],
-  ['Rent & arrears', 'Rent collection and arrears actions handled with clear ownership of what is happening next.'],
-  [
-    'Maintenance coordination',
-    'Repair decisions are managed with context around urgency, access, communication and practical next steps.',
-  ],
-  [
-    'Compliance coordination',
-    'Victorian rental obligations are tracked as part of the management process, with decisions explained in plain language.',
-  ],
-  [
-    'Renewals & tenancy communication',
-    'Lease timing, renter conversations and rental-position decisions are considered together instead of in isolation.',
-  ],
-];
+  ['Leasing & renter selection', 'Marketing, enquiries, applications and tenancy setup considered as one connected leasing process.'],
+  ['Routine inspections', 'Property condition, renter communication and follow-through kept visible rather than reduced to a checklist.'],
+  ['Rent & arrears', 'Rent collection, arrears actions and rental-position conversations handled with clear ownership.'],
+  ['Maintenance coordination', 'Repair decisions managed with context around urgency, access, communication and practical next steps.'],
+  ['Compliance coordination', 'Relevant Victorian rental obligations and records tracked as part of the management process.'],
+  ['Renewals & tenancy communication', 'Lease timing, renter conversations and rental-position decisions considered together.'],
+] as const;
+
+const switchSteps = [
+  ['01', 'Talk', 'Tell Sana what is not working now and what you want to improve.'],
+  ['02', 'Review', 'Understand the current management arrangement, property status and what an orderly transition would require.'],
+  ['03', 'Move only if it makes sense', 'If you decide to proceed, Sana can explain the handover information and next steps clearly.'],
+] as const;
 
 const faqs = [
   {
     q: 'Can I speak with Sana before filling in a form?',
-    a: `Yes. Direct phone contact is a first-class part of the service. Call ${SITE.phone.display} if a conversation is the easiest place to start.`,
+    a: `Yes. Call ${SITE.phone.display}. Direct phone access is a first-class part of the service.`,
   },
   {
     q: 'Do I need to be ready to appoint a property manager?',
-    a: 'No. You can start with a property, appraisal or switching conversation and decide whether the service is the right fit after the next step is clear.',
+    a: 'No. You can start with a conversation or rental appraisal and decide whether the service is the right fit after the next step is clear.',
   },
   {
     q: 'Can Sana help if my property is already managed elsewhere?',
-    a: 'Yes. The switching journey is designed to help you compare the current arrangement, understand what would need to move and make the handover feel controlled rather than chaotic.',
+    a: 'Yes. Start by reviewing the current arrangement and what an orderly handover would require. You do not need to cancel anything before that conversation.',
   },
   {
     q: 'What should I send for a rental appraisal?',
-    a: 'The address, current tenancy or vacancy status, key property features, recent changes and anything unusual about the current situation are useful starting points. Sana can ask for anything else that is genuinely needed.',
+    a: 'Start with the property address, current tenancy or vacancy status, key property features and anything unusual about the current situation.',
   },
 ];
 
@@ -119,10 +122,7 @@ const schema = [
     mainEntity: faqs.map((item) => ({
       '@type': 'Question',
       name: item.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.a,
-      },
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
     })),
   },
 ];
@@ -131,20 +131,19 @@ const schema = [
 <BaseLayout {title} {description} canonicalPath="/" {schema} bodyClass="home-rebirth">
   <SiteHeader slot="header" />
 
-  <section class="rebirth-hero" aria-labelledby="hero-title">
+  <section class="rebirth-hero" id="top" aria-labelledby="hero-title">
     <div class="rebirth-hero__line" aria-hidden="true"></div>
     <div class="container-wide rebirth-hero__grid">
       <div class="rebirth-hero__copy">
         <p class="rebirth-kicker"><span>Founder-led</span> Property Management · Melbourne</p>
-        <h1 id="hero-title">Your property should never feel like a mystery.</h1>
+        <h1 id="hero-title">Is your property <em>really</em> being managed?</h1>
         <p class="rebirth-hero__lead">
-          Clear property management, directly with Sana Patel. One accountable relationship for the decisions, updates
-          and follow-through that matter.
+          Receiving rent is one task. Managing an investment means staying on top of the tenancy, condition, maintenance,
+          rental position and the decisions that come next—directly with Sana Patel.
         </p>
+        <p class="rebirth-hero__promise">Your Property. My Priority.</p>
         <div class="rebirth-hero__actions">
-          <a class="rebirth-button rebirth-button--gold" href={`tel:${SITE.phone.e164}`}
-            >Call Sana · {SITE.phone.display}</a
-          >
+          <a class="rebirth-button rebirth-button--gold" href={`tel:${SITE.phone.e164}`}>Call Sana · {SITE.phone.display}</a>
           <a class="rebirth-button rebirth-button--ghost" href="#appraisal">Request a rental appraisal</a>
         </div>
         <div class="rebirth-hero__credentials" aria-label="Sana Patel credentials and service model">
@@ -154,141 +153,78 @@ const schema = [
         </div>
       </div>
 
-      <div class="rebirth-identity" aria-label="Sana Patel founder-led identity graphic">
-        <div class="rebirth-identity__orbit rebirth-identity__orbit--one" aria-hidden="true"></div>
-        <div class="rebirth-identity__orbit rebirth-identity__orbit--two" aria-hidden="true"></div>
-        <div class="rebirth-identity__arch">
-          <span class="rebirth-identity__small">Sana</span>
-          <strong>SP</strong>
-          <span class="rebirth-identity__small rebirth-identity__small--bottom">Patel</span>
+      <div class="rebirth-pride-mark" aria-label="Property Management with PRIDE">
+        <span class="rebirth-pride-mark__label">Property Management with</span>
+        <div class="rebirth-pride-mark__letters" aria-hidden="true">
+          <span>P</span><span>R</span><span>I</span><span>D</span><span>E</span>
         </div>
-        <div class="rebirth-identity__note rebirth-identity__note--top">
-          <span>01</span>
-          <p>One clear point of accountability</p>
-        </div>
-        <div class="rebirth-identity__note rebirth-identity__note--bottom">
-          <span>02</span>
-          <p>Know what changed. Know what happens next.</p>
-        </div>
+        <p>Your property should never be a mystery.</p>
       </div>
     </div>
 
     <div class="rebirth-hero__rail" aria-label="Service principles">
       <div class="container-wide rebirth-hero__rail-inner">
-        <span>Clear updates</span><i aria-hidden="true"></i><span>Considered decisions</span><i aria-hidden="true"
-        ></i><span>Visible follow-through</span><i aria-hidden="true"></i><span>Direct access</span>
+        <span>Proactive care</span><i aria-hidden="true"></i><span>Clear decisions</span><i aria-hidden="true"></i><span>Visible follow-through</span><i aria-hidden="true"></i><span>Direct access</span>
       </div>
     </div>
   </section>
 
-  <section class="rebirth-choice" id="services" aria-labelledby="choice-title">
-    <div class="container-wide rebirth-choice__header">
+  <section class="rebirth-pride" id="pride" aria-labelledby="pride-title">
+    <div class="container-wide rebirth-pride__grid">
+      <div class="rebirth-pride__intro">
+        <p class="eyebrow">The Sana standard</p>
+        <h2 id="pride-title">Property Management with <em>PRIDE.</em></h2>
+        <p>PRIDE is the standard Sana brings to the work every day—not a promise of perfect outcomes.</p>
+        <blockquote>“What I can control is how I respond.”</blockquote>
+      </div>
+      <div class="rebirth-pride__principles">
+        {
+          pride.map((item, index) => (
+            <article>
+              <span class="rebirth-pride__index">{String(index + 1).padStart(2, '0')}</span>
+              <span class="rebirth-pride__letter" aria-hidden="true">{item.letter}</span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="rebirth-diagnostic" aria-labelledby="diagnostic-title">
+    <div class="container-wide rebirth-diagnostic__header">
       <div>
-        <p class="eyebrow">Start where you are</p>
-        <h2 id="choice-title">Three situations. One clear next step.</h2>
+        <p class="rebirth-kicker rebirth-kicker--gold">A simple owner check</p>
+        <h2 id="diagnostic-title">Five questions worth asking about your property.</h2>
       </div>
       <p>
-        No need to browse a maze of pages first. Choose the situation that sounds most like yours, or call Sana and
-        start with the conversation.
+        You do not need to decide your current agent is “bad” before asking whether the management is giving you enough
+        visibility, context and follow-through.
       </p>
     </div>
-
-    <div class="container-wide rebirth-choice__grid">
-      {
-        ownerJourneys.map((journey) => (
-          <article class="rebirth-choice__card">
-            <span class="rebirth-choice__number">{journey.number}</span>
-            <h3>{journey.title}</h3>
-            <p>{journey.body}</p>
-            <a href={journey.href}>
-              {journey.link}
-              <span aria-hidden="true">↗</span>
-            </a>
-          </article>
-        ))
-      }
+    <div class="container-wide rebirth-diagnostic__list">
+      {ownerChecks.map((question, index) => (
+        <article>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <p>{question}</p>
+        </article>
+      ))}
+    </div>
+    <div class="container-wide rebirth-diagnostic__actions">
+      <a class="rebirth-button rebirth-button--gold" href={`tel:${SITE.phone.e164}`}>Talk it through with Sana</a>
+      <a class="rebirth-text-link rebirth-text-link--light" href="#appraisal">Start with a rental appraisal <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
-  <section class="rebirth-manifesto" aria-labelledby="manifesto-title">
-    <div class="container-wide rebirth-manifesto__grid">
-      <div class="rebirth-manifesto__index" aria-hidden="true">SP / 01</div>
-      <div>
-        <p class="rebirth-kicker rebirth-kicker--gold">The difference</p>
-        <h2 id="manifesto-title">No handballing. No wondering who owns the next step.</h2>
-      </div>
-      <div class="rebirth-manifesto__body">
-        <p>
-          Property management becomes exhausting when owners have to chase information, repeat the same story or guess
-          what is happening next.
-        </p>
-        <p>
-          Sana’s model is designed around visible accountability: a clear person responsible for the relationship,
-          useful context around decisions and follow-through that stays connected to the issue.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="rebirth-founder" id="why-sana" aria-labelledby="founder-title">
-    <div class="container-wide rebirth-founder__grid">
-      <div class="rebirth-founder__art" aria-hidden="true">
-        <div class="rebirth-founder__word rebirth-founder__word--sana">SANA</div>
-        <div class="rebirth-founder__shape">
-          <div class="rebirth-founder__monogram">SP</div>
-        </div>
-        <div class="rebirth-founder__word rebirth-founder__word--patel">PATEL</div>
-        <div class="rebirth-founder__caption">Founder-led · Melbourne</div>
-      </div>
-
-      <div class="rebirth-founder__copy">
-        <p class="eyebrow">Why Sana</p>
-        <h2 id="founder-title">A direct relationship, not another layer of management.</h2>
-        <p class="rebirth-founder__lead">
-          Sana Patel Real Estate is intentionally founder-led. When something needs attention, the relationship remains
-          connected to the person accountable for the service.
-        </p>
-        <div class="rebirth-founder__principles">
-          <article>
-            <span>01</span>
-            <div>
-              <h3>Direct access</h3><p>Speak directly with Sana when the situation needs a real conversation.</p>
-            </div>
-          </article>
-          <article>
-            <span>02</span>
-            <div>
-              <h3>Decision clarity</h3><p>Understand what happened, why it matters and what the next move is.</p>
-            </div>
-          </article>
-          <article>
-            <span>03</span>
-            <div>
-              <h3>Connected oversight</h3><p>
-                Leasing, inspections, maintenance, tenancy and rental decisions are treated as connected parts of the
-                investment.
-              </p>
-            </div>
-          </article>
-        </div>
-        <div class="rebirth-founder__actions">
-          <a class="rebirth-button rebirth-button--ink" href={`tel:${SITE.phone.e164}`}>Call Sana</a>
-          <a class="rebirth-text-link" href="/about/">Read Sana’s background <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="rebirth-services" aria-labelledby="services-detail-title">
+  <section class="rebirth-services" id="services" aria-labelledby="services-title">
     <div class="container-wide rebirth-services__intro">
       <p class="eyebrow">What gets managed</p>
-      <h2 id="services-detail-title">The everyday details. Made visible.</h2>
-      <p>
-        Full-service residential property management is not one task. It is a chain of decisions that should stay
-        understandable to the owner.
-      </p>
+      <h2 id="services-title">The everyday details. Managed as one property story.</h2>
+      <p>Good management is not one isolated task. The parts need to stay connected and understandable to the owner.</p>
     </div>
-
     <div class="container-wide rebirth-services__grid">
       {
         serviceItems.map(([heading, body], index) => (
@@ -302,37 +238,55 @@ const schema = [
     </div>
   </section>
 
-  <section class="rebirth-switch" aria-labelledby="switch-title">
+  <section class="rebirth-founder" id="why-sana" aria-labelledby="founder-title">
+    <div class="container-wide rebirth-founder__grid">
+      <div class="rebirth-founder__art" aria-hidden="true">
+        <div class="rebirth-founder__word rebirth-founder__word--sana">SANA</div>
+        <div class="rebirth-founder__shape rebirth-founder__shape--pride">
+          <div class="rebirth-founder__pride">PRIDE</div>
+        </div>
+        <div class="rebirth-founder__word rebirth-founder__word--patel">PATEL</div>
+        <div class="rebirth-founder__caption">Founder-led · Melbourne</div>
+      </div>
+      <div class="rebirth-founder__copy">
+        <p class="eyebrow">What PRIDE means to Sana</p>
+        <h2 id="founder-title">A direct relationship. A clear professional standard.</h2>
+        <p class="rebirth-founder__lead">
+          Property management is not simply collecting rent or completing routine tasks. It is being prepared,
+          communicating clearly, keeping useful records, giving considered advice and following through on what needs attention.
+        </p>
+        <p class="rebirth-founder__lead">
+          Sana cannot control every situation. She can control how she responds, how clearly she communicates and the
+          standard she brings to the decisions within her role.
+        </p>
+        <div class="rebirth-founder__principles">
+          <article><span>01</span><div><h3>Direct access</h3><p>Speak directly with Sana when the situation needs a real conversation.</p></div></article>
+          <article><span>02</span><div><h3>Decision clarity</h3><p>Know what happened, why it matters and what the next move is.</p></div></article>
+          <article><span>03</span><div><h3>Connected oversight</h3><p>Leasing, inspections, maintenance and tenancy decisions are treated as connected parts of the investment.</p></div></article>
+        </div>
+        <div class="rebirth-founder__actions">
+          <a class="rebirth-button rebirth-button--ink" href={`tel:${SITE.phone.e164}`}>Call Sana</a>
+          <a class="rebirth-text-link" href="#appraisal">Request an appraisal <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rebirth-switch" id="switching" aria-labelledby="switch-title">
     <div class="container-wide rebirth-switch__grid">
       <div class="rebirth-switch__title">
         <p class="rebirth-kicker rebirth-kicker--gold">Already managed?</p>
-        <h2 id="switch-title">A switch should feel controlled, not chaotic.</h2>
-        <p>
-          You do not need to wait until the relationship is completely broken. If the management feels unclear, compare
-          the operating model before making a decision.
-        </p>
-        <a class="rebirth-button rebirth-button--gold" href="/switch-property-managers/">See the switching approach</a>
+        <h2 id="switch-title">Changing managers can be simpler than staying frustrated.</h2>
+        <p>The first step is not cancelling anything. It is understanding the current arrangement and what a clean transition would require.</p>
+        <a class="rebirth-button rebirth-button--gold" href={`tel:${SITE.phone.e164}`}>Talk to Sana about switching</a>
       </div>
-
-      <div class="rebirth-switch__compare">
-        <div class="rebirth-switch__column rebirth-switch__column--muted">
-          <span class="rebirth-switch__label">If your current experience feels like</span>
-          <ul>
-            <li>Chasing updates</li>
-            <li>Unclear ownership of the next step</li>
-            <li>Repeated explanations</li>
-            <li>Decisions without enough context</li>
-          </ul>
-        </div>
-        <div class="rebirth-switch__column rebirth-switch__column--bright">
-          <span class="rebirth-switch__label">The Sana standard</span>
-          <ul>
-            <li>One clear point of accountability</li>
-            <li>Useful context around decisions</li>
-            <li>Visible follow-through</li>
-            <li>Direct conversation when needed</li>
-          </ul>
-        </div>
+      <div class="rebirth-switch__steps rebirth-switch__steps--simple">
+        {switchSteps.map(([number, heading, body]) => (
+          <article>
+            <span>{number}</span>
+            <div><h3>{heading}</h3><p>{body}</p></div>
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -340,54 +294,15 @@ const schema = [
   <section class="rebirth-process" aria-labelledby="process-title">
     <div class="container-wide rebirth-process__header">
       <div>
-        <p class="eyebrow">What happens next</p>
-        <h2 id="process-title">Simple enough to explain in four steps.</h2>
+        <p class="eyebrow">The simple process</p>
+        <h2 id="process-title">One conversation. Three clear steps.</h2>
       </div>
-      <p>
-        Whether you are appointing, appraising or switching, the first conversation should reduce uncertainty—not create
-        more of it.
-      </p>
+      <p>No maze of pages and no need to know which form is “right” before you start.</p>
     </div>
-
-    <div class="container-wide rebirth-process__steps">
-      <article>
-        <span>01</span><h3>Tell Sana what is happening</h3><p>
-          Share the property, current situation and what you want to improve.
-        </p>
-      </article>
-      <article>
-        <span>02</span><h3>Get the relevant context</h3><p>
-          Sana explains what information is needed and what the practical options look like.
-        </p>
-      </article>
-      <article>
-        <span>03</span><h3>Choose the right next move</h3><p>
-          Decide whether that is an appraisal, management appointment, switching conversation or simply more
-          information.
-        </p>
-      </article>
-      <article>
-        <span>04</span><h3>Keep accountability visible</h3><p>
-          If you move forward, the service stays connected to the person responsible for the relationship.
-        </p>
-      </article>
-    </div>
-  </section>
-
-  <section class="rebirth-proof-intro" aria-labelledby="proof-title">
-    <div class="container-wide rebirth-proof-intro__grid">
-      <div>
-        <p class="eyebrow">Proof you can inspect</p>
-        <h2 id="proof-title">Trust should not depend on a polished promise.</h2>
-      </div>
-      <div class="rebirth-proof-intro__links">
-        <a href={SITE.reviews.googleProfileUrl} target="_blank" rel="noopener noreferrer nofollow">
-          <span>Current Google reviews</span><strong>Open source ↗</strong>
-        </a>
-        <a href={SITE.profiles.business[0]} target="_blank" rel="noopener noreferrer">
-          <span>Current agency activity</span><strong>realestate.com.au ↗</strong>
-        </a>
-      </div>
+    <div class="container-wide rebirth-process__steps rebirth-process__steps--three">
+      <article><span>01</span><h3>Share the property</h3><p>Tell Sana the address, current situation and what you want to understand or improve.</p></article>
+      <article><span>02</span><h3>Get the context</h3><p>Sana explains what information matters and what the practical options look like.</p></article>
+      <article><span>03</span><h3>Choose the next move</h3><p>Appraise, appoint, switch—or simply leave the conversation with more clarity.</p></article>
     </div>
   </section>
 
@@ -398,26 +313,17 @@ const schema = [
   <section class="rebirth-faq" aria-labelledby="faq-title">
     <div class="container-wide rebirth-faq__grid">
       <div class="rebirth-faq__intro">
-        <p class="eyebrow">Before you call</p>
-        <h2 id="faq-title">The useful questions first.</h2>
-        <p>
-          If your question is more specific, call Sana directly. The website does not need to become a barrier to a
-          conversation.
-        </p>
+        <p class="eyebrow">Before you contact Sana</p>
+        <h2 id="faq-title">A few useful answers.</h2>
+        <p>If the answer you need is not here, call Sana directly.</p>
       </div>
       <div class="rebirth-faq__items">
-        {
-          faqs.map((item, index) => (
-            <details>
-              <summary>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                {item.q}
-                <i aria-hidden="true">+</i>
-              </summary>
-              <p>{item.a}</p>
-            </details>
-          ))
-        }
+        {faqs.map((item, index) => (
+          <details>
+            <summary><span>{String(index + 1).padStart(2, '0')}</span><strong>{item.q}</strong><i aria-hidden="true">+</i></summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
@@ -425,14 +331,10 @@ const schema = [
   <section class="rebirth-appraisal" id="appraisal" aria-labelledby="appraisal-title">
     <div class="container-wide rebirth-appraisal__grid">
       <div class="rebirth-appraisal__copy">
-        <p class="rebirth-kicker rebirth-kicker--gold">Ready when you are</p>
-        <h2 id="appraisal-title">Start with the property. Leave with a clearer next step.</h2>
-        <p>
-          Request a rental appraisal or call Sana directly. There is no need to work out the perfect form or commit to a
-          management agreement before the first conversation.
-        </p>
+        <p class="rebirth-kicker rebirth-kicker--gold">Start with the property</p>
+        <h2 id="appraisal-title">Want a clearer view of your rental position?</h2>
+        <p>Send the address and the current situation. Sana can take it from there.</p>
         <a class="rebirth-appraisal__phone" href={`tel:${SITE.phone.e164}`}>{SITE.phone.display}</a>
-        <span class="rebirth-appraisal__phone-label">Call Sana directly</span>
         <div class="rebirth-appraisal__micro">
           <span>Founder-led</span><span>Melbourne</span><span>Residential property management</span>
         </div>
