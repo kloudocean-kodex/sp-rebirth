@@ -41,7 +41,9 @@ test('homepage above the fold follows Sana final brief without extra sales clutt
 
   const hero = page.locator('.sana-hero');
   await expect(hero.getByText('Melbourne Property Management · For Rental Providers.', { exact: true })).toBeVisible();
-  await expect(hero.getByRole('heading', { name: 'Is your property really being managed?', exact: true })).toBeVisible();
+  await expect(
+    hero.getByRole('heading', { name: 'Is your property really being managed?', exact: true }),
+  ).toBeVisible();
   await expect(
     hero.getByText('Property management with strategy, accountability and personal attention.', { exact: true }),
   ).toBeVisible();
@@ -77,7 +79,9 @@ test('homepage presents Sana current PRIDE wording in the framework-led treatmen
   await expect(
     pride.getByText('A clear standard for how I approach the management of every property.', { exact: true }),
   ).toBeVisible();
-  await expect(pride.getByText('PRIDE is the standard I choose to bring to my work every day.', { exact: true })).toBeVisible();
+  await expect(
+    pride.getByText('PRIDE is the standard I choose to bring to my work every day.', { exact: true }),
+  ).toBeVisible();
 
   for (const heading of [
     'Proactive Property Care',
@@ -98,12 +102,16 @@ test('homepage keeps Sana PRIDE philosophy and consistent-standard message intac
   const philosophy = page.locator('.sana-philosophy');
   await expect(philosophy.getByText('What PRIDE means to me', { exact: true })).toBeVisible();
   await expect(philosophy.getByText(/property management is not simply about collecting rent/i)).toBeVisible();
-  await expect(philosophy.getByText(/not every situation in property management can be predicted or controlled/i)).toBeVisible();
+  await expect(
+    philosophy.getByText(/not every situation in property management can be predicted or controlled/i),
+  ).toBeVisible();
   await expect(philosophy.getByText('What I can control is how I respond.', { exact: true })).toBeVisible();
 
   const standard = page.locator('.sana-standard');
   await expect(standard.getByText('The Standard behind the service', { exact: true })).toBeVisible();
-  await expect(standard.getByText(/different properties\. different situations\. one consistent standard:/i)).toBeVisible();
+  await expect(
+    standard.getByText(/different properties\. different situations\. one consistent standard:/i),
+  ).toBeVisible();
   await expect(standard.getByText('Your Property. My Priority.', { exact: true })).toBeVisible();
 });
 
@@ -162,7 +170,9 @@ test('homepage follows the disciplined three-part client structure', async ({ pa
   expect(body).not.toMatch(/melbourne'?s best|guaranteed returns|maximise your returns|100% stress[- ]free/i);
 });
 
-test('confirmed 24x7 direct-access service promise remains on the detailed rental-provider journey', async ({ page }) => {
+test('confirmed 24x7 direct-access service promise remains on the detailed rental-provider journey', async ({
+  page,
+}) => {
   await page.goto('/rental-providers/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText('24×7 direct access', { exact: true }).first()).toBeVisible();
 });
