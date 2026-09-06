@@ -35,7 +35,7 @@ async function expectBrandReady(page: Page) {
   const logo = brand.locator('.brand__logo');
   await expect(brand).toBeVisible();
   await expect(logo).toHaveAttribute('alt', 'Sana Patel Real Estate');
-  await expect(logo).toHaveAttribute('src', /Sana-Patel-Logo\.webp$/);
+  await expect(logo).toHaveAttribute('src', /\/media\/sana-patel-logo\.webp$/);
   await page.evaluate(() => document.fonts.ready);
 }
 
