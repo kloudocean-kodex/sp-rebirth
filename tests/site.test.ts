@@ -110,29 +110,54 @@ describe('site configuration', () => {
   it('keeps the homepage hero static and evidence-safe without rejected or synthetic founder photography', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
     const heroStart = source.indexOf('<section class="rebirth-hero"');
-    const heroEnd = source.indexOf('<section class="rebirth-choice"', heroStart);
+    const heroEnd = source.indexOf('<section class="rebirth-pride"', heroStart);
     const heroSource = source.slice(heroStart, heroEnd);
 
     expect(heroStart).toBeGreaterThan(-1);
     expect(heroEnd).toBeGreaterThan(heroStart);
     expect(heroSource).not.toMatch(/<video\b/i);
     expect(heroSource).not.toMatch(/<img\b/i);
-    expect(heroSource).toContain('Sana Patel founder-led identity graphic');
+    expect(heroSource).toContain('rebirth-pride-mark');
+    expect(heroSource).toContain('Property Management with PRIDE');
     expect(heroSource).not.toContain('founder-concept-placeholder.svg');
     expect(heroSource).not.toContain('WhatsApp-Image-2025-09-30');
     expect(heroSource).not.toContain('Sana-headshot.webp');
   });
 
-  it('keeps the final homepage focused on direct contact, appraisal, management and switching', () => {
+  it('preserves Sana original wordmark and uses one-page primary navigation', () => {
+    const header = readFileSync(new URL('../src/components/SiteHeader.astro', import.meta.url), 'utf8');
+
+    expect(header).toContain('src={SITE.logo}');
+    expect(header).toContain('alt="Sana Patel Real Estate"');
+    expect(header).toContain('href="/#pride"');
+    expect(header).toContain('href="/#why-sana"');
+    expect(header).toContain('href="/#services"');
+    expect(header).toContain('href="/#reviews"');
+    expect(header).toContain('href="/#appraisal"');
+    expect(header).toContain('href="/#switching"');
+    expect(header).not.toContain('brand__monogram');
+    expect(header).not.toContain('brand__wordmark');
+  });
+
+  it('keeps the final homepage focused on Sana PRIDE, direct contact and inline owner actions', () => {
     const source = readFileSync(new URL('../src/pages/index.astro', import.meta.url), 'utf8');
 
+    expect(source).toContain('Is your property <em>really</em> being managed?');
+    expect(source).toContain('Your Property. My Priority.');
+    expect(source).toContain('id="pride"');
+    expect(source).toContain('Proactive Property Care');
+    expect(source).toContain('Results Driven');
+    expect(source).toContain('Integrity in Every Decision');
+    expect(source).toContain('Diligent Property Management');
+    expect(source).toContain('Experience That Matters');
     expect(source).toContain('id="services"');
     expect(source).toContain('id="why-sana"');
+    expect(source).toContain('id="switching"');
     expect(source).toContain('id="reviews"');
     expect(source).toContain('id="appraisal"');
     expect(source).toContain('Call Sana · {SITE.phone.display}');
     expect(source).toContain('<LeadForm type="rental_appraisal"');
-    expect(source).toContain('/switch-property-managers/');
+    expect(source).not.toContain('/switch-property-managers/');
     expect(source).not.toContain('/property-management-visibility-check/');
     expect(source).not.toContain('/rental-position-check/');
     expect(source).not.toMatch(/<video\b/i);
