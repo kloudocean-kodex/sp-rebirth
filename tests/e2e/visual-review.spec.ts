@@ -10,16 +10,15 @@ const reviewRoutes = [
 
 const homeReviewSections = [
   ['01-hero', '.rebirth-hero'],
-  ['02-owner-choices', '.rebirth-choice'],
-  ['03-accountability', '.rebirth-manifesto'],
-  ['04-founder', '.rebirth-founder'],
-  ['05-services', '.rebirth-services'],
+  ['02-pride', '.rebirth-pride'],
+  ['03-owner-check', '.rebirth-diagnostic'],
+  ['04-services', '.rebirth-services'],
+  ['05-founder', '.rebirth-founder'],
   ['06-switching', '.rebirth-switch'],
   ['07-process', '.rebirth-process'],
-  ['08-proof-intro', '.rebirth-proof-intro'],
-  ['09-reviews', '#reviews'],
-  ['10-faq', '.rebirth-faq'],
-  ['11-appraisal', '.rebirth-appraisal'],
+  ['08-reviews', '#reviews'],
+  ['09-faq', '.rebirth-faq'],
+  ['10-appraisal', '.rebirth-appraisal'],
 ] as const;
 
 const visualCaptureProjects = new Set(['desktop-chromium', 'mobile-chromium']);
@@ -33,10 +32,10 @@ function skipNonVisualProject(projectName: string) {
 
 async function expectBrandReady(page: Page) {
   const brand = page.getByRole('link', { name: 'Sana Patel Real Estate home' });
+  const logo = brand.locator('.brand__logo');
   await expect(brand).toBeVisible();
-  await expect(brand.locator('.brand__monogram')).toHaveText('SP');
-  await expect(brand.locator('.brand__wordmark strong')).toHaveText('Sana Patel');
-  await expect(brand.locator('.brand__wordmark > span')).toHaveText('Real Estate');
+  await expect(logo).toHaveAttribute('alt', 'Sana Patel Real Estate');
+  await expect(logo).toHaveAttribute('src', /Sana-Patel-Logo\.webp$/);
   await page.evaluate(() => document.fonts.ready);
 }
 
