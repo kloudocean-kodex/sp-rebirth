@@ -3,7 +3,10 @@ import { describe, expect, it } from 'vitest';
 import { SITE } from '../src/config/site';
 
 const source = readFileSync(new URL('../src/pages/about/index.astro', import.meta.url), 'utf8');
-const founderArtwork = readFileSync(new URL('../public/media/founder-concept-placeholder.svg', import.meta.url), 'utf8');
+const founderArtwork = readFileSync(
+  new URL('../public/media/founder-concept-placeholder.svg', import.meta.url),
+  'utf8',
+);
 const detailArtwork = readFileSync(
   new URL('../public/media/property-management-detail-placeholder.svg', import.meta.url),
   'utf8',
