@@ -1,0 +1,72 @@
+.home-final .sana-hero__ornament {
+  display: none;
+}
+
+.home-final .sana-hero__media {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 900ms ease;
+}
+
+.home-final .sana-hero__media.is-ready {
+  opacity: 1;
+}
+
+.home-final .sana-hero__video {
+  position: absolute;
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+  object-fit: cover;
+  object-position: center center;
+  filter: brightness(0.48) saturate(0.76) contrast(1.08);
+  transform: scale(1.015);
+}
+
+.home-final .sana-hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7, 8, 7, 0.88) 0%, rgba(7, 8, 7, 0.7) 38%, rgba(7, 8, 7, 0.28) 72%, rgba(7, 8, 7, 0.5) 100%),
+    linear-gradient(180deg, rgba(7, 8, 7, 0.34) 0%, rgba(7, 8, 7, 0.05) 45%, rgba(7, 8, 7, 0.72) 100%),
+    radial-gradient(circle at 78% 48%, rgba(184, 154, 96, 0.08), transparent 34rem);
+}
+
+.home-final .sana-hero::before {
+  z-index: 1;
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+}
+
+.home-final .sana-hero__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.home-final .sana-hero__lead {
+  max-width: 35rem;
+}
+
+.home-final .sana-hero h1,
+.home-final .sana-hero__lead,
+.home-final .sana-signature,
+.home-final .sana-overline {
+  text-shadow: 0 0.15rem 1.6rem rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 899px) {
+  .home-final .sana-hero__media {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-final .sana-hero__media {
+    display: none;
+  }
+}
