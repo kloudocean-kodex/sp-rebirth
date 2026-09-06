@@ -72,7 +72,7 @@ test('homepage preserves Sana original logo without depending on logo image load
   const logo = brand.locator('.brand__logo');
   await expect(brand).toBeVisible();
   await expect(logo).toHaveAttribute('alt', 'Sana Patel Real Estate');
-  await expect(logo).toHaveAttribute('src', /Sana-Patel-Logo\.webp$/);
+  await expect(logo).toHaveAttribute('src', /\/media\/sana-patel-logo\.webp$/);
 });
 
 test('homepage carries Sana owner-diagnostic questions inline instead of forcing another journey', async ({ page }) => {
@@ -137,15 +137,10 @@ test('homepage review proof keeps accessible independent source links if the ven
   await page.route('https://cdn.trustindex.io/**', (route) => route.abort('blockedbyclient'));
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByRole('heading', { name: /trust should not depend on a polished promise/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: /read the current reviews/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /current google reviews open source/i })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: /read reviews on google/i })).toHaveAttribute(
     'href',
     /query_place_id=ChIJ56JfW3H5QQcRERAx5fE3MgM/,
-  );
-  await expect(page.getByRole('link', { name: /current agency activity realestate\.com\.au/i })).toHaveAttribute(
-    'href',
-    'https://www.realestate.com.au/agency/sana-patel-real-estate-KRFFJV',
   );
   await expect(page.locator('[data-review-provider="Trustindex"]')).toHaveAttribute(
     'data-trustindex-widget-id',

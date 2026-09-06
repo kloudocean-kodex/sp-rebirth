@@ -127,7 +127,8 @@ describe('site configuration', () => {
   it('preserves Sana original wordmark and uses one-page primary navigation', () => {
     const header = readFileSync(new URL('../src/components/SiteHeader.astro', import.meta.url), 'utf8');
 
-    expect(header).toContain('src={SITE.logo}');
+    expect(header).toContain('src={SITE.logoAsset}');
+    expect(SITE.logoAsset).toBe('/media/sana-patel-logo.webp');
     expect(header).toContain('alt="Sana Patel Real Estate"');
     expect(header).toContain('href="/#pride"');
     expect(header).toContain('href="/#why-sana"');
