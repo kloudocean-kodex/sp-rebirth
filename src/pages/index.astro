@@ -52,18 +52,44 @@ const ownerChecks = [
 ] as const;
 
 const serviceItems = [
-  ['Leasing & renter selection', 'Marketing, enquiries, applications and tenancy setup considered as one connected leasing process.'],
-  ['Routine inspections', 'Property condition, renter communication and follow-through kept visible rather than reduced to a checklist.'],
-  ['Rent & arrears', 'Rent collection, arrears actions and rental-position conversations handled with clear ownership.'],
-  ['Maintenance coordination', 'Repair decisions managed with context around urgency, access, communication and practical next steps.'],
-  ['Compliance coordination', 'Relevant Victorian rental obligations and records tracked as part of the management process.'],
-  ['Renewals & tenancy communication', 'Lease timing, renter conversations and rental-position decisions considered together.'],
+  [
+    'Leasing & renter selection',
+    'Marketing, enquiries, applications and tenancy setup considered as one connected leasing process.',
+  ],
+  [
+    'Routine inspections',
+    'Property condition, renter communication and follow-through kept visible rather than reduced to a checklist.',
+  ],
+  [
+    'Rent & arrears',
+    'Rent collection, arrears actions and rental-position conversations handled with clear ownership.',
+  ],
+  [
+    'Maintenance coordination',
+    'Repair decisions managed with context around urgency, access, communication and practical next steps.',
+  ],
+  [
+    'Compliance coordination',
+    'Relevant Victorian rental obligations and records tracked as part of the management process.',
+  ],
+  [
+    'Renewals & tenancy communication',
+    'Lease timing, renter conversations and rental-position decisions considered together.',
+  ],
 ] as const;
 
 const switchSteps = [
   ['01', 'Talk', 'Tell Sana what is not working now and what you want to improve.'],
-  ['02', 'Review', 'Understand the current management arrangement, property status and what an orderly transition would require.'],
-  ['03', 'Move only if it makes sense', 'If you decide to proceed, Sana can explain the handover information and next steps clearly.'],
+  [
+    '02',
+    'Review',
+    'Understand the current management arrangement, property status and what an orderly transition would require.',
+  ],
+  [
+    '03',
+    'Move only if it makes sense',
+    'If you decide to proceed, Sana can explain the handover information and next steps clearly.',
+  ],
 ] as const;
 
 const faqs = [
@@ -138,12 +164,14 @@ const schema = [
         <p class="rebirth-kicker"><span>Founder-led</span> Property Management · Melbourne</p>
         <h1 id="hero-title">Is your property <em>really</em> being managed?</h1>
         <p class="rebirth-hero__lead">
-          Receiving rent is one task. Managing an investment means staying on top of the tenancy, condition, maintenance,
-          rental position and the decisions that come next—directly with Sana Patel.
+          Receiving rent is one task. Managing an investment means staying on top of the tenancy, condition,
+          maintenance, rental position and the decisions that come next—directly with Sana Patel.
         </p>
         <p class="rebirth-hero__promise">Your Property. My Priority.</p>
         <div class="rebirth-hero__actions">
-          <a class="rebirth-button rebirth-button--gold" href={`tel:${SITE.phone.e164}`}>Call Sana · {SITE.phone.display}</a>
+          <a class="rebirth-button rebirth-button--gold" href={`tel:${SITE.phone.e164}`}
+            >Call Sana · {SITE.phone.display}</a
+          >
           <a class="rebirth-button rebirth-button--ghost" href="#appraisal">Request a rental appraisal</a>
         </div>
         <div class="rebirth-hero__credentials" aria-label="Sana Patel credentials and service model">
@@ -164,7 +192,9 @@ const schema = [
 
     <div class="rebirth-hero__rail" aria-label="Service principles">
       <div class="container-wide rebirth-hero__rail-inner">
-        <span>Proactive care</span><i aria-hidden="true"></i><span>Clear decisions</span><i aria-hidden="true"></i><span>Visible follow-through</span><i aria-hidden="true"></i><span>Direct access</span>
+        <span>Proactive care</span><i aria-hidden="true"></i><span>Clear decisions</span><i aria-hidden="true"></i><span
+          >Visible follow-through</span
+        ><i aria-hidden="true"></i><span>Direct access</span>
       </div>
     </div>
   </section>
@@ -182,7 +212,9 @@ const schema = [
           pride.map((item, index) => (
             <article>
               <span class="rebirth-pride__index">{String(index + 1).padStart(2, '0')}</span>
-              <span class="rebirth-pride__letter" aria-hidden="true">{item.letter}</span>
+              <span class="rebirth-pride__letter" aria-hidden="true">
+                {item.letter}
+              </span>
               <div>
                 <h3>{item.title}</h3>
                 <p>{item.body}</p>
@@ -206,16 +238,20 @@ const schema = [
       </p>
     </div>
     <div class="container-wide rebirth-diagnostic__list">
-      {ownerChecks.map((question, index) => (
-        <article>
-          <span>{String(index + 1).padStart(2, '0')}</span>
-          <p>{question}</p>
-        </article>
-      ))}
+      {
+        ownerChecks.map((question, index) => (
+          <article>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <p>{question}</p>
+          </article>
+        ))
+      }
     </div>
     <div class="container-wide rebirth-diagnostic__actions">
       <a class="rebirth-button rebirth-button--gold" href={`tel:${SITE.phone.e164}`}>Talk it through with Sana</a>
-      <a class="rebirth-text-link rebirth-text-link--light" href="#appraisal">Start with a rental appraisal <span aria-hidden="true">→</span></a>
+      <a class="rebirth-text-link rebirth-text-link--light" href="#appraisal"
+        >Start with a rental appraisal <span aria-hidden="true">→</span></a
+      >
     </div>
   </section>
 
@@ -253,16 +289,32 @@ const schema = [
         <h2 id="founder-title">A direct relationship. A clear professional standard.</h2>
         <p class="rebirth-founder__lead">
           Property management is not simply collecting rent or completing routine tasks. It is being prepared,
-          communicating clearly, keeping useful records, giving considered advice and following through on what needs attention.
+          communicating clearly, keeping useful records, giving considered advice and following through on what needs
+          attention.
         </p>
         <p class="rebirth-founder__lead">
           Sana cannot control every situation. She can control how she responds, how clearly she communicates and the
           standard she brings to the decisions within her role.
         </p>
         <div class="rebirth-founder__principles">
-          <article><span>01</span><div><h3>Direct access</h3><p>Speak directly with Sana when the situation needs a real conversation.</p></div></article>
-          <article><span>02</span><div><h3>Decision clarity</h3><p>Know what happened, why it matters and what the next move is.</p></div></article>
-          <article><span>03</span><div><h3>Connected oversight</h3><p>Leasing, inspections, maintenance and tenancy decisions are treated as connected parts of the investment.</p></div></article>
+          <article>
+            <span>01</span><div>
+              <h3>Direct access</h3><p>Speak directly with Sana when the situation needs a real conversation.</p>
+            </div>
+          </article>
+          <article>
+            <span>02</span><div>
+              <h3>Decision clarity</h3><p>Know what happened, why it matters and what the next move is.</p>
+            </div>
+          </article>
+          <article>
+            <span>03</span><div>
+              <h3>Connected oversight</h3><p>
+                Leasing, inspections, maintenance and tenancy decisions are treated as connected parts of the
+                investment.
+              </p>
+            </div>
+          </article>
         </div>
         <div class="rebirth-founder__actions">
           <a class="rebirth-button rebirth-button--ink" href={`tel:${SITE.phone.e164}`}>Call Sana</a>
@@ -277,16 +329,26 @@ const schema = [
       <div class="rebirth-switch__title">
         <p class="rebirth-kicker rebirth-kicker--gold">Already managed?</p>
         <h2 id="switch-title">Changing managers can be simpler than staying frustrated.</h2>
-        <p>The first step is not cancelling anything. It is understanding the current arrangement and what a clean transition would require.</p>
+        <p>
+          The first step is not cancelling anything. It is understanding the current arrangement and what a clean
+          transition would require.
+        </p>
         <a class="rebirth-button rebirth-button--gold" href={`tel:${SITE.phone.e164}`}>Talk to Sana about switching</a>
       </div>
       <div class="rebirth-switch__steps rebirth-switch__steps--simple">
-        {switchSteps.map(([number, heading, body]) => (
-          <article>
-            <span>{number}</span>
-            <div><h3>{heading}</h3><p>{body}</p></div>
-          </article>
-        ))}
+        {
+          switchSteps.map(([number, heading, body]) => (
+            <article>
+              <span>{number}</span>
+              <div>
+                <>
+                  <h3>{heading}</h3>
+                  <p>{body}</p>
+                </>
+              </div>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -300,9 +362,21 @@ const schema = [
       <p>No maze of pages and no need to know which form is “right” before you start.</p>
     </div>
     <div class="container-wide rebirth-process__steps rebirth-process__steps--three">
-      <article><span>01</span><h3>Share the property</h3><p>Tell Sana the address, current situation and what you want to understand or improve.</p></article>
-      <article><span>02</span><h3>Get the context</h3><p>Sana explains what information matters and what the practical options look like.</p></article>
-      <article><span>03</span><h3>Choose the next move</h3><p>Appraise, appoint, switch—or simply leave the conversation with more clarity.</p></article>
+      <article>
+        <span>01</span><h3>Share the property</h3><p>
+          Tell Sana the address, current situation and what you want to understand or improve.
+        </p>
+      </article>
+      <article>
+        <span>02</span><h3>Get the context</h3><p>
+          Sana explains what information matters and what the practical options look like.
+        </p>
+      </article>
+      <article>
+        <span>03</span><h3>Choose the next move</h3><p>
+          Appraise, appoint, switch—or simply leave the conversation with more clarity.
+        </p>
+      </article>
     </div>
   </section>
 
@@ -318,12 +392,20 @@ const schema = [
         <p>If the answer you need is not here, call Sana directly.</p>
       </div>
       <div class="rebirth-faq__items">
-        {faqs.map((item, index) => (
-          <details>
-            <summary><span>{String(index + 1).padStart(2, '0')}</span><strong>{item.q}</strong><i aria-hidden="true">+</i></summary>
-            <p>{item.a}</p>
-          </details>
-        ))}
+        {
+          faqs.map((item, index) => (
+            <details>
+              <summary>
+                <>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{item.q}</strong>
+                  <i aria-hidden="true">+</i>
+                </>
+              </summary>
+              <p>{item.a}</p>
+            </details>
+          ))
+        }
       </div>
     </div>
   </section>
