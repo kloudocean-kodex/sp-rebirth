@@ -9,7 +9,6 @@ const description =
   'Meet Sana Patel, Licensed Estate Agent with 10+ years in property management, and the personal service standard behind Sana Patel Real Estate.';
 const businessId = new URL('/#business', SITE.url).toString();
 const founderId = new URL('/about/#sana-patel', SITE.url).toString();
-const founderImage = new URL('/media/sana-patel-meet-portrait.jpg', SITE.url).toString();
 
 const schema = {
   '@context': 'https://schema.org',
@@ -18,7 +17,6 @@ const schema = {
   name: SITE.founder.name,
   jobTitle: 'Managing Director / Licensed Estate Agent',
   url: SITE.founder.profileUrl,
-  image: founderImage,
   sameAs: [...SITE.profiles.founder],
   worksFor: {
     '@type': 'RealEstateAgent',
@@ -49,10 +47,10 @@ const schema = {
 
       <figure class="meet-hero__portrait">
         <img
-          src="/media/sana-patel-meet-portrait.jpg"
-          alt="Sana Patel standing outdoors"
-          width="1264"
-          height="1264"
+          src="/media/founder-concept-placeholder.svg"
+          alt="Editorial founder illustration"
+          width="1200"
+          height="1500"
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -82,10 +80,10 @@ const schema = {
     <div class="container-wide meet-detail__grid">
       <figure class="meet-detail__image">
         <img
-          src="/media/sana-patel-meet-desk.jpg"
-          alt="Sana Patel working at a property-management desk"
-          width="1264"
-          height="1264"
+          src="/media/property-management-detail-placeholder.svg"
+          alt="Editorial property-management illustration"
+          width="1200"
+          height="1500"
           loading="lazy"
           decoding="async"
         />
@@ -213,7 +211,7 @@ const schema = {
   .meet-hero__portrait img {
     display: block;
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 4 / 5;
     object-fit: contain;
     border-radius: 0;
     box-shadow: 0 2.4rem 6rem rgba(0, 0, 0, 0.36);
@@ -292,7 +290,7 @@ const schema = {
   .meet-detail__image img {
     display: block;
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 4 / 5;
     object-fit: contain;
     border-radius: 0;
     box-shadow: 0 2rem 5rem rgba(23, 23, 19, 0.13);
