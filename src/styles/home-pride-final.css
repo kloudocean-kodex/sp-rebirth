@@ -22,8 +22,7 @@
   isolation: isolate;
   background:
     radial-gradient(circle at 78% 35%, rgba(184, 154, 96, 0.11), transparent 26rem),
-    radial-gradient(circle at 11% 92%, rgba(215, 195, 154, 0.055), transparent 23rem),
-    var(--sana-ink);
+    radial-gradient(circle at 11% 92%, rgba(215, 195, 154, 0.055), transparent 23rem), var(--sana-ink);
   color: var(--sana-ivory);
 }
 
@@ -186,33 +185,11 @@
   }
 }
 
-.home-final .sana-hero__scroll {
-  position: absolute;
-  right: max(1rem, calc((100vw - 92rem) / 2));
-  bottom: 2rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: rgba(255, 253, 248, 0.52);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-decoration: none;
-}
-
-.home-final .sana-hero__scroll i {
-  width: 3.5rem;
-  height: 1px;
-  background: var(--sana-gold-soft);
-}
-
 .home-final .sana-pride {
   position: relative;
   padding: clamp(6rem, 10vw, 10rem) 0;
   overflow: clip;
-  background:
-    radial-gradient(circle at 94% 16%, rgba(184, 154, 96, 0.1), transparent 28rem),
-    var(--sana-ivory);
+  background: radial-gradient(circle at 94% 16%, rgba(184, 154, 96, 0.1), transparent 28rem), var(--sana-ivory);
   color: var(--sana-ink);
 }
 
@@ -395,9 +372,7 @@
   overflow: hidden;
   border: 1px solid rgba(215, 195, 154, 0.24);
   border-radius: 1.15rem;
-  background:
-    radial-gradient(circle at 82% 16%, rgba(215, 195, 154, 0.16), transparent 17rem),
-    var(--sana-ink);
+  background: radial-gradient(circle at 82% 16%, rgba(215, 195, 154, 0.16), transparent 17rem), var(--sana-ink);
   box-shadow: 0 2rem 5rem rgba(23, 23, 19, 0.16);
   color: var(--sana-ivory);
 }
@@ -443,9 +418,7 @@
   padding: clamp(2.5rem, 5vw, 4.5rem);
   border: 1px solid rgba(109, 83, 44, 0.2);
   border-radius: 1rem;
-  background:
-    linear-gradient(120deg, rgba(215, 195, 154, 0.15), transparent 42%),
-    var(--sana-paper);
+  background: linear-gradient(120deg, rgba(215, 195, 154, 0.15), transparent 42%), var(--sana-paper);
 }
 
 .home-final .sana-standard__label {
@@ -477,9 +450,7 @@
 
 .home-final .trust-proof {
   padding: clamp(6rem, 10vw, 9rem) 0;
-  background:
-    radial-gradient(circle at 8% 8%, rgba(184, 154, 96, 0.11), transparent 25rem),
-    var(--sana-paper);
+  background: radial-gradient(circle at 8% 8%, rgba(184, 154, 96, 0.11), transparent 25rem), var(--sana-paper);
 }
 
 .home-final .trust-proof::before {
@@ -518,9 +489,7 @@
   position: relative;
   overflow: clip;
   padding: clamp(6rem, 10vw, 9rem) 0;
-  background:
-    radial-gradient(circle at 84% 28%, rgba(184, 154, 96, 0.14), transparent 26rem),
-    var(--sana-ink);
+  background: radial-gradient(circle at 84% 28%, rgba(184, 154, 96, 0.14), transparent 26rem), var(--sana-ink);
   color: var(--sana-ivory);
 }
 
@@ -588,10 +557,6 @@
 
   .home-final .sana-button {
     width: 100%;
-  }
-
-  .home-final .sana-hero__scroll {
-    display: none;
   }
 
   .home-final .sana-pride__cards {
