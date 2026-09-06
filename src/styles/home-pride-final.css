@@ -196,8 +196,7 @@
 }
 
 .home-rebirth .rebirth-diagnostic {
-  background:
-    radial-gradient(circle at 88% 15%, rgba(184, 154, 96, 0.18), transparent 28rem), #11120f;
+  background: radial-gradient(circle at 88% 15%, rgba(184, 154, 96, 0.18), transparent 28rem), #11120f;
   color: #fffdf8;
 }
 
