@@ -6,13 +6,18 @@ import { SITE } from '@/config/site';
   <div class="container-wide trust-proof__shell">
     <div class="trust-proof__intro">
       <div>
-        <p class="eyebrow">Current Google reviews</p>
-        <h2 id="trust-proof-title">Read the current reviews.</h2>
+        <p class="eyebrow">Independent review proof</p>
+        <h2 id="trust-proof-title">Trusted by rental providers &amp; renters</h2>
       </div>
       <div class="trust-proof__context">
+        <strong>Real experiences. Real service.</strong>
         <p>
-          Reviews load from Sana Patel Real Estate's connected Google source through Trustindex, so the visible names,
-          dates, comments and rating stay source-driven.
+          Hear directly from rental providers and renters who have shared their experience of working with Sana Patel
+          Real Estate.
+        </p>
+        <p>
+          Google rating, review count and reviewer wording are supplied live through the connected Trustindex source—no
+          manually typed aggregate rating or review count.
         </p>
         <a href={SITE.reviews.googleProfileUrl} target="_blank" rel="noopener noreferrer nofollow">
           Read reviews on Google <span aria-hidden="true">↗</span>
@@ -142,6 +147,19 @@ import { SITE } from '@/config/site';
   .trust-proof__context {
     max-width: 42rem;
     color: var(--ink-soft);
+  }
+  .trust-proof__context strong {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(1.45rem, 2.4vw, 2.25rem);
+    font-style: italic;
+    font-weight: 430;
+    line-height: 1.08;
+  }
+  .trust-proof__context p + p {
+    margin-top: 0.65rem;
   }
   .trust-proof__context a {
     display: inline-flex;
